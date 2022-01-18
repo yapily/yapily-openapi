@@ -6732,9 +6732,9 @@
         "tags": [
           "Financial Profile"
         ],
-        "operationId": "createUserProfile",
-        "summary": "Create User Profile",
-        "description": "Used to create a `Financial Profile` for a `User`.  The response is asynchronous, returned with pending status, while retrieval of financial data is commenced.  There is a limit of 10,000 transactions for enrichment.",
+        "operationId": "createProfileConsent",
+        "summary": "Create Profile Consent",
+        "description": "Used to add a consent to a `Financial Profile` for a `User`.  The response is asynchronous, returned with pending status, while retrieval of financial data is commenced.  There is a limit of 10,000 transactions for enrichment.",
         "parameters": [
           {
             "description": "__Mandatory__. The Yapily generated UUID for the user.",
@@ -8794,6 +8794,20 @@
             "description": "A list of transaction streams",
             "items": {
               "$ref": "#/components/schemas/TransactionStream"
+            }
+          },
+          "recentlyTerminatedIncomeStreams": {
+            "type": "array",
+            "description": "A list of terminated transaction income streams",
+            "items": {
+              "$ref": "#/components/schemas/TerminatedTransactionStream"
+            }
+          },
+          "recentlyTerminatedExpenditureStreams": {
+            "type": "array",
+            "description": "A list of terminated transaction expenditure streams",
+            "items": {
+              "$ref": "#/components/schemas/TerminatedTransactionStream"
             }
           }
         },
@@ -11204,6 +11218,65 @@
             "type": "number",
             "description": "The average amount of the transaction stream",
             "example": 19.708
+          }
+        }
+      },
+      "TerminatedTransactionStream": {
+        "description": "Terminated transaction stream generated as part of the financial profile for a User.",
+        "properties": {
+          "name": {
+            "example": "Amazon Marketplace",
+            "type": "string",
+            "description": "The name of the TransactionStream"
+          },
+          "transactions": {
+            "type": "array",
+            "description": "A list of Transactions from the transaction stream.",
+            "items": {
+              "$ref": "#/components/schemas/EnrichedTransaction"
+            }
+          },
+          "transactionSchedule": {
+            "$ref": "#/components/schemas/TransactionSchedule"
+          },
+          "scheduleConsistencyScore": {
+            "type": "number",
+            "description": "The consistency of the transaction.  This is a number between 0 and 1 with 1 being the most consistent schedule.",
+            "example": 0.44
+          },
+          "nextExpectedTransactionDate": {
+            "type": "string",
+            "format": "date",
+            "description": "When is the transaction expected to occur next.",
+            "example": "2019-10-04"
+          },
+          "earliestTransactionDate": {
+            "type": "string",
+            "format": "date",
+            "description": "When is the first recorded transaction date",
+            "example": "2020-04-24"
+          },
+          "mostRecentTransactionDate": {
+            "type": "string",
+            "format": "date",
+            "description": "When is the most recent transaction date",
+            "example": "2019-10-03"
+          },
+          "amountConsistencyScore": {
+            "type": "number",
+            "description": "The consistency of the amount of the transaction.  This is a number between 0 and 1 with 1 being the most consistent amount.",
+            "example": 0.74
+          },
+          "averageAmount": {
+            "type": "number",
+            "description": "The average amount of the transaction stream",
+            "example": 19.708
+          },
+          "missedTransactions": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Missed transactions of transaction stream",
+            "example": 3
           }
         }
       },
