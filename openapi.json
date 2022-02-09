@@ -6412,6 +6412,129 @@
         ]
       }
     },
+    "/payment-pre-auth-requests": {
+      "post": {
+        "description": "Used to initiate the pre-authorisation process for payments for CbiGlobe `Institution` that contains the `INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS` feature to authenticate the user. <br><br>Feature: `INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS`",
+        "operationId": "createPaymentPreAuthorisationRequest",
+        "parameters": [
+          {
+            "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
+            "in": "query",
+            "name": "raw",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8": {
+              "examples": {
+                "Cbi Globe (PIS) Example Request": {
+                  "description": "Cbi Globe (PIS) Example Request",
+                  "value": {
+                    "applicationUserId": "john.doe@company.com",
+                    "institutionId": "n26",
+                    "callback": "https://display-parameters.com/",
+                    "scope": "PIS",
+                    "reference": "Bill Payment",
+                    "amount": {
+                      "amount": 1.00,
+                      "currency": "EUR"
+                    },
+                    "payee": {
+                      "name": "Jane Doe",
+                      "country": "BE",
+                      "accountIdentifications": [
+                        {
+                          "type": "IBAN",
+                          "identification": "BE12345678901234"
+                        }
+                      ]
+                    },
+                    "payer": {
+                      "accountIdentifications": [
+                        {
+                          "type": "IBAN",
+                          "identification": "DE12345678901234567890"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/PaymentPreAuthorisationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Berlin Group Example (PIS) Response": {
+                    "description": "Berlin Group Example (PIS) Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "ba79c56773de42129dbf8164b202276c"
+                      },
+                      "data": {
+                        "id": "53ff00d0-91dd-417d-880b-cdd7c50090ed",
+                        "userUuid": "e2578545-27a4-4edf-983f-5d33c2d7b559",
+                        "applicationUserId": "john.doe@company.com",
+                        "institutionId": "n26",
+                        "state": "4399535ee4de46238fce108a95669848",
+                        "status": "AWAITING_PRE_AUTHORIZATION",
+                        "createdAt": "2021-06-10T09:54:46.669Z",
+                        "featureScope": [
+                          "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+                        ],
+                        "authorisationUrl": "https://app.n26.com/open-banking?requestId=2e2b2efd-82bb-4a2b-8f67-ced1a93511b8&state=4399535ee4de46238fce108a95669848&authType=XS2A&scope=DEDICATED_PISP",
+                        "qrCodeUrl": "https://images.yapily.com/image/7384ad3b-5eb1-4304-9cfa-7aa6fcc5e0c7/1623318888?size=0"
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfAuthorisationRequestResponse"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "default": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "description": "Error Response",
+                    "value": {
+                      "error": {
+                        "code": 401,
+                        "status": "UNAUTHORIZED",
+                        "message": "Full authentication is required to access this resource"
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Error Response"
+          }
+        },
+        "summary": "Create Payment Pre-authorisation",
+        "tags": [
+          "Authorisations"
+        ]
+      }
+    },
     "/users": {
       "get": {
         "description": "Get all the users configured in your application",
@@ -7046,6 +7169,7 @@
             }
           },
           "accountIdentifications": {
+            "uniqueItems": true,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AccountIdentification"
@@ -7641,51 +7765,7 @@
             "type": "string"
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "400",
-              "401",
-              "402",
-              "403",
-              "404",
-              "405",
-              "406",
-              "407",
-              "408",
-              "409",
-              "410",
-              "411",
-              "412",
-              "413",
-              "414",
-              "415",
-              "416",
-              "417",
-              "418",
-              "419",
-              "420",
-              "421",
-              "422",
-              "423",
-              "424",
-              "426",
-              "428",
-              "429",
-              "431",
-              "451",
-              "500",
-              "501",
-              "502",
-              "503",
-              "504",
-              "505",
-              "506",
-              "507",
-              "508",
-              "509",
-              "510",
-              "511"
-            ]
+            "type": "string"
           },
           "tracingId": {
             "type": "string"
@@ -9064,7 +9144,8 @@
           "READ_DOMESTIC_PERIODIC_PAYMENT_REFUND",
           "READ_INTERNATIONAL_SINGLE_REFUND",
           "READ_INTERNATIONAL_SCHEDULED_REFUND",
-          "ACCOUNT_BENEFICIARIES"
+          "ACCOUNT_BENEFICIARIES",
+          "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
         ]
       },
       "FilterAndSort": {
@@ -9873,6 +9954,7 @@
             "example": "Jane Doe"
           },
           "accountIdentifications": {
+            "uniqueItems": true,
             "type": "array",
             "description": "__Mandatory__. The account identifications that identify the `Payee` bank account.",
             "example": [
@@ -9905,6 +9987,41 @@
         },
         "description": "__Mandatory__. The `Payee` object contains details of the beneficiary [person or business]. You must define this in your payment request alongwith all of the nested mandatory properties."
       },
+      "PayeeDetails": {
+        "type": "object",
+        "required": [
+          "accountIdentifications",
+          "name",
+          "country"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "__Mandatory__. The account holder name of the beneficiary.",
+            "example": "Jane Doe"
+          },
+          "accountIdentifications": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "__Mandatory__. The account identifications that identify the `Payee` bank account.",
+            "example": [
+              {
+                "identification": "IBUK123456789",
+                "type": "IBAN"
+              }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/AccountIdentification"
+            }
+          },
+          "country": {
+            "type": "string",
+            "description": "__Conditional__. The 2-letter country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment",
+            "example": "GB"
+          }
+        },
+        "description": "__Mandatory__. The `PayeeDetails` object contains details of the beneficiary [person or business]. You must define this in your payment request alongwith all of the nested mandatory properties."
+      },
       "Payer": {
         "required": [
           "accountIdentifications"
@@ -9917,6 +10034,7 @@
             "example": "John Doe"
           },
           "accountIdentifications": {
+            "uniqueItems": true,
             "type": "array",
             "description": "__Mandatory__. The account identifications that identify the `Payer` bank account.",
             "items": {
@@ -9925,6 +10043,23 @@
           },
           "address": {
             "$ref": "#/components/schemas/Address"
+          }
+        },
+        "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/knowledge/berlin_group/) for more information.</li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.</li></ol>"
+      },
+      "PayerDetails": {
+        "required": [
+          "accountIdentifications"
+        ],
+        "type": "object",
+        "properties": {
+          "accountIdentifications": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "__Mandatory__. The account identifications that identify the `Payer` bank account.",
+            "items": {
+              "$ref": "#/components/schemas/AccountIdentification"
+            }
           }
         },
         "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/knowledge/berlin_group/) for more information.</li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.</li></ol>"
@@ -10325,6 +10460,72 @@
           "PATC",
           "PART"
         ]
+      },
+      "PaymentPreAuthorisationRequest": {
+        "required": [
+          "institutionId",
+          "scope",
+          "payee",
+          "payer",
+          "amount",
+          "reference"
+        ],
+        "type": "object",
+        "properties": {
+          "userUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "applicationUserId": {
+            "type": "string",
+            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided.",
+            "example": "user-234562290"
+          },
+          "forwardParameters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "institutionId": {
+            "type": "string",
+            "description": "__Mandatory__. The reference to the `Institution` which identifies which institution the authorisation request is sent to.",
+            "example": "yapily-mock"
+          },
+          "callback": {
+            "type": "string",
+            "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-optional) for more information.",
+            "example": "https://display-parameters.com"
+          },
+          "redirect": {
+            "$ref": "#/components/schemas/RedirectRequest"
+          },
+          "oneTimeToken": {
+            "type": "boolean",
+            "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
+            "example": false
+          },
+          "scope": {
+            "type": "string",
+            "description": "__Mandatory__. Defines the scope of the pre-authorisation request.",
+            "example": "AIS"
+          },
+          "payee": {
+            "$ref": "#/components/schemas/PayeeDetails"
+          },
+          "payer": {
+            "$ref": "#/components/schemas/PayerDetails"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "reference": {
+            "type": "string",
+            "description": "__Mandatory__. The payment reference or description. Limited to a maximum of 18 characters long.",
+            "example": "Bill payment"
+          }
+        },
+        "description": "__Mandatory__. The payment pre authorisation request object defining the details of the payment and pre auth."
       },
       "PaymentRequest": {
         "required": [
@@ -10891,6 +11092,7 @@
             "type": "string"
           },
           "accountIdentifications": {
+            "uniqueItems": true,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AccountIdentification"
