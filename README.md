@@ -20,15 +20,15 @@ The following [tutorial](https://cloud.google.com/java/docs/setup#install_a_jdk_
 
 ## Java support
 
-Please refer to this [document](../docs/java.md) for Java.
+Please refer to this [document](/main/../docs/java.md) for Java.
 
 ## Node support
 
-Please refer to this [document](../docs/node.md) for Node.
+Please refer to this [document](/main/../docs/node.md) for Node.
 
 ## Python support
 
-Please refer to this [document](../docs/python.md) for Python.
+Please refer to this [document](/main/../docs/python.md) for Python.
 
 ## Known issues with openapi-generator
 
