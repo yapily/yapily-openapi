@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 
+## [2.2.0] - 2022-05-18
+### Added
+- Publishing new notifications endpoints for private beta
+- Miscellaneous updates to improve documentations
+
 ## [2.1.0] - 2022-02-11
 ### Added
 - New end point POST /payment-pre-auth-requests was added to support CBI Globe's pre-authorisation process
