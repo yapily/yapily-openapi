@@ -195,7 +195,7 @@
             "application/json;charset=UTF-8": {
               "examples": {
                 "CBI Globe Example Request": {
-                  "$ref": "#/components/examples/cbi-globe-example-acc-auth-request" 
+                  "$ref": "#/components/examples/cbi-globe-example-acc-auth-request"
                 },
                 "OBIE Example Request": {
                   "$ref": "#/components/examples/obie-example-acc-auth-request"
@@ -763,7 +763,7 @@
                 "examples": {
                   "OBIE Example Response": {
                     "$ref": "#/components/examples/obie-example-acc-direct-debits-response"
-                  }              
+                  }
                 },
                 "schema": {
                   "$ref": "#/components/schemas/ApiListResponseOfDirectDebitResponse"
@@ -844,7 +844,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "OBIE Example Response": {
-                    "$ref": "#/components/examples/obie-example-acc-periodic-payments-response"                  
+                    "$ref": "#/components/examples/obie-example-acc-periodic-payments-response"
                   }
                 },
                 "schema": {
@@ -926,7 +926,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "OBIE Example Response": {
-                    "$ref": "#/components/examples/obie-example-acc-scheduled-payments-response"                    
+                    "$ref": "#/components/examples/obie-example-acc-scheduled-payments-response"
                   }
                 },
                 "schema": {
@@ -1045,7 +1045,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Example Response": {
-                    "$ref": "#/components/examples/account-statements-example-esponse"                    
+                    "$ref": "#/components/examples/account-statements-example-esponse"
                   }
                 },
                 "schema": {
@@ -2084,10 +2084,10 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Berlin Group (Multiple SCA Methods) Example Response": {
-                    "$ref": "#/components/examples/berlin-group-multiple-sca-methods-example-response"                    
+                    "$ref": "#/components/examples/berlin-group-multiple-sca-methods-example-response"
                   },
                   "Berlin Group (Single SCA Method) Example Response": {
-                    "$ref": "#/components/examples/berlin-group-single-sca-method-example-response"              
+                    "$ref": "#/components/examples/berlin-group-single-sca-method-example-response"
                   }
                 },
                 "schema": {
@@ -2194,7 +2194,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Berlin Group (SCA Code) Example Response": {
-                    "$ref": "#/components/examples/berlin-group-sca-code-example-response"                  
+                    "$ref": "#/components/examples/berlin-group-sca-code-example-response"
                   },
                   "Berlin Group (Selected SCA Method) Example Response": {
                     "$ref": "#/components/examples/berlin-group-selected-sca-method-example-response"
@@ -2292,7 +2292,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Berlin Group EUR Embedded Bulk Payment Example Response": {
-                    "$ref": "#/components/examples/berlin-group-eur-embedded-bulk-payment-example-response"                    
+                    "$ref": "#/components/examples/berlin-group-eur-embedded-bulk-payment-example-response"
                   }
                 },
                 "schema": {
@@ -2396,7 +2396,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Berlin Group EUR Embedded Bulk Payment (SCA Code) Example Response": {
-                    "$ref": "#/components/examples/berlin-group-eur-embedded-bulk-payment-sca-code-example-response"                
+                    "$ref": "#/components/examples/berlin-group-eur-embedded-bulk-payment-sca-code-example-response"
                   }
                 },
                 "schema": {
@@ -2582,7 +2582,7 @@
                   "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-sca-code-example-request"
                 },
                 "Berlin Group EUR Single Domestic Payment (Selected SCA Method) Example Request": {
-                  "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-selected-sca-method-example-request"                  
+                  "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-selected-sca-method-example-request"
                 }
               },
               "schema": {
@@ -2601,7 +2601,7 @@
                     "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-sca-code-example-response"
                   },
                   "Berlin Group EUR Single Domestic Payment (Selected SCA Method) Example Response": {
-                    "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-selected-sca-method-example-response"                    
+                    "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-selected-sca-method-example-response"
                   }
                 },
                 "schema": {
@@ -2643,7 +2643,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Example Response": {
-                    "$ref": "#/components/examples/features-example-response"                    
+                    "$ref": "#/components/examples/features-example-response"
                   }
                 },
                 "schema": {
@@ -2748,7 +2748,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Example Response": {
-                    "$ref": "#/components/examples/institutions-example-response"                    
+                    "$ref": "#/components/examples/institutions-example-response"
                   }
                 },
                 "schema": {
@@ -2801,7 +2801,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Example Response": {
-                    "$ref": "#/components/examples/institution-example-response"                    
+                    "$ref": "#/components/examples/institution-example-response"
                   }
                 },
                 "schema": {
@@ -2843,7 +2843,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Example Response": {
-                    "$ref": "#/components/examples/me-example-response"                    
+                    "$ref": "#/components/examples/me-example-response"
                   }
                 },
                 "schema": {
@@ -2925,7 +2925,7 @@
                   "$ref": "#/components/examples/eur-single-domestic-payment-auth-example-request"
                 },
                 "GBP Single Domestic Example Request": {
-                  "$ref": "#/components/examples/gbp-single-domestic-payment-auth-example-request"                  
+                  "$ref": "#/components/examples/gbp-single-domestic-payment-auth-example-request"
                 }
               },
               "schema": {
@@ -3031,7 +3031,7 @@
             "application/json;charset=UTF-8": {
               "examples": {
                 "Berlin Group EUR Single Domestic Payment Example Request": {
-                  "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-example-request"                  
+                  "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-example-request"
                 }
               },
               "schema": {
@@ -3047,7 +3047,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Berlin Group EUR Single Domestic Payment Example Response": {
-                    "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-example-response"                    
+                    "$ref": "#/components/examples/berlin-group-eur-single-domestic-payment-example-response"
                   }
                 },
                 "schema": {
@@ -3155,7 +3155,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "EUR Domestic Single Payment Example Response": {
-                    "$ref": "#/components/examples/eur-domestic-single-payment-example-response"                    
+                    "$ref": "#/components/examples/eur-domestic-single-payment-example-response"
                   },
                   "GBP Domestic Single Payment Example Response": {
                     "$ref": "#/components/examples/gbp-domestic-single-payment-example-response"
@@ -3405,7 +3405,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Berlin Group Example (PIS) Response": {
-                    "$ref": "#/components/examples/berlin-group-pis-pre-auth-example-response"                    
+                    "$ref": "#/components/examples/berlin-group-pis-pre-auth-example-response"
                   }
                 },
                 "schema": {
@@ -3462,7 +3462,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Example Response": {
-                    "$ref": "#/components/examples/users_example-response"                    
+                    "$ref": "#/components/examples/users_example-response"
                   }
                 },
                 "schema": {
@@ -3504,7 +3504,7 @@
             "application/json;charset=UTF-8": {
               "examples": {
                 "Create User Example Request": {
-                  "$ref": "#/components/examples/create-user-example-request"       
+                  "$ref": "#/components/examples/create-user-example-request"
                 }
               },
               "schema": {
@@ -3986,7 +3986,14 @@
         },
         "responses": {
           "201": {
-            "description": "Event subscription created successfully"
+            "description": "Event subscription created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfEventSubscriptionResponse"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad request for missing required properties"
@@ -4016,7 +4023,7 @@
                   "title": "EventSubscriptionArrayResponse",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/EventSubscriptionResponse"
+                    "$ref": "#/components/schemas/ApiListResponseOfEventSubscriptionResponse"
                   }
                 }
               }
@@ -4048,7 +4055,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EventSubscriptionResponse"
+                  "$ref": "#/components/schemas/ApiResponseOfEventSubscriptionResponse"
                 }
               }
             }
@@ -4065,7 +4072,7 @@
         "tags": [
           "Notifications"
         ],
-        "summary": "delete event subscription by eveent type id",
+        "summary": "delete event subscription by event type id",
         "description": "delete a event subscription within the data matching the id in the path",
         "operationId": "deleteEventSubscriptionById",
         "x-beta": true,
@@ -4076,7 +4083,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Event subscription deleted succesfully"
+            "description": "Event subscription deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfEventSubscriptionDeleteResponse"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -5678,9 +5692,9 @@
             "description": "Identifier of the consolidated account. When used in Get Account Transactions calls, the transactions between the sub-accounts will not be reported"
           },
           "accountBalances": {
-            "type":"array",
-            "items":{
-              "$ref":"#/components/schemas/AccountBalance"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountBalance"
             }
           }
         },
@@ -8618,11 +8632,11 @@
         "title": "EventSubscriptionRequest",
         "type": "object",
         "required": [
-          "eventType",
+          "eventTypeId",
           "notification"
         ],
         "properties": {
-          "eventType": {
+          "eventTypeId": {
             "type": "string",
             "description": "Used to identify event subscription",
             "example": "payment.status"
@@ -8637,7 +8651,7 @@
         "type": "object",
         "required": [
           "eventTypeId",
-          "application",
+          "applicationId",
           "created",
           "notification"
         ],
@@ -8647,7 +8661,7 @@
             "description": "Event type Id.",
             "example": "payment.status"
           },
-          "application": {
+          "applicationId": {
             "type": "string",
             "format": "uuid",
             "description": "Application related to event subscription.",
@@ -8660,6 +8674,38 @@
           },
           "notification": {
             "$ref": "#/components/schemas/Notification"
+          }
+        }
+      },
+      "EventSubscriptionDeleteResponse": {
+        "title": "EventSubscriptionDeleteResponse",
+        "type": "object",
+        "required": [
+          "eventTypeId",
+          "applicationId",
+          "created",
+          "deleteStatus"
+        ],
+        "properties": {
+          "eventTypeId": {
+            "type": "string",
+            "description": "Event type Id.",
+            "example": "payment.status"
+          },
+          "applicationId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Application related to event subscription.",
+            "example": "2698db90-6635-4f76-b673-5ce8e2aeda0e"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation datetime of event subscription.",
+            "example": "28-07-2021 15:47:03"
+          },
+          "deleteStatus": {
+            "$ref": "#/components/schemas/DeleteStatusEnum"
           }
         }
       },
@@ -8680,6 +8726,111 @@
             "type": "string",
             "description": "Url related to the notification.",
             "example": "https://httpbin.com/new_endpoint"
+          }
+        }
+      },
+      "ApiResponseOfEventSubscriptionResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/EventSubscriptionResponse"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "raw": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
+      },
+      "ApiListResponseOfEventSubscriptionResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseListMeta"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventSubscriptionResponse"
+            }
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "raw": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/FilteredClientPayloadListTransaction"
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
+      },
+      "ApiResponseOfEventSubscriptionDeleteResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/EventSubscriptionDeleteResponse"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "raw": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
           }
         }
       }
@@ -9825,7 +9976,7 @@
             "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=7948ba4d6a064001b06ef28f8c06ca4a&nonce=7948ba4d6a064001b06ef28f8c06ca4a&scope=openid+accounts&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgYWNjb3VudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiNzk0OGJhNGQ2YTA2NDAwMWIwNmVmMjhmOGMwNmNhNGEiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoiYWFjLTBhNzQzYTBmLTBiN2QtNGU3Yi04N2ViLTBiYzY1ZTFkMmY5NyIsImVzc2VudGlhbCI6dHJ1ZX19LCJ1c2VyaW5mbyI6eyJvcGVuYmFua2luZ19pbnRlbnRfaWQiOnsidmFsdWUiOiJhYWMtMGE3NDNhMGYtMGI3ZC00ZTdiLTg3ZWItMGJjNjVlMWQyZjk3IiwiZXNzZW50aWFsIjp0cnVlfX19LCJub25jZSI6Ijc5NDhiYTRkNmEwNjQwMDFiMDZlZjI4ZjhjMDZjYTRhIiwianRpIjoiNTIxNGFjNTQtNTEzYi00N2Y1LTgyYjUtZWExY2NhYzg0YzNiIiwiaWF0IjoxNjIzMjI1ODAxLCJleHAiOjE2MjMyMjc2MDF9.wmNfzJD1ekN_f028qWOyVvICkFm2uJ5Umok4hmxk4HZnDY2AOWDg4VX_MJjPHDydhfW8ZciBfCbEgmnButmASBbil-tHzwDIholS4RmnOZ4DXD-AttYx_VA2_X36J53kmlCHstPZpoawSIzdcnyW0JIhmVEvs5ZsaJvsDKhWk0hgYNS2GI0PORcn85W98EaE8APVrsz-tR-EfC9NmSZu7tH1zLyyD43AuD2BqdlMiYVTlzZsJ3FGPZ-ddT0rRloJvxPV6GLibjNAEowpSLjmDLv2v7gWszmYgcrzp5UM2jllfVL2KPA6Be5Eg6LVkL60Q3FKQyOMc8SCAWhALq_7Ew",
             "qrCodeUrl": "https://images.yapily.com/image/3b634d3c-a2ce-49b8-9014-330661800604/1623225801?size=0"
           }
-        }        
+        }
       },
       "obie-example-acc-auth-response-put": {
         "description": "OBIE Example Response",
@@ -9850,7 +10001,7 @@
               "ACCOUNT_TRANSACTIONS_WITH_MERCHANT"
             ]
           }
-        }        
+        }
       },
       "obie-example-acc-auth-response-patch": {
         "description": "OBIE Example Response",
