@@ -4020,11 +4020,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "EventSubscriptionArrayResponse",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ApiListResponseOfEventSubscriptionResponse"
-                  }
+                  "$ref": "#/components/schemas/ApiListResponseOfEventSubscriptionResponse"
                 }
               }
             }

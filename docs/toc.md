@@ -5,4 +5,3 @@
   - [Node support](#node-support)
   - [Python support](#python-support)
   - [Known issues with openapi-generator](#known-issues-with-openapi-generator)
-  - [Examples](#examples)
