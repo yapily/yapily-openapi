@@ -1,8 +1,18 @@
 # Examples
 
 ## Structure
-This folder contains examples on how to use the openapigenerator to create the codeclient used to interact with the Yapily API.
-Each language has a `generate` script that showcases the flow used to generate the packages and run the entry scripts
+This folder contains examples on how to use the OpenAPI generator to create a code client used to interact with the Yapily API quickly.
+
+Before generating the clients, you will need to register your application in our [Dashboard](https://dashboard.yapily.com/).
+
+Once your application is generated and you've retrieved the `application_key` and `application_secret`, they can either be updated in the example files, or set as environment variables:
+
+```
+export APP_UUID=<your-application-uuid> 
+export APP_SECRET=<your-application-secret> 
+```
+
+Each language has a `generate` script that showcases the flow used to generate the packages and run the entry scripts.
 
 ## Usage
 
