@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.5.0",
+    "version": "2.6.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -11503,6 +11503,11 @@
           },
           "supplementaryData": {
             "type": "object"
+          },
+          "transactionMutability": {
+            "type": "string",
+            "description": "__Optional__. Specifies the Mutability of the Transaction record.<ul><li>A transaction with a `Status` of `Pending` is mutable.</li><li>A transaction with a `Status` of `Booked` where the `TransactionMutability` flag is not specified is not guaranteed to be immutable (although in most instances it will be).</li><li>A transaction with a `Status` of `Booked` with the `TransactionMutability` flag set to `Immutable` is immutable.</li><li>A transaction with a `Status` of `Booked` with the `TransactionMutability` flag set to `Mutable` is mutable.</li></ul>",
+            "example": "Mutable"
           }
         }
       },
