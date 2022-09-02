@@ -63,7 +63,7 @@
       "name": "Virtual Accounts"
     },
     {
-      "description": "Variable Recurring Payments enables transfer of money between accounts held by the same person or transfer of money for business payments. <br><br>In order to make Sweeping Variable Recurring Payments on behalf of a user, you are required to request an [Consent](#yapily-api-authorisations) from the user by calling the Sweeping Consent endpoint to authorise the user's account to make the payment. Once a `consent-token` is obtained, you can call the Payments endpoint to execute the Sweeping Variable Recurring Payments transaction. Before executing the payment, you have the option to confirm availability of funds in the user's account by calling the Funds Confirmation endpoint. <br><br>See [VRP Payments](https://docs.yapily.com/guides/payments/payment-execution/vrps/) for more information. ",
+      "description": "Variable Recurring Payments enables transfer of money between accounts held by the same person or transfer of money for business payments. <br><br>In order to make Sweeping Variable Recurring Payments on behalf of a user, you are required to request an [Consent](#yapily-api-authorisations) from the user by calling the Sweeping Consent endpoint to authorise the user's account to make the payment. Once a `consent-token` is obtained, you can call the Payments endpoint to execute the Sweeping Variable Recurring Payments transaction. Before executing the payment, you have the option to confirm availability of funds in the user's account by calling the Funds Confirmation endpoint. <br><br>See [VRP Payments](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/variable-recurring-payments/) for more information. ",
       "name": "Variable Recurring Payments"
     }
   ],
@@ -7230,7 +7230,7 @@
             "name": "paymentId",
             "required": true,
             "schema": {
-              "type": "string",
+              "type": "string"
             }
           },
           {
