@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.6.0",
+    "version": "2.7.1",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -4172,7 +4172,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4182,7 +4182,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4192,7 +4192,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4202,7 +4202,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4212,7 +4212,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4346,7 +4346,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4356,7 +4356,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4366,7 +4366,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4376,7 +4376,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4386,7 +4386,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4485,7 +4485,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4495,7 +4495,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4505,7 +4505,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4515,7 +4515,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4525,7 +4525,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4535,7 +4535,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4679,7 +4679,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4689,7 +4689,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4699,7 +4699,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4709,7 +4709,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4719,7 +4719,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4816,7 +4816,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4826,7 +4826,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4836,7 +4836,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4846,7 +4846,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4856,7 +4856,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4969,7 +4969,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4979,7 +4979,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4989,7 +4989,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -4999,7 +4999,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5009,7 +5009,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5116,7 +5116,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5126,7 +5126,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5136,7 +5136,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5146,7 +5146,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5156,7 +5156,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5166,7 +5166,180 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "operationId": "updateVirtualAccountById",
+        "summary": "Update Account",
+        "description": "Update the details of a specific account using its Id",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "__Mandatory__. The Id of the account.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
+            "in": "header",
+            "name": "client-id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8": {
+              "examples": {
+                "Update Account Example Request": {
+                  "description": "Update Account Example Request",
+                  "value": {
+                    "nickname": "MyAccount456",
+                    "status": "CLOSED"
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVirtualAccountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfVirtualAccount"
+                },
+                "examples": {
+                  "Update Accounts Example Response": {
+                    "description": "Update Account By Id Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "sd2ad0343-a141-4143-8756-a3a3cefrt31c",
+                        "count": 1
+                      },
+                      "data": {
+                        "id": "eb2ad083-a111-4143-8756-a3a3cef4031c",
+                        "createdDateTime": "2020-04-24T00:30:19.951Z",
+                        "status": "ACTIVE",
+                        "nickname": "MyAccount123",
+                        "currency": "GBP",
+                        "balances": [
+                          {
+                            "type": "INTERIM_AVAILABLE",
+                            "balanceAmount": {
+                              "amount": 10.50,
+                              "currency": "GBP"
+                            }
+                          },
+                          {
+                            "type": "INTERIM_BOOKED",
+                            "balanceAmount": {
+                              "amount": 10.50,
+                              "currency": "GBP"
+                            }
+                          }
+                        ],
+                        "bankAccount": {
+                          "currency": "GBP",
+                          "bankName": "Lloyds Bank",
+                          "bankAddress": "WE12 ABC",
+                          "bankCountry": "GB",
+                          "accountIdentifications": [
+                            {
+                              "identification": "401016",
+                              "type": "SORT_CODE"
+                            },
+                            {
+                              "identification": "71518920",
+                              "type": "ACCOUNT_NUMBER"
+                            }
+                          ],
+                          "payInReference": "Ref1249944"
+                        }
+                      },
+                      "forwardedData": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised. Credentials are missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Permission to access this endpoint is not granted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. Resource requested is not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "A failure occured during interaction with a third party provider",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5324,7 +5497,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5334,7 +5507,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5344,7 +5517,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5354,7 +5527,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5364,7 +5537,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5450,7 +5623,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5460,7 +5633,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5470,7 +5643,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5480,7 +5653,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5490,7 +5663,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5500,7 +5673,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5613,7 +5786,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5623,7 +5796,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5633,7 +5806,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5643,7 +5816,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5653,7 +5826,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5736,7 +5909,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5746,7 +5919,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5756,7 +5929,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5766,7 +5939,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5776,7 +5949,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5786,7 +5959,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             }
@@ -5997,7 +6170,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -6028,7 +6201,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -6254,7 +6427,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -6285,7 +6458,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -6476,7 +6649,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -6507,7 +6680,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -6665,7 +6838,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -6696,7 +6869,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -6860,7 +7033,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -6891,7 +7064,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -7001,7 +7174,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -7032,7 +7205,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -7058,7 +7231,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "uuid"
             }
           },
           {
@@ -7209,7 +7381,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -7240,7 +7412,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponse"
                 }
               }
             },
@@ -7974,6 +8146,43 @@
             },
             "source": "INSTITUTION",
             "status": "FAILED_DEPENDENCY"
+          },
+          "monitoring": []
+        }
+      },
+      "ApiErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetails"
+          },
+          "monitoring": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonitoringEndpointStatus"
+            }
+          }
+        },
+        "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
+        "example": {
+          "error": {
+            "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+            "code": 400,
+            "status": "BAD_REQUEST",
+            "supportUrl": "https://support.yapily.com/",
+            "source": "YAPILY",
+            "issues": [
+              {
+                "type": "INVALID_REQUEST",
+                "code": "INVALID_PROPERTY_UNEXPECTED_VALUE",
+                "parameter": "$.payer.accountidentifications.type",
+                "message": "Type Should be one of [PAN, SORT_CODE, ACCOUNT_NUMBER]",
+                "institutionError": {
+                  "errorMessage": "{\"Code\":\"400 BadRequest\",\"Id\":\"3517bfc2-c3ee-4f2f-b4f8-12f62478e0d1\",\"Message\":\"No Resource found\",\"Errors\":[{\"ErrorCode\":\"UK.OBIE.Resource.NotFound\",\"Message\":\"No resource found corresponding to the consent id\"}]}",
+                  "httpStatusCode": 400
+                }
+              }
+            ]
           },
           "monitoring": []
         }
@@ -12173,6 +12382,21 @@
             "example": "GBP",
             "type": "string",
             "description": "Three-letter ISO 4217 currency code"
+          }
+        },
+        "type": "object"
+      },
+      "UpdateVirtualAccountRequest": {
+        "properties": {
+          "nickname": {
+            "example": "MyAccount123",
+            "type": "string",
+            "description": "New reference that can be provided in order to help with identification of the account"
+          },
+          "status": {
+            "example": "CLOSED",
+            "type": "string",
+            "description": "New state of the Account: CLOSED - The account has been permanently closed and cannot be used"
           }
         },
         "type": "object"
