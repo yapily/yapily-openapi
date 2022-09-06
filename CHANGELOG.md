@@ -5,6 +5,10 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.8.0] - 2022-09-06
+### Changed
+- Update schema for Financial Profile endpoints
+
 ## [2.7.1] - 2022-09-02
 ### Changed
 - Updated VRP GET payment details payment ID path parameter to non-UUID format

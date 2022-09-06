@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.7.1",
+    "version": "2.8.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -3696,12 +3696,12 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "A successful response, returning a ProfileConsent.",
+          "201": {
+            "description": "A successful response, returning a ApiResponseOfFinancialProfileAuthorisationResponse.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProfileConsent"
+                  "$ref": "#/components/schemas/ApiResponseOfFinancialProfileAuthorisationResponse"
                 }
               }
             }
@@ -3770,11 +3770,11 @@
         ],
         "responses": {
           "200": {
-            "description": "A successful response, returning a ProfileConsent.",
+            "description": "A successful response, returning a ApiResponseOfFinancialProfileConsent.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProfileConsent"
+                  "$ref": "#/components/schemas/ApiResponseOfFinancialProfileConsent"
                 }
               }
             }
@@ -3841,7 +3841,14 @@
         ],
         "responses": {
           "200": {
-            "description": "The ProfileConsent was deleted."
+            "description": "The ProfileConsent was deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfFinancialProfileConsentRemoveResponse"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request.  Returned if the userUuid is not a valid UUID.",
@@ -3898,11 +3905,11 @@
         ],
         "responses": {
           "200": {
-            "description": "A successful response, returning a FinancialProfile.",
+            "description": "A successful response, returning a ApiResponseOfFinancialProfile.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FinancialProfile"
+                  "$ref": "#/components/schemas/ApiResponseOfFinancialProfile"
                 }
               }
             }
@@ -11381,6 +11388,74 @@
           "URGENT"
         ]
       },
+      "ApiResponseOfFinancialProfileAuthorisationResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProfileConsent"
+            }
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ApiResponseOfFinancialProfileConsent": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ProfileConsent"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ApiResponseOfFinancialProfileConsentRemoveResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ApiResponseOfFinancialProfile": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/FinancialProfile"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "ProfileConsent": {
         "description": "Object returned when creating a User Profile.",
         "properties": {
@@ -11411,6 +11486,24 @@
             "example": "mock-sandbox",
             "type": "string",
             "description": "The id of the Institution."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When a profile consent is created.",
+            "example": "28-07-2022 21:00:00"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When a profile consent is expired after created + X.",
+            "example": "28-07-2022 21:05:00"
+          },
+          "dataInsertedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "After data retrieval from aggregated profile consent is completed.",
+            "example": "28-07-2022 21:00:30"
           }
         },
         "type": "object"
