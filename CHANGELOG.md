@@ -5,6 +5,26 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.13.0] - 2022-10-03
+### Added
+- Updated schema and examples for consent endpoints
+
+## [2.12.0] - 2022-09-29
+### Added
+- Add originalPaymentId to VirtualAccountPayment body
+
+## [2.11.0] - 2022-09-20
+### Added
+- Add Create Virtual Account Client and Get Virtual Account Clients endpoints
+
+## [2.10.0] - 2022-09-14
+### Added
+- Add consent extend endpoint
+
+## [2.9.0] - 2022-09-07
+### Changed
+- Update schema for Financial Profile balance prediction endpoint
+
 ## [2.8.0] - 2022-09-06
 ### Changed
 - Update schema for Financial Profile endpoints

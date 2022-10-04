@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.8.0",
+    "version": "2.13.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -2029,6 +2029,91 @@
         ]
       }
     },
+    "/consents/{consentId}/extend": {
+      "post": {
+        "description": "Used to indicate to Yapily that reconfirmation has occurred for a given Consent, and to update lastUpdatedAt and reconfirmBy for that Consent. Returns the Consent.",
+        "operationId": "extendConsent",
+        "x-beta": true,
+        "parameters": [
+          {
+            "description": "__Mandatory__. The consent Id of the `Consent` to update.",
+            "in": "path",
+            "name": "consentId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8": {
+              "examples": {
+                "Example Request": {
+                  "$ref": "#/components/examples/consent-extend-example-request"
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/ExtendConsentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Example Response": {
+                    "$ref": "#/components/examples/consent-get-example-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfConsent"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/extend-consent-error-response-code-400"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Error Response. The supplied lastConfirmedAt date, Consent type, or Consent status is invalid."
+          },
+          "default": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/error-response-code-401"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Error Response"
+          }
+        },
+        "summary": "Extend Consent",
+        "tags": [
+          "Consents"
+        ]
+      }
+    },
     "/embedded-account-auth-requests": {
       "post": {
         "description": "Used to initiate the embedded authorisation process for an `Institution` that contains the `INITIATE_EMBEDDED_ACCOUNT_REQUEST` feature in order to obtain the the user's authorisation to access their account information. <br><br>See [Embedded Account Flows](https://docs.yapily.com/pages/key-concepts/account-data/account-authorisation/embedded-account-flows/) for more information about this flow.<br><br>Feature: `INITIATE_EMBEDDED_ACCOUNT_REQUEST`",
@@ -3936,6 +4021,153 @@
           },
           "404": {
             "description": "Not Found.  Returned if the userUuid is not found for the `Application`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userUuid}/profile/predicted-balances": {
+      "get": {
+        "tags": [
+          "Financial Profile"
+        ],
+        "operationId": "getBalancePrediction",
+        "summary": "Get Predicted Balances",
+        "description": "Used to retrieve a `Balance Prediction Profile` for a `User`.  Status will be `PENDING` until all ProfileConsents are `COMPLETED`.",
+        "parameters": [
+          {
+            "description": "__Mandatory__. The Yapily generated UUID for the user.",
+            "in": "path",
+            "name": "userUuid",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response, returning a Balance Prediction Profile.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfFinancialProfileBalancePrediction"
+                },
+                "examples": {
+                  "Balance Prediction Example Response": {
+                    "description": "Balance Prediction Example Response",
+                    "value": {
+                      "status": "COMPLETED",
+                      "profileConsents": [
+                        {
+                          "id": "eb2ad083-a111-4143-8756-a3a3cef4031c",
+                          "status": "COMPLETED",
+                          "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+                          "referenceConsentId": "1e2e5167-8519-4c19-b016-8f2f0c6e38b6",
+                          "institutionId": "mock-sandbox"
+                        }
+                      ],
+                      "enrichedBalances": [
+                        {
+                          "accountIds": [
+                            "abc123",
+                            "xyz456"
+                          ],
+                          "institutions": [
+                            "llyods",
+                            "monzo_ab"
+                          ],
+                          "historic": [
+                            {
+                              "date": "2021-03-01",
+                              "balance": 20
+                            },
+                            {
+                              "date": "2021-03-02",
+                              "balance": 60
+                            },
+                            {
+                              "date": "2021-03-03",
+                              "balance": 0
+                            },
+                            {
+                              "date": "2021-03-04",
+                              "balance": 0
+                            },
+                            {
+                              "date": "2021-03-05",
+                              "balance": 100
+                            }
+                          ],
+                          "predicted": [
+                            {
+                              "date": "2021-03-24",
+                              "medianBalance": 28.48,
+                              "90percentileBalance": 49.26,
+                              "10percentileBalance": 5.96
+                            },
+                            {
+                              "date": "2021-03-25",
+                              "medianBalance": 28.88,
+                              "90percentileBalance": 46.38,
+                              "10percentileBalance": -2.39
+                            },
+                            {
+                              "date": "2021-03-26",
+                              "medianBalance": 22.07,
+                              "90percentileBalance": 41.48,
+                              "10percentileBalance": 0.82
+                            },
+                            {
+                              "date": "2021-03-27",
+                              "medianBalance": 20.91,
+                              "90percentileBalance": 38.25,
+                              "10percentileBalance": -1.24
+                            },
+                            {
+                              "date": "2021-03-28",
+                              "medianBalance": 14.99,
+                              "90percentileBalance": 35.98,
+                              "10percentileBalance": -14.64
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.  Returned if the userUuid is not a valid UUID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Either authentication credentials were not supplied, or they were invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.  Returned if the userUuid is not found for the `Application`, or data not found for the userUuid.",
             "content": {
               "application/json": {
                 "schema": {
@@ -5974,6 +6206,372 @@
         }
       }
     },
+    "/virtual-accounts/clients": {
+      "post": {
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "operationId": "createVirtualAccountClient",
+        "x-beta":true,
+        "summary": "Create Virtual Account Client",
+        "description": "Create a new virtual account client (individual or business client). Available for clients who have direct onboarding permissions only. Please contact your CSM to enquire about access",
+        "parameters": [
+          {
+            "description": "__Mandatory__. This must be your master / parent client-id (and not one associated with one of your clients)",
+            "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
+            "in": "header",
+            "name": "client-id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8": {
+              "examples": {
+                "Create Virtual Account Business Client Example Request": {
+                  "description": "Create Virtual Account Business Client Example Request",
+                  "value": {
+                    "type": "BUSINESS",
+                    "business": {
+                      "name": "Payments ltd company",
+                      "type": "LIMITED_LIABILITY",
+                      "registrationNumber": "1234567",
+                      "contactName": "James Edward Rhodes",
+                      "email": "james.rhodes@example.com",
+                      "phone": "447006783009",
+                      "registeredAddress": {
+                        "addressLine1": "123 Queens Street",
+                        "addressLine2": "Unit 13",
+                        "townName": "York",
+                        "postCode": "12345",
+                        "country": "GB"
+                      },
+                      "tradingAddress": {
+                        "addressLine1": "123 Queens Street",
+                        "addressLine2": "Unit 13",
+                        "townName": "York",
+                        "postCode": "12345",
+                        "country": "GB"
+                      }
+                    }
+                  }
+                },
+                "Create Virtual Account Individual Client Example Request": {
+                  "description": "Create Virtual Account Individual Client Example Request",
+                  "value": {
+                    "type": "INDIVIDUAL",
+                    "individual": {
+                        "firstName": "James",
+                        "lastName": "Rhodes",
+                        "address": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                        },
+                        "birthDate": "1970-07-10",
+                        "email": "james.rhodes@example.com",
+                        "phone": "447006783009"
+                    }
+                  }
+                }
+              },
+              "schema": {
+                    "$ref": "#/components/schemas/VirtualAccountClientRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                      "$ref": "#/components/schemas/ApiResponseOfVirtualAccountClient"
+                },
+                "examples": {
+                  "Create Virtual Account Business Example Response": {
+                    "description": "Create Virtual Account Business Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "96169af01d394ad39658f17d53b49a5d"
+                      },
+                      "data": {
+                        "id": "a2d43be3-972a-4458-9b6b-84ac15ae5287",
+                        "type": "BUSINESS",
+                        "business": {
+                          "name": "Payments ltd company",
+                          "type": "LIMITED_LIABILITY",
+                          "registrationNumber": "1234567",
+                          "contactName": "James Edward Rhodes",
+                          "email": "james.rhodes@example.com",
+                          "phone": "447006783009",
+                          "registeredAddress": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                          },
+                          "tradingAddress": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                          }
+                        },
+                        "status": "ACTIVE",
+                        "kycStatus": "VERIFIED",
+                        "createdDateTime": "2022-08-11T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised. Credentials are missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Permission to access this endpoint is not granted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "A failure occured during interaction with a third party provider",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "operationId": "getVirtualAccountClients",
+        "x-beta": true,
+        "summary": "Get List of Virtual Account Clients",
+        "description": "Get Virtual Account Clients (individual or business client).",
+        "parameters": [
+          {
+            "description": "__Mandatory__. This must be your master / parent client-id (and not one associated with one of your clients)",
+            "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
+            "in": "header",
+            "name": "client-id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "description": "__Optional__.  Filter clients based on client type. One of BUSINESS or INDIVIDUAL",
+            "example": "BUSINESS",
+            "in": "query",
+            "name": "type",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Optional__.  Filter clients based on client status. One of ACTIVE, PENDING or SUSPENDED",
+            "example": "ACTIVE",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "__Optional__. Data required to provide pagination",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                      "$ref": "#/components/schemas/ApiListResponseOfVirtualAccountClient"
+                },
+                "examples": {
+                  "Get Virtual Account Clients Example Response": {
+                    "description": "Get Virtual Account Clients Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "96169af01d394ad39658f17d53b49a5d"
+                      },
+                      "links": {
+                        "self": "https://api.yapily.com/virtual-accounts/clients?cursor=cGFnZT0wJnNpemU9MTAwMCZzb3J0PWNyZWF0ZWREYXRlLGRlc2M=",
+                        "first": "https://api.yapily.com/virtual-accounts/clients?cursor=cGFnZT0wJnNpemU9MTAwMCZzb3J0PWNyZWF0ZWREYXRlLGRlc2M=",
+                        "last": "https://api.yapily.com/virtual-accounts/clients?cursor=cGFnZT0wJnNpemU9MTAwMCZzb3J0PWNyZWF0ZWREYXRlLGRlc2M=",
+                        "next": "https://api.yapily.com/virtual-accounts/clients?cursor=cGFnZT0wJnNpemU9MTAwMCZzb3J0PWNyZWF0ZWREYXRlLGRlc2M=",
+                        "previous": "https://api.yapily.com/virtual-accounts/clients?cursor=cGFnZT0wJnNpemU9MTAwMCZzb3J0PWNyZWF0ZWREYXRlLGRlc2M="
+                      },
+                      "data": [{
+                        "id": "a2d43be3-972a-4458-9b6b-84ac15ae5287",
+                        "type": "BUSINESS",
+                        "business": {
+                          "name": "Payments ltd company",
+                          "type": "LIMITED_LIABILITY",
+                          "registrationNumber": "1234567",
+                          "contactName": "James Edward Rhodes",
+                          "email": "james.rhodes@example.com",
+                          "phone": "447006783009",
+                          "registeredAddress": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                          },
+                          "tradingAddress": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                          }
+                        },
+                        "status": "ACTIVE",
+                        "kycStatus": "VERIFIED",
+                        "createdDateTime": "2022-08-11T00:00:00Z"
+                      },
+                      {
+                        "id": "a2d43be3-972a-4458-9b6b-84ac15ae5283",
+                        "type": "INDIVIDUAL",
+                        "individual": {
+                          "firstName": "James",
+                          "middleName": "Edward",
+                          "lastName": "Rhodes",
+                          "email": "james.rhodes@example.com",
+                          "phone": "447006783009",
+                          "birthDate": "1970-07-10",
+                          "address": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                          }
+                        },
+                        "status": "ACTIVE",
+                        "kycStatus": "VERIFIED",
+                        "createdDateTime": "2022-08-11T00:00:00Z"
+                      }]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised. Credentials are missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Permission to access this endpoint is not granted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "A failure occured during interaction with a third party provider",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/variable-recurring-payments/sweeping/consents": {
       "post": {
         "description": "Used to initiate the authorisation process and direct users to the login screen of their financial Institution in order to give their consent for Sweeping Variable Recurring Payments. The request would return an Authorization URL and an Identifier for the consent created at the Institution. First make sure that the payment feature you wish to execute is supported by the bank by checking the features array in [GET Institution](https://docs.yapily.com/api/#get-institution). <br><br>See [Redirect Payment Flows](https://docs.yapily.com/guides/payments/payment-authorisation-flows/redirect/) for more information about this flow.<br><br>Features:<ul><li>`INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`</li></ul>",
@@ -6008,37 +6606,37 @@
                         "currency": "GBP"
                       }
                     },
-                    "initiationDetails": 
-                      {
-                        "reference": "Own Account Sweeping",
-                        "payer": {
-                          "name": "John Doe",
-                          "accountIdentifications": [
-                            {
-                              "type": "ACCOUNT_NUMBER",
-                              "identification": "87654321"
-                            },
-                            {
-                              "type": "SORT_CODE",
-                              "identification": "654321"
-                            }
-                          ]
-                        },
-                        "payee": {
-                          "name": "John Doe",
-                          "accountIdentifications": [
-                            {
-                              "type": "ACCOUNT_NUMBER",
-                              "identification": "12345678"
-                            },
-                            {
-                              "type": "SORT_CODE",
-                              "identification": "123456"
-                            }
-                          ]
-                        }
+                    "initiationDetails":
+                    {
+                      "reference": "Own Account Sweeping",
+                      "payer": {
+                        "name": "John Doe",
+                        "accountIdentifications": [
+                          {
+                            "type": "ACCOUNT_NUMBER",
+                            "identification": "87654321"
+                          },
+                          {
+                            "type": "SORT_CODE",
+                            "identification": "654321"
+                          }
+                        ]
+                      },
+                      "payee": {
+                        "name": "John Doe",
+                        "accountIdentifications": [
+                          {
+                            "type": "ACCOUNT_NUMBER",
+                            "identification": "12345678"
+                          },
+                          {
+                            "type": "SORT_CODE",
+                            "identification": "123456"
+                          }
+                        ]
                       }
-                    
+                    }
+
                   }
                 }
               },
@@ -6110,37 +6708,37 @@
                             }
                           ]
                         },
-                        "initiationDetails": 
-                          {
-                            "reference": "Own Account Sweeping",
-                            "payer": {
-                              "name": "John Doe",
-                              "accountIdentifications": [
-                                {
-                                  "type": "ACCOUNT_NUMBER",
-                                  "identification": "87654321"
-                                },
-                                {
-                                  "type": "SORT_CODE",
-                                  "identification": "654321"
-                                }
-                              ]
-                            },
-                            "payee": {
-                              "name": "John Doe",
-                              "accountIdentifications": [
-                                {
-                                  "type": "ACCOUNT_NUMBER",
-                                  "identification": "12345678"
-                                },
-                                {
-                                  "type": "SORT_CODE",
-                                  "identification": "123456"
-                                }
-                              ]
-                            }
+                        "initiationDetails":
+                        {
+                          "reference": "Own Account Sweeping",
+                          "payer": {
+                            "name": "John Doe",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "87654321"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "654321"
+                              }
+                            ]
+                          },
+                          "payee": {
+                            "name": "John Doe",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "12345678"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "123456"
+                              }
+                            ]
                           }
-                        
+                        }
+
                       }
                     }
                   }
@@ -6367,37 +6965,37 @@
                             }
                           ]
                         },
-                        "initiationDetails": 
-                          {
-                            "reference": "Bill Payment",
-                            "payer": {
-                              "name": "John Doe",
-                              "accountIdentifications": [
-                                {
-                                  "type": "ACCOUNT_NUMBER",
-                                  "identification": "87654321"
-                                },
-                                {
-                                  "type": "SORT_CODE",
-                                  "identification": "654321"
-                                }
-                              ]
-                            },
-                            "payee": {
-                              "name": "Thames Water",
-                              "accountIdentifications": [
-                                {
-                                  "type": "ACCOUNT_NUMBER",
-                                  "identification": "12345678"
-                                },
-                                {
-                                  "type": "SORT_CODE",
-                                  "identification": "123456"
-                                }
-                              ]
-                            }
+                        "initiationDetails":
+                        {
+                          "reference": "Bill Payment",
+                          "payer": {
+                            "name": "John Doe",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "87654321"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "654321"
+                              }
+                            ]
+                          },
+                          "payee": {
+                            "name": "Thames Water",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "12345678"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "123456"
+                              }
+                            ]
                           }
-                        
+                        }
+
                       }
                     }
                   }
@@ -6541,7 +7139,7 @@
                             "name": "AcceptedCustomerProfile"
                           }
                         },
-                        "initiationDetails": 
+                        "initiationDetails":
                         {
                           "reference": "Own Account Sweeping",
                           "payer": {
@@ -6778,37 +7376,37 @@
                             }
                           ]
                         },
-                        "initiationDetails": 
-                          {
-                            "reference": "Own Account Sweeping",
-                            "payer": {
-                              "name": "John Doe",
-                              "accountIdentifications": [
-                                {
-                                  "type": "ACCOUNT_NUMBER",
-                                  "identification": "87654321"
-                                },
-                                {
-                                  "type": "SORT_CODE",
-                                  "identification": "654321"
-                                }
-                              ]
-                            },
-                            "payee": {
-                              "name": "John Doe",
-                              "accountIdentifications": [
-                                {
-                                  "type": "ACCOUNT_NUMBER",
-                                  "identification": "12345678"
-                                },
-                                {
-                                  "type": "SORT_CODE",
-                                  "identification": "123456"
-                                }
-                              ]
-                            }
+                        "initiationDetails":
+                        {
+                          "reference": "Own Account Sweeping",
+                          "payer": {
+                            "name": "John Doe",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "87654321"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "654321"
+                              }
+                            ]
+                          },
+                          "payee": {
+                            "name": "John Doe",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "12345678"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "123456"
+                              }
+                            ]
                           }
-                        
+                        }
+
                       }
                     }
                   }
@@ -6973,37 +7571,37 @@
                             }
                           ]
                         },
-                        "initiationDetails": 
-                          {
-                            "reference": "Bill Payment",
-                            "payer": {
-                              "name": "John Doe",
-                              "accountIdentifications": [
-                                {
-                                  "type": "ACCOUNT_NUMBER",
-                                  "identification": "87654321"
-                                },
-                                {
-                                  "type": "SORT_CODE",
-                                  "identification": "654321"
-                                }
-                              ]
-                            },
-                            "payee": {
-                              "name": "Thames Water",
-                              "accountIdentifications": [
-                                {
-                                  "type": "ACCOUNT_NUMBER",
-                                  "identification": "12345678"
-                                },
-                                {
-                                  "type": "SORT_CODE",
-                                  "identification": "123456"
-                                }
-                              ]
-                            }
+                        "initiationDetails":
+                        {
+                          "reference": "Bill Payment",
+                          "payer": {
+                            "name": "John Doe",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "87654321"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "654321"
+                              }
+                            ]
+                          },
+                          "payee": {
+                            "name": "Thames Water",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "12345678"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "123456"
+                              }
+                            ]
                           }
-                        
+                        }
+
                       }
                     }
                   }
@@ -7137,8 +7735,8 @@
                       "data": {
                         "id": "a9582f8e-08be-4cca-9f01-1ad3be96532d",
                         "fundsAvailable": {
-                        "fundsAvailable": true,
-                        "fundsAvailableAt": "2021-06-08T10:59:35.138Z"
+                          "fundsAvailable": true,
+                          "fundsAvailableAt": "2021-06-08T10:59:35.138Z"
                         },
                         "reference": "Own Account Sweeping",
                         "paymentAmount": {
@@ -7273,7 +7871,7 @@
                             "name": "AcceptedCustomerProfile"
                           }
                         },
-                        "initiationDetails": 
+                        "initiationDetails":
                         {
                           "reference": "Own Account Sweeping",
                           "payer": {
@@ -7650,6 +8248,20 @@
             "items": {
               "$ref": "#/components/schemas/CreditLine"
             }
+          }
+        }
+      },
+      "ExtendConsentRequest": {
+        "required": [
+          "lastConfirmedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "lastConfirmedAt": {
+            "type": "string",
+            "description": "__Mandatory__. The time that the user confirmed access to their account information",
+            "format": "date-time",
+            "example": "2022-08-16T10:59:53.288Z"
           }
         }
       },
@@ -8255,7 +8867,7 @@
           },
           "applicationUuid": {
             "type": "string",
-            "description": "Unique identifier of the application the user is associated with.", 
+            "description": "Unique identifier of the application the user is associated with.",
             "format": "uuid"
           },
           "applicationUserId": {
@@ -8469,6 +9081,16 @@
           },
           "authorizedAt": {
             "type": "string",
+            "format": "date-time"
+          },
+          "lastConfirmedAt": {
+            "type": "string",
+            "description": "The time that the PSU last confirmed access to their account information, either through full authentication with the institution, or through reconfirmation with the TPP.",
+            "format": "date-time"
+          },
+          "reconfirmBy": {
+            "type": "string",
+            "description": "The time by which the consent should be reconfirmed to ensure continued access to the account information.",
             "format": "date-time"
           },
           "institutionConsentId": {
@@ -8973,6 +9595,16 @@
             "type": "string",
             "format": "date-time"
           },
+          "lastConfirmedAt": {
+            "type": "string",
+            "description": "The time that the PSU last confirmed access to their account information, either through full authentication with the institution, or through reconfirmation with the TPP.",
+            "format": "date-time"
+          },
+          "reconfirmBy": {
+            "type": "string",
+            "description": "The time by which the consent should be reconfirmed to ensure continued access to the account information.",
+            "format": "date-time"
+          },
           "institutionConsentId": {
             "type": "string"
           }
@@ -9199,23 +9831,29 @@
       },
       "CurrencyExchange": {
         "type": "object",
+        "description": "Provides details on the currrency exchange.",
         "properties": {
           "sourceCurrency": {
-            "type": "string"
+            "type": "string",
+            "description": "Currency from which an amount is to be converted."
           },
           "targetCurrency": {
-            "type": "string"
+            "type": "string",
+            "description": "Currency to which an amount is to be converted."
           },
           "unitCurrency": {
-            "type": "string"
+            "type": "string",
+            "description": "The currency in which the rate of exchange is expressed in a currency exchange. In the example 1GBP = xxxCUR, the unit currency is GBP."
           },
           "exchangeRate": {
-            "type": "number"
+            "type": "number",
+            "description": "The factor used for conversion of an amount from one currency to another. This reflects the price at which one currency was bought with another currency."
           }
         }
       },
       "DeleteStatusEnum": {
         "type": "string",
+        "description": "Indicates the outcome of the delete request.",
         "enum": [
           "SUCCESS",
           "FAILED"
@@ -11508,6 +12146,126 @@
         },
         "type": "object"
       },
+      "BalancePredictionProfile": {
+        "description": "A Balance Prediction profile for a User.",
+        "properties": {
+          "status": {
+            "example": "COMPLETED",
+            "type": "string",
+            "description": "The status, will be COMPLETED which represents successful retreival of profile."
+          },
+          "profileConsents": {
+            "type": "array",
+            "description": "A list of ProfileConsents used in the Balance Prediction profile.",
+            "items": {
+              "$ref": "#/components/schemas/ProfileConsent"
+            }
+          },
+          "enrichedBalances": {
+            "type": "array",
+            "description": "A list of Balances returned by Balance Prediction profile.",
+            "items": {
+              "$ref": "#/components/schemas/EnrichedBalances"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "ApiResponseOfFinancialProfileBalancePrediction": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BalancePredictionProfile"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "EnrichedBalances": {
+        "type": "object",
+        "description": "Enriched Balance information generated which include historic aggregated balances and predicted balances",
+        "properties": {
+          "accountIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of Account Ids used to generate Balance Prediction Profile."
+          },
+          "institutions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of Institution Ids associated with the accounts used to generate Balance Prediction Profile."
+          },
+          "historic": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnrichedHistoricBalance"
+            },
+            "description": "A list of historic balances. Each balance in the list is an aggregation (sum) of the reported balance for each account within the profile at a point in time."
+          },
+          "predicted": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnrichedPredictedBalance"
+            },
+            "description": "A list of predicted balances. Each balance in the list is a projected balance of the profile at a future point in time."
+          }
+        }
+      },
+      "EnrichedHistoricBalance": {
+        "type": "object",
+        "description": "A list of Aggregated Account Balances for historic date range.",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date for which Aggregated Balance amount across Bank accounts is calculated.",
+            "example": "2021-10-01"
+          },
+          "balance": {
+            "type": "number",
+            "description": "The Aggregated Balance amount for a specific date.",
+            "example": 20
+          }
+        }
+      },
+      "EnrichedPredictedBalance": {
+        "type": "object",
+        "description": "A list of Predicted Account Balances for future date range.",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date for which Balance amount is predicted.",
+            "example": "2021-11-01"
+          },
+          "medianBalance": {
+            "type": "number",
+            "description": "The median Balance amount for a future date.",
+            "example": 49.26
+          },
+          "90percentileBalance": {
+            "type": "number",
+            "description": "The 90th percentile Balance amount for a future date.",
+            "example": 49.26
+          },
+          "10percentileBalance": {
+            "type": "number",
+            "description": "The 10th percentile Balance amount for a future date.",
+            "example": 5.96
+          }
+        }
+      },
       "ProprietaryBankTransactionCode": {
         "type": "object",
         "properties": {
@@ -12548,6 +13306,11 @@
           },
           "destination": {
             "$ref": "#/components/schemas/VirtualAccountPaymentDestination"
+          },
+          "originalPaymentId": {
+            "example": "za2ad0234-a333-5435-8787-a3a3cef4031c",
+            "type": "string",
+            "description": "Unique id of the original payment that was refunded"
           }
         },
         "type": "object"
@@ -12872,6 +13635,178 @@
         },
         "type": "object"
       },
+      "VirtualAccountClientRequest": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties":{
+          "type": {
+              "$ref": "#/components/schemas/VirtualAccountClientType"
+          },
+          "individual":{
+            "$ref": "#/components/schemas/VirtualAccountIndividualClient"
+          },
+          "business": {
+            "$ref": "#/components/schemas/VirtualAccountBusinessClient"
+          }
+
+        }
+
+      },
+      "VirtualAccountClient": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id generated in the on-boarding process, it will be used as client-id for virtual accounts request",
+            "example": "cf996ecc-8720-4bb3-8dbb-fe9018e0db12"
+          },
+          "type": {
+            "$ref": "#/components/schemas/VirtualAccountClientType"
+          },
+          "kycStatus": {
+            "$ref": "#/components/schemas/VirtualAccountKycStatus"
+          },
+          "status": {
+            "$ref": "#/components/schemas/VirtualAccountClientStatus"
+          },
+          "createdDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "individual": {
+            "$ref": "#/components/schemas/VirtualAccountIndividualClient"
+          },
+          "business": {
+            "$ref": "#/components/schemas/VirtualAccountBusinessClient"
+          }
+        }
+      },
+      "VirtualAccountIndividualClient": {
+        "type": "object",
+        "required": [
+          "firstName",
+          "lastName",
+          "birthDate",
+          "email"
+        ],
+        "properties":{
+          "firstName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/VirtualAccountAddress"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      },
+      "VirtualAccountBusinessClient": {
+        "type": "object",
+        "required": [
+          "name",
+          "type",
+          "registrationNumber",
+          "registeredAddress",
+          "contactName",
+          "email",
+          "phone"
+        ],
+        "properties":{
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/VirtualAccountClientBusinessType"
+          },
+          "registrationNumber": {
+            "type": "string"
+          },
+          "registeredAddress": {
+            "$ref": "#/components/schemas/VirtualAccountAddress"
+          },
+          "tradingAddress": {
+            "$ref": "#/components/schemas/VirtualAccountAddress"
+          },
+          "contactName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      },
+      "VirtualAccountAddress": {
+        "type": "object",
+        "required": [
+          "addressLine1",
+          "townName",
+          "country"
+        ],
+        "properties": {
+          "addressLine1": {
+            "type": "string",
+            "example": "12 New Street",
+            "description": "__Mandatory__. AddressLine1 of the sub-client"
+          },
+          "addressLine2": {
+            "type": "string",
+            "example": "Barcelona CA 08005",
+            "description": "__Optional__. AddressLine2 of the sub-client"
+          },
+          "townName": {
+            "type": "string",
+            "example": "Barcelona ",
+            "description": "__Mandatory__. Town name of the sub-client"
+          },
+          "postCode": {
+            "type": "string",
+            "example": "08005",
+            "description": "__Optional__. Address postcode of the sub-client"
+          },
+          "country": {
+            "type": "string",
+            "example": "ES",
+            "description": "__Optional__. Country of the sub-client"
+          }
+        }
+      },
+      "VirtualAccountClientType":{
+        "type": "string",
+        "enum": [
+          "INDIVIDUAL",
+          "BUSINESS"
+        ]
+      },
+      "VirtualAccountClientBusinessType": {
+        "type": "string",
+        "enum": [
+          "SOLE_TRADER",
+          "LIMITED_LIABILITY",
+          "CHARITY",
+          "PUBLIC_LIMITED_COMPANY",
+          "ORDINARY_PARTNERSHIP",
+          "LIMITED_PARTNERSHIP"
+        ]
+      },
       "VirtualAccountTransferSource": {
         "required": [
           "accountId"
@@ -12897,6 +13832,21 @@
           }
         },
         "type": "object"
+      },
+      "VirtualAccountKycStatus":{
+        "type": "string",
+        "enum": [
+          "UNVERIFIED",
+          "VERIFIED"
+        ]
+      },
+      "VirtualAccountClientStatus":{
+        "type": "string",
+        "enum": [
+          "PENDING",
+          "ACTIVE",
+          "SUSPENDED"
+        ]
       },
       "ErrorIssue": {
         "required": [
@@ -13123,6 +14073,54 @@
             "items": {
               "$ref": "#/components/schemas/VirtualAccountPayment"
             }
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
+      },
+      "ApiResponseOfVirtualAccountClient": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/VirtualAccountClient"
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
+      },
+      "ApiListResponseOfVirtualAccountClient": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseListMeta"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VirtualAccountClient"
+            }
+          },
+          "links": {
+            "$ref": "#/components/schemas/Links"
           },
           "forwardedData": {
             "type": "array",
@@ -15013,6 +16011,7 @@
             ],
             "state": "0623e536c5044b4aa3f6c66e7537bee0",
             "authorizedAt": "2021-06-09T08:23:03.944Z",
+            "lastConfirmedAt": "2021-06-09T08:23:03.944Z",
             "institutionConsentId": "aac-f7847e99-7c66-4bb8-8641-61a24057f2e8",
             "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=0623e536c5044b4aa3f6c66e7537bee0&nonce=0623e536c5044b4aa3f6c66e7537bee0&scope=openid+accounts&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgYWNjb3VudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiMDYyM2U1MzZjNTA0NGI0YWEzZjZjNjZlNzUzN2JlZTAiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoiYWFjLWY3ODQ3ZTk5LTdjNjYtNGJiOC04NjQxLTYxYTI0MDU3ZjJlOCIsImVzc2VudGlhbCI6dHJ1ZX19LCJ1c2VyaW5mbyI6eyJvcGVuYmFua2luZ19pbnRlbnRfaWQiOnsidmFsdWUiOiJhYWMtZjc4NDdlOTktN2M2Ni00YmI4LTg2NDEtNjFhMjQwNTdmMmU4IiwiZXNzZW50aWFsIjp0cnVlfX19LCJub25jZSI6IjA2MjNlNTM2YzUwNDRiNGFhM2Y2YzY2ZTc1MzdiZWUwIiwianRpIjoiMjEyM2E1OGMtMTExYi00OGY2LTg2ODAtZTViYTNiMzI3MjM5IiwiaWF0IjoxNjIzMjI3MDAxLCJleHAiOjE2MjMyMjg4MDF9.JG5lc5TWjCucWZPfcyd34trk0QcGNzhYXfhHTlVrcfu1zjrAtSUI8i0o4yKqS19cOGKHq1HtuQac2hhO8gCr_vd5n7eIuIrWfjEM1MuIwsJ85jOpMBkEiSOurLRIgW77VmqHpVUVj5-0-1Tk-N-vaC_4nIdtSi576sOb4rjLQvs2EX_sFODGjyMxHXiZlnr2p71gA3nRy8M2Vv_At4-NPW8OLULS8zXclWoK797HFAGtsNLCy8tz0YCsnEaFhcLhZSliy3a7DRfxvBmIzhY23M4uQ6bpM1zCyqTPsOhqR-qdgnZorBrax_2CQ37yIeV4becUJWvZSdnjYX7gDtNltA",
             "qrCodeUrl": "https://images.yapily.com/image/4ef6e16c-dbe2-4d90-9e1b-868d946082ef/1623227001?size=0"
@@ -16217,6 +17216,7 @@
           "consentToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6Im1vZGVsby1zYW5kYm94IiwiQ09OU0VOVCI6IjU2YTQyMjQ0LTQxNGEtNGI1Mi04YzRmLTRhZDJhNTBlODJmZSIsIkFQUExJQ0FUSU9OX1VTRVJfSUQiOiJtb2ZlLTIiLCJVU0VSIjoiY2E0MTJmZGYtNWEzMC00M2EyLTg4YjctNTk2NGEyNGE4ZTU1In0.gorwpnUjSr5dzQJLR32M2geWOj7yK9xMsZmq27ssY9xP_xGmWfUL_aqVHYyQ4r5KWw6Xb6RjvO839st8chJLtg",
           "state": "a09f8ff9c1284444aa635267e05f76e1",
           "authorizedAt": "2021-06-08T10:59:53.288Z",
+          "lastConfirmedAt": "2021-06-08T10:59:53.288Z",
           "institutionConsentId": "aac-605d48f2-2a0e-4594-81a9-996524fa3b2a"
         }
       },
@@ -16247,6 +17247,7 @@
           "consentToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6Im1vZGVsby1zYW5kYm94IiwiQ09OU0VOVCI6IjU2YTQyMjQ0LTQxNGEtNGI1Mi04YzRmLTRhZDJhNTBlODJmZSIsIkFQUExJQ0FUSU9OX1VTRVJfSUQiOiJtb2ZlLTIiLCJVU0VSIjoiY2E0MTJmZGYtNWEzMC00M2EyLTg4YjctNTk2NGEyNGE4ZTU1In0.gorwpnUjSr5dzQJLR32M2geWOj7yK9xMsZmq27ssY9xP_xGmWfUL_aqVHYyQ4r5KWw6Xb6RjvO839st8chJLtg",
           "state": "a09f8ff9c1284444aa635267e05f76e1",
           "authorizedAt": "2021-06-08T10:59:53.288Z",
+          "lastConfirmedAt": "2021-07-08T10:59:53.288Z",
           "institutionConsentId": "aac-605d48f2-2a0e-4594-81a9-996524fa3b2a"
         }
       },
@@ -16341,8 +17342,16 @@
             "consentToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6Im1vZGVsby1zYW5kYm94IiwiQ09OU0VOVCI6IjU2YTQyMjQ0LTQxNGEtNGI1Mi04YzRmLTRhZDJhNTBlODJmZSIsIkFQUExJQ0FUSU9OX1VTRVJfSUQiOiJtb2ZlLTIiLCJVU0VSIjoiY2E0MTJmZGYtNWEzMC00M2EyLTg4YjctNTk2NGEyNGE4ZTU1In0.gorwpnUjSr5dzQJLR32M2geWOj7yK9xMsZmq27ssY9xP_xGmWfUL_aqVHYyQ4r5KWw6Xb6RjvO839st8chJLtg",
             "state": "a09f8ff9c1284444aa635267e05f76e1",
             "authorizedAt": "2021-06-08T10:59:53.288Z",
+            "lastConfirmedAt": "2021-07-08T10:59:53.288Z",
+            "reconfirmBy": "2021-10-06T10:59:53.288Z",
             "institutionConsentId": "aac-605d48f2-2a0e-4594-81a9-996524fa3b2a"
           }
+        }
+      },
+      "consent-extend-example-request": {
+        "description": "Extend Consent Example Request",
+        "value": {
+          "lastConfirmedAt": "2021-07-08T10:59:53.288Z"
         }
       },
       "features-example-response": {
@@ -16927,6 +17936,16 @@
             "code": 401,
             "status": "UNAUTHORIZED",
             "message": "Full authentication is required to access this resource"
+          }
+        }
+      },
+      "extend-consent-error-response-code-400": {
+        "description": "Error Response",
+        "value": {
+          "error": {
+            "code": 400,
+            "status": "BAD_REQUEST",
+            "message": "lastConfirmedAt cannot be a future date and time"
           }
         }
       }
