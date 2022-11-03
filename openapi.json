@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.13.1",
+    "version": "2.14.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -65,6 +65,10 @@
     {
       "description": "Variable Recurring Payments enables transfer of money between accounts held by the same person or transfer of money for business payments. <br><br>In order to make Sweeping Variable Recurring Payments on behalf of a user, you are required to request an [Consent](#yapily-api-authorisations) from the user by calling the Sweeping Consent endpoint to authorise the user's account to make the payment. Once a `consent-token` is obtained, you can call the Payments endpoint to execute the Sweeping Variable Recurring Payments transaction. Before executing the payment, you have the option to confirm availability of funds in the user's account by calling the Funds Confirmation endpoint. <br><br>See [VRP Payments](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/variable-recurring-payments/) for more information. ",
       "name": "Variable Recurring Payments"
+    },
+    {
+      "description": "Realtime Transactions enables fastest retreival of transactions for an account in real time using cursor based pagination approach. <br><br>This feature is currently available as a [Private Beta version](https://docs.yapily.com/pages/home/faqs/yapily/#what-is-a-private-beta-version). Please contact your Customer Service Manager if you would like to access it.",
+      "name": "Realtime Transactions"
     }
   ],
   "paths": {
@@ -3174,7 +3178,7 @@
     },
     "/payments": {
       "post": {
-        "description": "Used to initiate a payment after obtaining the user's authorisation. <br><br>Features:<ul><li>`INITIATE_DOMESTIC_PERIODIC_PAYMENT`</li><li>`INITIATE_DOMESTIC_SCHEDULED_PAYMENT`</li><li>`INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT`</li><li>`INITIATE_DOMESTIC_SINGLE_PAYMENT`</li><li>`INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_PERIODIC_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_SINGLE_PAYMENT`</li></ul>",
+        "description": "Used to initiate a payment after obtaining the user's authorisation. <br><br>Features:<ul><li>`INITIATE_DOMESTIC_PERIODIC_PAYMENT`</li><li>`INITIATE_DOMESTIC_SCHEDULED_PAYMENT`</li><li>`INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT`</li><li>`INITIATE_DOMESTIC_SINGLE_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_PERIODIC_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_SINGLE_PAYMENT`</li></ul>",
         "operationId": "createPayment",
         "parameters": [
           {
@@ -8027,6 +8031,236 @@
         "summary": "Get Variable Recurring Payment Details",
         "tags": [
           "Variable Recurring Payments"
+        ]
+      }
+    },
+    "/accounts/{accountId}/real-time/transactions": {
+      "get": {
+        "description": "Used to get the account transactions for an account in real time with cursor pagination<br><br>Feature: `ACCOUNT_TRANSACTIONS`",
+        "operationId": "getRealTimeTransactions",
+        "x-beta": true,
+        "parameters": [
+          {
+            "description": "__Mandatory__. The account Id of the user's bank account.",
+            "in": "path",
+            "name": "accountId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Mandatory__. The `consent-token` containing the user's authorisation to make the request.",
+            "example": "{consentToken}",
+            "in": "header",
+            "name": "consent",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.",
+            "in": "header",
+            "name": "psu-id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.",
+            "in": "header",
+            "name": "psu-corporate-id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.",
+            "in": "header",
+            "name": "psu-ip-address",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Optional__. Returned transactions will be on or after this date (yyyy-MM-dd'T'HH:mm:ss.SSSZ).",
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Optional__. Returned transactions will be on or before this date (yyyy-MM-dd'T'HH:mm:ss.SSSZ).",
+            "in": "query",
+            "name": "before",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Optional__. The cursor token supplied by a previous call. The cursor represents a location in the data set.",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
+            "in": "query",
+            "name": "raw",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Example Response": {
+                    "description": "Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "488ce8243ee74a378be722ffffec8f7f",
+                        "count": 1
+                      },
+                      "data": [
+                        {
+                          "id": "49d6e5c6-0130-46e3-884b-1b185432d9e0",
+                          "date": "2021-05-06T17:44:34.589Z",
+                          "bookingDateTime": "2021-05-06T17:44:34.589Z",
+                          "valueDateTime": "2021-05-06T17:44:34.589Z",
+                          "status": "BOOKED",
+                          "transactionAmount": {
+                            "amount": -100.23,
+                            "currency": "GBP"
+                          },
+                          "reference": "0",
+                          "description": "Debit for Payment Id: sdp-1-57379a43-c4b8-49f5-bd7c-699189ee7a60",
+                          "transactionInformation": [
+                            "Debit for Payment Id: sdp-1-57379a43-c4b8-49f5-bd7c-699189ee7a60"
+                          ],
+                          "isoBankTransactionCode": {
+                            "domainCode": {
+                              "code": "PMNT",
+                              "name": "Payments"
+                            },
+                            "familyCode": {
+                              "code": "ICDT",
+                              "name": "Issued Credit Transfers"
+                            },
+                            "subFamilyCode": {
+                              "code": "DMCT",
+                              "name": "Domestic Credit Transfer"
+                            }
+                          },
+                          "proprietaryBankTransactionCode": {
+                            "code": "PMT",
+                            "issuer": "modelo-sandbox"
+                          },
+                          "balance": {
+                            "type": "CLOSING_AVAILABLE",
+                            "balanceAmount": {
+                              "amount": 426.53,
+                              "currency": "GBP"
+                            }
+                          }
+                        }
+                      ],
+                      "links": {
+                        "first": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=aaa",
+                        "prev": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=bbb",
+                        "self": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ccc",
+                        "next": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ddd",
+                        "last": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=zzz"
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiListResponseOfRealTimeTransaction"
+                }
+              }
+            },
+            "description": "Ok"
+          },
+          "401": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "description": "Error Response",
+                    "value": {
+                      "error": {
+                        "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+                        "code": 401,
+                        "status": "UNAUTHORIZED",
+                        "supportUrl": "https://support.yapily.com/",
+                        "source": "YAPILY",
+                        "issues": [
+                          {
+                            "type": "CREDENTIALS",
+                            "code": "CREDENTIALS_MISING",
+                            "message": "Authentication header not present"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Error Response"
+          },
+          "default": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "description": "Error Response",
+                    "value": {
+                      "error": {
+                        "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+                        "code": 400,
+                        "status": "BAD_REQUEST",
+                        "supportUrl": "https://support.yapily.com/",
+                        "source": "YAPILY",
+                        "issues": [
+                          {
+                            "type": "BAD_REQUEST",
+                            "code": "BAD_REQUEST",
+                            "message": "The server could not understand the request due to invalid syntax"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Error Response"
+          }
+        },
+        "summary": "Get Account Transactions",
+        "tags": [
+          "Realtime Transactions"
         ]
       }
     }
@@ -14817,6 +15051,138 @@
             "type": "integer",
             "format": "int32",
             "description": "__Optional__. Max number of payments that can be submitted under this period."
+          }
+        }
+      },
+      "ApiListResponseOfRealTimeTransaction": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RealTimeTransaction"
+            }
+          },
+          "links": {
+            "type": "object",
+            "properties": {
+              "first": {
+                "type": "string",
+                "description": "A cursor or link to the first page in the data set."
+              },
+              "prev": {
+                "type": "string",
+                "description": "A cursor or link to the previous page in the data set."
+              },
+              "self": {
+                "type": "string",
+                "description": "A cursor or link to the current page in the data set."
+              },
+              "next": {
+                "type": "string",
+                "description": "A cursor or link to the next page in the data set."
+              },
+              "last": {
+                "type": "string",
+                "description": "A cursor or link to the last page in the data set."
+              }
+            }
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "raw": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
+      },
+      "RealTimeTransaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bookingDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "valueDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TransactionStatusEnum"
+          },
+          "transactionAmount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "grossAmount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "currencyExchange": {
+            "$ref": "#/components/schemas/CurrencyExchange"
+          },
+          "chargeDetails": {
+            "$ref": "#/components/schemas/TransactionChargeDetails"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "statementReferences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatementReference"
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "transactionInformation": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "addressDetails": {
+            "$ref": "#/components/schemas/AddressDetails"
+          },
+          "isoBankTransactionCode": {
+            "$ref": "#/components/schemas/IsoBankTransactionCode"
+          },
+          "proprietaryBankTransactionCode": {
+            "$ref": "#/components/schemas/ProprietaryBankTransactionCode"
+          },
+          "balance": {
+            "$ref": "#/components/schemas/TransactionBalance"
+          },
+          "payeeDetails": {
+            "$ref": "#/components/schemas/Payee"
+          },
+          "payerDetails": {
+            "$ref": "#/components/schemas/Payer"
+          },
+          "merchant": {
+            "$ref": "#/components/schemas/Merchant"
+          },
+          "supplementaryData": {
+            "type": "object"
           }
         }
       }
