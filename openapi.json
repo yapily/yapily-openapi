@@ -65,10 +65,6 @@
     {
       "description": "Variable Recurring Payments enables transfer of money between accounts held by the same person or transfer of money for business payments. <br><br>In order to make Sweeping Variable Recurring Payments on behalf of a user, you are required to request an [Consent](#yapily-api-authorisations) from the user by calling the Sweeping Consent endpoint to authorise the user's account to make the payment. Once a `consent-token` is obtained, you can call the Payments endpoint to execute the Sweeping Variable Recurring Payments transaction. Before executing the payment, you have the option to confirm availability of funds in the user's account by calling the Funds Confirmation endpoint. <br><br>See [VRP Payments](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/variable-recurring-payments/) for more information. ",
       "name": "Variable Recurring Payments"
-    },
-    {
-      "description": "Realtime Transactions enables fastest retreival of transactions for an account in real time using cursor based pagination approach. <br><br>This feature is currently available as a [Private Beta version](https://docs.yapily.com/pages/home/faqs/yapily/#what-is-a-private-beta-version). Please contact your Customer Service Manager if you would like to access it.",
-      "name": "Realtime Transactions"
     }
   ],
   "paths": {
@@ -8258,9 +8254,9 @@
             "description": "Error Response"
           }
         },
-        "summary": "Get Account Transactions",
+        "summary": "Get Real Time Account Transactions",
         "tags": [
-          "Realtime Transactions"
+          "Financial Data"
         ]
       }
     }
