@@ -5,6 +5,22 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.17.0] - 2022-12-15
+### Added
+- Get client by id and delete beneficiary
+
+### Changed
+- Virtual account error response examples 
+
+## [2.16.0] - 2022-11-30
+### Changed
+- Payer name isn't required but the field was marked as mandatory in its description. This change updates the field description.
+
+## [2.15.0] - 2022-10-17
+### Added
+- ApplicationUser domain alreay has a column createdAt which is not used in OAS models. This change updates the models of
+  applicationuser to use createdAt in request and response
+
 ## [2.14.0] - 2022-11-03
 ### Added
 - Add Realtime transactions endpoint

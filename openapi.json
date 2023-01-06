@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.14.0",
+    "version": "2.16.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -4407,54 +4407,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -4581,54 +4546,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -4720,37 +4650,73 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "404": {
             "description": "Not Found. Requested beneficiary is not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "424": {
+            "$ref": "#/components/responses/424"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "operationId": "deleteVirtualAccountBeneficiary",
+        "summary": "Delete Beneficiary",
+        "description": "Delete a specific beneficiary (individual or business account)",
+        "parameters": [
+          {
+            "description": "__Mandatory__. The Id of the beneficiary that will be deleted",
+            "in": "path",
+            "name": "beneficiaryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
+            "in": "header",
+            "name": "client-id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "description": "Not Found. Requested beneficiary is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -4760,24 +4726,10 @@
             }
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -4914,54 +4866,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -5051,54 +4968,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -5204,54 +5086,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -5351,64 +5198,29 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "404": {
             "description": "Not Found. Resource requested is not found.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
                 }
               }
             }
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -5524,64 +5336,29 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "404": {
             "description": "Not Found. Resource requested is not found.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
                 }
               }
             }
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -5732,54 +5509,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -5858,64 +5600,29 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "404": {
             "description": "Not Found. Requested payment is not found.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
                 }
               }
             }
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -6021,24 +5728,10 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
             "description": "Forbidden. Permission to access this endpoint is not granted.",
@@ -6051,24 +5744,10 @@
             }
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -6144,64 +5823,29 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "404": {
             "description": "Not Found. Requested beneficiary is not found.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
                 }
               }
             }
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -6217,7 +5861,7 @@
         "description": "Create a new virtual account client (individual or business client). Available for clients who have direct onboarding permissions only. Please contact your CSM to enquire about access",
         "parameters": [
           {
-            "description": "__Mandatory__. This must be your master / parent client-id (and not one associated with one of your clients)",
+            "description": "__Mandatory__. This must be your master client-id (and not one associated with one of your clients)",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -6339,54 +5983,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/403"
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -6400,7 +6009,7 @@
         "description": "Get Virtual Account Clients (individual or business client).",
         "parameters": [
           {
-            "description": "__Mandatory__. This must be your master / parent client-id (and not one associated with one of your clients)",
+            "description": "__Mandatory__. This must be your master client-id (and not one associated with one of your clients)",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -6520,54 +6129,128 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
           },
           "401": {
-            "description": "Unauthorised. Credentials are missing or invalid",
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "424": {
+            "$ref": "#/components/responses/424"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/virtual-accounts/clients/{clientId}": {
+      "get": {
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "operationId": "getVirtualAccountClientById",
+        "x-beta": true,
+        "summary": "Get a Virtual Account Client by ID",
+        "description": "Get a Virtual Account Client using its ID. Restricted to applications with direct onboarding permissions only",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "description": "__Mandatory__. The ID of the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Mandatory__. This must be your master client-id (and not one associated with one of your clients)",
+            "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
+            "in": "header",
+            "name": "client-id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/ApiResponseOfVirtualAccountClient"
+                },
+                "examples": {
+                  "Get Virtual Account Client By Id Example Response": {
+                    "description": "Get Virtual Account Client By Id Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "96169af01d394ad39658f17d53b49a5d"
+                      },
+                      "data": {
+                        "id": "a2d43be3-972a-4458-9b6b-84ac15ae5287",
+                        "type": "BUSINESS",
+                        "business": {
+                          "name": "Payments ltd company",
+                          "type": "LIMITED_LIABILITY",
+                          "registrationNumber": "1234567",
+                          "contactName": "James Edward Rhodes",
+                          "email": "james.rhodes@example.com",
+                          "phone": "447006783009",
+                          "registeredAddress": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                          },
+                          "tradingAddress": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                          }
+                        },
+                        "status": "ACTIVE",
+                        "kycStatus": "VERIFIED",
+                        "createdDateTime": "2022-08-11T00:00:00Z"
+                      }
+                    }
+                  }
                 }
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
           "403": {
-            "description": "Forbidden. Permission to access this endpoint is not granted.",
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "description": "Not Found. Requested client is not found.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
                 }
               }
             }
           },
           "424": {
-            "description": "A failure occured during interaction with a third party provider",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/424"
           },
           "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -9036,6 +8719,149 @@
           "monitoring": []
         }
       },
+      "401VirtualAccountsApiErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetails"
+          },
+          "monitoring": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonitoringEndpointStatus"
+            }
+          }
+        },
+        "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
+        "example": {
+          "error": {
+            "code": 401,
+            "status": "UNAUTHORIZED"
+          },
+          "monitoring": []
+        }
+      },
+      "403VirtualAccountsApiErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetails"
+          },
+          "monitoring": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonitoringEndpointStatus"
+            }
+          }
+        },
+        "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
+        "example": {
+          "error": {
+            "code": 403,
+            "status": "FORBIDDEN",
+            "supportUrl": "https://support.yapily.com/",
+            "source": "USER",
+            "issues": [
+              {
+                "type": "INVALID_REQUEST",
+                "code": "Yapily.gateway.api.scope.required",
+                "message": "You don't have the right scope to access this resource"
+              }
+            ]
+          },
+          "monitoring": []
+        }
+      },
+      "404VirtualAccountsApiErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetails"
+          },
+          "monitoring": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonitoringEndpointStatus"
+            }
+          }
+        },
+        "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
+        "example": {
+          "error": {
+            "tracingId": "1e982b70f5f44a8383df1e1dc3f8ebf7",
+            "code": 404,
+            "status": "NOT_FOUND",
+            "supportUrl": "https://support.yapily.com/",
+            "source": "CLIENT",
+            "issues": [
+              {
+                "type": "INVALID_REQUEST",
+                "code": "yapily.generic.error",
+                "message": "404 NOT_FOUND"
+              }
+            ]
+          },
+          "monitoring": []
+        }
+      },
+      "424VirtualAccountsApiErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetails"
+          },
+          "monitoring": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonitoringEndpointStatus"
+            }
+          }
+        },
+        "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
+        "example": {
+          "error": {
+            "tracingId": "553f33e10469443788cd366618b1ef78",
+            "code": 424,
+            "status": "FAILED_DEPENDENCY",
+            "supportUrl": "https://support.yapily.com/",
+            "source": "INSTITUTION",
+            "issues": [
+              {
+                "type": "INVALID_REQUEST",
+                "code": "FAILED_THIRD_PARTY_DEPENDENCY",
+                "message": "A request to a third party provider failed. Error message: [null] Error code: [INVALID_BANK_BENEFICIARY]"
+              }
+            ]
+          },
+          "monitoring": []
+        }
+      },
+      "500VirtualAccountsApiErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetails"
+          },
+          "monitoring": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonitoringEndpointStatus"
+            }
+          }
+        },
+        "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
+        "example": {
+          "error": {
+            "tracingId": "55abe4b0cf2642fface78876d2547f91",
+            "code": 500,
+            "status": "INTERNAL_SERVER_ERROR",
+            "supportUrl": "https://support.yapily.com/",
+            "source": "YAPILY",
+            "issues": []
+          },
+          "monitoring": []
+        }
+      },
       "Application": {
         "type": "object",
         "description": "Information about the application.",
@@ -9106,6 +8932,11 @@
           },
           "referenceId": {
             "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Date and time of when the user was created.",
+            "format": "date-time"
           },
           "institutionConsents": {
             "type": "array",
@@ -11336,7 +11167,7 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "__Mandatory__. The account holder name of the Payer.",
+            "description": "The account holder name of the Payer.",
             "example": "John Doe"
           },
           "accountIdentifications": {
@@ -18223,6 +18054,7 @@
             "uuid": "3b908179-6faa-42e1-8129-8fd0ff1fc68f",
             "applicationUuid": "3020bf54-e254-40ba-ba7b-fc959774486a",
             "applicationUserId": "bojack@9tees.com",
+            "createdAt": "2022-10-17T08:51:02.463Z",
             "institutionConsents": [
               {
                 "institutionId": "modelo-sandbox"
@@ -18233,6 +18065,7 @@
             "uuid": "be7dd6fa-1236-41b6-a7a1-5d7863ab9553",
             "applicationUuid": "3020bf54-e254-40ba-ba7b-fc959774486a",
             "referenceId": "hollyhock@9tees.com",
+            "createdAt": "2022-10-17T08:51:02.464Z",
             "institutionConsents": [
               {
                 "institutionId": "mock-sandbox"
@@ -18243,6 +18076,7 @@
             "uuid": "deb9aac1-b0bc-4f40-9c0b-6a675cf6646f",
             "applicationUuid": "3020bf54-e254-40ba-ba7b-fc959774486a",
             "referenceId": "beatrice@9tees.com",
+            "createdAt": "2022-10-17T08:51:02.466Z",
             "institutionConsents": [
               {
                 "institutionId": "yapily-mock"
@@ -18257,6 +18091,7 @@
           "uuid": "1ec8e814-085e-46ad-a303-3fe11808f67e",
           "applicationUuid": "50935110-c7df-4003-a06a-1cc5fd4643c9",
           "applicationUserId": "john.doe@company.com",
+          "createdAt": "2022-10-17T08:51:02.463Z",
           "institutionConsents": []
         }
       },
@@ -18284,6 +18119,7 @@
           "uuid": "3b908179-6faa-42e1-8129-8fd0ff1fc68f",
           "applicationUuid": "3020bf54-e254-40ba-ba7b-fc959774486a",
           "applicationUserId": "bojack@9tees.com",
+          "createdAt": "2022-10-17T08:51:02.463Z",
           "institutionConsents": [
             {
               "institutionId": "modelo-sandbox"
@@ -18308,6 +18144,71 @@
             "code": 400,
             "status": "BAD_REQUEST",
             "message": "lastConfirmedAt cannot be a future date and time"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "ok"
+      },
+      "400": {
+        "description": "Bad Request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorResponse"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorised. Credentials are missing or invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/401VirtualAccountsApiErrorResponse"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Forbidden. Permission to access this endpoint is not granted.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/403VirtualAccountsApiErrorResponse"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found. Resource requested is not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
+            }
+          }
+        }
+      },
+      "424": {
+        "description": "A failure occurred during an interaction with a third party provider.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/424VirtualAccountsApiErrorResponse"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Unexpected Error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/500VirtualAccountsApiErrorResponse"
+            }
           }
         }
       }
