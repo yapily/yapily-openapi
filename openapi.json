@@ -362,7 +362,7 @@
     },
     "/accounts": {
       "get": {
-        "description": "Used to return all accounts and balances for the end user associated with the presented consent token.<br><br>Feature: `ACCOUNTS`",
+        "description": "Returns all accounts and balances for the end user associated with the presented consent token.<br><br>Feature: `ACCOUNTS`",
         "operationId": "getAccounts",
         "parameters": [
           {
@@ -452,7 +452,7 @@
     },
     "/accounts/{accountId}": {
       "get": {
-        "description": "Used to return the account and balance information for the end user associated with the presented consent token.<br><br>Feature: `ACCOUNTS`",
+        "description": "Returns the account and balance information for a user's specified account.<br><br>Feature: `ACCOUNT`",
         "operationId": "getAccount",
         "parameters": [
           {
@@ -551,7 +551,7 @@
     },
     "/accounts/{accountId}/balances": {
       "get": {
-        "description": "Used to return the balance for the end user associated with the presented consent token.<br><br>\n__Note__: This endpoint is only for obtaining the balance information of an account belonging to an `Institution` that exposes their APIs through the [CBI Globe Gateway](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe//). If the `Institution` you wish to obtain balance data is not in the CBI Globe, use [Get Account](https://docs.yapily.com/api/reference/#operation/getAccount) or [Get Accounts](https://docs.yapily.com/api/reference/#operation/getAccounts) to get balance data. <br><br>Feature: `ACCOUNT_BALANCES` ",
+        "description": "Returns the balance for the end user associated with the presented consent token.<br><br>\n__Note__: This endpoint is only for obtaining the balance information of an account belonging to an `Institution` that exposes their APIs through the [CBI Globe Gateway](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe//). If the `Institution` you wish to obtain balance data is not in the CBI Globe, use [Get Account](https://docs.yapily.com/api/reference/#operation/getAccount) or [Get Accounts](https://docs.yapily.com/api/reference/#operation/getAccounts) to get balance data. <br><br>Feature: `ACCOUNT_BALANCES` ",
         "operationId": "getAccountBalances",
         "parameters": [
           {
@@ -650,7 +650,7 @@
     },
     "/accounts/{accountId}/beneficiaries": {
       "get": {
-        "description": "Used to get all the beneficiaries of a user's account<br><br>Feature: `ACCOUNT_BENEFICIARIES`",
+        "description": "Returns all the beneficiaries of a user's account.<br><br>Feature: `ACCOUNT_BENEFICIARIES`",
         "operationId": "getBeneficiaries",
         "parameters": [
           {
@@ -722,7 +722,7 @@
     },
     "/accounts/{accountId}/direct-debits": {
       "get": {
-        "description": "Used to get the list of direct debits for an account.<br><br>Feature: `ACCOUNT_DIRECT_DEBIT`",
+        "description": "Returns the list of direct debits for an account.<br><br>Feature: `ACCOUNT_DIRECT_DEBITS`",
         "operationId": "getAccountDirectDebits",
         "parameters": [
           {
@@ -804,7 +804,7 @@
     },
     "/accounts/{accountId}/periodic-payments": {
       "get": {
-        "description": "Used to get the list of periodic payments (standing orders in the UK) for an account.<br><br>Feature: `ACCOUNT_PERIODIC_PAYMENTS`",
+        "description": "Returns the list of periodic payments (standing orders in the UK) for an account.<br><br>Feature: `ACCOUNT_PERIODIC_PAYMENTS`",
         "operationId": "getAccountPeriodicPayments",
         "parameters": [
           {
@@ -886,7 +886,7 @@
     },
     "/accounts/{accountId}/scheduled-payments": {
       "get": {
-        "description": "Used to get the list of scheduled payments for an account.<br><br>Feature: `ACCOUNT_SCHEDULED_PAYMENT`",
+        "description": "Returns the list of scheduled payments for an account.<br><br>Feature: `ACCOUNT_SCHEDULED_PAYMENTS`",
         "operationId": "getAccountScheduledPayments",
         "parameters": [
           {
@@ -968,7 +968,7 @@
     },
     "/accounts/{accountId}/statements": {
       "get": {
-        "description": "Used to get the list of statements for an account.<br><br>Feature: `ACCOUNT_STATEMENTS`",
+        "description": "Returns the list of statements for an account.<br><br>Feature: `ACCOUNT_STATEMENTS`",
         "operationId": "getStatements",
         "parameters": [
           {
@@ -1087,7 +1087,7 @@
     },
     "/accounts/{accountId}/statements/{statementId}": {
       "get": {
-        "description": "Used to get a statement for an account.<br><br>Feature: `ACCOUNT_STATEMENT`",
+        "description": "Returns a statement for an account.<br><br>Feature: `ACCOUNT_STATEMENT`",
         "operationId": "getStatement",
         "parameters": [
           {
@@ -1178,7 +1178,7 @@
     },
     "/accounts/{accountId}/statements/{statementId}/file": {
       "get": {
-        "description": "Used to get the statement file for an account.<br><br>Feature: `ACCOUNT_STATEMENT_FILE`",
+        "description": "Returns a PDF file of a statement for an account.<br><br>Feature: `ACCOUNT_STATEMENT_FILE`",
         "operationId": "getStatementFile",
         "parameters": [
           {
@@ -1255,7 +1255,7 @@
     },
     "/accounts/{accountId}/transactions": {
       "get": {
-        "description": "Used to get the account transactions for an account<br><br>Feature: `ACCOUNT_TRANSACTIONS`",
+        "description": "Returns the account transactions for an account.<br><br>Feature: `ACCOUNT_TRANSACTIONS`",
         "operationId": "getTransactions",
         "parameters": [
           {
@@ -1517,7 +1517,7 @@
     },
     "/bulk-payments": {
       "post": {
-        "description": "Used to initiate a bulk payment after obtaining the user's authorisation. <br><br>Feature: `CREATE_BULK_PAYMENT`",
+        "description": "Creates a bulk payment after obtaining the user's authorisation. <br><br>Feature: `CREATE_BULK_PAYMENT`",
         "operationId": "createBulkPayment",
         "parameters": [
           {
@@ -2770,7 +2770,7 @@
     },
     "/identity": {
       "get": {
-        "description": "Used to get the identity information for an account.<br><br>Feature: `IDENTITY`",
+        "description": "Returns the identity information for an account.<br><br>Feature: `IDENTITY`",
         "operationId": "getIdentity",
         "parameters": [
           {
@@ -3174,7 +3174,7 @@
     },
     "/payments": {
       "post": {
-        "description": "Used to initiate a payment after obtaining the user's authorisation. <br><br>Features:<ul><li>`INITIATE_DOMESTIC_PERIODIC_PAYMENT`</li><li>`INITIATE_DOMESTIC_SCHEDULED_PAYMENT`</li><li>`INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT`</li><li>`INITIATE_DOMESTIC_SINGLE_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_PERIODIC_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_SINGLE_PAYMENT`</li></ul>",
+        "description": "Creates a payment after obtaining the user's authorisation. <br><br>Features:<ul><li>`CREATE_DOMESTIC_PERIODIC_PAYMENT`</li><li>`CREATE_DOMESTIC_SCHEDULED_PAYMENT`</li><li>`CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT`</li><li>`CREATE_DOMESTIC_SINGLE_PAYMENT`</li><li>`CREATE_INTERNATIONAL_PERIODIC_PAYMENT`</li><li>`CREATE_INTERNATIONAL_SCHEDULED_PAYMENT`</li><li>`CREATE_INTERNATIONAL_SINGLE_PAYMENT`</li></ul>",
         "operationId": "createPayment",
         "parameters": [
           {
@@ -3285,7 +3285,7 @@
     },
     "/payments/{paymentId}/details": {
       "get": {
-        "description": "Used to get the payment details of a payment. This is most commonly used to check for any updates to the payment status. <br><br>Feature: `EXISTING_PAYMENTS_DETAILS`",
+        "description": "Returns the details of a payment. <br><br>Most commonly used to check for payment status updates. <br><br>Feature: `EXISTING_PAYMENTS_DETAILS`",
         "operationId": "getPayments",
         "parameters": [
           {
@@ -6256,7 +6256,7 @@
         "operationId": "createVirtualAccountRefund",
         "x-beta": true,
         "summary": "Create Refund",
-        "description": "Create a refund for a payment received into a virtual account. Funds are returned to the source account. When subscribed to virtualAccount.refund.status notifications, updates on the refund status will be delivered asynchronously",
+        "description": "Create a refund for a payment received into a virtual account. Funds are returned to the source account. When subscribed to `virtualAccount.refund.status` notifications, updates on the refund status are delivered asynchronously.",
         "parameters": [
           {
             "description": "Uniquely identifies a request, such that requests made with a same value are considered retries <br> We recommend that a v4 UUID is supplied ",
@@ -7119,7 +7119,7 @@
     },
     "/variable-recurring-payments/payments": {
       "post": {
-        "description": "Used to submit a Variable Recurring Payments transaction after obtaining the user's authorisation. First make sure that the payment feature you wish to execute is supported by the bank by checking the features array in [GET Institution](https://docs.yapily.com/api/#get-institution). <br><br>Features:<ul><li>`CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`</li><li>`CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING`</li></ul>",
+        "description": "Creates a Variable Recurring Payment transaction after obtaining the user's authorisation.<br><br>Features:<ul><li>`CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`</li><li>`CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING`</li></ul>",
         "operationId": "createVrpPayment",
         "x-beta": true,
         "parameters": [
@@ -7719,7 +7719,7 @@
     },
     "/variable-recurring-payments/funds-confirmation": {
       "post": {
-        "description": "Used to confirm funds on the Payer account to execute Variable Recurring Payments after obtaining the user's authorisation. <br><br>Features:<ul><li>`VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION`</li></ul>",
+        "description": "Confirms whether there are available funds on the Payer account to execute a Variable Recurring Payment after obtaining the user's authorisation. <br><br>Features:<ul><li>`VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION`</li></ul>",
         "operationId": "createVrpFundsConfirmation",
         "x-beta": true,
         "parameters": [
