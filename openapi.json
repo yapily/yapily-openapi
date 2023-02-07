@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.16.0",
+    "version": "2.18.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -4545,6 +4545,60 @@
               }
             }
           },
+          "409": {
+            "description": "Conflict with another beneficiary with same account identifications",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfVirtualAccountBeneficiary"
+                },
+                "examples": {
+                  "Create Duplicated Beneficiary Example Response": {
+                    "description": "Create Duplicated Beneficiary Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "96169af01d394ad39658f17d53b49a5d"
+                      },
+                      "data": {
+                        "id": "a2d43be3-972a-4458-9b6b-84ac15ae5287",
+                        "nickname": "MyBeneficiary123",
+                        "paymentSchemes": [
+                          "FASTER_PAYMENTS",
+                          "CHAPS"
+                        ],
+                        "type": "INDIVIDUAL",
+                        "name": "Mr Jack Williams",
+                        "birthDate": "1999-10-04",
+                        "address": {
+                          "addressLine": "12 New Street",
+                          "townName": "London",
+                          "postCode": "NE15 PLZ",
+                          "country": "GB"
+                        },
+                        "account": {
+                          "currency": "GBP",
+                          "bankName": "Lloyds Bank",
+                          "bankAddress": "London, WE12 ABC",
+                          "bankCountry": "GB",
+                          "accountIdentifications": [
+                            {
+                              "type": "SORT_CODE",
+                              "identification": "401016"
+                            },
+                            {
+                              "type": "ACCOUNT_NUMBER",
+                              "identification": "71518920"
+                            }
+                          ]
+                        },
+                        "status": "ACTIVE"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           "400": {
             "$ref": "#/components/responses/400"
           },
@@ -5771,6 +5825,17 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
+            "in": "header",
+            "name": "client-id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
           }
         ],
         "responses": {
@@ -5856,7 +5921,7 @@
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountClient",
-        "x-beta":true,
+        "x-beta": true,
         "summary": "Create Virtual Account Client",
         "description": "Create a new virtual account client (individual or business client). Available for clients who have direct onboarding permissions only. Please contact your CSM to enquire about access",
         "parameters": [
@@ -5909,24 +5974,24 @@
                   "value": {
                     "type": "INDIVIDUAL",
                     "individual": {
-                        "firstName": "James",
-                        "lastName": "Rhodes",
-                        "address": {
-                            "addressLine1": "123 Queens Street",
-                            "addressLine2": "Unit 13",
-                            "townName": "York",
-                            "postCode": "12345",
-                            "country": "GB"
-                        },
-                        "birthDate": "1970-07-10",
-                        "email": "james.rhodes@example.com",
-                        "phone": "447006783009"
+                      "firstName": "James",
+                      "lastName": "Rhodes",
+                      "address": {
+                        "addressLine1": "123 Queens Street",
+                        "addressLine2": "Unit 13",
+                        "townName": "York",
+                        "postCode": "12345",
+                        "country": "GB"
+                      },
+                      "birthDate": "1970-07-10",
+                      "email": "james.rhodes@example.com",
+                      "phone": "447006783009"
                     }
                   }
                 }
               },
               "schema": {
-                    "$ref": "#/components/schemas/VirtualAccountClientRequest"
+                "$ref": "#/components/schemas/VirtualAccountClientRequest"
               }
             }
           },
@@ -5938,7 +6003,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                      "$ref": "#/components/schemas/ApiResponseOfVirtualAccountClient"
+                  "$ref": "#/components/schemas/ApiResponseOfVirtualAccountClient"
                 },
                 "examples": {
                   "Create Virtual Account Business Example Response": {
@@ -6055,7 +6120,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                      "$ref": "#/components/schemas/ApiListResponseOfVirtualAccountClient"
+                  "$ref": "#/components/schemas/ApiListResponseOfVirtualAccountClient"
                 },
                 "examples": {
                   "Get Virtual Account Clients Example Response": {
@@ -6071,57 +6136,331 @@
                         "next": "https://api.yapily.com/virtual-accounts/clients?cursor=cGFnZT0wJnNpemU9MTAwMCZzb3J0PWNyZWF0ZWREYXRlLGRlc2M=",
                         "previous": "https://api.yapily.com/virtual-accounts/clients?cursor=cGFnZT0wJnNpemU9MTAwMCZzb3J0PWNyZWF0ZWREYXRlLGRlc2M="
                       },
-                      "data": [{
-                        "id": "a2d43be3-972a-4458-9b6b-84ac15ae5287",
-                        "type": "BUSINESS",
-                        "business": {
-                          "name": "Payments ltd company",
-                          "type": "LIMITED_LIABILITY",
-                          "registrationNumber": "1234567",
-                          "contactName": "James Edward Rhodes",
-                          "email": "james.rhodes@example.com",
-                          "phone": "447006783009",
-                          "registeredAddress": {
-                            "addressLine1": "123 Queens Street",
-                            "addressLine2": "Unit 13",
-                            "townName": "York",
-                            "postCode": "12345",
-                            "country": "GB"
+                      "data": [
+                        {
+                          "id": "a2d43be3-972a-4458-9b6b-84ac15ae5287",
+                          "type": "BUSINESS",
+                          "business": {
+                            "name": "Payments ltd company",
+                            "type": "LIMITED_LIABILITY",
+                            "registrationNumber": "1234567",
+                            "contactName": "James Edward Rhodes",
+                            "email": "james.rhodes@example.com",
+                            "phone": "447006783009",
+                            "registeredAddress": {
+                              "addressLine1": "123 Queens Street",
+                              "addressLine2": "Unit 13",
+                              "townName": "York",
+                              "postCode": "12345",
+                              "country": "GB"
+                            },
+                            "tradingAddress": {
+                              "addressLine1": "123 Queens Street",
+                              "addressLine2": "Unit 13",
+                              "townName": "York",
+                              "postCode": "12345",
+                              "country": "GB"
+                            }
                           },
-                          "tradingAddress": {
-                            "addressLine1": "123 Queens Street",
-                            "addressLine2": "Unit 13",
-                            "townName": "York",
-                            "postCode": "12345",
-                            "country": "GB"
-                          }
+                          "status": "ACTIVE",
+                          "kycStatus": "VERIFIED",
+                          "createdDateTime": "2022-08-11T00:00:00Z"
                         },
-                        "status": "ACTIVE",
-                        "kycStatus": "VERIFIED",
-                        "createdDateTime": "2022-08-11T00:00:00Z"
+                        {
+                          "id": "a2d43be3-972a-4458-9b6b-84ac15ae5283",
+                          "type": "INDIVIDUAL",
+                          "individual": {
+                            "firstName": "James",
+                            "middleName": "Edward",
+                            "lastName": "Rhodes",
+                            "email": "james.rhodes@example.com",
+                            "phone": "447006783009",
+                            "birthDate": "1970-07-10",
+                            "address": {
+                              "addressLine1": "123 Queens Street",
+                              "addressLine2": "Unit 13",
+                              "townName": "York",
+                              "postCode": "12345",
+                              "country": "GB"
+                            }
+                          },
+                          "status": "ACTIVE",
+                          "kycStatus": "VERIFIED",
+                          "createdDateTime": "2022-08-11T00:00:00Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised. Credentials are missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Permission to access this endpoint is not granted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "A failure occured during interaction with a third party provider",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/virtual-accounts/refunds": {
+      "post": {
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "operationId": "createVirtualAccountRefund",
+        "x-beta": true,
+        "summary": "Create Refund",
+        "description": "Create a refund for a payment received into a virtual account. Funds are returned to the source account. When subscribed to virtualAccount.refund.status notifications, updates on the refund status will be delivered asynchronously",
+        "parameters": [
+          {
+            "description": "Uniquely identifies a request, such that requests made with a same value are considered retries <br> We recommend that a v4 UUID is supplied ",
+            "example": "a346fe67-1d81-4ccd-8409-bf9d6c07980f",
+            "in": "header",
+            "name": "idempotency-key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for.",
+            "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
+            "in": "header",
+            "name": "client-id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8": {
+              "examples": {
+                "Initiate Refund To Source Example Request": {
+                  "description": "Create Refund Example Request",
+                  "value": {
+                    "originalPayment": {
+                      "paymentInitiationId": "19d2fbfb-f30c-44eb-b3b5-978560d2b712"
+                    },
+                    "amount": {
+                      "amount": 100,
+                      "currency": "GBP"
+                    },
+                    "reason": "REQUESTED_BY_CUSTOMER",
+                    "paymentDate": "2022-11-11",
+                    "reference": "Refund 123",
+                    "refundTo": "SOURCE",
+                    "beneficiaryType": "INDIVIDUAL"
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/VirtualAccountRefundRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfVirtualAccountRefund"
+                },
+                "examples": {
+                  "Create Virtual Account Refund Example Response": {
+                    "description": "Create Virtual Account Refund Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "96169af01d394ad39658f17d53b49a5d"
                       },
-                      {
-                        "id": "a2d43be3-972a-4458-9b6b-84ac15ae5283",
-                        "type": "INDIVIDUAL",
-                        "individual": {
-                          "firstName": "James",
-                          "middleName": "Edward",
-                          "lastName": "Rhodes",
-                          "email": "james.rhodes@example.com",
-                          "phone": "447006783009",
-                          "birthDate": "1970-07-10",
-                          "address": {
-                            "addressLine1": "123 Queens Street",
-                            "addressLine2": "Unit 13",
-                            "townName": "York",
-                            "postCode": "12345",
-                            "country": "GB"
-                          }
+                      "data": {
+                        "id": "46d3349e-6733-459d-a6da-71850a7e8076",
+                        "originalPayment": {
+                          "paymentInititationId": "19d2fbfb-f30c-44eb-b3b5-978560d2b712"
                         },
-                        "status": "ACTIVE",
-                        "kycStatus": "VERIFIED",
-                        "createdDateTime": "2022-08-11T00:00:00Z"
-                      }]
+                        "status": "INITIATED",
+                        "amount": {
+                          "amount": 100,
+                          "currency": "GBP"
+                        },
+                        "reason": "REQUESTED_BY_CUSTOMER",
+                        "paymentDate": "2022-11-11",
+                        "reference": "Refund 123",
+                        "refundTo": "SOURCE",
+                        "beneficiaryType": "INDIVIDUAL",
+                        "createdDateTime": "2022-11-11T15:00:57.345Z",
+                        "updatedDateTime": "2022-11-11T14:00:57.751Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "424": {
+            "$ref": "#/components/responses/424"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/virtual-accounts/refunds/{id}": {
+      "get": {
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "operationId": "getVirtualAccountRefundById",
+        "x-beta": true,
+        "summary": "Get Refund By Id",
+        "description": "Get the details of a refund by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "__Mandatory__. The id of the refund",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for.",
+            "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
+            "in": "header",
+            "name": "client-id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfVirtualAccountRefund"
+                },
+                "examples": {
+                  "Get Virtual Account Refund Response": {
+                    "description": "Get Virtual Account Refund By ID Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "96169af01d394ad39658f17d53b49a5d"
+                      },
+                      "data": {
+                        "id": "46d3349e-6733-459d-a6da-71850a7e8076",
+                        "originalPayment": {
+                          "paymentInitiationId": "19d2fbfb-f30c-44eb-b3b5-978560d2b712"
+                        },
+                        "status": "INITIATED",
+                        "amount": {
+                          "amount": 100,
+                          "currency": "GBP"
+                        },
+                        "reason": "REQUESTED_BY_CUSTOMER",
+                        "paymentDate": "2022-11-11",
+                        "reference": "Refund 123",
+                        "refundTo": "SOURCE",
+                        "beneficiaryType": "INDIVIDUAL",
+                        "beneficiaryId": "sd6ad034-a111-4143-8756-a3a3cef4045v",
+                        "createdDateTime": "2022-11-11T15:00:57.345Z",
+                        "updatedDateTime": "2022-11-11T14:00:57.751Z"
+                      }
+                    }
+                  },
+                  "Get Virtual Account Refund With Error Response": {
+                    "description": "Get Virtual Account Refund By ID Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "96169af01d394ad39658f17d53b49a5d"
+                      },
+                      "data": {
+                        "id": "46d3349e-6733-459d-a6da-71850a7e8076",
+                        "originalPayment": {
+                          "paymentInitiationId": "19d2fbfb-f30c-44eb-b3b5-978560d2b712"
+                        },
+                        "status": "FAILED",
+                        "issues": {
+                          "type": "INVALID",
+                          "code": "INVALID_BENEFICIARY_DETAILS",
+                          "message": "The required details were not available to create the beneficiary"
+                        },
+                        "amount": {
+                          "amount": 100,
+                          "currency": "GBP"
+                        },
+                        "reason": "REQUESTED_BY_CUSTOMER",
+                        "paymentDate": "2022-11-11",
+                        "reference": "Refund 123",
+                        "beneficiaryType": "INDIVIDUAL",
+                        "createdDateTime": "2022-11-11T15:00:57.345Z",
+                        "updatedDateTime": "2022-11-11T14:00:57.751Z"
+                      }
                     }
                   }
                 }
@@ -6237,14 +6576,7 @@
             "$ref": "#/components/responses/403"
           },
           "404": {
-            "description": "Not Found. Requested client is not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
-                }
-              }
-            }
+            "$ref": "#/components/responses/404"
           },
           "424": {
             "$ref": "#/components/responses/424"
@@ -6289,8 +6621,7 @@
                         "currency": "GBP"
                       }
                     },
-                    "initiationDetails":
-                    {
+                    "initiationDetails": {
                       "reference": "Own Account Sweeping",
                       "payer": {
                         "name": "John Doe",
@@ -6318,8 +6649,16 @@
                           }
                         ]
                       }
+                    },
+                    "complianceData": {
+                      "payer": {
+                        "type": "INDIVIDUAL",
+                        "individual": {
+                          "name": "John Doe",
+                          "birthDate": "2000-08-12"
+                        }
+                      }
                     }
-
                   }
                 }
               },
@@ -6391,8 +6730,7 @@
                             }
                           ]
                         },
-                        "initiationDetails":
-                        {
+                        "initiationDetails": {
                           "reference": "Own Account Sweeping",
                           "payer": {
                             "name": "John Doe",
@@ -6421,7 +6759,6 @@
                             ]
                           }
                         }
-
                       }
                     }
                   }
@@ -6570,6 +6907,29 @@
                           }
                         ]
                       }
+                    },
+                    "complianceData": {
+                      "payer": {
+                        "type": "BUSINESS",
+                        "business": {
+                          "name": "Company LTD",
+                          "registrationNumber": "COM123NO",
+                          "registeredAddress": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                          },
+                          "tradingAddress": {
+                            "addressLine1": "123 Queens Street",
+                            "addressLine2": "Unit 13",
+                            "townName": "York",
+                            "postCode": "12345",
+                            "country": "GB"
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -6648,8 +7008,7 @@
                             }
                           ]
                         },
-                        "initiationDetails":
-                        {
+                        "initiationDetails": {
                           "reference": "Bill Payment",
                           "payer": {
                             "name": "John Doe",
@@ -6678,7 +7037,6 @@
                             ]
                           }
                         }
-
                       }
                     }
                   }
@@ -6813,7 +7171,7 @@
                       "data": {
                         "id": "a9582f8e-08be-4cca-9f01-1ad3be96532d",
                         "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
-                        "institutionConsentId" : "PF23232222DD",
+                        "institutionConsentId": "PF23232222DD",
                         "status": "COMPLETED",
                         "statusDetails": {
                           "status": "COMPLETED",
@@ -6822,8 +7180,7 @@
                             "name": "AcceptedCustomerProfile"
                           }
                         },
-                        "initiationDetails":
-                        {
+                        "initiationDetails": {
                           "reference": "Own Account Sweeping",
                           "payer": {
                             "name": "John Doe",
@@ -6852,8 +7209,7 @@
                             ]
                           }
                         },
-                        "submissionDetails":
-                        {
+                        "submissionDetails": {
                           "reference": "Own Account Sweeping",
                           "payee": {
                             "name": "John Doe",
@@ -6900,7 +7256,7 @@
                           "name": "Refund Account"
                         },
                         "expectedSettlementTime": "2022-03-02T12:00:00.000Z",
-                        "expectedExecutionTime" : "2022-03-02T12:00:00.000Z"
+                        "expectedExecutionTime": "2022-03-02T12:00:00.000Z"
                       }
                     }
                   }
@@ -7059,8 +7415,7 @@
                             }
                           ]
                         },
-                        "initiationDetails":
-                        {
+                        "initiationDetails": {
                           "reference": "Own Account Sweeping",
                           "payer": {
                             "name": "John Doe",
@@ -7089,7 +7444,6 @@
                             ]
                           }
                         }
-
                       }
                     }
                   }
@@ -7254,8 +7608,7 @@
                             }
                           ]
                         },
-                        "initiationDetails":
-                        {
+                        "initiationDetails": {
                           "reference": "Bill Payment",
                           "payer": {
                             "name": "John Doe",
@@ -7284,7 +7637,6 @@
                             ]
                           }
                         }
-
                       }
                     }
                   }
@@ -7545,7 +7897,7 @@
                       "data": {
                         "id": "a9582f8e-08be-4cca-9f01-1ad3be96532d",
                         "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
-                        "institutionConsentId" : "PF23232222DD",
+                        "institutionConsentId": "PF23232222DD",
                         "status": "COMPLETED",
                         "statusDetails": {
                           "status": "COMPLETED",
@@ -7554,8 +7906,7 @@
                             "name": "AcceptedCustomerProfile"
                           }
                         },
-                        "initiationDetails":
-                        {
+                        "initiationDetails": {
                           "reference": "Own Account Sweeping",
                           "payer": {
                             "name": "John Doe",
@@ -7584,8 +7935,7 @@
                             ]
                           }
                         },
-                        "submissionDetails":
-                        {
+                        "submissionDetails": {
                           "reference": "Own Account Sweeping",
                           "payee": {
                             "name": "John Doe",
@@ -7632,7 +7982,7 @@
                           "name": "Refund Account"
                         },
                         "expectedSettlementTime": "2022-03-02T12:00:00.000Z",
-                        "expectedExecutionTime" : "2022-03-02T12:00:00.000Z"
+                        "expectedExecutionTime": "2022-03-02T12:00:00.000Z"
                       }
                     }
                   }
@@ -8223,7 +8573,6 @@
             "$ref": "#/components/schemas/UserCredentials"
           },
           "selectedScaMethod": {
-            "description": "The `SCA method` selected for use.",
             "$ref": "#/components/schemas/ScaMethod"
           },
           "scaCode": {
@@ -8907,7 +9256,7 @@
           },
           "updated": {
             "type": "string",
-            "description":"Date and time of when the application was last updated.",
+            "description": "Date and time of when the application was last updated.",
             "format": "date-time"
           }
         }
@@ -8928,7 +9277,7 @@
           },
           "applicationUserId": {
             "type": "string",
-            "description":"__Conditional__. The user-friendly reference to the `User`."
+            "description": "__Conditional__. The user-friendly reference to the `User`."
           },
           "referenceId": {
             "type": "string"
@@ -8961,7 +9310,7 @@
           },
           "applicationUserId": {
             "type": "string",
-            "description":"__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
+            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
           },
           "referenceId": {
             "type": "string"
@@ -13415,9 +13764,7 @@
             "example": "123 Baker Street",
             "type": "string",
             "description": "The address of the source bank account"
-
           }
-
         },
         "type": "object"
       },
@@ -13701,19 +14048,17 @@
         "required": [
           "type"
         ],
-        "properties":{
+        "properties": {
           "type": {
-              "$ref": "#/components/schemas/VirtualAccountClientType"
+            "$ref": "#/components/schemas/VirtualAccountClientType"
           },
-          "individual":{
+          "individual": {
             "$ref": "#/components/schemas/VirtualAccountIndividualClient"
           },
           "business": {
             "$ref": "#/components/schemas/VirtualAccountBusinessClient"
           }
-
         }
-
       },
       "VirtualAccountClient": {
         "type": "object",
@@ -13752,7 +14097,7 @@
           "birthDate",
           "email"
         ],
-        "properties":{
+        "properties": {
           "firstName": {
             "type": "string"
           },
@@ -13788,7 +14133,7 @@
           "email",
           "phone"
         ],
-        "properties":{
+        "properties": {
           "name": {
             "type": "string"
           },
@@ -13850,7 +14195,7 @@
           }
         }
       },
-      "VirtualAccountClientType":{
+      "VirtualAccountClientType": {
         "type": "string",
         "enum": [
           "INDIVIDUAL",
@@ -13894,20 +14239,185 @@
         },
         "type": "object"
       },
-      "VirtualAccountKycStatus":{
+      "VirtualAccountKycStatus": {
         "type": "string",
         "enum": [
           "UNVERIFIED",
           "VERIFIED"
         ]
       },
-      "VirtualAccountClientStatus":{
+      "VirtualAccountClientStatus": {
         "type": "string",
         "enum": [
           "PENDING",
           "ACTIVE",
           "SUSPENDED"
         ]
+      },
+      "VirtualAccountRefundRequest": {
+        "required": [
+          "originalPayment",
+          "refundTo"
+        ],
+        "type": "object",
+        "properties": {
+          "originalPayment": {
+            "$ref": "#/components/schemas/VirtualAccountOriginalPayment"
+          },
+          "amount": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Amount"
+              },
+              {
+                "description": "Amount to be refunded"
+              }
+            ]
+          },
+          "reason": {
+            "example": "REQUESTED_BY_CUSTOMER",
+            "type": "string",
+            "description": "Reason for the refund. Allowed values: REQUESTED_BY_CUSTOMER, DUPLICATE_PAYMENT, OTHER"
+          },
+          "paymentDate": {
+            "format": "date",
+            "example": "2022-10-04",
+            "type": "string",
+            "description": "The date that the refund instruction will be executed. Must be in the present or future"
+          },
+          "reference": {
+            "example": "Invoice 1267765",
+            "type": "string",
+            "description": "Reference to be associated with the refund. This will appear on the beneficiary's bank statement"
+          },
+          "refundTo": {
+            "type": "string",
+            "description": "Indicates which account will be used for refund. Allowed value: SOURCE",
+            "example": "SOURCE"
+          },
+          "beneficiaryType": {
+            "example": "INDIVIDUAL",
+            "type": "string",
+            "description": "__Conditional__. This field is required when refundTo is SOURCE. Indicates the type of Beneficiary as either an INDIVIDUAL or BUSINESS."
+          },
+          "beneficiary": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VirtualAccountBeneficiaryRequest"
+              },
+              {
+                "description": "Not yet supported"
+              }
+            ]
+          }
+        }
+      },
+      "VirtualAccountOriginalPayment": {
+        "properties": {
+          "paymentInitiationId": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiResponseOfVirtualAccountRefund": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/VirtualAccountRefund"
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
+      },
+      "VirtualAccountRefund": {
+        "properties": {
+          "id": {
+            "example": "za2ad0234-a333-5435-8787-a3a3cef4031c",
+            "type": "string",
+            "description": "Unique id of the refund"
+          },
+          "originalPayment": {
+            "$ref": "#/components/schemas/VirtualAccountOriginalPayment"
+          },
+          "status": {
+            "example": "INITIATED",
+            "type": "string",
+            "description": "The current state of the transaction <br> INITIATED - The transaction request is acknowledged and will not undergo validation checks <br> PENDING - Initial checks were successful and the payment is pending processing. This is primarily used for future dated payments that have not yet reached their payment date <br> PROCESSING - Initial checks succeeded and the transaction request is now being processed <br> COMPLETED - The transaction has been successfully processed (terminal status) <br> FAILED - An failure occured during transaction processing (terminal status)"
+          },
+          "amount": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Amount"
+              },
+              {
+                "description": "Amount to be transferred"
+              }
+            ]
+          },
+          "issues": {
+            "type": "array",
+            "description": "List of issues relating to a FAILED status",
+            "items": {
+              "$ref": "#/components/schemas/ErrorIssue"
+            }
+          },
+          "reason": {
+            "example": "REQUESTED_BY_CUSTOMER",
+            "type": "string",
+            "description": "The reason of the refund request"
+          },
+          "paymentDate": {
+            "format": "date",
+            "example": "2022-10-04",
+            "type": "string",
+            "description": "Date on which the refund instruction will be executed, that may be in the future"
+          },
+          "reference": {
+            "example": "Refund 123",
+            "type": "string",
+            "description": "Reference to be associated with the refund. This will appear on the beneficiary's bank statement"
+          },
+          "refundTo": {
+            "example": "SOURCE",
+            "type": "string",
+            "description": "Indicates which account will be used for refund."
+          },
+          "beneficiaryType": {
+            "example": "INDIVIDUAL",
+            "type": "string",
+            "description": "Indicates the type of Beneficiary as either an INDIVIDUAL or BUSINESS"
+          },
+          "beneficiaryId": {
+            "example": "sd6ad034-a111-4143-8756-a3a3cef4045v",
+            "type": "string",
+            "description": "Unique id of the beneficiary to whom the payment will be made"
+          },
+          "createdDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-04-24T00:30:19.951Z",
+            "description": "Date and time that the refund was created"
+          },
+          "updatedDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-04-24T00:30:19.951Z",
+            "description": "Date and time that the refund was updated"
+          }
+        },
+        "type": "object"
       },
       "ErrorIssue": {
         "required": [
@@ -14265,6 +14775,9 @@
           },
           "initiationDetails": {
             "$ref": "#/components/schemas/InitiationDetails"
+          },
+          "complianceData": {
+            "$ref": "#/components/schemas/ComplianceData"
           }
         }
       },
@@ -14318,6 +14831,9 @@
           },
           "initiationDetails": {
             "$ref": "#/components/schemas/InitiationDetails"
+          },
+          "complianceData": {
+            "$ref": "#/components/schemas/ComplianceData"
           }
         }
       },
@@ -14705,6 +15221,120 @@
           }
         },
         "description": "__Mandatory__. The payment initiation object defining the details of the payment under the Variable Recurring Payment consent."
+      },
+      "ComplianceData": {
+        "type": "object",
+        "properties": {
+          "payer": {
+            "$ref": "#/components/schemas/ComplianceDataPayer"
+          }
+        },
+        "description": "__Conditional__. Information needed to complete compliance checks. Mandatory for Yapily Connect customers."
+      },
+      "ComplianceDataPayer": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "INDIVIDUAL",
+            "description": "The payer type. Allowed values: INDIVIDUAL, BUSINESS. The corresponding object must be included."
+          },
+          "individual": {
+            "$ref": "#/components/schemas/ComplianceDataIndividual"
+          },
+          "business": {
+            "$ref": "#/components/schemas/ComplianceDataBusiness"
+          }
+        },
+        "description": "__Conditional__. Payer details required for compliance checks."
+      },
+      "ComplianceDataIndividual": {
+        "type": "object",
+        "required": [
+          "name",
+          "birthDate"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe",
+            "description": "This is the first and last name of your end user."
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2000-08-12",
+            "description": "This is the date of birth of your end user."
+          }
+        },
+        "description": "__Conditional__. Mandatory if the type is INDIVIDUAL."
+      },
+      "ComplianceDataBusiness": {
+        "type": "object",
+        "required": [
+          "name",
+          "registrationNumber",
+          "registeredAddress"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Company LTD",
+            "description": "This is the registered company name of your end user."
+          },
+          "registrationNumber": {
+            "type": "string",
+            "example": "COM123NO",
+            "description": "This is the registered company number of the business."
+          },
+          "registeredAddress": {
+            "$ref": "#/components/schemas/ComplianceDataAddress"
+          },
+          "tradingAddress": {
+            "$ref": "#/components/schemas/ComplianceDataAddress"
+          }
+        },
+        "description": "__Conditional__. Mandatory if the type is BUSINESS."
+      },
+      "ComplianceDataAddress": {
+        "type": "object",
+        "required": [
+          "addressLine1",
+          "townName",
+          "postCode",
+          "country"
+        ],
+        "properties": {
+          "addressLine1": {
+            "type": "string",
+            "example": "123 Queens Street",
+            "description": "__Mandatory__. AddressLine1 of the business."
+          },
+          "addressLine2": {
+            "type": "string",
+            "example": "Unit 13",
+            "description": "__Optional__. AddressLine2 of the business."
+          },
+          "townName": {
+            "type": "string",
+            "example": "York",
+            "description": "__Mandatory__. Town name of the business."
+          },
+          "postCode": {
+            "type": "string",
+            "example": "12345",
+            "description": "__Mandatory__. Post code of the business."
+          },
+          "country": {
+            "type": "string",
+            "example": "GB",
+            "description": "__Mandatory__. Country of the business."
+          }
+        },
+        "description": "This is the registered company or trading address of your end user."
       },
       "SubmissionDetails": {
         "required": [

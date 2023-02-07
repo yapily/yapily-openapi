@@ -5,6 +5,14 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.19.0] - 2023-02-07
+### Added
+- Included `complianceData` object in the VRP consents endpoints
+
+## [2.18.0] - 2023-02-06
+### Added
+- Create refund and get refund by id
+
 ## [2.17.0] - 2022-12-15
 ### Added
 - Get client by id and delete beneficiary
