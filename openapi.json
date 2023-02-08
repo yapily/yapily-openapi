@@ -1053,7 +1053,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "Example Response": {
-                    "$ref": "#/components/examples/account-statements-example-esponse"
+                    "$ref": "#/components/examples/account-statements-example-response"
                   }
                 },
                 "schema": {
@@ -3831,7 +3831,7 @@
         ],
         "operationId": "getProfileConsent",
         "summary": "Get Profile Consent",
-        "description": "Used to retreive a specific ProfileConsent for a User.",
+        "description": "Used to retrieve a specific ProfileConsent for a User.",
         "parameters": [
           {
             "description": "__Mandatory__. The Yapily generated UUID for the user.",
@@ -5047,7 +5047,7 @@
         "operationId": "createVirtualAccountPayOut",
         "x-beta": true,
         "summary": "Create Pay Out",
-        "description": "Initiate a payment from a specified virtual account to a previously added beneficiary using any of the schemes that it supports <br> When subscribed to virtualAccount.payOut.status notifications, further updates on payment processing status will be develivered asynchronously ",
+        "description": "Initiate a payment from a specified virtual account to a previously added beneficiary using any of the schemes that it supports <br> When subscribed to virtualAccount.payOut.status notifications, further updates on payment processing status will be delivered asynchronously ",
         "parameters": [
           {
             "description": "Uniquely identifies a request, such that requests made with a same value are considered retries <br> We recommend that a v4 UUID is supplied ",
@@ -6786,7 +6786,7 @@
                         "issues": [
                           {
                             "type": "CREDENTIALS",
-                            "code": "CREDENTIALS_MISING",
+                            "code": "CREDENTIALS_MISSING",
                             "message": "Authentication header not present"
                           }
                         ]
@@ -7064,7 +7064,7 @@
                         "issues": [
                           {
                             "type": "CREDENTIALS",
-                            "code": "CREDENTIALS_MISING",
+                            "code": "CREDENTIALS_MISSING",
                             "message": "Authentication header not present"
                           }
                         ]
@@ -7284,7 +7284,7 @@
                         "issues": [
                           {
                             "type": "CREDENTIALS",
-                            "code": "CREDENTIALS_MISING",
+                            "code": "CREDENTIALS_MISSING",
                             "message": "Authentication header not present"
                           }
                         ]
@@ -7471,7 +7471,7 @@
                         "issues": [
                           {
                             "type": "CREDENTIALS",
-                            "code": "CREDENTIALS_MISING",
+                            "code": "CREDENTIALS_MISSING",
                             "message": "Authentication header not present"
                           }
                         ]
@@ -7527,7 +7527,7 @@
     "/variable-recurring-payments/non-sweeping/consents/{consentId}": {
       "get": {
         "description": "Get Non-Sweeping Variable Recurring Payments consent details using the consent Id",
-        "operationId": "getpNonSweepingVrpConsentById",
+        "operationId": "getNonSweepingVrpConsentById",
         "x-beta": true,
         "parameters": [
           {
@@ -7664,7 +7664,7 @@
                         "issues": [
                           {
                             "type": "CREDENTIALS",
-                            "code": "CREDENTIALS_MISING",
+                            "code": "CREDENTIALS_MISSING",
                             "message": "Authentication header not present"
                           }
                         ]
@@ -7805,7 +7805,7 @@
                         "issues": [
                           {
                             "type": "CREDENTIALS",
-                            "code": "CREDENTIALS_MISING",
+                            "code": "CREDENTIALS_MISSING",
                             "message": "Authentication header not present"
                           }
                         ]
@@ -8010,7 +8010,7 @@
                         "issues": [
                           {
                             "type": "CREDENTIALS",
-                            "code": "CREDENTIALS_MISING",
+                            "code": "CREDENTIALS_MISSING",
                             "message": "Authentication header not present"
                           }
                         ]
@@ -8300,7 +8300,7 @@
         "name": "eventTypeId",
         "in": "path",
         "required": true,
-        "description": "Unique identifier of the event type (for which notifications will be sent)",
+        "description": "Unique identifier of the event type (for which notifications will be sent). ",
         "schema": {
           "type": "string",
           "description": "Valid event type Id"
@@ -8916,7 +8916,7 @@
             "$ref": "#/components/schemas/AddressTypeEnum"
           }
         },
-        "description": "__Conditional__. The address of the `Payee` or `Payer`.<ul><li>`payee.address` is mandatory when the `paymentType` is an `INTERNATIONAL` payment</li><li>An `Institution` may require you to specify the `country` when used in the context ofthe `Payee` to be able to make a payment.</li></ul>",
+        "description": "__Conditional__. The address of the `Payee` or `Payer`.<ul><li>`payee.address` is mandatory when the `paymentType` is an `INTERNATIONAL` payment</li><li>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment.</li></ul>",
         "example": {
           "country": "GB"
         }
@@ -8970,7 +8970,7 @@
       },
       "ApiError": {
         "type": "object",
-        "description": "Provides details of the error that has occured.",
+        "description": "Provides details of the error that has occurred.",
         "properties": {
           "code": {
             "type": "integer",
@@ -9365,7 +9365,7 @@
           },
           "state": {
             "type": "string",
-            "description": "Corellation ID used when handshaking with a new insitution via OAuth2 registration."
+            "description": "Correlation ID used when handshaking with a new institution via OAuth2 registration."
           },
           "authorizedAt": {
             "type": "string",
@@ -12862,13 +12862,21 @@
       },
       "MonitoringStatusEnum": {
         "type": "string",
+        "description": "The latest operational status.",
         "enum": [
           "Up",
           "Down",
           "Warning",
           "Unknown",
           "Expired"
-        ]
+        ],
+        "x-enumDescriptions": {
+          "Up": "All the resources are UP or a mix of resources that are UP and EXPIRED",
+          "Down": "All the resources are DOWN or a mix of resources that are DOWN and EXPIRED",
+          "Warning": "Mix of resources that are UP and DOWN",
+          "Unknown": "There are no tested resources",
+          "Expired": "All the resources are EXPIRED"
+        }
       },
       "StatementReference": {
         "type": "object",
@@ -13284,7 +13292,7 @@
         "properties": {
           "eventTypeId": {
             "type": "string",
-            "description": "Unique identifier of the event type (for which notifications will be sent)",
+            "description": "Unique identifier of the event type (for which notifications will be sent).<br><br>Allowed values: payment.status, payment.status.completed, payment.isoStatus, virtualAccount.payIn.status, virtualAccount.payOut.status, virtualAccount.createBeneficiary.status, virtualAccount.account.status, virtualAccount.client.status, virtualAccount.refund.status, virtualAccount.payOut.return  ",
             "example": "payment.status.completed"
           },
           "notification": {
@@ -13356,7 +13364,7 @@
         }
       },
       "Notification": {
-        "title": "Subscription detail on how and where notifications will be received",
+        "description": "Subscription details for how and where to receive notifications.",
         "type": "object",
         "required": [
           "type",
@@ -13370,7 +13378,7 @@
           },
           "url": {
             "type": "string",
-            "description": "URL to which the notification will be sent",
+            "description": "URL to which the notification will be sent.",
             "example": "https://httpbin.com/new_endpoint"
           }
         }
@@ -15646,7 +15654,7 @@
     },
     "securitySchemes": {
       "basicAuth": {
-        "description": "Requests to the Yapily API are authenticated using an Application's `APPLICATION_KEY` and `APPLICATION_SECRET`. You can view and manage your credentials in the [Yapily Dashboard](https://dashboard.yapily.com/).<br><br> An `APPLICATION_KEY` and `APPLICATION_SECRET` pair provides connectivity to each `Institution` configured in a Yapily `Application`, so it is important to keep these credentials secure. Do not share your `APPLICATION_SECRET` in publicly accessible areas such as GitHub, client-side code, etc. <br><br> Authentication is performed using HTTP Basic Authentication. `Your APPLICATION_KEY` should be sent as the basic auth `username` and your `APPLICATION_SECRET` should be sent as the basic auth `password`. <br><br> All requests should be made via HTTPS.<aside class=\"info\">HTTP Basic Authentication credentials are generated by concatenating APPLICATION_KEY and APPLICATION_SECRET separated with a colon and encoded with base64 to form the `authToken`, as follows: <br><br>`authToken` = Base64 encoded(`APPLICATION_KEY` + ':' + `APPLICATION_SECRET`).</aside>",
+        "description": "Requests to the Yapily API are authenticated using an Application's `APPLICATION_KEY` and `APPLICATION_SECRET`. You can view and manage your credentials in the [Yapily Console](https://console.yapily.com/).<br><br> An `APPLICATION_KEY` and `APPLICATION_SECRET` pair provides connectivity to each `Institution` configured in a Yapily `Application`, so it is important to keep these credentials secure. Do not share your `APPLICATION_SECRET` in publicly accessible areas such as GitHub, client-side code, etc. <br><br> Authentication is performed using HTTP Basic Authentication. `Your APPLICATION_KEY` should be sent as the basic auth `username` and your `APPLICATION_SECRET` should be sent as the basic auth `password`. <br><br> All requests should be made via HTTPS.<aside class=\"info\">HTTP Basic Authentication credentials are generated by concatenating APPLICATION_KEY and APPLICATION_SECRET separated with a colon and encoded with base64 to form the `authToken`, as follows: <br><br>`authToken` = Base64 encoded(`APPLICATION_KEY` + ':' + `APPLICATION_SECRET`).</aside>",
         "scheme": "basic",
         "type": "http"
       }
@@ -17106,7 +17114,7 @@
           }
         }
       },
-      "account-statements-example-esponse": {
+      "account-statements-example-response": {
         "description": "Example Response",
         "value": {
           "meta": {
