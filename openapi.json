@@ -12968,10 +12968,66 @@
             "$ref": "#/components/schemas/TransactionBalance"
           },
           "payeeDetails": {
-            "$ref": "#/components/schemas/Payee"
+            "type": "object",
+            "description": "Details of the beneficiary [person or business].",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The account holder name of the Payee."
+              },
+              "accountIdentifications": {
+                "type": "array",
+                "description": "The account identifications that identify the Payee's bank account.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "allOf" : [
+                        {
+                        "$ref": "#/components/schemas/AccountIdentificationType"
+                        }
+                      ],
+                      "description": "Describes the format of the account."
+                    },
+                    "identification": {
+                      "type": "string",
+                      "description": "The value associated with the account identification type."
+                    }
+                  }
+                }
+              }
+            }
           },
           "payerDetails": {
-            "$ref": "#/components/schemas/Payer"
+            "type": "object",
+            "description": "Details of the benefactor [person or business].",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The account holder name of the Payer."
+              },
+              "accountIdentifications": {
+                "type": "array",
+                "description": "The account identifications that identify the Payer's bank account.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "allOf" : [
+                        {
+                          "$ref": "#/components/schemas/AccountIdentificationType"
+                        }
+                      ],
+                      "description": "Describes the format of the account."
+                    },
+                    "identification": {
+                      "type": "string",
+                      "description": "The value associated with the account identification type."
+                    }
+                  }
+                }
+              }
+            }
           },
           "merchant": {
             "$ref": "#/components/schemas/Merchant"
