@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.18.0",
+    "version": "2.19.1",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -67,8 +67,29 @@
       "name": "Variable Recurring Payments"
     }
   ],
+  "x-tagGroups": [
+    {
+      "name": "Endpoints",
+      "tags": [
+        "Application",
+        "Users",
+        "Institutions",
+        "Consents",
+        "Authorisations",
+        "Financial Data",
+        "Payments",
+        "Financial Profile",
+        "Notifications",
+        "Virtual Accounts",
+        "Variable Recurring Payments"
+      ]
+    }
+  ],
   "paths": {
     "/account-auth-requests": {
+      "x-yapily-features": [
+        "INITIATE_ACCOUNT_REQUEST"
+      ],
       "patch": {
         "description": "Used to prompt the account holder for continued access to their financial data. This endpoint should be used when a `Consent` that was previously `AUTHORIZED` can no longer be used to retrieve data.<br><br>See [Re-Authorisation](https://docs.yapily.com/pages/key-concepts/account-data/account-consents/#re-authorisation) for more information.",
         "operationId": "reAuthoriseAccount",
@@ -361,6 +382,10 @@
       }
     },
     "/accounts": {
+      "x-yapily-features": [
+        "ACCOUNTS",
+        "ACCOUNTS_WITHOUT_BALANCE"
+      ],
       "get": {
         "description": "Returns all accounts and balances for the end user associated with the presented consent token.<br><br>Feature: `ACCOUNTS`",
         "operationId": "getAccounts",
@@ -451,6 +476,10 @@
       }
     },
     "/accounts/{accountId}": {
+      "x-yapily-features": [
+        "ACCOUNT",
+        "ACCOUNT_WITHOUT_BALANCE"
+      ],
       "get": {
         "description": "Returns the account and balance information for a user's specified account.<br><br>Feature: `ACCOUNT`",
         "operationId": "getAccount",
@@ -550,6 +579,9 @@
       }
     },
     "/accounts/{accountId}/balances": {
+      "x-yapily-features": [
+        "ACCOUNT_BALANCES"
+      ],
       "get": {
         "description": "Returns the balance for the end user associated with the presented consent token.<br><br>\n__Note__: This endpoint is only for obtaining the balance information of an account belonging to an `Institution` that exposes their APIs through the [CBI Globe Gateway](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe//). If the `Institution` you wish to obtain balance data is not in the CBI Globe, use [Get Account](https://docs.yapily.com/api/reference/#operation/getAccount) or [Get Accounts](https://docs.yapily.com/api/reference/#operation/getAccounts) to get balance data. <br><br>Feature: `ACCOUNT_BALANCES` ",
         "operationId": "getAccountBalances",
@@ -649,6 +681,9 @@
       }
     },
     "/accounts/{accountId}/beneficiaries": {
+      "x-yapily-features": [
+        "ACCOUNT_BENEFICIARIES"
+      ],
       "get": {
         "description": "Returns all the beneficiaries of a user's account.<br><br>Feature: `ACCOUNT_BENEFICIARIES`",
         "operationId": "getBeneficiaries",
@@ -721,6 +756,9 @@
       }
     },
     "/accounts/{accountId}/direct-debits": {
+      "x-yapily-features": [
+        "ACCOUNT_DIRECT_DEBITS"
+      ],
       "get": {
         "description": "Returns the list of direct debits for an account.<br><br>Feature: `ACCOUNT_DIRECT_DEBITS`",
         "operationId": "getAccountDirectDebits",
@@ -803,6 +841,9 @@
       }
     },
     "/accounts/{accountId}/periodic-payments": {
+      "x-yapily-features": [
+        "ACCOUNT_PERIODIC_PAYMENTS"
+      ],
       "get": {
         "description": "Returns the list of periodic payments (standing orders in the UK) for an account.<br><br>Feature: `ACCOUNT_PERIODIC_PAYMENTS`",
         "operationId": "getAccountPeriodicPayments",
@@ -885,6 +926,9 @@
       }
     },
     "/accounts/{accountId}/scheduled-payments": {
+      "x-yapily-features": [
+        "ACCOUNT_SCHEDULED_PAYMENTS"
+      ],
       "get": {
         "description": "Returns the list of scheduled payments for an account.<br><br>Feature: `ACCOUNT_SCHEDULED_PAYMENTS`",
         "operationId": "getAccountScheduledPayments",
@@ -967,6 +1011,9 @@
       }
     },
     "/accounts/{accountId}/statements": {
+      "x-yapily-features": [
+        "ACCOUNT_STATEMENTS"
+      ],
       "get": {
         "description": "Returns the list of statements for an account.<br><br>Feature: `ACCOUNT_STATEMENTS`",
         "operationId": "getStatements",
@@ -1086,6 +1133,9 @@
       }
     },
     "/accounts/{accountId}/statements/{statementId}": {
+      "x-yapily-features": [
+        "ACCOUNT_STATEMENT"
+      ],
       "get": {
         "description": "Returns a statement for an account.<br><br>Feature: `ACCOUNT_STATEMENT`",
         "operationId": "getStatement",
@@ -1177,6 +1227,9 @@
       }
     },
     "/accounts/{accountId}/statements/{statementId}/file": {
+      "x-yapily-features": [
+        "ACCOUNT_STATEMENT_FILE"
+      ],
       "get": {
         "description": "Returns a PDF file of a statement for an account.<br><br>Feature: `ACCOUNT_STATEMENT_FILE`",
         "operationId": "getStatementFile",
@@ -1254,6 +1307,10 @@
       }
     },
     "/accounts/{accountId}/transactions": {
+      "x-yapily-features": [
+        "ACCOUNT_TRANSACTIONS",
+        "ACCOUNT_TRANSACTIONS_WITH_MERCHANT"
+      ],
       "get": {
         "description": "Returns the account transactions for an account.<br><br>Feature: `ACCOUNT_TRANSACTIONS`",
         "operationId": "getTransactions",
@@ -1305,7 +1362,7 @@
             }
           },
           {
-            "description": "__Optional__. Can be `categories` or `merchant`. When set, will include enrichment data in the transactions returned. <br><br>Enrichment data is optional, e.g. when 'merchant' enrichment data is requested, the enrichment response will include merchant data only if it can be evaluated from the transaction.",
+            "description": "__Optional__. Acceptable value: `categorisation`. When set, will include enrichment data in the transactions returned. <br><br>Enrichment data is optional, e.g. when 'categorisation' enrichment data is requested, the enrichment response will include categorisation data and merchant name, only if it can be evaluated from the transaction. This service is limited for UK institution transactions currently.",
             "in": "query",
             "name": "with",
             "required": false,
@@ -1421,6 +1478,9 @@
       }
     },
     "/bulk-payment-auth-requests": {
+      "x-yapily-features": [
+        "INITIATE_BULK_PAYMENT"
+      ],
       "post": {
         "description": "Used to initiate the authorisation process and direct users to the login screen of their financial Institution in order to give their consent for a bulk payment. See [Bulk Payments](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/bulk-payments/) for more information. <br><br>See [Redirect Payment Flows](https://docs.yapily.com/pages/key-concepts/payments/payment-authorisation/redirect-payment-flows/) for more information about this flow.<br><br>Feature: `INITIATE_BULK_PAYMENT`",
         "operationId": "createBulkPaymentAuthorisation",
@@ -1516,6 +1576,9 @@
       }
     },
     "/bulk-payments": {
+      "x-yapily-features": [
+        "CREATE_BULK_PAYMENT"
+      ],
       "post": {
         "description": "Creates a bulk payment after obtaining the user's authorisation. <br><br>Feature: `CREATE_BULK_PAYMENT`",
         "operationId": "createBulkPayment",
@@ -2115,6 +2178,9 @@
       }
     },
     "/embedded-account-auth-requests": {
+      "x-yapily-features": [
+        "INITIATE_EMBEDDED_ACCOUNT_REQUEST"
+      ],
       "post": {
         "description": "Used to initiate the embedded authorisation process for an `Institution` that contains the `INITIATE_EMBEDDED_ACCOUNT_REQUEST` feature in order to obtain the the user's authorisation to access their account information. <br><br>See [Embedded Account Flows](https://docs.yapily.com/pages/key-concepts/account-data/account-authorisation/embedded-account-flows/) for more information about this flow.<br><br>Feature: `INITIATE_EMBEDDED_ACCOUNT_REQUEST`",
         "operationId": "initiateEmbeddedAccountRequest",
@@ -2323,6 +2389,9 @@
       }
     },
     "/embedded-bulk-payment-auth-requests": {
+      "x-yapily-features": [
+        "INITIATE_EMBEDDED_BULK_PAYMENT"
+      ],
       "post": {
         "description": "Used to initiate the embedded authorisation process for an `Institution` that contains the `INITIATE_EMBEDDED_BULK_PAYMENT` feature in order to obtain the the user's authorisation for a bulk payment. See [Bulk Payments](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/bulk-payments/) for more information. <br><br> See [Embedded Payment Flows](https://docs.yapily.com/pages/key-concepts/payments/payment-authorisation/embedded-payment-flows/) for more information about this flow.<br><br>Feature: `INITIATE_EMBEDDED_BULK_PAYMENT`",
         "operationId": "createEmbeddedBulkPaymentAuthorisation",
@@ -2522,6 +2591,9 @@
       }
     },
     "/embedded-payment-auth-requests": {
+      "x-yapily-features": [
+        "INITIATE_EMBEDDED_DOMESTIC_SINGLE_PAYMENT"
+      ],
       "post": {
         "description": "Used to initiate the embedded authorisation process for an `Institution` that contains the `INITIATE_EMBEDDED_DOMESTIC_SINGLE_PAYMENT` feature in order to obtain the the user's authorisation for a payment.<br><br> See [Embedded Payment Flows](https://docs.yapily.com/pages/key-concepts/payments/payment-authorisation/embedded-payment-flows/) for more information about this flow.<br><br>Feature: `INITIATE_EMBEDDED_DOMESTIC_SINGLE_PAYMENT`",
         "operationId": "createEmbeddedPaymentAuthorisation",
@@ -2769,6 +2841,9 @@
       }
     },
     "/identity": {
+      "x-yapily-features": [
+        "IDENTITY"
+      ],
       "get": {
         "description": "Returns the identity information for an account.<br><br>Feature: `IDENTITY`",
         "operationId": "getIdentity",
@@ -2969,6 +3044,21 @@
       }
     },
     "/payment-auth-requests": {
+      "x-yapily-features": [
+        "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
+        "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "INITIATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "READ_DOMESTIC_PERIODIC_PAYMENT_REFUND",
+        "READ_DOMESTIC_SCHEDULED_REFUND",
+        "READ_DOMESTIC_SINGLE_REFUND",
+        "READ_INTERNATIONAL_SCHEDULED_REFUND",
+        "READ_INTERNATIONAL_SINGLE_REFUND"
+      ],
       "post": {
         "description": "Used to initiate the authorisation process and direct users to the login screen of their financial Institution in order to give their consent for a payment. This endpoint is used to initiate all the different payment listed below. Based on the type of payment you wish to make, you may be required to provide specific properties in [PaymentRequest](https://docs.yapily.com/api/reference/#operation/createPaymentAuthorisation!path=paymentRequest&t=request). First make sure that the payment feature you wish to execute is supported by the bank by checking the features array in [GET Institution](https://docs.yapily.com/api/reference/#operation/getInstitution). <br><br>See [Redirect Payment Flows](https://docs.yapily.com/pages/key-concepts/payments/payment-authorisation/redirect-payment-flows/) for more information about this flow.<br><br>Features:<ul><li>`INITIATE_DOMESTIC_PERIODIC_PAYMENT`</li><li>`INITIATE_DOMESTIC_SCHEDULED_PAYMENT`</li><li>`INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT`</li><li>`INITIATE_DOMESTIC_SINGLE_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_PERIODIC_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT`</li><li>`INITIATE_INTERNATIONAL_SINGLE_PAYMENT`</li></ul>",
         "operationId": "createPaymentAuthorisation",
@@ -3173,6 +3263,17 @@
       }
     },
     "/payments": {
+      "x-yapily-features": [
+        "CREATE_DOMESTIC_PERIODIC_PAYMENT",
+        "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_PAYMENT",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "PERIODIC_PAYMENT_FREQUENCY_EXTENDED"
+      ],
       "post": {
         "description": "Creates a payment after obtaining the user's authorisation. <br><br>Features:<ul><li>`CREATE_DOMESTIC_PERIODIC_PAYMENT`</li><li>`CREATE_DOMESTIC_SCHEDULED_PAYMENT`</li><li>`CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT`</li><li>`CREATE_DOMESTIC_SINGLE_PAYMENT`</li><li>`CREATE_INTERNATIONAL_PERIODIC_PAYMENT`</li><li>`CREATE_INTERNATIONAL_SCHEDULED_PAYMENT`</li><li>`CREATE_INTERNATIONAL_SINGLE_PAYMENT`</li></ul>",
         "operationId": "createPayment",
@@ -3284,6 +3385,9 @@
       }
     },
     "/payments/{paymentId}/details": {
+      "x-yapily-features": [
+        "EXISTING_PAYMENTS_DETAILS"
+      ],
       "get": {
         "description": "Returns the details of a payment. <br><br>Most commonly used to check for payment status updates. <br><br>Feature: `EXISTING_PAYMENTS_DETAILS`",
         "operationId": "getPayments",
@@ -3389,6 +3493,12 @@
       }
     },
     "/pre-auth-requests": {
+      "x-yapily-features": [
+        "INITIATE_ONETIME_PRE_AUTHORISATION",
+        "INITIATE_PRE_AUTHORISATION",
+        "INITIATE_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_PRE_AUTHORISATION_PAYMENTS"
+      ],
       "post": {
         "description": "Used to initiate the pre-authorisation process for any `Institution` that contains the `INITIATE_PRE_AUTHORISATION` feature to authenticate the user. <br><br>Feature: `INITIATE_PRE_AUTHORISATION`",
         "operationId": "createPreAuthorisationRequest",
@@ -3400,6 +3510,33 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "description": "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.",
+            "in": "header",
+            "name": "psu-id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.",
+            "in": "header",
+            "name": "psu-corporate-id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.",
+            "in": "header",
+            "name": "psu-ip-address",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -3434,7 +3571,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfAccountAuthorisationResponse"
+                  "$ref": "#/components/schemas/ApiResponseOfPreAuthorisationResponse"
                 }
               }
             },
@@ -3463,6 +3600,9 @@
       }
     },
     "/payment-pre-auth-requests": {
+      "x-yapily-features": [
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+      ],
       "post": {
         "description": "Used to initiate the pre-authorisation process for payments for CbiGlobe `Institution` that contains the `INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS` feature to authenticate the user. <br><br>Feature: `INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS`",
         "operationId": "createPaymentPreAuthorisationRequest",
@@ -3474,6 +3614,15 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "description": "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.",
+            "in": "header",
+            "name": "psu-ip-address",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -3502,7 +3651,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfAccountAuthorisationResponse"
+                  "$ref": "#/components/schemas/ApiResponseOfPreAuthorisationResponse"
                 }
               }
             },
@@ -3968,14 +4117,14 @@
         }
       }
     },
-    "/users/{userUuid}/profile": {
+    "/users/{userUuid}/profile/transaction-groups": {
       "get": {
         "tags": [
           "Financial Profile"
         ],
         "operationId": "getUserProfile",
-        "summary": "Get User Profile",
-        "description": "Used to retrieve a `FinancialProfile` for a `User`.  Status will be `PENDING` until all ProfileConsents are `COMPLETED`.",
+        "summary": "Get Transaction Groups",
+        "description": "Used to retrieve a `TransactionGroups` for a `User`.  Status will be `PENDING` until all ProfileConsents are `COMPLETED`.",
         "parameters": [
           {
             "description": "__Mandatory__. The Yapily generated UUID for the user.",
@@ -4314,6 +4463,7 @@
     "/virtual-accounts/beneficiaries": {
       "get": {
         "tags": [
+          "Virtual Accounts Beneficiaries",
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountBeneficiaries",
@@ -4425,6 +4575,7 @@
       },
       "post": {
         "tags": [
+          "Virtual Accounts Beneficiaries",
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountBeneficiary",
@@ -4620,6 +4771,7 @@
     "/virtual-accounts/beneficiaries/{beneficiaryId}": {
       "get": {
         "tags": [
+          "Virtual Accounts Beneficiaries",
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountBeneficiary",
@@ -4732,6 +4884,7 @@
       },
       "delete": {
         "tags": [
+          "Virtual Accounts Beneficiaries",
           "Virtual Accounts"
         ],
         "operationId": "deleteVirtualAccountBeneficiary",
@@ -4791,6 +4944,7 @@
     "/virtual-accounts/accounts": {
       "get": {
         "tags": [
+          "Virtual Accounts Accounts",
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccounts",
@@ -4938,6 +5092,7 @@
       },
       "post": {
         "tags": [
+          "Virtual Accounts Accounts",
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccount",
@@ -5042,6 +5197,7 @@
     "/virtual-accounts/payments/pay-outs": {
       "post": {
         "tags": [
+          "Virtual Accounts Payments",
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountPayOut",
@@ -5160,6 +5316,7 @@
     "/virtual-accounts/accounts/{accountId}": {
       "get": {
         "tags": [
+          "Virtual Accounts Accounts",
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountById",
@@ -5280,6 +5437,7 @@
       },
       "patch": {
         "tags": [
+          "Virtual Accounts Accounts",
           "Virtual Accounts"
         ],
         "operationId": "updateVirtualAccountById",
@@ -5420,6 +5578,7 @@
     "/virtual-accounts/payments": {
       "get": {
         "tags": [
+          "Virtual Accounts Payments",
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountPayments",
@@ -5461,7 +5620,7 @@
           {
             "name": "status",
             "in": "query",
-            "description": "__Optional__. Filter payments based on the payment status. One of INITIATED, PROCESSING, COMPLETED, FAILED",
+            "description": "__Optional__. Filter payments based on the payment status. One of INITIATED, PENDING, PROCESSING, COMPLETED, FAILED",
             "example": [
               "INITIATED",
               "COMPLETED"
@@ -5583,6 +5742,7 @@
     "/virtual-accounts/payments/{id}": {
       "get": {
         "tags": [
+          "Virtual Accounts Payments",
           "Virtual Accounts"
         ],
         "operationId": "getPaymentsById",
@@ -5684,6 +5844,7 @@
     "/virtual-accounts/payments/transfers": {
       "post": {
         "tags": [
+          "Virtual Accounts Payments",
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountTransfer",
@@ -5809,6 +5970,7 @@
     "/virtual-accounts/payments/{paymentId}/pay-in-details": {
       "get": {
         "tags": [
+          "Virtual Accounts Payments",
           "Virtual Accounts"
         ],
         "operationId": "getPayInDetails",
@@ -5918,6 +6080,7 @@
     "/virtual-accounts/clients": {
       "post": {
         "tags": [
+          "Virtual Accounts Clients",
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountClient",
@@ -6066,6 +6229,7 @@
       },
       "get": {
         "tags": [
+          "Virtual Accounts Clients",
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountClients",
@@ -6251,6 +6415,7 @@
     "/virtual-accounts/refunds": {
       "post": {
         "tags": [
+          "Virtual Accounts Refunds",
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountRefund",
@@ -6327,7 +6492,7 @@
                       "data": {
                         "id": "46d3349e-6733-459d-a6da-71850a7e8076",
                         "originalPayment": {
-                          "paymentInititationId": "19d2fbfb-f30c-44eb-b3b5-978560d2b712"
+                          "paymentInitiationId": "19d2fbfb-f30c-44eb-b3b5-978560d2b712"
                         },
                         "status": "INITIATED",
                         "amount": {
@@ -6369,6 +6534,7 @@
     "/virtual-accounts/refunds/{id}": {
       "get": {
         "tags": [
+          "Virtual Accounts Refunds",
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountRefundById",
@@ -6488,6 +6654,7 @@
     "/virtual-accounts/clients/{clientId}": {
       "get": {
         "tags": [
+          "Virtual Accounts Clients",
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountClientById",
@@ -6588,6 +6755,9 @@
       }
     },
     "/variable-recurring-payments/sweeping/consents": {
+      "x-yapily-features": [
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING"
+      ],
       "post": {
         "description": "Used to initiate the authorisation process and direct users to the login screen of their financial Institution in order to give their consent for Sweeping Variable Recurring Payments. The request would return an Authorization URL and an Identifier for the consent created at the Institution. First make sure that the payment feature you wish to execute is supported by the bank by checking the features array in [GET Institution](https://docs.yapily.com/api/#get-institution). <br><br>See [Redirect Payment Flows](https://docs.yapily.com/guides/payments/payment-authorisation-flows/redirect/) for more information about this flow.<br><br>Features:<ul><li>`INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`</li></ul>",
         "operationId": "createSweepingAuthorisation",
@@ -6840,6 +7010,9 @@
       }
     },
     "/variable-recurring-payments/non-sweeping/consents": {
+      "x-yapily-features": [
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING"
+      ],
       "post": {
         "description": "Used to initiate the authorisation process and direct users to the login screen of their financial Institution in order to give their consent for Non-Sweeping Variable Recurring Payments. The request would return an Authorization URL and an Identifier for the consent created at the Institution. First make sure that the payment feature you wish to execute is supported by the bank by checking the features array in [GET Institution](https://docs.yapily.com/api/#get-institution). <br><br>See [Redirect Payment Flows](https://docs.yapily.com/guides/payments/payment-authorisation-flows/redirect/) for more information about this flow.<br><br>Features:<ul><li>`INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING`</li></ul>",
         "operationId": "createNonSweepingAuthorisation",
@@ -7118,6 +7291,10 @@
       }
     },
     "/variable-recurring-payments/payments": {
+      "x-yapily-features": [
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING"
+      ],
       "post": {
         "description": "Creates a Variable Recurring Payment transaction after obtaining the user's authorisation.<br><br>Features:<ul><li>`CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`</li><li>`CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING`</li></ul>",
         "operationId": "createVrpPayment",
@@ -7718,6 +7895,9 @@
       }
     },
     "/variable-recurring-payments/funds-confirmation": {
+      "x-yapily-features": [
+        "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION"
+      ],
       "post": {
         "description": "Confirms whether there are available funds on the Payer account to execute a Variable Recurring Payment after obtaining the user's authorisation. <br><br>Features:<ul><li>`VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION`</li></ul>",
         "operationId": "createVrpFundsConfirmation",
@@ -8240,7 +8420,7 @@
                         "issues": [
                           {
                             "type": "CREDENTIALS",
-                            "code": "CREDENTIALS_MISING",
+                            "code": "CREDENTIALS_MISSING",
                             "message": "Authentication header not present"
                           }
                         ]
@@ -8604,14 +8784,13 @@
       },
       "AccountInfo": {
         "required": [
-          "accountId",
           "accountIdentification"
         ],
         "type": "object",
         "properties": {
           "accountId": {
             "type": "string",
-            "description": "__Mandatory__. Unique identifier of the account.",
+            "description": "__Conditional__. Unique identifier of the account.",
             "example": "500000000000000000000001"
           },
           "accountIdentification": {
@@ -8749,7 +8928,8 @@
           "IFS",
           "CLABE",
           "CTN",
-          "BRANCH_CODE"
+          "BRANCH_CODE",
+          "VIRTUAL_ACCOUNT_ID"
         ]
       },
       "ApiResponseOfAccountStatement": {
@@ -9305,7 +9485,7 @@
           },
           "userUuid": {
             "type": "string",
-            "description": "__Conditional__. User-friendly identifier of the `User` that provides authorisation. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided.",
+            "description": "__Conditional__. `User` for which the authorisation request was created.",
             "format": "uuid"
           },
           "applicationUserId": {
@@ -9433,38 +9613,46 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "`User` for which the authorisation request was created.",
             "format": "uuid"
           },
           "userUuid": {
             "type": "string",
+            "description": "__Conditional__. `User` for which the authorisation request was created.",
             "format": "uuid"
           },
           "applicationUserId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
           },
           "referenceId": {
             "type": "string"
           },
           "institutionId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
+            "description": "Date and time of when the consent was created.",
             "format": "date-time"
           },
           "transactionFrom": {
             "type": "string",
+            "description": "When performing a transaction query using the consent, this is the earliest date of transaction records that can be retrieved.",
             "format": "date-time"
           },
           "transactionTo": {
             "type": "string",
+            "description": "When performing a transaction query using the consent, this is the latest date of transaction records that can be retrieved.",
             "format": "date-time"
           },
           "expiresAt": {
             "type": "string",
+            "description": "Date and time of when the authorisation will expire by. Reauthorisation will be needed to retain access.",
             "format": "date-time"
           },
           "timeToExpireInMillis": {
@@ -9478,19 +9666,23 @@
           },
           "featureScope": {
             "uniqueItems": true,
+            "description": "The set of features that the consent will provide access to.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FeatureEnum"
             }
           },
           "consentToken": {
-            "type": "string"
+            "type": "string",
+            "description": "Represents the authorisation to gain access to the requested features. Required to access account information or make a payment request."
           },
           "state": {
-            "type": "string"
+            "type": "string",
+            "description": "Correlation ID used with the `Institution` during the authorisation process."
           },
           "authorizedAt": {
             "type": "string",
+            "description": "Date and time of when the request was authorised by the Institution.",
             "format": "date-time"
           },
           "lastConfirmedAt": {
@@ -9504,13 +9696,15 @@
             "format": "date-time"
           },
           "institutionConsentId": {
-            "type": "string"
+            "type": "string",
+            "description": "Identification of the consent at the Institution."
           },
           "authorisationUrl": {
             "type": "string"
           },
           "qrCodeUrl": {
-            "type": "string"
+            "type": "string",
+            "description": "The URL link for the QR code that may be scanned via a mobile device to make a authorisation redirect to the bank (authURL encoded)."
           }
         }
       },
@@ -9630,23 +9824,27 @@
       },
       "Beneficiary": {
         "type": "object",
+        "description": "Account information belonging to the target beneficiary (person/ business).",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique identifier of the `beneficiary`."
           },
           "reference": {
-            "type": "string"
+            "type": "string",
+            "description": "A creditor reference that is requested to be used for all payment instructions to this beneficiary."
           },
           "payee": {
             "$ref": "#/components/schemas/BeneficiaryPayee"
           },
           "trusted": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether the account owner has stated that this beneficiary should be trusted. This often results in reduced authentication and authorisation requirements on payments to the beneficiary."
           }
         }
       },
       "BeneficiaryPayee": {
-        "description": "__Mandatory__. The `BeneficiaryPayee` object contains details of the beneficiary [person or business]. You must define this in your payment request along with all of the nested mandatory properties.",
+        "description": "__Mandatory__. Account details belonging to the `Beneficiary Payee` (person/ business). You must define this in your payment request along with all of the nested mandatory properties.",
         "required": [
           "accountIdentifications"
         ],
@@ -9842,6 +10040,7 @@
       },
       "Categorisation": {
         "type": "object",
+        "description": "Income and Expense categorisation that the Yapily categorisation engine has determined for the transaction.",
         "properties": {
           "categories": {
             "type": "array",
@@ -9856,16 +10055,20 @@
       },
       "Category": {
         "type": "object",
+        "description": "Income and Expense `Category` in which the transaction resides.",
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier of the category",
             "format": "uuid"
           },
           "label": {
-            "type": "string"
+            "type": "string",
+            "description": "Descriptive identifier of the category."
           },
           "country": {
-            "type": "string"
+            "type": "string",
+            "description": "The country code of where the category transaction took place, denoted as a 3-digit character code - ISO 3166."
           },
           "subcategories": {
             "type": "array",
@@ -9926,25 +10129,28 @@
       },
       "PaymentChargeDetails": {
         "type": "object",
+        "description": "Details the charges that will apply to the payment.",
         "properties": {
           "chargeAmount": {
             "$ref": "#/components/schemas/Amount"
           },
           "chargeType": {
-            "description": "Type of charge",
+            "description": "__Mandatory__. Specifies the nature of the transaction charge e.g. (Bank transfer fees).",
             "type": "string"
           },
           "chargeTo": {
-            "description": "Charge bearer",
+            "description": "__Mandatory__. States which party of the payment bears the charges.",
             "type": "string"
           }
         }
       },
       "Consent": {
         "type": "object",
+        "description": "Consent detailing the requested authorisation from a user to a specific `Institution`.",
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier of the consent.",
             "format": "uuid"
           },
           "userUuid": {
@@ -9952,31 +10158,37 @@
             "format": "uuid"
           },
           "applicationUserId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
           },
           "referenceId": {
             "type": "string"
           },
           "institutionId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
+            "description": "Date and time of when the consent was created.",
             "format": "date-time"
           },
           "transactionFrom": {
             "type": "string",
+            "description": "When performing a transaction query using the consent, this is the earliest date of transaction records that can be retrieved.",
             "format": "date-time"
           },
           "transactionTo": {
             "type": "string",
+            "description": "When performing a transaction query using the consent, this is the latest date of transaction records that can be retrieved.",
             "format": "date-time"
           },
           "expiresAt": {
             "type": "string",
+            "description": "Date and time of when the authorisation will expire by. Reauthorisation will be needed to retain access.",
             "format": "date-time"
           },
           "timeToExpireInMillis": {
@@ -9990,19 +10202,23 @@
           },
           "featureScope": {
             "uniqueItems": true,
+            "description": "The set of features that the consent will provide access to.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FeatureEnum"
             }
           },
           "consentToken": {
-            "type": "string"
+            "type": "string",
+            "description": "Represents the authorisation to gain access to the requested features. Required to access account information or make a payment request."
           },
           "state": {
-            "type": "string"
+            "type": "string",
+            "description": "Correlation ID used with the `Institution` during the authorisation process."
           },
           "authorizedAt": {
             "type": "string",
+            "description": "Date and time of when the request was authorised by the Institution.",
             "format": "date-time"
           },
           "lastConfirmedAt": {
@@ -10016,7 +10232,8 @@
             "format": "date-time"
           },
           "institutionConsentId": {
-            "type": "string"
+            "type": "string",
+            "description": "Identification of the consent at the Institution."
           }
         }
       },
@@ -10117,19 +10334,23 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "__Conditional__. User-friendly identifier of the `User` that provides authorisation. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided.",
             "format": "uuid"
           },
           "deleteStatus": {
             "$ref": "#/components/schemas/DeleteStatusEnum"
           },
           "institutionId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
           },
           "institutionConsentId": {
-            "type": "string"
+            "type": "string",
+            "description": "Identification of the consent at the Institution."
           },
           "creationDate": {
             "type": "string",
+            "description": "Date and time of when the consent was authorised.",
             "format": "date-time"
           }
         }
@@ -10187,10 +10408,12 @@
         "type": "object",
         "properties": {
           "displayName": {
-            "type": "string"
+            "type": "string",
+            "description": "Country name."
           },
           "countryCode2": {
-            "type": "string"
+            "type": "string",
+            "description": "Two character ISO 3166 country code."
           }
         },
         "description": "An array of `Country` denoting which regions the `Institution` provides coverage for"
@@ -10218,6 +10441,7 @@
       },
       "CreditLine": {
         "type": "object",
+        "description": "__Mandatory__. Details whether the account has access to a credit line from an `Institution`.",
         "properties": {
           "type": {
             "$ref": "#/components/schemas/CreditLineType"
@@ -10229,6 +10453,7 @@
       },
       "CreditLineType": {
         "type": "string",
+        "description": "__Mandatory__. The type of credit that has been provided.",
         "enum": [
           "AVAILABLE",
           "CREDIT",
@@ -10304,11 +10529,11 @@
         }
       },
       "EnrichedTransaction": {
-        "description": "Part of a financial profile for a User.",
+        "description": "Details of the transaction, identified by Yapily data services.",
         "properties": {
           "transactionId": {
             "type": "string",
-            "description": "The id of the transaction",
+            "description": "Unique identifier of the transaction",
             "example": "c51e3bee-36fb-4c0a-8441-d6ba2056fe87"
           },
           "transactionInformation": {
@@ -10319,23 +10544,23 @@
           "amount": {
             "example": 21.99,
             "type": "number",
-            "description": "The amount of the transaction"
+            "description": "Monetary amount."
           },
           "institution": {
             "type": "string",
-            "description": "The id of the institution",
+            "description": "The `Institution` that the transaction is sent to.",
             "example": "starling"
           },
           "bookingDateTime": {
             "type": "string",
             "format": "date-time",
-            "description": "The datetime of the transaction",
+            "description": "Date and time of when a transaction entry occured and was posted to the account servicer's books.",
             "example": "2020-04-24T00:30:19.951Z"
           }
         }
       },
       "EnrichedWrapper": {
-        "description": "A financial profile for a User.",
+        "description": "Details of income and expenditure streams, identified by Yapily data services.",
         "required": [
           "incomeStreams",
           "expenditureStreams",
@@ -10345,14 +10570,14 @@
         "properties": {
           "incomeStreams": {
             "type": "array",
-            "description": "A list of transaction streams",
+            "description": "Lists all possible income streams identified for the `Application User`.",
             "items": {
               "$ref": "#/components/schemas/TransactionStream"
             }
           },
           "expenditureStreams": {
             "type": "array",
-            "description": "A list of transaction streams",
+            "description": "Lists all possible expenditure streams identified for the `Application User`.",
             "items": {
               "$ref": "#/components/schemas/TransactionStream"
             }
@@ -10376,6 +10601,7 @@
       },
       "Enrichment": {
         "type": "object",
+        "description": "Enriched data that has been derived by Yapily using it's data processing and machine learning techniques.",
         "properties": {
           "categorisation": {
             "$ref": "#/components/schemas/Categorisation"
@@ -10384,31 +10610,38 @@
             "$ref": "#/components/schemas/TransactionHash"
           },
           "cleansedDescription": {
-            "type": "string"
+            "type": "string",
+            "description": "Cleaned version of the `Transaction Description` that removes miscellaneous, generic and unhelpful text."
           },
           "merchant": {
             "$ref": "#/components/schemas/EnrichmentMerchant"
           },
           "location": {
-            "type": "string"
+            "type": "string",
+            "description": "The location of where the transaction took place."
           },
           "paymentProcessor": {
-            "type": "string"
+            "type": "string",
+            "description": "A payment provider that manages (credit/debit) transactions between the `Institution` and the merchant."
           },
           "correctedDate": {
             "type": "string",
+            "description": "The likely date and time on which the transaction took place. This is distinct from `Booking Date Time` which usually refers to the post-clearing value.",
             "format": "date-time"
           }
         }
       },
       "EnrichmentMerchant": {
         "type": "object",
+        "description": "Details of the merchant, identified by Yapily data services.",
         "properties": {
           "merchantName": {
-            "type": "string"
+            "type": "string",
+            "description": "The name of the indivdual merchant involved in the transaction e.g. (TESCO Petrol)."
           },
           "parentGroup": {
-            "type": "string"
+            "type": "string",
+            "description": "The parent organisation that the merchant belongs to e.g. (TESCO)."
           }
         }
       },
@@ -10476,15 +10709,18 @@
       },
       "FeatureDetails": {
         "type": "object",
+        "description": "Features that an individual `Institution` may support. ",
         "properties": {
           "feature": {
             "$ref": "#/components/schemas/FeatureEnum"
           },
           "endpoint": {
-            "type": "string"
+            "type": "string",
+            "description": "Endpoints that are associated with the feature e.g. (available for use if an Institution supports a feature)."
           },
           "documentationUrl": {
-            "type": "string"
+            "type": "string",
+            "description": "The link to further documentation regarding the feature."
           }
         }
       },
@@ -10639,14 +10875,17 @@
         "properties": {
           "from": {
             "type": "string",
+            "description": "__Optional__. The earliest date and time of resources / records that should be returned.",
             "format": "date-time"
           },
           "before": {
             "type": "string",
+            "description": "__Optional__. The latest date and time of resources / records that should be returned.",
             "format": "date-time"
           },
           "limit": {
             "type": "integer",
+            "description": "__Optional__. The maximum number of resources / records that should be returned.",
             "format": "int32"
           },
           "sort": {
@@ -11000,26 +11239,31 @@
       },
       "FrequencyResponse": {
         "type": "object",
+        "description": "__Mandatory__. Defines the intervals at which payment should be made.",
         "properties": {
           "frequencyType": {
             "$ref": "#/components/schemas/FrequencyEnumExtended"
           },
           "intervalWeek": {
             "type": "integer",
+            "description": "The weekly intervals at which a payment will be made. e.g. 1 = Every months, 2 = Every 2 months.",
             "format": "int32"
           },
           "intervalMonth": {
             "type": "integer",
+            "description": "The monthly intervals at which a payment will be made. e.g. 1 = Every month, 2 = Every 2 months",
             "format": "int32"
           },
           "executionDay": {
             "type": "integer",
+            "description": "The day on which a payment will be made, according to the weekly or monthly interval.",
             "format": "int32"
           }
         }
       },
       "Identity": {
         "type": "object",
+        "description": "Identification details of a party associated with an account e.g. (account owner or operator).",
         "properties": {
           "id": {
             "type": "string"
@@ -11120,18 +11364,19 @@
       },
       "Institution": {
         "type": "object",
+        "description": "Typically, a bank or business unit within a bank e.g. (AIB Business, AIB Ireland, AIB UK).",
         "properties": {
           "id": {
             "type": "string",
-            "description": "The Yapily Id for the `Institution`"
+            "description": "Unique identifier for the `Institution`."
           },
           "name": {
             "type": "string",
-            "description": "The friendly name of the `Institution`"
+            "description": "The friendly name of the `Institution`."
           },
           "fullName": {
             "type": "string",
-            "description": "The full name of the `Institution`"
+            "description": "The full name of the `Institution`."
           },
           "countries": {
             "uniqueItems": true,
@@ -11211,20 +11456,25 @@
       },
       "InstitutionConsent": {
         "type": "object",
+        "description": "`Institution` authorised consents which are currently in place for the `Application User`.",
         "properties": {
           "institutionId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
           }
         }
       },
       "InstitutionError": {
         "type": "object",
+        "description": "Raw error details provided by the `Institution`, when it was the error source.",
         "properties": {
           "errorMessage": {
-            "type": "string"
+            "type": "string",
+            "description": "Textual description of the `Institution` error."
           },
           "httpStatusCode": {
             "type": "integer",
+            "description": "Numeric HTTP status code associated with the `Institution` error.",
             "format": "int32"
           }
         }
@@ -11237,7 +11487,7 @@
         "properties": {
           "currencyOfTransfer": {
             "type": "string",
-            "description": "__Mandatory__. The 3-letter currency code for the currency of the payment to be transferred which can differ from the currency of the payer's account."
+            "description": "__Mandatory__. The currency to be transferred to the payee. This may differ from the currency the payment is denoted in and the currency of the payer's account. Specified as a 3-letter code (ISO 4217)."
           },
           "exchangeRateInformation": {
             "$ref": "#/components/schemas/ExchangeRateInformation"
@@ -11257,6 +11507,7 @@
       },
       "IsoBankTransactionCode": {
         "type": "object",
+        "description": "Defines the underlying transaction type (e.g. Card or Debit Transactions, Loans or Mortages). <br><br> Conforms to `ISO` standards - ISO 20022.",
         "properties": {
           "domainCode": {
             "$ref": "#/components/schemas/IsoCodeDetails"
@@ -11271,13 +11522,16 @@
       },
       "IsoCodeDetails": {
         "type": "object",
+        "description": "__Mandatory__. Details the identification of the ISO code.",
         "properties": {
           "code": {
             "default": "UNKNOWN",
+            "description": "__Mandatory__. Unique identifier of the ISO code.",
             "type": "string"
           },
           "name": {
             "default": "UNKNOWN",
+            "description": "__Mandatory__. Name of the ISO Code.",
             "type": "string"
           }
         }
@@ -11286,22 +11540,27 @@
         "type": "object",
         "properties": {
           "source": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. URL from where the media can be retrieved."
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. The type of media e.g. (logo, icon)."
           }
         },
-        "description": "Contains links to the logo and the icons for the `Institution`"
+        "description": "Details of the media held for the `Institution`"
       },
       "Merchant": {
         "type": "object",
+        "description": "Details of the merchant involved in the transaction.",
         "properties": {
           "merchantName": {
-            "type": "string"
+            "type": "string",
+            "description": "The name of the merchant involved in the transaction."
           },
           "merchantCategoryCode": {
-            "type": "string"
+            "type": "string",
+            "description": "Defines the underlying services and goods that the merchant provides. Specified as a 3-letter ISO 18245 code "
           }
         }
       },
@@ -11342,39 +11601,46 @@
       },
       "MultiAuthorisation": {
         "type": "object",
+        "description": "Details the additional levels of authorisation which are required from, and being managed by, the `Institution`.",
         "properties": {
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "_Mandatory_. Specifies the current status of the multi-authorisation flow."
           },
           "numberOfAuthorisationRequired": {
             "type": "integer",
+            "description": "__Mandatory__. Total number of authorisations required.",
             "format": "int32"
           },
           "numberOfAuthorisationReceived": {
             "type": "integer",
+            "description": "__Mandatory__. The total number of authorisations that have been recieved.",
             "format": "int32"
           },
           "lastUpdatedDateTime": {
             "type": "string",
+            "description": "__Mandatory__. Date and time of when the authorisation was last updated.",
             "format": "date-time"
           },
           "expirationDateTime": {
             "type": "string",
+            "description": "__Mandatory__. Date and time by when the authorisation flow must be completed before it expires and the authorisation request is terminated.",
             "format": "date-time"
           }
         }
       },
       "NewApplicationUser": {
         "type": "object",
+        "description": "Details of a new user to be created for the application.",
         "properties": {
           "applicationUserId": {
             "type": "string",
-            "description": "__Optional__. An additional unique identifier that you can specify when creating a new `User` to more easily reference it",
+            "description": "__Optional__. The unique identifier of the `Application User` assigned by the Application Owner.",
             "example": "user-234562290"
           },
           "referenceId": {
             "type": "string",
-            "description": "__Deprecated__. A non-unique reference Id for the `User`"
+            "description": "__Deprecated__. A non-unique reference Id for the `Application User`."
           }
         }
       },
@@ -11429,6 +11695,7 @@
       },
       "Payee": {
         "type": "object",
+        "description": "__Mandatory__. Details of the beneficiary [person or business].",
         "required": [
           "accountIdentifications",
           "name"
@@ -11467,11 +11734,10 @@
           },
           "merchantCategoryCode": {
             "type": "string",
-            "description": "__Optional__. The category code of the merchant in case the `Payee` is a business.",
+            "description": "__Optional__. The category code of the merchant in case the `Payee` is a business. Specified as a 3-letter ISO 18245 code.",
             "example": "5551"
           }
-        },
-        "description": "__Mandatory__. The `Payee` object contains details of the beneficiary [person or business]. You must define this in your payment request alongwith all of the nested mandatory properties."
+        }
       },
       "PayeeDetails": {
         "type": "object",
@@ -11502,11 +11768,11 @@
           },
           "country": {
             "type": "string",
-            "description": "__Conditional__. The 2-letter country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment",
+            "description": "__Conditional__. The 2-letter ISO 3166 country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment",
             "example": "GB"
           }
         },
-        "description": "__Mandatory__. The `PayeeDetails` object contains details of the beneficiary [person or business]. You must define this in your payment request alongwith all of the nested mandatory properties."
+        "description": "__Mandatory__. Details of the beneficiary [person or business]."
       },
       "Payer": {
         "required": [
@@ -11531,7 +11797,7 @@
             "$ref": "#/components/schemas/Address"
           }
         },
-        "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/pages/knowledge/open-banking/berlin_group/) for more information.</li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.</li></ol>"
+        "description": "__Conditional__. Details of the benefactor [person or business]."
       },
       "PayerDetails": {
         "required": [
@@ -11548,7 +11814,7 @@
             }
           }
         },
-        "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/pages/knowledge/open-banking/berlin_group/) for more information.</li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.</li></ol>"
+        "description": "__Conditional__. Details of the benefactor [person or business]."
       },
       "PaymentAuthorisationRequest": {
         "required": [
@@ -11580,7 +11846,7 @@
           },
           "callback": {
             "type": "string",
-            "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/pages/knowledge/yapily-concepts/callback_url/#using-a-callback-optional) for more information.",
+            "description": "__Optional__. The URL to redirect the user to after the user complete the authorisation at the `Institution`.",
             "example": "https://display-parameters.com"
           },
           "redirect": {
@@ -11602,6 +11868,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier for the `Payment Authorisation Request`.",
             "format": "uuid"
           },
           "userUuid": {
@@ -11609,31 +11876,37 @@
             "format": "uuid"
           },
           "applicationUserId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
           },
           "referenceId": {
             "type": "string"
           },
           "institutionId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
+            "description": "Date and time of when the consent was created.",
             "format": "date-time"
           },
           "transactionFrom": {
             "type": "string",
+            "description": "When performing a transaction query using the consent, this is the earliest date of transaction records that can be retrieved.",
             "format": "date-time"
           },
           "transactionTo": {
             "type": "string",
+            "description": "When performing a transaction query using the consent, this is the latest date of transaction records that can be retrieved.",
             "format": "date-time"
           },
           "expiresAt": {
             "type": "string",
+            "description": "Date and time of when the authorisation will expire by. Reauthorisation will be needed to retain access.",
             "format": "date-time"
           },
           "timeToExpireInMillis": {
@@ -11647,23 +11920,28 @@
           },
           "featureScope": {
             "uniqueItems": true,
+            "description": "The set of features that the consent will provide access to.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FeatureEnum"
             }
           },
           "consentToken": {
-            "type": "string"
+            "type": "string",
+            "description": "Represents the authorisation to gain access to the requested features. Required to access account information or make a payment request."
           },
           "state": {
-            "type": "string"
+            "type": "string",
+            "description": "Corellation ID used with the `Institution` during the authorisation process."
           },
           "authorizedAt": {
             "type": "string",
+            "description": "Date and time of when the request was authorised by the Institution.",
             "format": "date-time"
           },
           "institutionConsentId": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique identifier of the consent, as assigned by the Institution."
           },
           "charges": {
             "type": "array",
@@ -11678,10 +11956,12 @@
             "type": "string"
           },
           "qrCodeUrl": {
-            "type": "string"
+            "type": "string",
+            "description": "The URL for a QR code that may be scanned via a mobile device to make a authorisation redirect to the bank (authURL encoded)."
           },
           "explanation": {
-            "type": "string"
+            "type": "string",
+            "description": "Message from the `Institution` received by Yapily, detailing the next action the user is required to take. This is used only for Decoupled flows."
           }
         }
       },
@@ -11790,34 +12070,41 @@
           },
           "userUuid": {
             "type": "string",
+            "description": "__Conditional__. `User` for which the authorisation request was created.",
             "format": "uuid"
           },
           "applicationUserId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
           },
           "referenceId": {
             "type": "string"
           },
           "institutionId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. The  `Institution` the authorisation request is sent to."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
+            "description": "Date and time of when the consent was created.",
             "format": "date-time"
           },
           "transactionFrom": {
             "type": "string",
+            "description": "When performing a transaction query using the consent, this is the earliest date of transaction records that can be retrieved.",
             "format": "date-time"
           },
           "transactionTo": {
             "type": "string",
+            "description": "When performing a transaction query using the consent, this is the latest date of transaction records that can be retrieved.",
             "format": "date-time"
           },
           "expiresAt": {
             "type": "string",
+            "description": "Date and time of when the authorisation will expire by. Reauthorisation will be needed to retain access.",
             "format": "date-time"
           },
           "timeToExpireInMillis": {
@@ -11837,17 +12124,21 @@
             }
           },
           "consentToken": {
-            "type": "string"
+            "type": "string",
+            "description": "Represents the authorisation to gain access to the requested features. Required to access account information or make a payment request."
           },
           "state": {
-            "type": "string"
+            "type": "string",
+            "description": "Corellation ID used with the `Institution` during the authorisation process."
           },
           "authorizedAt": {
             "type": "string",
+            "description": "Date and time of when the request was authorised by the Institution.",
             "format": "date-time"
           },
           "institutionConsentId": {
-            "type": "string"
+            "type": "string",
+            "description": "Identification of the consent at the Institution."
           },
           "charges": {
             "type": "array",
@@ -11862,7 +12153,8 @@
             "type": "string"
           },
           "qrCodeUrl": {
-            "type": "string"
+            "type": "string",
+            "description": "The URL link for the QR code that may be scanned via a mobile device to make a authorisation redirect to the bank (authURL encoded)."
           },
           "explanation": {
             "type": "string"
@@ -11913,6 +12205,7 @@
       },
       "PaymentIsoStatus": {
         "type": "object",
+        "description": "The payment status code, as denoted by a 3-letter ISO 20022 code.",
         "properties": {
           "code": {
             "$ref": "#/components/schemas/PaymentIsoStatusCodeEnum"
@@ -11967,6 +12260,7 @@
           },
           "forwardParameters": {
             "type": "array",
+            "description": "Extra parameters to be forwarded in the redirect back to the client after the user authorisation flow has been completed.",
             "items": {
               "type": "string"
             }
@@ -12069,13 +12363,16 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique identifier of the payment."
           },
           "institutionConsentId": {
-            "type": "string"
+            "type": "string",
+            "description": "Identification of the consent at the Institution."
           },
           "paymentIdempotencyId": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. A unique identifier that you must provide to identify the payment. This can be any alpha-numeric string but is limited to a maximum of 35 characters."
           },
           "paymentLifecycleId": {
             "type": "string"
@@ -12093,19 +12390,23 @@
             "$ref": "#/components/schemas/Payee"
           },
           "reference": {
-            "type": "string"
+            "type": "string",
+            "description": "__Optional__. The payment reference or description. Limited to a maximum of 18 characters long."
           },
           "amount": {
-            "type": "number"
+            "type": "number",
+            "description": "Monetary amount."
           },
           "currency": {
-            "type": "string"
+            "type": "string",
+            "description": "Currency the payment amount is denoted in. Specified as a 3-letter ISO 4217 code."
           },
           "amountDetails": {
             "$ref": "#/components/schemas/Amount"
           },
           "createdAt": {
             "type": "string",
+            "description": "Date and time of when the payment request was created.",
             "format": "date-time"
           },
           "firstPaymentAmount": {
@@ -12113,6 +12414,7 @@
           },
           "firstPaymentDateTime": {
             "type": "string",
+            "description": "Date and time of when the first payment request is to be made.",
             "format": "date-time"
           },
           "nextPaymentAmount": {
@@ -12120,6 +12422,7 @@
           },
           "nextPaymentDateTime": {
             "type": "string",
+            "description": "__Conditional__. Defines when the recurring payment is to be made.",
             "format": "date-time"
           },
           "finalPaymentAmount": {
@@ -12127,10 +12430,12 @@
           },
           "finalPaymentDateTime": {
             "type": "string",
+            "description": "Date and time of when the final payment is to be made.",
             "format": "date-time"
           },
           "numberOfPayments": {
             "type": "integer",
+            "description": "Number of recurring payment requests to be made as part of the instructed payment schedule.",
             "format": "int32"
           },
           "previousPaymentAmount": {
@@ -12138,6 +12443,7 @@
           },
           "previousPaymentDateTime": {
             "type": "string",
+            "description": "Date and time of when the previous payment request was posted.",
             "format": "date-time"
           },
           "chargeDetails": {
@@ -12147,20 +12453,24 @@
             }
           },
           "scheduledPaymentType": {
-            "type": "string"
+            "type": "string",
+            "description": "Details the execution type and the payment date between the payer and the payee."
           },
           "scheduledPaymentDateTime": {
             "type": "string",
+            "description": "Date and time of when the scheduled payment request will be made.",
             "format": "date-time"
           },
           "frequency": {
             "$ref": "#/components/schemas/FrequencyResponse"
           },
           "currencyOfTransfer": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. The currency to be transferred to the payee. This may differ from the currency the payment is denoted in and the currency of the payer's account. Specified as a 3-letter code (ISO 4217)."
           },
           "purpose": {
-            "type": "string"
+            "type": "string",
+            "description": "Specifies the external purpose code for the `Institution` - IS0 20022."
           },
           "priority": {
             "$ref": "#/components/schemas/PriorityCodeEnum"
@@ -12400,6 +12710,7 @@
           },
           "forwardParameters": {
             "type": "array",
+            "description": "Extra parameters to be forwarded in the redirect back to the client after the user authorisation flow has been completed.",
             "items": {
               "type": "string"
             }
@@ -12426,6 +12737,127 @@
             "type": "string",
             "description": "__Mandatory__. Defines the scope of the pre-authorisation request.",
             "example": "AIS"
+          }
+        }
+      },
+      "PreAuthorisationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userUuid": {
+            "type": "string",
+            "description": "`User` for which the authorisation request was created.",
+            "format": "uuid"
+          },
+          "applicationUserId": {
+            "type": "string"
+          },
+          "referenceId": {
+            "type": "string"
+          },
+          "institutionId": {
+            "type": "string",
+            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
+          },
+          "status": {
+            "$ref": "#/components/schemas/AuthorisationStatus"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Date and time of when the consent was created.",
+            "format": "date-time"
+          },
+          "transactionFrom": {
+            "type": "string",
+            "description": "When performing a transaction query using the consent, this is the earliest date of transaction records that can be retrieved.",
+            "format": "date-time"
+          },
+          "transactionTo": {
+            "type": "string",
+            "description": "When performing a transaction query using the consent, this is the latest date of transaction records that can be retrieved.",
+            "format": "date-time"
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "Date and time of when the authorisation will expire by. Reauthorisation will be needed to retain access.",
+            "format": "date-time"
+          },
+          "timeToExpireInMillis": {
+            "type": "integer",
+            "format": "int64",
+            "deprecated": true
+          },
+          "timeToExpire": {
+            "type": "string",
+            "format": "iso8601"
+          },
+          "featureScope": {
+            "uniqueItems": true,
+            "description": "The set of features that the consent will provide access to.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeatureEnum"
+            }
+          },
+          "consentToken": {
+            "type": "string",
+            "description": "Represents the authorisation to gain access to the requested features. Required to access account information or make a payment request."
+          },
+          "state": {
+            "type": "string",
+            "description": "Correlation ID used with the `Institution` during the authorisation process."
+          },
+          "authorizedAt": {
+            "type": "string",
+            "description": "Date and time of when the request was authorised by the Institution.",
+            "format": "date-time"
+          },
+          "institutionConsentId": {
+            "type": "string",
+            "description": "Identification of the consent at the Institution."
+          },
+          "authorisationUrl": {
+            "type": "string"
+          },
+          "qrCodeUrl": {
+            "type": "string",
+            "description": "The URL link for the QR code that may be scanned via a mobile device to make a authorisation redirect to the bank (authURL encoded)."
+          }
+        }
+      },
+      "ApiResponseOfPreAuthorisationResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PreAuthorisationResponse"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "raw": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
           }
         }
       },
@@ -12505,13 +12937,13 @@
         }
       },
       "ProfileConsent": {
-        "description": "Object returned when creating a User Profile.",
+        "description": "Details of a consent linked to a `User Profile`.",
         "properties": {
           "id": {
             "example": "eb2ad083-a111-4143-8756-a3a3cef4031c",
             "type": "string",
             "format": "uuid",
-            "description": "The id of the ProfileConsent"
+            "description": "Unique identifier of the `consent` in context of a user's profile."
           },
           "status": {
             "example": "PENDING",
@@ -12528,12 +12960,12 @@
             "example": "1e2e5167-8519-4c19-b016-8f2f0c6e38b6",
             "type": "string",
             "format": "uuid",
-            "description": "The referenceConsentId."
+            "description": "Unique identifier of the consent."
           },
           "institutionId": {
             "example": "mock-sandbox",
             "type": "string",
-            "description": "The id of the Institution."
+            "description": "__Mandatory__. The  `Institution` the authorisation request is sent to."
           },
           "createdAt": {
             "type": "string",
@@ -12678,12 +13110,15 @@
       },
       "ProprietaryBankTransactionCode": {
         "type": "object",
+        "description": "Transaction code that is proprietary to the `Institution`.",
         "properties": {
           "code": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. Properietary code used to identify the underlying transaction."
           },
           "issuer": {
-            "type": "string"
+            "type": "string",
+            "description": "__Mandatory__. Issuer of the properitary code."
           }
         }
       },
@@ -12737,6 +13172,7 @@
       },
       "RawResponse": {
         "type": "object",
+        "description": "Interaction (raw request and response) that occured with the `Institution` in order to fulfil a request.",
         "properties": {
           "request": {
             "$ref": "#/components/schemas/RawRequest"
@@ -12775,6 +13211,7 @@
       },
       "RefundAccount": {
         "type": "object",
+        "description": "The account to which funds should be returned if the payment is to be later refunded.",
         "properties": {
           "name": {
             "type": "string"
@@ -12854,7 +13291,7 @@
       },
       "SortEnum": {
         "type": "string",
-        "description": "Valid options for the sort parameter",
+        "description": "The attribute on which resources / records returned should be sorted. Valid options for the sort parameter.",
         "enum": [
           "date",
           "-date"
@@ -12880,6 +13317,7 @@
       },
       "StatementReference": {
         "type": "object",
+        "description": "Unique reference for a statement period. This may be optionally populated if available.",
         "properties": {
           "value": {
             "type": "string"
@@ -12900,9 +13338,11 @@
       },
       "Transaction": {
         "type": "object",
+        "description": "Details of a transaction (credit or debit) that has occurred on the account.",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique identifier of the transaction."
           },
           "date": {
             "type": "string",
@@ -12910,20 +13350,24 @@
           },
           "bookingDateTime": {
             "type": "string",
+            "description": "Date and time of when a transaction was booked.",
             "format": "date-time"
           },
           "valueDateTime": {
             "type": "string",
+            "description": "Date and time when the funds either cease to be available (for debit transactions) or become available (for credit transactions) to the account owner.",
             "format": "date-time"
           },
           "status": {
             "$ref": "#/components/schemas/TransactionStatusEnum"
           },
           "amount": {
-            "type": "number"
+            "type": "number",
+            "description": "The transaction amount."
           },
           "currency": {
-            "type": "string"
+            "type": "string",
+            "description": "Currency the transaction amount is denoted in. Specified as a 3-letter ISO 4217 code."
           },
           "transactionAmount": {
             "$ref": "#/components/schemas/Amount"
@@ -12951,6 +13395,7 @@
           },
           "transactionInformation": {
             "type": "array",
+            "description": "Further details on the transaction. This is narrative data, caught as unstructured text.",
             "items": {
               "type": "string"
             }
@@ -12984,7 +13429,7 @@
                     "type": {
                       "allOf" : [
                         {
-                        "$ref": "#/components/schemas/AccountIdentificationType"
+                          "$ref": "#/components/schemas/AccountIdentificationType"
                         }
                       ],
                       "description": "Describes the format of the account."
@@ -13036,7 +13481,8 @@
             "$ref": "#/components/schemas/Enrichment"
           },
           "supplementaryData": {
-            "type": "object"
+            "type": "object",
+            "description": "Additional information that cannot be captured in a structured field or block."
           },
           "transactionMutability": {
             "type": "string",
@@ -13086,6 +13532,7 @@
       },
       "TransactionChargeDetails": {
         "type": "object",
+        "description": "Details the charges that will apply to the transaction.",
         "properties": {
           "chargeAmount": {
             "$ref": "#/components/schemas/Amount"
@@ -13094,6 +13541,7 @@
       },
       "TransactionHash": {
         "type": "object",
+        "description": "An unique identifier for the transaction that was generated by Yapily. This is a hash of transaction attributes and may be useful an id is not present (and therefore hasn't been provided by an Institution).",
         "properties": {
           "hash": {
             "type": "string"
@@ -13101,7 +13549,7 @@
         }
       },
       "TransactionSchedule": {
-        "description": "Part of a financial profile for a User.",
+        "description": "The frequency at which transactions occurred.",
         "properties": {
           "frequency": {
             "type": "string",
@@ -13128,16 +13576,16 @@
         ]
       },
       "TransactionStream": {
-        "description": "Part of a financial profile for a User.",
+        "description": "Lists all possible transaction streams identified for the `Application User`.",
         "properties": {
           "name": {
             "example": "Amazon Marketplace",
             "type": "string",
-            "description": "The name of the TransactionStream"
+            "description": "The name of the Transaction Stream."
           },
           "transactions": {
             "type": "array",
-            "description": "A list of Transactions from the transaction stream.",
+            "description": "A list of transaction details, identified by Yapily data services.",
             "items": {
               "$ref": "#/components/schemas/EnrichedTransaction"
             }
@@ -13241,7 +13689,7 @@
       },
       "Type": {
         "type": "string",
-        "description": "The type of sca method available for the user",
+        "description": "The `SCA` method type available for the user",
         "enum": [
           "SMS_OTP",
           "CHIP_OTP",
@@ -13251,6 +13699,7 @@
       },
       "UsageType": {
         "type": "string",
+        "description": "The customer segment of the account.",
         "enum": [
           "PERSONAL",
           "BUSINESS",
@@ -13285,16 +13734,19 @@
       },
       "UserDeleteResponse": {
         "type": "object",
+        "description": "Deletion of the user. Includes the user profile and all associate consents.",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique identifier of the user."
           },
           "deleteStatus": {
             "$ref": "#/components/schemas/DeleteStatusEnum"
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Date and time that the user was created."
           },
           "userConsents": {
             "uniqueItems": true,
@@ -13773,7 +14225,7 @@
           "status": {
             "example": "INITIATED",
             "type": "string",
-            "description": "The current state of the transaction <br> INITIATED - The transaction request is acknowledged and will not undergo validation checks <br> PROCESSING - Initial checks succeeded and the transaction request is now being processed <br> COMPLETED - The transaction has been successfully processed (terminal status) <br> FAILED - An failure occured during transaction processing (terminal status)"
+            "description": "The current state of the transaction <br> INITIATED - The transaction request is acknowledged and will not undergo validation checks <br> PENDING - Initial checks were successful and the payment is pending processing. This is primarily used for future dated payments that have not yet reached their payment date <br> PROCESSING - Initial checks succeeded and the transaction request is now being processed <br> COMPLETED - The transaction has been successfully processed (terminal status) <br> FAILED - An failure occured during transaction processing (terminal status)"
           },
           "source": {
             "$ref": "#/components/schemas/VirtualAccountPaymentSource"
@@ -14012,6 +14464,11 @@
             "example": "eb2ad083-a111-4143-8756-a3a3cef4031c",
             "type": "string",
             "description": "Only present if type is ACCOUNT. Identifies the Virtual Account from which the payment was made"
+          },
+          "beneficiaryId": {
+            "example": "sd6ad034-a111-4143-8756-a3a3cef4045v",
+            "type": "string",
+            "description": "Only present if type is BENEFICIARY. Identifies the Virtual Account Beneficiary from which the payment was made"
           },
           "accountIdentifications": {
             "type": "array",
@@ -14341,7 +14798,7 @@
           "reason": {
             "example": "REQUESTED_BY_CUSTOMER",
             "type": "string",
-            "description": "Reason for the refund. Allowed values: REQUESTED_BY_CUSTOMER, DUPLICATE_PAYMENT, OTHER"
+            "description": "Reason for the refund. Allowed values [REQUESTED_BY_CUSTOMER, DUPLICATE_PAYMENT, OTHER]"
           },
           "paymentDate": {
             "format": "date",
@@ -14358,6 +14815,11 @@
             "type": "string",
             "description": "Indicates which account will be used for refund. Allowed value: SOURCE",
             "example": "SOURCE"
+          },
+          "refundToOriginalPayer": {
+            "type": "boolean",
+            "description": "__Conditional__. This field is required when refundTo is BENEFICIARY. Indicates if the refund is back to the original payer. Allowed value: true",
+            "example": true
           },
           "beneficiaryType": {
             "example": "INDIVIDUAL",
@@ -14457,6 +14919,11 @@
             "example": "SOURCE",
             "type": "string",
             "description": "Indicates which account will be used for refund."
+          },
+          "refundToOriginalPayer": {
+            "type": "boolean",
+            "description": "Indicates if the refund is back to the original payer.",
+            "example": true
           },
           "beneficiaryType": {
             "example": "INDIVIDUAL",
@@ -14948,7 +15415,8 @@
             "format": "date-time"
           },
           "institutionConsentId": {
-            "type": "string"
+            "type": "string",
+            "description": "Identification of the consent at the Institution."
           },
           "authorisationUrl": {
             "type": "string"
@@ -15057,6 +15525,12 @@
           "tracingId": {
             "type": "string",
             "writeOnly": true
+          },
+          "raw": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
           }
         }
       },
@@ -15084,6 +15558,12 @@
           "tracingId": {
             "type": "string",
             "writeOnly": true
+          },
+          "raw": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
           }
         }
       },
@@ -15266,6 +15746,12 @@
           "tracingId": {
             "type": "string",
             "writeOnly": true
+          },
+          "raw": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
           }
         }
       },
@@ -15515,6 +16001,12 @@
           "tracingId": {
             "type": "string",
             "writeOnly": true
+          },
+          "raw": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
           }
         }
       },
@@ -16898,7 +17390,6 @@
             ],
             "state": "0623e536c5044b4aa3f6c66e7537bee0",
             "authorizedAt": "2021-06-09T08:23:03.944Z",
-            "lastConfirmedAt": "2021-06-09T08:23:03.944Z",
             "institutionConsentId": "aac-f7847e99-7c66-4bb8-8641-61a24057f2e8",
             "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=0623e536c5044b4aa3f6c66e7537bee0&nonce=0623e536c5044b4aa3f6c66e7537bee0&scope=openid+accounts&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgYWNjb3VudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiMDYyM2U1MzZjNTA0NGI0YWEzZjZjNjZlNzUzN2JlZTAiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoiYWFjLWY3ODQ3ZTk5LTdjNjYtNGJiOC04NjQxLTYxYTI0MDU3ZjJlOCIsImVzc2VudGlhbCI6dHJ1ZX19LCJ1c2VyaW5mbyI6eyJvcGVuYmFua2luZ19pbnRlbnRfaWQiOnsidmFsdWUiOiJhYWMtZjc4NDdlOTktN2M2Ni00YmI4LTg2NDEtNjFhMjQwNTdmMmU4IiwiZXNzZW50aWFsIjp0cnVlfX19LCJub25jZSI6IjA2MjNlNTM2YzUwNDRiNGFhM2Y2YzY2ZTc1MzdiZWUwIiwianRpIjoiMjEyM2E1OGMtMTExYi00OGY2LTg2ODAtZTViYTNiMzI3MjM5IiwiaWF0IjoxNjIzMjI3MDAxLCJleHAiOjE2MjMyMjg4MDF9.JG5lc5TWjCucWZPfcyd34trk0QcGNzhYXfhHTlVrcfu1zjrAtSUI8i0o4yKqS19cOGKHq1HtuQac2hhO8gCr_vd5n7eIuIrWfjEM1MuIwsJ85jOpMBkEiSOurLRIgW77VmqHpVUVj5-0-1Tk-N-vaC_4nIdtSi576sOb4rjLQvs2EX_sFODGjyMxHXiZlnr2p71gA3nRy8M2Vv_At4-NPW8OLULS8zXclWoK797HFAGtsNLCy8tz0YCsnEaFhcLhZSliy3a7DRfxvBmIzhY23M4uQ6bpM1zCyqTPsOhqR-qdgnZorBrax_2CQ37yIeV4becUJWvZSdnjYX7gDtNltA",
             "qrCodeUrl": "https://images.yapily.com/image/4ef6e16c-dbe2-4d90-9e1b-868d946082ef/1623227001?size=0"
@@ -18103,7 +18594,6 @@
           "consentToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6Im1vZGVsby1zYW5kYm94IiwiQ09OU0VOVCI6IjU2YTQyMjQ0LTQxNGEtNGI1Mi04YzRmLTRhZDJhNTBlODJmZSIsIkFQUExJQ0FUSU9OX1VTRVJfSUQiOiJtb2ZlLTIiLCJVU0VSIjoiY2E0MTJmZGYtNWEzMC00M2EyLTg4YjctNTk2NGEyNGE4ZTU1In0.gorwpnUjSr5dzQJLR32M2geWOj7yK9xMsZmq27ssY9xP_xGmWfUL_aqVHYyQ4r5KWw6Xb6RjvO839st8chJLtg",
           "state": "a09f8ff9c1284444aa635267e05f76e1",
           "authorizedAt": "2021-06-08T10:59:53.288Z",
-          "lastConfirmedAt": "2021-06-08T10:59:53.288Z",
           "institutionConsentId": "aac-605d48f2-2a0e-4594-81a9-996524fa3b2a"
         }
       },
@@ -18134,7 +18624,6 @@
           "consentToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6Im1vZGVsby1zYW5kYm94IiwiQ09OU0VOVCI6IjU2YTQyMjQ0LTQxNGEtNGI1Mi04YzRmLTRhZDJhNTBlODJmZSIsIkFQUExJQ0FUSU9OX1VTRVJfSUQiOiJtb2ZlLTIiLCJVU0VSIjoiY2E0MTJmZGYtNWEzMC00M2EyLTg4YjctNTk2NGEyNGE4ZTU1In0.gorwpnUjSr5dzQJLR32M2geWOj7yK9xMsZmq27ssY9xP_xGmWfUL_aqVHYyQ4r5KWw6Xb6RjvO839st8chJLtg",
           "state": "a09f8ff9c1284444aa635267e05f76e1",
           "authorizedAt": "2021-06-08T10:59:53.288Z",
-          "lastConfirmedAt": "2021-07-08T10:59:53.288Z",
           "institutionConsentId": "aac-605d48f2-2a0e-4594-81a9-996524fa3b2a"
         }
       },

@@ -5,6 +5,18 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.19.1] - 2023-02-21
+### Added
+- Included `x-yapily-features` for endpoints
+- Included optional headers for `/pre-auth-requests` and `/payment-pre-auth-requests` endpoint
+- Included raw response for VRP endpoints
+
+### Changed
+- Modified response for `/pre-auth-requests` and `/payment-pre-auth-requests` endpoint
+- Modified endpoint path from `/users/{userUuid}/profile` to `/users/{userUuid}/profile/transaction-groups`
+- Modified description, examples, typos for various endpoints and attributes
+
+
 ## [2.19.0] - 2023-02-07
 ### Added
 - Included `complianceData` object in the VRP consents endpoints
