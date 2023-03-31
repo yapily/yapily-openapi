@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.19.1",
+    "version": "2.20.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -4481,7 +4481,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -4583,7 +4583,7 @@
         "description": "Create a new beneficiary (individual or business account) to which a Pay Out can be made. The beneficiary can be used from any virtual account that is held",
         "parameters": [
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -4788,7 +4788,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -4901,7 +4901,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -4990,7 +4990,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -5100,7 +5100,7 @@
         "description": "Create a new virtual account",
         "parameters": [
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -5216,7 +5216,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -5334,7 +5334,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -5454,7 +5454,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -5657,7 +5657,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -5760,7 +5760,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -5863,7 +5863,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -5989,7 +5989,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The customer or sub-customer id for which the request will be done",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -6434,7 +6434,7 @@
             }
           },
           {
-            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for.",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -6529,6 +6529,142 @@
             "$ref": "#/components/responses/500"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Virtual Accounts Accounts",
+          "Virtual Accounts"
+        ],
+        "operationId": "getVirtualAccountRefunds",
+        "x-beta": true,
+        "summary": "Get list of refunds",
+        "description": "Retrieve a list of refunds",
+        "parameters": [
+          {
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
+            "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
+            "in": "header",
+            "name": "client-id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "description": "__Optional__. Filter refunds based on unique ID of the original payment",
+            "example": "PDC_29bd8528-9b6f-4b6e-a963-9382944dc830",
+            "in": "query",
+            "name": "paymentInitiationId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Optional__.  Filter refunds based on refund status. One of INITIATED, SCHEDULED, PROCESSING, COMPLETED, FAILED",
+            "example": "PROCESSING",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "__Optional__.  Filter to get refunds created on or after this date (yyyy-MM-dd'T'HH:mm:ss.SSSZ)",
+            "example": "2023-01-13T16:41:51.136085Z",
+            "in": "query",
+            "name": "createdDateTimeAfter",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "description": "__Optional__.  Filter to get refunds created on or before this date (yyyy-MM-dd'T'HH:mm:ss.SSSZ)",
+            "example": "2023-02-13T16:41:51.136085Z",
+            "in": "query",
+            "name": "createdDateTimeBefore",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "example": "cGF5bWVudEluaXRpYXRpb25JZD1QRENfMjliZDg1MjgtOWI2Zi00YjZlLWE5NjMtOTM4Mjk0NGRjODMwJnN0YXR1cz1GQUlMRUQmY3JlYXRlZERhdGVUaW1lRnJvbT0yMDIzLTAxLTEzVDE2OjQxOjUxLjEzNjA4NVomY3JlYXRlZERhdGVUaW1lVG89MjAyMy0wMi0xMFQxODo0Mjo1MS4xMzYwODVaJnBvaW50ZXI9MjAyMy0wMS0xM1QxNjo0MTo1MS4xMzYwODU=",
+            "description": "__Optional__. Encoded pagination cursor to fetch next page",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiListResponseOfVirtualAccountRefund"
+                },
+                "examples": {
+                  "Get Virtual Account Refunds Example Response": {
+                    "description": "Get Virtual Account Refunds Example Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "96169af01d394ad39658f17d53b49a5d"
+                      },
+                      "links": {
+                        "next": "https://api.yapily.com/virtual-accounts/refunds?cursor=cGF5bWVudEluaXRpYXRpb25JZD1QRENfMjliZDg1MjgtOWI2Zi00YjZlLWE5NjMtOTM4Mjk0NGRjODMwJnN0YXR1cz1GQUlMRUQmY3JlYXRlZERhdGVUaW1lRnJvbT0yMDIzLTAxLTEzVDE2OjQxOjUxLjEzNjA4NVomY3JlYXRlZERhdGVUaW1lVG89MjAyMy0wMi0xMFQxODo0Mjo1MS4xMzYwODVaJnBvaW50ZXI9MjAyMy0wMS0xM1QxNjo0MTo1MS4xMzYwODU="
+                      },
+                      "data": [
+                        {
+                          "id": "46d3349e-6733-459d-a6da-71850a7e8076",
+                          "originalPayment": {
+                            "paymentInitiationId": "19d2fbfb-f30c-44eb-b3b5-978560d2b712"
+                          },
+                          "status": "INITIATED",
+                          "amount": {
+                            "amount": 100,
+                            "currency": "GBP"
+                          },
+                          "reason": "REQUESTED_BY_CUSTOMER",
+                          "paymentDate": "2022-11-11",
+                          "reference": "Refund 123",
+                          "refundTo": "SOURCE",
+                          "refundToOriginalPayer": true,
+                          "beneficiaryType": "INDIVIDUAL",
+                          "createdDateTime": "2022-11-11T15:00:57.345Z",
+                          "updatedDateTime": "2022-11-11T14:00:57.751Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "424": {
+            "$ref": "#/components/responses/424"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
       }
     },
     "/virtual-accounts/refunds/{id}": {
@@ -6552,7 +6688,7 @@
             }
           },
           {
-            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for.",
+            "description": "The customer or sub-customer ID. Identifies the customer to perform the request for",
             "example": "5a7294ab-6b7d-4681-835a-f9b9775c75db",
             "in": "header",
             "name": "client-id",
@@ -14845,6 +14981,38 @@
           }
         },
         "type": "object"
+      },
+      "ApiListResponseOfVirtualAccountRefund": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "links": {
+            "type": "object",
+            "properties": {
+              "next": {
+                "type": "string"
+              }
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VirtualAccountRefund"
+            }
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
       },
       "ApiResponseOfVirtualAccountRefund": {
         "type": "object",
