@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.20.0",
+    "version": "2.21.3",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -3069,6 +3069,7 @@
             "name": "psu-id",
             "required": false,
             "schema": {
+              "title": "User Id",
               "type": "string"
             }
           },
@@ -3078,6 +3079,7 @@
             "name": "psu-corporate-id",
             "required": false,
             "schema": {
+              "title": "Corporate User Id",
               "type": "string"
             }
           },
@@ -3087,6 +3089,7 @@
             "name": "psu-ip-address",
             "required": false,
             "schema": {
+              "title": "User IP Address",
               "type": "string"
             }
           },
@@ -3168,6 +3171,7 @@
             "name": "psu-id",
             "required": false,
             "schema": {
+              "title": "User Id",
               "type": "string"
             }
           },
@@ -3177,6 +3181,7 @@
             "name": "psu-corporate-id",
             "required": false,
             "schema": {
+              "title": "Corporate User Id",
               "type": "string"
             }
           },
@@ -3186,6 +3191,7 @@
             "name": "psu-ip-address",
             "required": false,
             "schema": {
+              "title": "User IP Address",
               "type": "string"
             }
           },
@@ -3294,6 +3300,7 @@
             "name": "psu-id",
             "required": false,
             "schema": {
+              "title": "User Id",
               "type": "string"
             }
           },
@@ -3303,6 +3310,7 @@
             "name": "psu-corporate-id",
             "required": false,
             "schema": {
+              "title": "Corporate User Id",
               "type": "string"
             }
           },
@@ -3312,6 +3320,7 @@
             "name": "psu-ip-address",
             "required": false,
             "schema": {
+              "title": "User IP Address",
               "type": "string"
             }
           },
@@ -3417,6 +3426,7 @@
             "name": "psu-id",
             "required": false,
             "schema": {
+              "title": "User Id",
               "type": "string"
             }
           },
@@ -3426,6 +3436,7 @@
             "name": "psu-corporate-id",
             "required": false,
             "schema": {
+              "title": "Corporate User Id",
               "type": "string"
             }
           },
@@ -3435,6 +3446,7 @@
             "name": "psu-ip-address",
             "required": false,
             "schema": {
+              "title": "User IP Address",
               "type": "string"
             }
           },
@@ -6532,7 +6544,7 @@
       },
       "get": {
         "tags": [
-          "Virtual Accounts Accounts",
+          "Virtual Accounts Refunds",
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountRefunds",
@@ -8902,6 +8914,7 @@
         }
       },
       "AccountIdentification": {
+        "title": "Account Identifications",
         "required": [
           "type",
           "identification"
@@ -8912,6 +8925,7 @@
             "$ref": "#/components/schemas/AccountIdentificationType"
           },
           "identification": {
+            "title": "Account Identification",
             "type": "string",
             "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
             "example": "401016"
@@ -9041,6 +9055,7 @@
         ]
       },
       "AccountIdentificationType": {
+        "title": "Account Identification Type",
         "type": "string",
         "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
         "example": "SORT_CODE",
@@ -9171,9 +9186,11 @@
         ]
       },
       "Address": {
+        "title": "Address Details",
         "type": "object",
         "properties": {
           "addressLines": {
+            "title": "Address Lines",
             "type": "array",
             "description": "__Optional__. The address line of the address",
             "example": [
@@ -9184,26 +9201,31 @@
             }
           },
           "streetName": {
+            "title": "Street",
             "type": "string",
             "description": "__Optional__. The street name of the address",
             "example": "Oxford Road"
           },
           "buildingNumber": {
+            "title": "Building Number",
             "type": "string",
             "description": "__Optional__. The building number of the address",
             "example": "45"
           },
           "postCode": {
+            "title": "Post Code",
             "type": "string",
             "description": "__Optional__. The post code of the address",
             "example": "HP19 3EQ"
           },
           "townName": {
+            "title": "Town",
             "type": "string",
             "description": "__Optional__. The town name of the address",
             "example": "Aylesbury"
           },
           "county": {
+            "title": "County",
             "type": "array",
             "description": "__Optional__. The list of counties for the address",
             "example": [
@@ -9214,16 +9236,19 @@
             }
           },
           "country": {
+            "title": "Country",
             "type": "string",
             "description": "__Conditional__. The 2-letter country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment",
             "example": "GB"
           },
           "department": {
+            "title": "Department",
             "type": "string",
             "description": "__Optional__. The department for the address",
             "example": "Unit 2"
           },
           "subDepartment": {
+            "title": "Sub-Department",
             "type": "string",
             "description": "__Optional__. The sub-department for the address",
             "example": "Floor 3"
@@ -9247,6 +9272,7 @@
         }
       },
       "AddressTypeEnum": {
+        "title": "Address Type",
         "type": "string",
         "description": "__Optional__. The type of address",
         "enum": [
@@ -9262,6 +9288,7 @@
         ]
       },
       "Amount": {
+        "title": "Amount Details",
         "required": [
           "amount",
           "currency"
@@ -9269,11 +9296,13 @@
         "type": "object",
         "properties": {
           "amount": {
+            "title": "Amount",
             "type": "number",
             "description": "__Mandatory__. The monetary value",
             "example": 10
           },
           "currency": {
+            "title": "Currency",
             "type": "string",
             "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
             "example": "GBP"
@@ -11830,6 +11859,7 @@
         }
       },
       "Payee": {
+        "title": "Payee Details",
         "type": "object",
         "description": "__Mandatory__. Details of the beneficiary [person or business].",
         "required": [
@@ -11838,6 +11868,7 @@
         ],
         "properties": {
           "name": {
+            "title": "Payee Name",
             "type": "string",
             "description": "__Mandatory__. The account holder name of the beneficiary.",
             "example": "Jane Doe"
@@ -11864,11 +11895,13 @@
             "$ref": "#/components/schemas/Address"
           },
           "merchantId": {
+            "title": "Merchant Id",
             "type": "string",
             "description": "__Optional__. The merchant ID is a unique code provided by the payment processor to the merchant.",
             "example": "24589303"
           },
           "merchantCategoryCode": {
+            "title": "Merchant Category",
             "type": "string",
             "description": "__Optional__. The category code of the merchant in case the `Payee` is a business. Specified as a 3-letter ISO 18245 code.",
             "example": "5551"
@@ -11911,12 +11944,14 @@
         "description": "__Mandatory__. Details of the beneficiary [person or business]."
       },
       "Payer": {
+        "title": "Payer Details",
         "required": [
           "accountIdentifications"
         ],
         "type": "object",
         "properties": {
           "name": {
+            "title": "Payer Name",
             "type": "string",
             "description": "The account holder name of the Payer.",
             "example": "John Doe"
@@ -12135,6 +12170,7 @@
         }
       },
       "PaymentContextType": {
+        "title": "Payment Code",
         "type": "string",
         "default": "OTHER",
         "description": "__Optional__. The payment context code. This defaults to `OTHER` if not specified.",
@@ -12451,6 +12487,7 @@
         "type": "object",
         "properties": {
           "paymentIdempotencyId": {
+            "title": "Idempotency Id",
             "type": "string",
             "description": "__Mandatory__. A unique identifier that you must provide to identify the payment. This can be any alpha-numeric string but is limited to a maximum of 35 characters.",
             "example": "04ab4536gaerfc0e1f93c4f4"
@@ -12459,6 +12496,7 @@
             "$ref": "#/components/schemas/Payer"
           },
           "reference": {
+            "title": "Payment Reference",
             "type": "string",
             "description": "__Optional__. The payment reference or description. Limited to a maximum of 18 characters long.",
             "example": "Bill payment"
@@ -12482,12 +12520,14 @@
             "$ref": "#/components/schemas/Amount"
           },
           "paymentDateTime": {
+            "title": "Payment Date",
             "type": "string",
             "description": "__Conditional__. Used to specify the date of the payment when the payment type is one of the following:<ul>    <li><code>DOMESTIC_SCHEDULED_PAYMENT</code></li>    <li><code>DOMESTIC_PERIODIC_PAYMENT</code></li>    <li><code>INTERNATIONAL_SCHEDULED_PAYMENT</code></li>    <li><code>INTERNATIONAL_PERIODIC_PAYMENT</code></li></ul>",
             "format": "date-time",
             "example": "2021-07-21T17:32:28Z"
           },
           "readRefundAccount": {
+            "title": "Read Refund Account",
             "type": "boolean",
             "description": "__Optional__. Used to request the payer details in the payment response when the `Institution` provides the feature `READ_DOMESTIC_SINGLE_REFUND`.<br><br>See [Reverse Payments](https://docs.yapily.com/pages/knowledge/open-banking/reverse_payments/) for more information.",
             "example": false
@@ -12778,6 +12818,7 @@
         }
       },
       "PaymentType": {
+        "title": "Payment Type",
         "type": "string",
         "description": "__Mandatory__. Used to specify which of the [payment types](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#payment-types) to execute.<br><br>See [European Payments](https://docs.yapily.com/pages/knowledge/open-banking/european_payments/) to verify whether the `type` should be `DOMESTIC` or `INTERNATIONAL`.",
         "enum": [
@@ -13398,6 +13439,18 @@
           }
         }
       },
+      "ResponseMetaWithCount": {
+        "type": "object",
+        "properties": {
+          "tracingId": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "ScaMethod": {
         "required": [
           "id"
@@ -13422,6 +13475,21 @@
             "type": "string",
             "description": "__Optional__. A description of the sca method if provided by the `Institution`",
             "example": "Testkarte Hr. Haubach_1, optisch"
+          },
+          "information": {
+            "type": "string",
+            "description": "Additional information from the institution to provide to the PSU to help with the selected SCA method. The language is determined by the institution and may vary.",
+            "example": "Bitte bestätigen Sie den Vorgang in Ihrer SecureGo plus App"
+          },
+          "data": {
+            "description": "Data from the institution to provide to the PSU to complete authorisation. The language is determined by the institution and may vary.",
+            "type": "array",
+            "items":{
+              "type": "string"
+            },
+            "example": [
+              "0488701109982928CY439040000100000010000520,00"
+            ]
           }
         }
       },
@@ -14341,7 +14409,7 @@
           "paymentScheme": {
             "example": "FASTER_PAYMENTS",
             "type": "string",
-            "description": "Method of settlement to complete the payment. One of: <br> FASTER_PAYMENTS <br> SEPA_CREDIT <br> SEPA_INSTANT <br> SWIFT <br> SWIFT_EXPRESS <br> CHAPS <br> IAT <br> WIRE"
+            "description": "Method of settlement to complete the payment. One of: <br> FASTER_PAYMENTS <br> SEPA_CREDIT <br> SEPA_INSTANT <br> SWIFT <br> SWIFT_EXPRESS <br> CHAPS <br> IAT <br> WIRE <br> TRANSFER"
           },
           "amount": {
             "allOf": [
@@ -14387,7 +14455,7 @@
           "paymentScheme": {
             "example": "FASTER_PAYMENTS",
             "type": "string",
-            "description": "Method of settlement to complete the payment. One of: <br> FASTER_PAYMENTS <br> SEPA_CREDIT <br> SEPA_INSTANT <br> SWIFT <br> SWIFT_EXPRESS <br> CHAPS <br> IAT <br> WIRE"
+            "description": "Method of settlement to complete the payment. One of: <br> FASTER_PAYMENTS <br> SEPA_CREDIT <br> SEPA_INSTANT <br> SWIFT <br> SWIFT_EXPRESS <br> CHAPS <br> IAT <br> WIRE <br> TRANSFER"
           },
           "amount": {
             "allOf": [
@@ -16239,7 +16307,7 @@
         "type": "object",
         "properties": {
           "meta": {
-            "$ref": "#/components/schemas/ResponseMeta"
+            "$ref": "#/components/schemas/ResponseMetaWithCount"
           },
           "data": {
             "type": "array",
@@ -16410,7 +16478,8 @@
           "selectedScaMethod": {
             "id": "944",
             "type": "PUSH_OTP",
-            "description": "SecureSIGN"
+            "description": "SecureSIGN",
+            "information": "Bitte bestätigen Sie den Vorgang in Ihrer SecureGo plus App"
           }
         }
       },
@@ -17338,7 +17407,11 @@
               "EXISTING_PAYMENTS_DETAILS"
             ],
             "selectedScaMethod": {
-              "id": "591655"
+              "id": "591655",
+              "information": "1. Stecken Sie Ihre Chipkarte in den TAN-Generator und drücken \"F\".<br>2. Halten Sie den TAN-Generator an die animierte Grafik. Dabei müssen die Markierungen<br>   (Dreiecke) der Grafik mit denen auf Ihrem TAN-Generator übereinstimmen.<br>3. Prüfen Sie die Anzeige auf dem Leserdisplay und drücken \"OK\".<br>4. Prüfen Sie die Hinweise<br>   \"Empfänger-IBAN\" und \"Betrag\"<br>   auf dem Leserdisplay und bestätigen Sie diese dann jeweils mit \"OK\" auf Ihrem TAN-Generator.<br><br>5. Bitte beachten: Überprüfen Sie die Anzeige des TAN-Generators immer anhand der Original-Transaktions-Daten - z.B. einer Rechnung.<br>Bitte geben Sie die auf Ihrem TAN-Generator angezeigte TAN hier ein und bestätigen Sie diese.",
+              "data": [
+                "0488701109982928CY4390400001000010000520,00"
+              ]
             }
           }
         }

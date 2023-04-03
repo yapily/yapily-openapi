@@ -1,9 +1,8 @@
 # Yapily-openapi3-specifications
 
-<img src="https://validator.swagger.io/validator?url=https://openapi.yapily.com/openapi.json">
+![Schema Validator](https://validator.swagger.io/validator?url=https://openapi.yapily.com/openapi.json)
 
 Yapily uses the `OpenAPI 3.0.1` specification to schematize our [docs](https://docs.yapily.com/) and generate our supported client libraries. This provides a consistent developer experience across our external interfaces.
-
 
 - [Yapily-openapi3-specifications](#yapily-openapi3-specifications)
   - [Installing the Java dependencies](#installing-the-java-dependencies)
@@ -11,6 +10,7 @@ Yapily uses the `OpenAPI 3.0.1` specification to schematize our [docs](https://d
   - [Node support](#node-support)
   - [Python support](#python-support)
   - [Known issues with openapi-generator](#known-issues-with-openapi-generator)
+  - [Examples](#examples)
 
 ## Installing the Java dependencies
 
@@ -18,7 +18,7 @@ The OpenAPI generator is a maven plugin used to generate server and client libra
 
 First requirement to use the OpenAPI generator is to install Java. 
 
-The following [tutorial](https://cloud.google.com/java/docs/setup#install_a_jdk_java_development_kit) provides an extensive step by step guide on how to setup and configure your development environment.
+The following [tutorial](https://cloud.google.com/java/docs/setup#install_a_jdk_java_development_kit) provides an extensive step-by-step guide on how to set up and configure your development environment.
 
 ## Java support
 
@@ -36,4 +36,8 @@ Please refer to this [document](/main/../docs/python.md) for Python.
 
 The [openapi-generator](https://github.com/OpenAPITools/openapi-generator) generation styles vary depending on the chosen language:
 
-- We regard the extension of enumerations in the Yapily API to be a non-breaking change and we may add new values without advance warning. Please note that some OpenAPI generators automatically employ enum validation by default, however we expect clients to disable strict enum validation for responses in your generated libraries. Otherwise your clients will experience errors when new enum values are added.
+- We regard the extension of enumerations in the Yapily API to be a non-breaking change, and we may add new values without advance warning. Please note that some OpenAPI generators automatically employ enum validation by default, however we expect clients to disable strict enum validation for responses in your generated libraries. Otherwise, your clients will experience errors when new enum values are added.
+
+## Examples
+
+For a better view of the implementation process, check out our [examples](/main/../examples/README.md) section which presents a strategy for implementing easily with Yapily in your language of choice.

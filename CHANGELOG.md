@@ -5,9 +5,26 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.21.3] - 2023-03-13
+### Added
+- Update `titles` for all the fields associated with `PaymentRequest`
+
+
+## [2.21.2] - 2023-03-10
+### Added
+- Updated `paymentScheme` description with new payment scheme of type `TRANSFER`
+
+## [2.21.1] - 2023-03-07
+### Changed
+- Included missing `count` field in the `meta` property of the `ApiListResponseOfRealTimeTransaction` object
+
+## [2.21.0] - 2023-03-01
+### Added
+- Added additional fields to `selectedScaMethod` to show `information` and `data` useful to PSU when authenticating embedded consents
+
 ## [2.20.0] - 2023-02-27
 ### Added
-- Added get all refunds endpoint  
+- Added get all refunds endpoint
 
 ## [2.19.1] - 2023-02-21
 ### Added
@@ -19,7 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Modified response for `/pre-auth-requests` and `/payment-pre-auth-requests` endpoint
 - Modified endpoint path from `/users/{userUuid}/profile` to `/users/{userUuid}/profile/transaction-groups`
 - Modified description, examples, typos for various endpoints and attributes
-
 
 ## [2.19.0] - 2023-02-07
 ### Added
@@ -34,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Get client by id and delete beneficiary
 
 ### Changed
-- Virtual account error response examples 
+- Virtual account error response examples
 
 ## [2.16.0] - 2022-11-30
 ### Changed
@@ -121,5 +137,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unnecessary enumeration representing http status codes from the ApiError definition.
 
 ## [2.0.0] - 2021-12-01
-### Added 
+### Added
 - The first published OpenAPI Specification used to drive Yapily's contract first development approach.

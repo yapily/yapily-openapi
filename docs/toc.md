@@ -1,7 +1,7 @@
-
 - [Yapily-openapi3-specifications](#yapily-openapi3-specifications)
   - [Installing the Java dependencies](#installing-the-java-dependencies)
   - [Java support](#java-support)
   - [Node support](#node-support)
   - [Python support](#python-support)
   - [Known issues with openapi-generator](#known-issues-with-openapi-generator)
+  - [Examples](#examples)
