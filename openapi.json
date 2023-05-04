@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.21.3",
+    "version": "2.21.4",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -9645,31 +9645,31 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "`User` for which the authorisation request was created.",
+            "description": "Unique identifier for the embedded account authorisation request.",
             "format": "uuid"
           },
           "userUuid": {
             "type": "string",
-            "description": "__Conditional__. `User` for which the authorisation request was created.",
+            "description": "The `User` that the authorisation request was created for.",
             "format": "uuid"
           },
           "applicationUserId": {
             "type": "string",
-            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
+            "description": "The user-friendly reference to the `User` that the authorisation request was created for."
           },
           "referenceId": {
             "type": "string"
           },
           "institutionId": {
             "type": "string",
-            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
+            "description": "The `Institution` the authorisation request was sent to."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
-            "description": "Date and time of when the embedded authorisation was created by the application user.",
+            "description": "Date and time the embedded authorisation was created by the application user.",
             "format": "date-time"
           },
           "transactionFrom": {
@@ -9684,7 +9684,7 @@
           },
           "expiresAt": {
             "type": "string",
-            "description": "Date and time of when the embedded authorisation will expire by. Reauthorisation will be needed to retain access.",
+            "description": "Date and time the embedded authorisation expires. Re-authorisation is needed to retain access.",
             "format": "date-time"
           },
           "timeToExpireInMillis": {
@@ -9698,7 +9698,7 @@
           },
           "featureScope": {
             "uniqueItems": true,
-            "description": "The set of features that the consent will provide access to.",
+            "description": "The set of features the consent provides access to.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FeatureEnum"
@@ -9706,7 +9706,7 @@
           },
           "consentToken": {
             "type": "string",
-            "description": "Represents the authorisation to gain access to the requested features. Required to access account information or make a payment request."
+            "description": "Represents the authorisation to gain access to the requested features. Required to access account information."
           },
           "state": {
             "type": "string",
@@ -9714,23 +9714,23 @@
           },
           "authorizedAt": {
             "type": "string",
-            "description": "Date and time of when the request was authorised by the Institution.",
+            "description": "Date and time the request was authorised by the `Institution`.",
             "format": "date-time"
           },
           "institutionConsentId": {
             "type": "string",
-            "description": "Identification of the consent at the Institution."
+            "description": "Identification of the consent at the `Institution`."
           },
           "authorisationUrl": {
             "type": "string"
           },
           "qrCodeUrl": {
             "type": "string",
-            "description": "The URL link for the QR code that may be scanned via a mobile device to make a authorisation redirect to the bank (authURL encoded)."
+            "description": "The URL link for the QR code that may be scanned via a mobile device to make an authorisation redirect to the bank (authURL encoded)."
           },
           "scaMethods": {
             "type": "array",
-            "description": "List of `SCA methods` the `Institution` supports and that are available for selection.",
+            "description": "List of `SCA methods` that the `Institution` supports and are available for selection.",
             "items": {
               "$ref": "#/components/schemas/ScaMethod"
             }
@@ -9778,31 +9778,31 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "`User` for which the authorisation request was created.",
+            "description": "Unique identifier for the account authorisation request.",
             "format": "uuid"
           },
           "userUuid": {
             "type": "string",
-            "description": "__Conditional__. `User` for which the authorisation request was created.",
+            "description": "The `User` that the authorisation request was created for.",
             "format": "uuid"
           },
           "applicationUserId": {
             "type": "string",
-            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
+            "description": "The user-friendly reference to the `User` that the authorisation request was created for."
           },
           "referenceId": {
             "type": "string"
           },
           "institutionId": {
             "type": "string",
-            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
+            "description": "The `Institution` the authorisation request was sent to."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
-            "description": "Date and time of when the consent was created.",
+            "description": "Date and time the consent was created.",
             "format": "date-time"
           },
           "transactionFrom": {
@@ -9817,7 +9817,7 @@
           },
           "expiresAt": {
             "type": "string",
-            "description": "Date and time of when the authorisation will expire by. Reauthorisation will be needed to retain access.",
+            "description": "Date and time the authorisation expires. Re-authorisation is needed to retain access.",
             "format": "date-time"
           },
           "timeToExpireInMillis": {
@@ -9831,7 +9831,7 @@
           },
           "featureScope": {
             "uniqueItems": true,
-            "description": "The set of features that the consent will provide access to.",
+            "description": "The set of features the consent provides access to.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FeatureEnum"
@@ -9839,7 +9839,7 @@
           },
           "consentToken": {
             "type": "string",
-            "description": "Represents the authorisation to gain access to the requested features. Required to access account information or make a payment request."
+            "description": "Represents the authorisation to gain access to the requested features. Required to access account information."
           },
           "state": {
             "type": "string",
@@ -9847,29 +9847,29 @@
           },
           "authorizedAt": {
             "type": "string",
-            "description": "Date and time of when the request was authorised by the Institution.",
+            "description": "Date and time the request was authorised by the `Institution`.",
             "format": "date-time"
           },
           "lastConfirmedAt": {
             "type": "string",
-            "description": "The time that the PSU last confirmed access to their account information, either through full authentication with the institution, or through reconfirmation with the TPP.",
+            "description": "The time the PSU last confirmed access to their account information, either through full authentication with the institution, or through reconfirmation with the TPP.",
             "format": "date-time"
           },
           "reconfirmBy": {
             "type": "string",
-            "description": "The time by which the consent should be reconfirmed to ensure continued access to the account information.",
+            "description": "The date and time the consent must be reconfirmed by to ensure continued access to the account information.",
             "format": "date-time"
           },
           "institutionConsentId": {
             "type": "string",
-            "description": "Identification of the consent at the Institution."
+            "description": "Unique identifier of the consent assigned by the `Institution`."
           },
           "authorisationUrl": {
             "type": "string"
           },
           "qrCodeUrl": {
             "type": "string",
-            "description": "The URL link for the QR code that may be scanned via a mobile device to make a authorisation redirect to the bank (authURL encoded)."
+            "description": "The URL link for the QR code that may be scanned via a mobile device to make an authorisation redirect to the bank (authURL encoded)."
           }
         }
       },
@@ -12039,30 +12039,31 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Unique identifier for the `Payment Authorisation Request`.",
+            "description": "Unique identifier for the payment authorisation request`.",
             "format": "uuid"
           },
           "userUuid": {
             "type": "string",
+            "description": "The `User` that the authorisation request was created for.",
             "format": "uuid"
           },
           "applicationUserId": {
             "type": "string",
-            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
+            "description": "The user-friendly reference to the `User` that the authorisation request was created for."
           },
           "referenceId": {
             "type": "string"
           },
           "institutionId": {
             "type": "string",
-            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
+            "description": "The `Institution` the authorisation request was sent to."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
-            "description": "Date and time of when the consent was created.",
+            "description": "Date and time the consent was created.",
             "format": "date-time"
           },
           "transactionFrom": {
@@ -12077,7 +12078,7 @@
           },
           "expiresAt": {
             "type": "string",
-            "description": "Date and time of when the authorisation will expire by. Reauthorisation will be needed to retain access.",
+            "description": "Date and time the authorisation expires. Re-authorisation is needed to retain access.",
             "format": "date-time"
           },
           "timeToExpireInMillis": {
@@ -12091,7 +12092,7 @@
           },
           "featureScope": {
             "uniqueItems": true,
-            "description": "The set of features that the consent will provide access to.",
+            "description": "The set of features the consent provides access to.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FeatureEnum"
@@ -12099,20 +12100,20 @@
           },
           "consentToken": {
             "type": "string",
-            "description": "Represents the authorisation to gain access to the requested features. Required to access account information or make a payment request."
+            "description": "Represents the authorisation to gain access to the requested features. Required to make a payment request."
           },
           "state": {
             "type": "string",
-            "description": "Corellation ID used with the `Institution` during the authorisation process."
+            "description": "Correlation ID used with the `Institution` during the authorisation process."
           },
           "authorizedAt": {
             "type": "string",
-            "description": "Date and time of when the request was authorised by the Institution.",
+            "description": "Date and time the request was authorised by the `Institution`.",
             "format": "date-time"
           },
           "institutionConsentId": {
             "type": "string",
-            "description": "Unique identifier of the consent, as assigned by the Institution."
+            "description": "Unique identifier of the consent assigned by the `Institution`."
           },
           "charges": {
             "type": "array",
@@ -12238,30 +12239,31 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier for the embedded payment authorisation request.",
             "format": "uuid"
           },
           "userUuid": {
             "type": "string",
-            "description": "__Conditional__. `User` for which the authorisation request was created.",
+            "description": "The `User` that the authorisation request was created for.",
             "format": "uuid"
           },
           "applicationUserId": {
             "type": "string",
-            "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided."
+            "description": "The user-friendly reference to the `User` that the authorisation request was created for."
           },
           "referenceId": {
             "type": "string"
           },
           "institutionId": {
             "type": "string",
-            "description": "__Mandatory__. The  `Institution` the authorisation request is sent to."
+            "description": "The  `Institution` the authorisation request was sent to."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
-            "description": "Date and time of when the consent was created.",
+            "description": "Date and time the embedded payment authorisation was created.",
             "format": "date-time"
           },
           "transactionFrom": {
@@ -12276,7 +12278,7 @@
           },
           "expiresAt": {
             "type": "string",
-            "description": "Date and time of when the authorisation will expire by. Reauthorisation will be needed to retain access.",
+            "description": "Date and time the authorisation expires. Re-authorisation is needed to retain access.",
             "format": "date-time"
           },
           "timeToExpireInMillis": {
@@ -12290,6 +12292,7 @@
           },
           "featureScope": {
             "uniqueItems": true,
+            "description": "The set of features the consent provides access to.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FeatureEnum"
@@ -12297,20 +12300,20 @@
           },
           "consentToken": {
             "type": "string",
-            "description": "Represents the authorisation to gain access to the requested features. Required to access account information or make a payment request."
+            "description": "Represents the authorisation to gain access to the requested features. Required to make a payment request."
           },
           "state": {
             "type": "string",
-            "description": "Corellation ID used with the `Institution` during the authorisation process."
+            "description": "Correlation ID used with the `Institution` during the authorisation process."
           },
           "authorizedAt": {
             "type": "string",
-            "description": "Date and time of when the request was authorised by the Institution.",
+            "description": "Date and time the request was authorised by the `Institution`.",
             "format": "date-time"
           },
           "institutionConsentId": {
             "type": "string",
-            "description": "Identification of the consent at the Institution."
+            "description": "Identification of the consent at the `Institution`."
           },
           "charges": {
             "type": "array",
@@ -12326,7 +12329,7 @@
           },
           "qrCodeUrl": {
             "type": "string",
-            "description": "The URL link for the QR code that may be scanned via a mobile device to make a authorisation redirect to the bank (authURL encoded)."
+            "description": "The URL link for the QR code that may be scanned via a mobile device to make an authorisation redirect to the bank (authURL encoded)."
           },
           "explanation": {
             "type": "string"
@@ -12922,29 +12925,31 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier for the pre-authorisation request.",
             "format": "uuid"
           },
           "userUuid": {
             "type": "string",
-            "description": "`User` for which the authorisation request was created.",
+            "description": "The `User` that the authorisation request was created for.",
             "format": "uuid"
           },
           "applicationUserId": {
-            "type": "string"
+            "type": "string",
+            "description": "The user-friendly reference to the `User` that the authorisation request was created for."
           },
           "referenceId": {
             "type": "string"
           },
           "institutionId": {
             "type": "string",
-            "description": "__Mandatory__. The `Institution` the authorisation request is sent to."
+            "description": "The `Institution` the authorisation request was sent to."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
-            "description": "Date and time of when the consent was created.",
+            "description": "Date and time the consent was created.",
             "format": "date-time"
           },
           "transactionFrom": {
@@ -12959,7 +12964,7 @@
           },
           "expiresAt": {
             "type": "string",
-            "description": "Date and time of when the authorisation will expire by. Reauthorisation will be needed to retain access.",
+            "description": "Date and time the authorisation expires. Re-authorisation is needed to retain access.",
             "format": "date-time"
           },
           "timeToExpireInMillis": {
@@ -12973,7 +12978,7 @@
           },
           "featureScope": {
             "uniqueItems": true,
-            "description": "The set of features that the consent will provide access to.",
+            "description": "The set of features the consent provides access to.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FeatureEnum"
@@ -12985,16 +12990,16 @@
           },
           "state": {
             "type": "string",
-            "description": "Correlation ID used with the `Institution` during the authorisation process."
+            "description": "Corellation ID used with the `Institution` during the authorisation process."
           },
           "authorizedAt": {
             "type": "string",
-            "description": "Date and time of when the request was authorised by the Institution.",
+            "description": "Date and time the request was authorised by the `Institution`.",
             "format": "date-time"
           },
           "institutionConsentId": {
             "type": "string",
-            "description": "Identification of the consent at the Institution."
+            "description": "Unique identifier of the consent assigned by the `Institution`."
           },
           "authorisationUrl": {
             "type": "string"
