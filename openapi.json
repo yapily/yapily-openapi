@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.21.4",
+    "version": "2.21.5",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -18196,23 +18196,19 @@
           "data": {
             "payments": [
               {
+                "id": "pv3-a6ac6528-e8c8-44eb-b6f9-8521963518dd",
+                "institutionConsentId": "sdp-1-27a192bb-482f-4731-989b-e7271661248d",
                 "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
-                "payer": {
-                  "name": "John Doe",
-                  "accountIdentifications": [
-                    {
-                      "type": "IBAN",
-                      "identification": "DE12345678901234567890"
-                    }
-                  ]
+                "paymentLifecycleId": "3gaq9wj387aojd83dh7549824",
+                "status": "COMPLETED",
+                "statusDetails": {
+                  "status": "COMPLETED",
+                  "statusUpdateDate": "2021-06-10T11:26:54.887Z",
+                  "isoStatus": {
+                    "code": "ACSC",
+                    "name": "AcceptedSettlementCompleted"
+                  }
                 },
-                "amount": 1.00,
-                "amountDetails": {
-                  "amount": 1.00,
-                  "currency": "EUR"
-                },
-                "reference": "Bill Payment",
-                "scheduledPaymentType": "DOMESTIC_PAYMENT",
                 "payeeDetails": {
                   "name": "Jane Doe",
                   "address": {
@@ -18224,7 +18220,16 @@
                       "identification": "BE12345678901234"
                     }
                   ]
-                }
+                },
+                "reference": "Bill Payment",
+                "amount": 1.00,
+                "currency": "EUR",
+                "amountDetails": {
+                  "amount": 1.00,
+                  "currency": "EUR"
+                },
+                "scheduledPaymentType": "DOMESTIC_PAYMENT",
+                "createdAt": "2021-06-10T11:26:54.887Z"
               }
             ]
           }
