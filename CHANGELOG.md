@@ -5,13 +5,15 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
-## [2.21.5] - 2023-05-23
+## [2.21.6] - 2023-05-25
+## Removed
+- Removed outdated references to CBI Globe 
 
+## [2.21.5] - 2023-05-23
 ### Fixed
 - Fixed Get Payment Details example 
 
 ## [2.21.4] - 2023-05-02
-
 ### Changed
 - Modified descriptions for Authorisation endpoints
 

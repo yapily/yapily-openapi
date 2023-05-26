@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.21.5",
+    "version": "2.21.6",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -223,9 +223,6 @@
           "content": {
             "application/json;charset=UTF-8": {
               "examples": {
-                "CBI Globe Example Request": {
-                  "$ref": "#/components/examples/cbi-globe-example-acc-auth-request"
-                },
                 "OBIE Example Request": {
                   "$ref": "#/components/examples/obie-example-acc-auth-request"
                 }
@@ -242,9 +239,6 @@
             "content": {
               "application/json;charset=UTF-8": {
                 "examples": {
-                  "CBI Globe Example Response": {
-                    "$ref": "#/components/examples/cbi-globe-example-acc-auth-response"
-                  },
                   "OBIE Example Response": {
                     "$ref": "#/components/examples/obie-example-acc-auth-response-post"
                   }
@@ -583,7 +577,7 @@
         "ACCOUNT_BALANCES"
       ],
       "get": {
-        "description": "Returns the balance for the end user associated with the presented consent token.<br><br>\n__Note__: This endpoint is only for obtaining the balance information of an account belonging to an `Institution` that exposes their APIs through the [CBI Globe Gateway](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe//). If the `Institution` you wish to obtain balance data is not in the CBI Globe, use [Get Account](https://docs.yapily.com/api/reference/#operation/getAccount) or [Get Accounts](https://docs.yapily.com/api/reference/#operation/getAccounts) to get balance data. <br><br>Feature: `ACCOUNT_BALANCES` ",
+        "description": "Returns the balance for the end user associated with the presented consent token.",
         "operationId": "getAccountBalances",
         "parameters": [
           {
@@ -647,8 +641,8 @@
             "content": {
               "application/json;charset=UTF-8": {
                 "examples": {
-                  "CBI Globe Example Response": {
-                    "$ref": "#/components/examples/cbi-globe-example-acc-balance-response"
+                  "Example response": {
+                    "$ref": "#/components/examples/example-acc-balance-response"
                   }
                 },
                 "schema": {
@@ -3616,7 +3610,7 @@
         "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
       ],
       "post": {
-        "description": "Used to initiate the pre-authorisation process for payments for CbiGlobe `Institution` that contains the `INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS` feature to authenticate the user. <br><br>Feature: `INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS`",
+        "description": "Used to initiate the pre-authorisation process for payments for CBI Globe institutions that contain the `INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS` feature to authenticate the user. <br><br>Feature: `INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS`",
         "operationId": "createPaymentPreAuthorisationRequest",
         "parameters": [
           {
@@ -3642,7 +3636,7 @@
           "content": {
             "application/json;charset=UTF-8": {
               "examples": {
-                "Cbi Globe (PIS) Example Request": {
+                "CBI Globe (PIS) example request": {
                   "$ref": "#/components/examples/cbi-globe-pis-pre-auth-example-request"
                 }
               },
@@ -8963,13 +8957,13 @@
         "properties": {
           "transactionFrom": {
             "type": "string",
-            "description": "__Optional__. Used to specify the lower bound on when to pull transaction. This should be declared when accessing transaction older than 90 days for banks in the [CBI Globe](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe/).",
+            "description": "__Optional__. Specifies the earliest date of the transaction records to be returned.<br><br> You must supply this field to retrieve transactions older than 90 days for banks accessed via the the [CBI Globe Gateway](https://docs.yapily.com/pages/data/financial-data-resources/data-restrictions/#cbi-globe-gateway).",
             "format": "date-time",
             "example": "2020-01-01T00:00:00Z"
           },
           "transactionTo": {
             "type": "string",
-            "description": "__Optional__. When performing a request using the consent, this is the latest date of transaction records that can be retrieved.",
+            "description": "__Optional__. Specifies the latest date of the transaction records to be returned.",
             "format": "date-time",
             "example": "2021-01-01T00:00:00Z"
           },
@@ -9005,7 +8999,7 @@
             }
           }
         },
-        "description": "__Conditional__. Used to further specify details of the `Consent` to request <br><br>Conditions:<ol><li>Mandatory to access balance/transaction data for an `Institution` within the [CBI Globe](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe/)</li><li>Mandatory to specify the individual scopes to request from the user at the `Institution` for an account authorisation</li><li>Mandatory to specify an expiry time on the created `Consent` at which time will render it unusable</li><li>Mandatory to specify the date range that the created `Consent` will be able to access transactions for (given the range is support for the `Institution`)</li></ol>"
+        "description": "__Conditional__. Used to further specify details of the `Consent` to request <br><br>Conditions:<ol><li>Mandatory to specify the individual scopes to request from the user at the `Institution` for an account authorisation</li><li>Mandatory to specify an expiry time on the created `Consent` at which time will render it unusable</li><li>Mandatory to specify the date range that the created `Consent` will be able to access transactions for (given the range is support for the `Institution`)</li></ol>"
       },
       "AccountStatement": {
         "type": "object",
@@ -16793,34 +16787,6 @@
           }
         }
       },
-      "cbi-globe-example-acc-auth-request": {
-        "description": "CBI Globe Example Request",
-        "value": {
-          "applicationUserId": "john.doe@company.com",
-          "institutionId": "bpm-sandbox",
-          "callback": "https://display-parameters.com/",
-          "accountRequest": {
-            "accountIdentifiersForBalance": [
-              {
-                "accountId": "account1234567",
-                "accountIdentification": {
-                  "type": "IBAN",
-                  "identification": "IT77O0848283352871412938123"
-                }
-              }
-            ],
-            "accountIdentifiersForTransaction": [
-              {
-                "accountId": "account1234567",
-                "accountIdentification": {
-                  "type": "IBAN",
-                  "identification": "IT77O0848283352871412938123"
-                }
-              }
-            ]
-          }
-        }
-      },
       "obie-example-acc-auth-request": {
         "description": "OBIE Example Request",
         "value": {
@@ -17069,7 +17035,7 @@
         }
       },
       "cbi-globe-pis-pre-auth-example-request": {
-        "description": "Cbi Globe (PIS) Example Request",
+        "description": "CBI Globe (PIS) example request",
         "value": {
           "applicationUserId": "john.doe@company.com",
           "institutionId": "n26",
@@ -17116,32 +17082,6 @@
           "institutionId": "n26",
           "callback": "https://display-parameters.com/",
           "scope": "PIS"
-        }
-      },
-      "cbi-globe-example-acc-auth-response": {
-        "description": "CBI Globe Example Response",
-        "value": {
-          "meta": {
-            "tracingId": "a55a89c4a27b41129e484d74fc338121"
-          },
-          "data": {
-            "id": "4f988304-67ea-4ea9-a61e-cb90cac37f78",
-            "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
-            "applicationUserId": "john.doe@company.com",
-            "institutionId": "bpm-sandbox",
-            "status": "AWAITING_AUTHORIZATION",
-            "createdAt": "2021-06-09T11:06:54.132Z",
-            "expiresAt": "2021-09-07T00:00:00Z",
-            "timeToExpire": "P89DT12H53M5.589S",
-            "featureScope": [
-              "ACCOUNT_BALANCES",
-              "ACCOUNT_TRANSACTIONS"
-            ],
-            "state": "a55ae8debaad4fb991b73a3a912a2004",
-            "institutionConsentId": "bdbd7ad0-b2d1-4a5c-9173-3586f30bc575",
-            "authorisationUrl": "https://scasandbox.bancobpm.it/sca/login.html?idRichiestaSCA=20210609110654029&tipoRisorsa=C&codiceASPSP=05034",
-            "qrCodeUrl": "https://images.yapily.com/image/72095dc7-4a23-4971-9a7f-e3f9c6af7921/1623236814?size=0"
-          }
         }
       },
       "berlin-group-eur-single-domestic-embedded-payment-example-response": {
@@ -17524,8 +17464,8 @@
           }
         }
       },
-      "cbi-globe-example-acc-balance-response": {
-        "description": "CBI Globe Example Response",
+      "example-acc-balance-response": {
+        "description": "Example response",
         "value": {
           "meta": {
             "tracingId": "82e86ae9547a4f04b3773c1207e4b84d"
