@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.21.6",
+    "version": "2.22.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -81,7 +81,8 @@
         "Financial Profile",
         "Notifications",
         "Virtual Accounts",
-        "Variable Recurring Payments"
+        "Variable Recurring Payments",
+        "Hosted Pages"
       ]
     }
   ],
@@ -8614,6 +8615,314 @@
           "Financial Data"
         ]
       }
+    },
+    "/hosted/payment-requests": {
+      "x-yapily-features": [
+        "INITIATE_DOMESTIC_SINGLE_PAYMENT"
+      ],
+      "post": {
+        "description": "Used to initiate a payment request using Yapily Hosted Pages.",
+        "x-beta": true,
+        "operationId": "createHostedPaymentRequest",
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8": {
+              "examples": {
+                "Create Hosted Payment Request": {
+                  "$ref": "#/components/examples/create-hosted-payment-request"
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/CreateHostedPaymentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Create Hosted Payment Request Response": {
+                    "$ref": "#/components/examples/create-hosted-payment-request-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfCreateHostedPaymentRequest"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "400 Error Response": {
+                    "$ref": "#/components/examples/400-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "401 Error Response": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Unauthorized. Credentials are missing or invalid"
+          },
+          "500": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Unexpected Error"
+          },
+          "default": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/error-response-code-401"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Error Response"
+          }
+        },
+        "summary": "Create Hosted payment request",
+        "tags": [
+          "Hosted Pages"
+        ]
+      }
+    },
+    "/hosted/payment-requests/links": {
+      "post": {
+        "description": "Used to created a long lived payment request for Pay By Link",
+        "x-beta": true,
+        "operationId": "createHostedPaymentRequestLink",
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8": {
+              "examples": {
+                "Create Hosted Payment Request": {
+                  "$ref": "#/components/examples/create-hosted-payment-request-link"
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/CreateHostedPaymentRequestLink"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Create Hosted Payment Request Response": {
+                    "$ref": "#/components/examples/create-hosted-payment-request-link-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfCreateHostedPaymentRequestLink"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "400 Error Response": {
+                    "$ref": "#/components/examples/400-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "401 Error Response": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Unauthorized. Credentials are missing or invalid"
+          },
+          "500": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Unexpected Error"
+          },
+          "default": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/error-response-code-401"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Error Response"
+          }
+        },
+        "summary": "Create Pay By Link",
+        "tags": [
+          "Hosted Pages"
+        ]
+      }
+    },
+    "/hosted/payment-requests/{paymentRequestId}": {
+      "get": {
+        "description": "Used to get details of a payment request",
+        "x-beta": true,
+        "operationId": "getHostedPaymentRequest",
+        "parameters": [
+          {
+            "description": "Unique Identifier of the payment request",
+            "in": "path",
+            "name": "paymentRequestId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Get Hosted Payment Request Response": {
+                    "$ref": "#/components/examples/get-hosted-payment-request-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfGetHostedPaymentRequest"
+                }
+              }
+            },
+            "description": "Ok"
+          },
+          "401": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "401 Error Response": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "404 Error Response": {
+                    "$ref": "#/components/examples/404-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Unexpected Error"
+          },
+          "default": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/error-response-code-401"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Error Response"
+          }
+        },
+        "summary": "Get Hosted payment request",
+        "tags": [
+          "Hosted Pages"
+        ]
+      }
     }
   },
   "components": {
@@ -8926,6 +9235,21 @@
           }
         }
       },
+      "AccountIdentificationResponse": {
+        "title": "Account Identifications",
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AccountIdentificationTypeResponse"
+          },
+          "identification": {
+            "title": "Account Identification",
+            "type": "string",
+            "description": "The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/payments/payments-resources/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+            "example": "401016"
+          }
+        }
+      },
       "AccountInfo": {
         "required": [
           "accountIdentification"
@@ -9052,6 +9376,35 @@
         "title": "Account Identification Type",
         "type": "string",
         "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+        "example": "SORT_CODE",
+        "enum": [
+          "SORT_CODE",
+          "ACCOUNT_NUMBER",
+          "IBAN",
+          "BBAN",
+          "BIC",
+          "PAN",
+          "MASKED_PAN",
+          "MSISDN",
+          "BSB",
+          "NCC",
+          "ABA",
+          "ABA_WIRE",
+          "ABA_ACH",
+          "EMAIL",
+          "ROLL_NUMBER",
+          "BLZ",
+          "IFS",
+          "CLABE",
+          "CTN",
+          "BRANCH_CODE",
+          "VIRTUAL_ACCOUNT_ID"
+        ]
+      },
+      "AccountIdentificationTypeResponse": {
+        "title": "Account Identification Type",
+        "type": "string",
+        "description": "Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information.",
         "example": "SORT_CODE",
         "enum": [
           "SORT_CODE",
@@ -9256,6 +9609,83 @@
           "country": "GB"
         }
       },
+      "AddressResponse": {
+        "title": "Address Details",
+        "type": "object",
+        "properties": {
+          "addressLines": {
+            "title": "Address Lines",
+            "type": "array",
+            "description": "The address line of the address",
+            "example": [
+              "Ardenham Court"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "streetName": {
+            "title": "Street",
+            "type": "string",
+            "description": "The street name of the address",
+            "example": "Oxford Road"
+          },
+          "buildingNumber": {
+            "title": "Building Number",
+            "type": "string",
+            "description": "The building number of the address",
+            "example": "45"
+          },
+          "postCode": {
+            "title": "Post Code",
+            "type": "string",
+            "description": "The post code of the address",
+            "example": "HP19 3EQ"
+          },
+          "townName": {
+            "title": "Town",
+            "type": "string",
+            "description": "The town name of the address",
+            "example": "Aylesbury"
+          },
+          "county": {
+            "title": "County",
+            "type": "array",
+            "description": "The list of counties for the address",
+            "example": [
+              "Buckinghamshire"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "country": {
+            "title": "Country",
+            "type": "string",
+            "description": "The 2-letter country code for the address.",
+            "example": "GB"
+          },
+          "department": {
+            "title": "Department",
+            "type": "string",
+            "description": "The department for the address",
+            "example": "Unit 2"
+          },
+          "subDepartment": {
+            "title": "Sub-Department",
+            "type": "string",
+            "description": "The sub-department for the address",
+            "example": "Floor 3"
+          },
+          "addressType": {
+            "$ref": "#/components/schemas/AddressTypeEnumResponse"
+          }
+        },
+        "description": "The address of the `Payee` or `Payer`.",
+        "example": {
+          "country": "GB"
+        }
+      },
       "AddressDetails": {
         "type": "object",
         "properties": {
@@ -9269,6 +9699,22 @@
         "title": "Address Type",
         "type": "string",
         "description": "__Optional__. The type of address",
+        "enum": [
+          "BUSINESS",
+          "CORRESPONDENCE",
+          "DELIVERY_TO",
+          "MAIL_TO",
+          "PO_BOX",
+          "POSTAL",
+          "RESIDENTIAL",
+          "STATEMENT",
+          "UNKNOWN"
+        ]
+      },
+      "AddressTypeEnumResponse": {
+        "title": "Address Type",
+        "type": "string",
+        "description": "The type of address",
         "enum": [
           "BUSINESS",
           "CORRESPONDENCE",
@@ -9303,6 +9749,25 @@
           }
         },
         "description": "__Mandatory__. Monetary Amount."
+      },
+      "AmountDetailsResponse": {
+        "title": "Amount Details",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "title": "Amount",
+            "type": "number",
+            "description": "The monetary value",
+            "example": 10
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string",
+            "description": "The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+            "example": "GBP"
+          }
+        },
+        "description": "Monetary Amount."
       },
       "ApiCall": {
         "type": "object"
@@ -11902,6 +12367,52 @@
           }
         }
       },
+      "PayeeDetailsResponse": {
+        "title": "Payee Details",
+        "type": "object",
+        "description": " Details of the beneficiary [person or business].",
+        "properties": {
+          "name": {
+            "title": "Payee Name",
+            "type": "string",
+            "description": "The account holder name of the beneficiary.",
+            "example": "Jane Doe"
+          },
+          "accountIdentifications": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "The account identifications that identify the `Payee` bank account.",
+            "example": [
+              {
+                "identification": "401016",
+                "type": "SORT_CODE"
+              },
+              {
+                "identification": "71518920",
+                "type": "ACCOUNT_NUMBER"
+              }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/AccountIdentificationResponse"
+            }
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressResponse"
+          },
+          "merchantId": {
+            "title": "Merchant Id",
+            "type": "string",
+            "description": "The merchant ID is a unique code provided by the payment processor to the merchant.",
+            "example": "24589303"
+          },
+          "merchantCategoryCode": {
+            "title": "Merchant Category",
+            "type": "string",
+            "description": "The category code of the merchant in case the `Payee` is a business. Specified as a 3-letter ISO 18245 code.",
+            "example": "5551"
+          }
+        }
+      },
       "PayeeDetails": {
         "type": "object",
         "required": [
@@ -11963,6 +12474,30 @@
           }
         },
         "description": "__Conditional__. Details of the benefactor [person or business]."
+      },
+      "PayerDetailsResponse": {
+        "title": "Payer Details",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Payer Name",
+            "type": "string",
+            "description": "The account holder name of the Payer.",
+            "example": "John Doe"
+          },
+          "accountIdentifications": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "The account identifications that identify the `Payer` bank account.",
+            "items": {
+              "$ref": "#/components/schemas/AccountIdentificationResponse"
+            }
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressResponse"
+          }
+        },
+        "description": "Details of the benefactor [person or business]."
       },
       "PayerDetails": {
         "required": [
@@ -12169,6 +12704,18 @@
         "type": "string",
         "default": "OTHER",
         "description": "__Optional__. The payment context code. This defaults to `OTHER` if not specified.",
+        "enum": [
+          "BILL",
+          "GOODS",
+          "SERVICES",
+          "OTHER",
+          "PERSON_TO_PERSON"
+        ]
+      },
+      "PaymentContextTypeResponse": {
+        "title": "Payment Code",
+        "type": "string",
+        "description": "The payment context code.",
         "enum": [
           "BILL",
           "GOODS",
@@ -12818,6 +13365,22 @@
         "title": "Payment Type",
         "type": "string",
         "description": "__Mandatory__. Used to specify which of the [payment types](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#payment-types) to execute.<br><br>See [European Payments](https://docs.yapily.com/pages/knowledge/open-banking/european_payments/) to verify whether the `type` should be `DOMESTIC` or `INTERNATIONAL`.",
+        "enum": [
+          "DOMESTIC_PAYMENT",
+          "DOMESTIC_INSTANT_PAYMENT",
+          "DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+          "DOMESTIC_SCHEDULED_PAYMENT",
+          "DOMESTIC_PERIODIC_PAYMENT",
+          "INTERNATIONAL_PAYMENT",
+          "INTERNATIONAL_SCHEDULED_PAYMENT",
+          "INTERNATIONAL_PERIODIC_PAYMENT",
+          "BULK_PAYMENT"
+        ]
+      },
+      "PaymentTypeResponse": {
+        "title": "Payment Type",
+        "type": "string",
+        "description": "Specifies which of the [payment types](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#payment-types) to execute.<br>",
         "enum": [
           "DOMESTIC_PAYMENT",
           "DOMESTIC_INSTANT_PAYMENT",
@@ -16433,6 +16996,516 @@
             "type": "object"
           }
         }
+      },
+      "CreateHostedPaymentRequest": {
+        "required": [
+          "redirectUrl",
+          "paymentRequestDetails",
+          "institutionIdentifiers"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "__Conditional__. Yapily Identifier for the `User` returned by the create user step POST /users. You must provide either a `userId` or `applicationUserId`."
+          },
+          "applicationUserId": {
+            "type": "string",
+            "description": "__Conditional__. Your own `User` reference. This field allows you to use your own unique references for individual users. Where the `User` reference doesn't have an associated Yapily `userId`, a new `userId` is created and linked to it. You must provide either a `userId` or `applicationUserId`."
+          },
+          "institutionIdentifiers": {
+            "$ref": "#/components/schemas/InstitutionIdentifiers"
+          },
+          "userSettings": {
+            "$ref": "#/components/schemas/UserSettings"
+          },
+          "redirectUrl": {
+            "type": "string",
+            "description": "URL of your server to redirect the user after completion of the payment flow.",
+            "example": "https://tpp-application.com"
+          },
+          "paymentRequestDetails": {
+            "$ref": "#/components/schemas/HostedPaymentRequestDetails"
+          }
+        }
+      },
+      "CreateHostedPaymentRequestLink": {
+        "required": [
+          "redirectUrl",
+          "paymentRequestDetails",
+          "institutionIdentifiers"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "__Conditional__. Yapily Identifier for the `User` returned by the create user step POST /users. You must either provide `userId` or `applicationUserId`."
+          },
+          "applicationUserId": {
+            "type": "string",
+            "description": "__Conditional__. Your own `User` reference. If you want to work with their own unique references for individual PSUs then you can use the `applicationUserId` property to provide that value. Where Yapily does not already have a Yapily userId that matches the supplied `applicationUserId`, then a new Yapily userId is created automatically and linked to the `applicationUserId` value. You must either provide userId or `applicationUserId`."
+          },
+          "institutionIdentifiers": {
+            "$ref": "#/components/schemas/InstitutionIdentifiers"
+          },
+          "userSettings": {
+            "$ref": "#/components/schemas/UserSettings"
+          },
+          "redirectUrl": {
+            "type": "string",
+            "description": "URL of your server to redirect the user after completion of the payment flow.",
+            "example": "https://tpp-application.com"
+          },
+          "authorisationExpiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time that the authorisation expires. Must be between 10 minutes and 30 days in the future. If not specified, the authorisation URL will expire 10 minutes after creation."
+          },
+          "paymentRequestDetails": {
+            "$ref": "#/components/schemas/HostedPaymentRequestDetailsLink"
+          }
+        }
+      },
+      "InstitutionIdentifiers": {
+        "description": "Specifies the institution requirements for making the payment. Skips the bank selection screen in payment flow if the `institutionId` and `institutionCountryCode` are provided.",
+        "type": "object",
+        "required": [
+          "institutionCountryCode"
+        ],
+        "properties": {
+          "institutionId": {
+            "type": "string",
+            "description": "Yapily identifier which identifies the `Institution` the payment request is sent to."
+          },
+          "institutionCountryCode": {
+            "type": "string",
+            "description": "2 letter ISO Country code of the `Institution` the payment request is sent to.",
+            "example": "GB"
+          }
+        }
+      },
+      "InstitutionIdentifiersResponse": {
+        "description": "Specifies the institution selected for making the payment.",
+        "type": "object",
+        "properties": {
+          "institutionId": {
+            "type": "string",
+            "description": "Yapily identifier which identifies the `Institution` the payment request is sent to."
+          },
+          "institutionCountryCode": {
+            "type": "string",
+            "description": "2 letter ISO Country code of the `Institution` the payment request is sent to.",
+            "example": "GB"
+          }
+        }
+      },
+      "UserSettings": {
+        "description": "Specifies the language and location preferences of the user.",
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string",
+            "description": "2 letter ISO Language code which denotes the language preference for the `User`.",
+            "example": "en"
+          },
+          "location": {
+            "type": "string",
+            "description": "2 letter ISO Country code which denotes the location preference for the `User`.",
+            "example": "GB"
+          }
+        }
+      },
+      "HostedPaymentRequestDetails": {
+        "description": "Details of the payment.",
+        "required": [
+          "paymentIdempotencyId",
+          "type",
+          "payee",
+          "amountDetails"
+        ],
+        "type": "object",
+        "properties": {
+          "paymentIdempotencyId": {
+            "type": "string",
+            "description": "A unique identifier that you must provide to identify the payment. This can be any alpha-numeric string but is limited to a maximum of 35 characters.",
+            "example": "04ab4536gaerfc0e1f93c4f4"
+          },
+          "reference": {
+            "type": "string",
+            "description": "The payment reference or description. Limited to a maximum of 18 characters for UK institutions.",
+            "example": "Bill payment"
+          },
+          "contextType": {
+            "$ref": "#/components/schemas/PaymentContextType"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PaymentType"
+          },
+          "payee": {
+            "$ref": "#/components/schemas/Payee"
+          },
+          "payer": {
+            "$ref": "#/components/schemas/Payer"
+          },
+          "amountDetails": {
+            "$ref": "#/components/schemas/HostedAmountDetails"
+          },
+          "paymentDueDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date that the payment is due. Displayed to the end user in the payment summary screen."
+          }
+        }
+      },
+      "HostedPaymentResponseDetails": {
+        "description": "Details of the payment.",
+        "type": "object",
+        "properties": {
+          "paymentIdempotencyId": {
+            "type": "string",
+            "description": "A unique identifier provided to identify the payment. This can be any alpha-numeric string but is limited to a maximum of 35 characters.",
+            "example": "04ab4536gaerfc0e1f93c4f4"
+          },
+          "reference": {
+            "type": "string",
+            "description": "The payment reference or description. Limited to a maximum of 18 characters for UK institutions.",
+            "example": "Bill payment"
+          },
+          "contextType": {
+            "$ref": "#/components/schemas/PaymentContextTypeResponse"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PaymentTypeResponse"
+          },
+          "payee": {
+            "$ref": "#/components/schemas/PayeeDetailsResponse"
+          },
+          "payer": {
+            "$ref": "#/components/schemas/PayerDetailsResponse"
+          },
+          "amountDetails": {
+            "$ref": "#/components/schemas/AmountDetailsResponse"
+          },
+          "paymentDueDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date that the payment is due."
+          }
+        }
+      },
+      "HostedPaymentRequestDetailsLink": {
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "description": "The payment reference or description. Limited to a maximum of 18 characters for UK institutions.",
+            "example": "Bill payment"
+          },
+          "contextType": {
+            "$ref": "#/components/schemas/PaymentContextTypeResponse"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PaymentTypeResponse"
+          },
+          "payee": {
+            "$ref": "#/components/schemas/PayeeDetailsResponse"
+          },
+          "payer": {
+            "$ref": "#/components/schemas/PayerDetailsResponse"
+          },
+          "amountDetails": {
+            "$ref": "#/components/schemas/AmountDetailsResponse"
+          },
+          "paymentDueDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date that the payment is due. Displayed to the end user in the payment summary screen."
+          }
+        }
+      },
+      "HostedAmountDetails": {
+        "required": [
+          "amountToPay",
+          "currency"
+        ],
+        "type": "object",
+        "properties": {
+          "amountToPay": {
+            "type": "number",
+            "description": "The payment amount",
+            "minimum": 0.01 ,
+            "example": 10.50
+          },
+          "currency": {
+            "type": "string",
+            "description": "The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+            "example": "GBP"
+          }
+        },
+        "description": "The payment amount and currency"
+      },
+      "HostedPaymentRequestResponse": {
+        "type": "object",
+        "properties": {
+          "paymentRequestId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique Id of the payment request."
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique Id for the `User` assigned by Yapily."
+          },
+          "applicationUserId": {
+            "type": "string",
+            "description": "Your reference to the `User`."
+          },
+          "applicationId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique Id of the `Application` the user is associated with."
+          },
+          "institutionIdentifiers": {
+            "$ref": "#/components/schemas/InstitutionIdentifiersResponse"
+          },
+          "userSettings": {
+            "$ref": "#/components/schemas/UserSettings"
+          },
+          "redirectUrl": {
+            "type": "string",
+            "description": "URL of payment server to redirect the user after completion of the payment flow.",
+            "example": "https://tpp-application.com"
+          },
+          "paymentRequestDetails": {
+            "$ref": "#/components/schemas/HostedPaymentResponseDetails"
+          },
+          "hostedUrl": {
+            "type": "string",
+            "description": "The URL of Hosted UI page for the applicationId which initiates the user journey for the payment. <br> URL would be appended with authToken, applicationId and userSettings."
+          },
+          "authToken": {
+            "type": "string",
+            "description": "The JWT Token signed by the certificate-vault using Yapily's keys."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time at which the payment was created."
+          },
+          "authorisationExpiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time at which the auth Token will expire."
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the payment request. <br> Possible Values: <br> ACTIVE <br> INACTIVE"
+          }
+        }
+      },
+      "HostedPaymentPhase": {
+        "type": "object",
+        "properties": {
+          "phaseName": {
+            "type": "string",
+            "description": "The name of the hosted payment process phase. Allowed values are : <ul> <li> INITIATED  -  Payment process initiated </li><li> DECLINED  -  Payment process failed and will not proceed further </li><li> INSTITUTION_SUBMITTED  -  Payment institution submitted </li><li> EMBEDDED_CREDENTIAL_REQUESTED  -  For embedded banks, a UI element to collect user credentials was displayed </li><li> AUTHORISATION_INITIATED  -  All details required for payment initiation have been collected </li><li> VALIDATION_COMPLETED  -  The payment payload was validated successfully </li><li> AUTHORISATION_CREATED  -  Payment authorisation request created with Institution </li><li> EMBEDDED_CODE_REQUESTED  -  For embedded banks, a UI element to collect SCA for initiated consent was displayed </li><li> EMBEDDED_TYPE_REQUESTED  -  For embedded banks, a UI element to allow the user to select their preferred SCA method for this consent authorisation was displayed  </li><li> EMBEDDED_DECOUPLED_AUTHORISATION  -  For embedded banks, decoupled authoirisation was initiated by the bank </li><li> EMBEDDED_CODE_COLLECTED  -  For embedded banks, SCA code was collected for consent authorisation </li><li> EMBEDDED_TYPE_SELECTED  -  For embedded banks, preferred SCA method was selected for consent authorisation </li><li> CONSENT_POLLING_STARTED  -  We start polling the bank for consent authorisation status </li><li> CONSENT_POLLING_ENDED  -  We finish polling the bank for consent authorisation status </li><li> AUTHORISED  -  Payment authorisation completed </li><li> AUTHORISATION_FAILED  -  Payment authorisation failed and will not proceed further </li><li> AUTHORISATION_REJECTED  -  Payment authorisation rejected and will not proceed further </li><li> SUBMITTED  -  Payment execution created and submitted to Institution </li><li> ACCEPTED  -  Payment execution accepted by Institution and awaiting settlement </li><li> REJECTED  -  Payment or Authorisation request rejected by Institution and will not proceed further </li><li> SETTLEMENT_COMPLETED  -  Payment settlement completed </li><li> STATUS_POLLING_STARTED  -  Payment status polling started </li><li> STATUS_POLLING_ENDED  -  Payment status polling ended </li><li> MERCHANT_ACKNOWLEDGED  -  Payment acknowledgement received from merchant </li><li> FINISHED  -  Payment process completed </li> </ul>"
+          },
+          "phaseCreatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time when phase of the hosted payment was inserted."
+          }
+        },
+        "description": "The phase of the payment."
+      },
+      "HostedPaymentStatusDetails": {
+        "description": "The status of the payment.",
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatus"
+          },
+          "statusUpdateDate": {
+            "description": "Date and time the status was updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "isoStatus": {
+            "$ref": "#/components/schemas/HostedPaymentIsoStatus"
+          }
+        }
+      },
+      "HostedPaymentIsoStatus": {
+        "description": "The ISO status of the payment.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description" : "The ISO 20022 `PaymentStatusCode`. One of : <br> ACSC <br> ACCC <br> ACCP  <br> ACSP <br> ACTC <br> ACWC <br> ACWP <br> ACFC <br> RCVD <br> PART <br> PATC <br> PDNG <br> RJCT <br> CANC",
+            "example": "ACSC"
+          },
+          "name": {
+            "type": "string",
+            "description": "The full name of the ISO 20022 `PaymentStatusCode`.",
+            "example": "AcceptedCreditSettlementCompleted"
+          }
+        }
+      },
+      "ApiResponseOfGetHostedPaymentRequest": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/HostedPaymentDetails"
+          }
+        }
+      },
+      "HostedPaymentDetails": {
+        "type": "object",
+        "properties": {
+          "paymentRequestId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The unique ID of the payment request."
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The Unique Identifier for the `User` assigned by Yapily."
+          },
+          "applicationUserId": {
+            "type": "string",
+            "description": "Your reference to the `User`."
+          },
+          "applicationId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The Unique Identifier of the `Application` the user is associated with."
+          },
+          "institutionIdentifiers": {
+            "$ref": "#/components/schemas/InstitutionIdentifiersResponse"
+          },
+          "userSettings": {
+            "$ref": "#/components/schemas/UserSettings"
+          },
+          "redirectUrl": {
+            "type": "string",
+            "description": "URL of your server to redirect the user after completion of the payment flow.",
+            "example": "https://tpp-application.com"
+          },
+          "paymentRequestDetails": {
+            "$ref": "#/components/schemas/HostedPaymentRequestDetailsLink"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date and time at which the payment request was created.",
+            "format": "date-time"
+          },
+          "authorisationExpiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time at which the auth Token will expire."
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the payment request. <br> Possible values: <br> ACTIVE <br> INACTIVE"
+          },
+          "payments": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Payments that have been initiated as part of this request",
+            "items": {
+              "$ref": "#/components/schemas/HostedPayment"
+            }
+          }
+        }
+      },
+      "HostedPayment": {
+        "type": "object",
+        "properties": {
+          "paymentId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The Unique Identifier of the payment created using Yapily hosted application."
+          },
+          "institutionIdentifiers": {
+            "$ref": "#/components/schemas/InstitutionIdentifiersResponse"
+          },
+          "phases": {
+            "description": "The phase reached by the payment and its timestamp.",
+            "type": "array",
+            "items":{
+              "$ref": "#/components/schemas/HostedPaymentPhase"
+            }
+          },
+          "statusDetails": {
+            "description": "Details of the payment status.",
+            "type": "array",
+            "items":{
+              "$ref": "#/components/schemas/HostedPaymentStatusDetails"
+            }
+          },
+          "institutionPaymentId": {
+            "type": "string",
+            "description": "The Unique Identifier of the payment created with the `Institution`."
+          },
+          "paymentLifecycleId": {
+            "type": "string",
+            "description": "The Unique Identifier provided by TPP in the Payment request to identify the payment."
+          },
+          "paymentIdempotencyId": {
+            "type": "string",
+            "description": "A unique identifier that you must provide to identify the payment. This can be any alpha-numeric string but is limited to a maximum of 35 characters.",
+            "example": "04ab4536gaerfc0e1f93c4f4"
+          },
+          "reference": {
+            "type": "string",
+            "description": "The payment reference or description. Limited to a maximum of 18 characters for UK institutions.",
+            "example": "Bill payment"
+          },
+          "contextType": {
+            "$ref": "#/components/schemas/PaymentContextTypeResponse"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PaymentTypeResponse"
+          },
+          "payee": {
+            "$ref": "#/components/schemas/PayeeDetailsResponse"
+          },
+          "payer": {
+            "$ref": "#/components/schemas/PayerDetailsResponse"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/AmountDetailsResponse"
+          }
+        }
+      },
+      "ApiResponseOfCreateHostedPaymentRequest": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/HostedPaymentRequestResponse"
+          }
+        }
+      },
+      "ApiResponseOfCreateHostedPaymentRequestLink": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/HostedPaymentRequestResponse"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -19518,6 +20591,483 @@
             "code": 400,
             "status": "BAD_REQUEST",
             "message": "lastConfirmedAt cannot be a future date and time"
+          }
+        }
+      },
+      "create-hosted-payment-request": {
+        "description": "Create Hosted payment request",
+        "value": {
+          "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+          "applicationUserId": "john.doe@company.com",
+          "institutionIdentifiers" : {
+            "institutionId": "modelo-sandbox",
+            "institutionCountryCode": "GB"
+          },
+          "userSettings" : {
+            "language": "en",
+            "location": "GB"
+          },
+          "redirectUrl": "https://tpp-application.com/",
+          "paymentRequestDetails": {
+            "paymentIdempotencyId": "4289457hd38djoa783jw9qag3",
+            "amountDetails": {
+              "amountToPay": 10.00,
+              "currency": "GBP"
+            },
+            "reference": "Test Payment",
+            "contextType": "OTHER",
+            "type": "DOMESTIC_PAYMENT",
+            "payee": {
+              "name": "Jane Doe",
+              "accountIdentifications": [
+                {
+                  "type": "SORT_CODE",
+                  "identification": "123456"
+                },
+                {
+                  "type": "ACCOUNT_NUMBER",
+                  "identification": "12345678"
+                }
+              ]
+            },
+            "payer": {
+              "name": "John Doe",
+              "accountIdentifications": [
+                {
+                  "type": "SORT_CODE",
+                  "identification": "121212"
+                },
+                {
+                  "type": "ACCOUNT_NUMBER",
+                  "identification": "87654321"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "create-hosted-payment-request-response": {
+        "description": "Create Hosted Payment Response",
+        "value": {
+          "meta": {
+            "tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"
+          },
+          "data": {
+            "paymentRequestId": "eb39f8ae-aeff-4ffa-a23d-d4a5b3eff406",
+            "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+            "applicationUserId": "john.doe@company.com",
+            "applicationId": "64949de6-6510-4d70-9500-d4aa094c506c",
+            "institutionIdentifiers" : {
+              "institutionId": "modelo-sandbox",
+              "institutionCountryCode": "GB"
+            },
+            "userSettings" : {
+              "language": "en",
+              "location": "GB"
+            },
+            "redirectUrl": "https://tpp-application.com/",
+            "paymentRequestDetails": {
+              "paymentIdempotencyId": "4289457hd38djoa783jw9qag3",
+              "amountDetails": {
+                "amountToPay": 1.00,
+                "currency": "GBP"
+              },
+              "reference": "Test Payment",
+              "contextType": "OTHER",
+              "type": "DOMESTIC_PAYMENT",
+              "payee": {
+                "name": "Jane Doe",
+                "accountIdentifications": [
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "123456"
+                  },
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "12345678"
+                  }
+                ]
+              },
+              "payer": {
+                "name": "John Doe",
+                "accountIdentifications": [
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "121212"
+                  },
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "87654321"
+                  }
+                ]
+              }
+            },
+            "hostedUrl": "https://prototypes.yapily.com/auth-link1.html",
+            "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            "createdAt": "2021-06-10T11:26:54.887Z",
+            "authorisationExpiresAt": "2021-06-10T11:36:54.887Z",
+            "status": "ACTIVE"
+          }
+        }
+      },
+      "create-hosted-payment-request-link": {
+        "description": "Create Hosted payment request",
+        "value": {
+          "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+          "applicationUserId": "john.doe@company.com",
+          "institutionIdentifiers" : {
+            "institutionId": "modelo-sandbox",
+            "institutionCountryCode": "GB"
+          },
+          "userSettings" : {
+            "language": "en",
+            "location": "GB"
+          },
+          "redirectUrl": "https://tpp-application.com/",
+          "paymentRequestDetails": {
+            "amountDetails": {
+              "amountToPay": 1.00,
+              "currency": "GBP"
+            },
+            "reference": "Test Payment",
+            "contextType": "OTHER",
+            "type": "DOMESTIC_PAYMENT",
+            "payee": {
+              "name": "Jane Doe",
+              "accountIdentifications": [
+                {
+                  "type": "SORT_CODE",
+                  "identification": "123456"
+                },
+                {
+                  "type": "ACCOUNT_NUMBER",
+                  "identification": "12345678"
+                }
+              ]
+            },
+            "payer": {
+              "name": "John Doe",
+              "accountIdentifications": [
+                {
+                  "type": "SORT_CODE",
+                  "identification": "121212"
+                },
+                {
+                  "type": "ACCOUNT_NUMBER",
+                  "identification": "87654321"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "create-hosted-payment-request-link-response": {
+        "description": "Create Hosted Payment Response",
+        "value": {
+          "meta": {
+            "tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"
+          },
+          "data": {
+            "paymentRequestId": "eb39f8ae-aeff-4ffa-a23d-d4a5b3eff406",
+            "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+            "applicationUserId": "john.doe@company.com",
+            "applicationId": "64949de6-6510-4d70-9500-d4aa094c506c",
+            "institutionIdentifiers" : {
+              "institutionId": "modelo-sandbox",
+              "institutionCountryCode": "GB"
+            },
+            "userSettings" : {
+              "language": "en",
+              "location": "GB"
+            },
+            "redirectUrl": "https://tpp-application.com/",
+            "paymentRequestDetails": {
+              "amountDetails": {
+                "amountToPay": 10.00,
+                "currency": "GBP"
+              },
+              "reference": "Test Payment",
+              "contextType": "OTHER",
+              "type": "DOMESTIC_PAYMENT",
+              "payee": {
+                "name": "Jane Doe",
+                "accountIdentifications": [
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "123456"
+                  },
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "12345678"
+                  }
+                ]
+              },
+              "payer": {
+                "name": "John Doe",
+                "accountIdentifications": [
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "121212"
+                  },
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "87654321"
+                  }
+                ]
+              }
+            },
+            "hostedUrl": "https://prototypes.yapily.com/auth-link1.html",
+            "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            "createdAt": "2021-06-10T11:26:54.887Z",
+            "authorisationExpiresAt": "2021-06-10T11:36:54.887Z",
+            "status": "ACTIVE"
+          }
+        }
+      },
+      "get-hosted-payment-request-response": {
+        "description": "Get Hosted payment request Response",
+        "value": {
+          "meta": {
+            "tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"
+          },
+          "data": {
+            "paymentRequestId": "eb39f8ae-aeff-4ffa-a23d-d4a5b3eff406",
+            "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+            "applicationUserId": "john.doe@company.com",
+            "applicationId": "64949de6-6510-4d70-9500-d4aa094c506c",
+            "institutionIdentifiers" : {
+              "institutionId": "modelo-sandbox",
+              "institutionCountryCode": "GB"
+            },
+            "userSettings" : {
+              "language": "en",
+              "location": "GB"
+            },
+            "redirectUrl": "https://tpp-application.com/",
+            "paymentRequestDetails": {
+              "amountDetails": {
+                "amountToPay": 1.00,
+                "currency": "GBP"
+              },
+              "reference": "Test Payment",
+              "contextType": "OTHER",
+              "type": "DOMESTIC_PAYMENT",
+              "payee": {
+                "name": "Jane Doe",
+                "accountIdentifications": [
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "123456"
+                  },
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "12345678"
+                  }
+                ]
+              },
+              "payer": {
+                "name": "John Doe",
+                "accountIdentifications": [
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "121212"
+                  },
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "87654321"
+                  }
+                ]
+              }
+            },
+            "createdAt": "2021-06-10T11:26:54.887Z",
+            "authorisationExpiresAt": "2021-06-10T11:36:54.887Z",
+            "status": "ACTIVE",
+            "payments": [
+              {
+                "paymentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "institutionIdentifiers": {
+                  "institutionId": "string",
+                  "institutionCountryCode": "GB"
+                },
+                "userIdentifiers": {
+                  "psuId": "string",
+                  "psuCorporateId": "string",
+                  "psuIpAddress": "string"
+                },
+                "phases": [
+                  {
+                    "phaseName": "INITIATED",
+                    "phaseCreatedAt": "2021-06-10T11:26:54.887Z"
+                  },
+                  {
+                    "phaseName": "INSTITUTION_SUBMITTED",
+                    "phaseCreatedAt": "2021-06-10T11:26:55.123Z"
+                  },
+                  {
+                    "phaseName": "INPUT_CAPTURED",
+                    "phaseCreatedAt": "2021-06-10T11:27:05.123Z"
+                  },
+                  {
+                    "phaseName": "VALIDATION_COMPLETED",
+                    "phaseCreatedAt": "2021-06-10T11:27:05.223Z"
+                  },
+                  {
+                    "phaseName": "AUTHORISATION_CREATED",
+                    "phaseCreatedAt": "2021-06-10T11:27:06.637Z"
+                  },
+                  {
+                    "phaseName": "AUTHORISED",
+                    "phaseCreatedAt": "2021-06-10T11:27:10.637Z"
+                  },
+                  {
+                    "phaseName": "SUBMITTED",
+                    "phaseCreatedAt": "2021-06-10T11:27:10.654Z"
+                  },
+                  {
+                    "phaseName": "ACCEPTED",
+                    "phaseCreatedAt": "2021-06-10T11:27:11.867Z"
+                  },
+                  {
+                    "phaseName": "SETTLEMENT_COMPLETED",
+                    "phaseCreatedAt": "2021-06-10T11:27:13.887Z"
+                  }
+                ],
+                "statusDetails": [
+                  {
+                    "status": "PENDING",
+                    "statusUpdateDate": "2021-06-10T11:27:11.867Z",
+                    "isoStatus": {
+                      "code": "PDNG",
+                      "name": "Pending"
+                    }
+                  },
+                  {
+                    "status": "COMPLETED",
+                    "statusUpdateDate": "2021-06-10T11:27:13.887Z",
+                    "isoStatus": {
+                      "code": "ACSC",
+                      "name": "AcceptedSettlementCompleted"
+                    }
+                  }
+                ],
+                "institutionPaymentId": "string",
+                "paymentLifecycleId": "string",
+                "paymentIdempotencyId": "04ab4536gaerfc0e1f93c4f4",
+                "reference": "Bill payment",
+                "contextType": "OTHER",
+                "type": "DOMESTIC_PAYMENT",
+                "payee": {
+                  "name": "Jane Doe",
+                  "accountIdentifications": [
+                    {
+                      "identification": "401016",
+                      "type": "SORT_CODE"
+                    },
+                    {
+                      "identification": "71518920",
+                      "type": "ACCOUNT_NUMBER"
+                    }
+                  ],
+                  "address": {
+                    "country": "GB"
+                  },
+                  "merchantId": "24589303",
+                  "merchantCategoryCode": "5551"
+                },
+                "payer": {
+                  "name": "John Doe",
+                  "accountIdentifications": [
+                    {
+                      "type": "SORT_CODE",
+                      "identification": "401016"
+                    }
+                  ],
+                  "address": {
+                    "country": "GB"
+                  }
+                },
+                "amount": {
+                  "amount": 10,
+                  "currency": "GBP"
+                }
+              }
+            ]
+          }            
+        }
+      },
+      "400-error-response":{
+        "description": "400 Error",
+        "value": {
+          "error": {
+            "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+            "code": 400,
+            "status": "BAD_REQUEST",
+            "supportUrl": "https://support.yapily.com/",
+            "source": "YAPILY",
+            "issues": [
+              {
+                "type": "BAD_REQUEST",
+                "code": 10600,
+                "message": "The server could not understand the request due to invalid syntax"
+              }
+            ]
+          }
+        }
+      },
+      "401-error-response": {
+        "description": "401 Error",
+        "value": {
+          "error": {
+            "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+            "code": 401,
+            "status": "UNAUTHORIZED",
+            "supportUrl": "https://support.yapily.com/",
+            "source": "YAPILY",
+            "issues": [
+              {
+                "type": "CREDENTIALS",
+                "code": 10700,
+                "message": "Authorization header invalid or credentials not authenticated"
+              }
+            ]
+          }
+        }
+      },
+      "404-error-response": {
+        "description": "404 Error",
+        "value": {
+          "error": {
+            "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+            "code": 404,
+            "status": "NOT FOUND",
+            "supportUrl": "https://support.yapily.com/",
+            "source": "YAPILY",
+            "issues": [
+              {
+                "type": "INVALID_REQUEST",
+                "code": 10800,
+                "message": "Resource not found"
+              }
+            ]
+          }
+        }
+      },
+      "500-error-response": {
+        "description": "500 Error",
+        "value": {
+          "error": {
+            "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+            "code": 500,
+            "status": "INTERNAL SERVER ERROR",
+            "supportUrl": "https://support.yapily.com/",
+            "source": "YAPILY",
+            "issues": [
+              {
+                "type": "INTERNAL_SERVER_ERROR",
+                "code": 11000,
+                "message": "Unexpected server error"
+              }
+            ]
           }
         }
       }

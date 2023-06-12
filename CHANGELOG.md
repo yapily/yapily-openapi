@@ -5,8 +5,13 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.22.0] - 2023-05-26
+
+### Added
+- Added endpoints to use Yapily Hosted Pages
+
 ## [2.21.6] - 2023-05-25
-## Removed
+### Removed
 - Removed outdated references to CBI Globe 
 
 ## [2.21.5] - 2023-05-23
