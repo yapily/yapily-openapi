@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.22.1",
+    "version": "2.23.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -17431,7 +17431,17 @@
           "paymentId": {
             "type": "string",
             "format": "uuid",
+            "description": "The Unique Identifier of the payment."
+          },
+          "hostedPaymentId": {
+            "type": "string",
+            "format": "uuid",
             "description": "The Unique Identifier of the payment created using Yapily hosted application."
+          },
+          "consentId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The Unique Identifier of the consent."
           },
           "institutionIdentifiers": {
             "$ref": "#/components/schemas/InstitutionIdentifiersResponse"
@@ -20885,6 +20895,8 @@
             "payments": [
               {
                 "paymentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "hostedPaymentId": "a5065217-e0b0-42e1-a0e1-8be209b24f2a",
+                "consentId": "1e2e5167-8519-4c19-b016-8f2f0c6e38b6",
                 "institutionIdentifiers": {
                   "institutionId": "string",
                   "institutionCountryCode": "GB"
