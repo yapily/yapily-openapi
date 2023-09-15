@@ -5,6 +5,10 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.24.0] - 2023-09-14
+### Added
+- Add public endpoints to use Yapily Constraints
+
 ## [2.23.0] - 2023-09-11
 ### Changed
 - Included the `hostedPaymentId` and `consentId` fields on the Yapily Hosted Pages GET endpoint

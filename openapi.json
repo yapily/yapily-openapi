@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.23.0",
+    "version": "2.24.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -65,6 +65,10 @@
     {
       "description": "Variable Recurring Payments enables transfer of money between accounts held by the same person or transfer of money for business payments. <br><br>In order to make Sweeping Variable Recurring Payments on behalf of a user, you are required to request an [Consent](#yapily-api-authorisations) from the user by calling the Sweeping Consent endpoint to authorise the user's account to make the payment. Once a `consent-token` is obtained, you can call the Payments endpoint to execute the Sweeping Variable Recurring Payments transaction. Before executing the payment, you have the option to confirm availability of funds in the user's account by calling the Funds Confirmation endpoint. <br><br>See [VRP Payments](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/variable-recurring-payments/) for more information. ",
       "name": "Variable Recurring Payments"
+    },
+    {
+      "description": "The constraints endpoints can be used to retrieve institution specific data requirements and rules that will apply when performing other operations.",
+      "name": "Constraints"
     }
   ],
   "x-tagGroups": [
@@ -82,7 +86,8 @@
         "Notifications",
         "Virtual Accounts",
         "Variable Recurring Payments",
-        "Hosted Pages"
+        "Hosted Pages",
+        "Constraints"
       ]
     }
   ],
@@ -8923,6 +8928,286 @@
           "Hosted Pages"
         ]
       }
+    },
+    "/institutions/constraints/payments": {
+      "get": {
+        "description": "Retrieve institution specific constraints for payment authorisation and submission requests",
+        "operationId": "getPaymentConstraintsRulesByInstitution",
+        "parameters": [
+          {
+            "description": "Unique Id(s) of the `Institution`(s) to retrieve the Payment Constraints for. Multiple institutionIds need to be separated by `,`",
+            "name": "institutionIds",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Country code of the `Institution`(s). Ensure that the country code matches the respective institutionIds; any mismatch will result in an HTTP 404 error response.",
+            "in": "query",
+            "name": "institutionCountryCode",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Type of payment to retrieve payment constraints for",
+            "in": "query",
+            "name": "paymentType",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "DOMESTIC_PAYMENT",
+                "DOMESTIC_INSTANT_PAYMENT",
+                "DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+                "DOMESTIC_SCHEDULED_PAYMENT",
+                "DOMESTIC_PERIODIC_PAYMENT",
+                "INTERNATIONAL_PAYMENT",
+                "INTERNATIONAL_SCHEDULED_PAYMENT",
+                "INTERNATIONAL_PERIODIC_PAYMENT",
+                "BULK_PAYMENT"
+              ]
+            }
+          },
+          {
+            "description": "The path on the API that is associated with the operation for which constraints are to be retrieved",
+            "in": "query",
+            "name": "endpointPath",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The HTTP method that is associated with the operation for which constraints are to be retrieved",
+            "in": "query",
+            "name": "endpointMethod",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "POST",
+                "PATCH",
+                "PUT",
+                "GET",
+                "DELETE"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiListResponseOfPaymentConstraints"
+                }
+              }
+            },
+            "description": "Ok"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/400-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Bad Request."
+          },
+          "401": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Either authentication credentials were not supplied, or they were invalid."
+          },
+          "404": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/404-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Not Found."
+          },
+          "500": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "Get Payment Constraints Rules",
+        "tags": [
+          "Constraints"
+        ]
+      }
+    },
+    "/institutions/constraints/data": {
+      "get": {
+        "description": "Get Data Constraints Rules against an Institution for Account Authorisation requests",
+        "operationId": "getAccountConstraintsRulesByInstitution",
+        "parameters": [
+          {
+            "description": "Unique Id(s) of the `Institution`(s) to retrieve the Data Constraints for. Multiple institutionIds need to be separated by `,`",
+            "name": "institutionIds",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Country code of the `Institution`(s). Ensure that the country code matches the respective institutionIds; any mismatch will result in an HTTP 404 error response.",
+            "in": "query",
+            "name": "institutionCountryCode",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The path on the API that is associated with the operation for which constraints are to be retrieved",
+            "in": "query",
+            "name": "endpointPath",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The HTTP method that is associated with the operation for which constraints are to be retrieved",
+            "in": "query",
+            "name": "endpointMethod",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "POST",
+                "PATCH",
+                "PUT",
+                "GET",
+                "DELETE"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiListResponseOfDataConstraints"
+                }
+              }
+            },
+            "description": "Ok"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/400-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Bad Request."
+          },
+          "401": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Either authentication credentials were not supplied, or they were invalid."
+          },
+          "404": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/404-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Not Found."
+          },
+          "500": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "Get Data Constraints Rules",
+        "tags": [
+          "Constraints"
+        ]
+      }
     }
   },
   "components": {
@@ -17516,6 +17801,873 @@
             "$ref": "#/components/schemas/HostedPaymentRequestResponse"
           }
         }
+      },
+      "ApiListResponseOfPaymentConstraints":{
+        "type":"object",
+        "properties":{
+          "meta": {
+            "$ref": "#/components/schemas/ResponseListMeta"
+          },
+          "data":{
+            "type": "array",
+            "items": {
+              "$ref":"#/components/schemas/PaymentConstraintsResponse"
+            }
+          }
+        },
+        "example": {
+          "meta": {
+            "tracingId": "661471ddb4344113a2d185b861cb3dcf"
+          },
+          "data": [
+            {
+              "institutionId": "mock-sandbox",
+              "institutionCountryCode": "GB",
+              "endpointPath": "/payments",
+              "endpointMethod": "POST",
+              "paymentType": "DOMESTIC_PAYMENT",
+              "request": {
+                "headers": {
+                  "title": "Header",
+                  "type": "object",
+                  "properties": {
+                    "psuID": {
+                      "title": "PSU Id",
+                      "type": "string",
+                      "description": ""
+                    }
+                  }
+                },
+                "body": {
+                  "title": "Payment Request",
+                  "required": [
+                    "payee",
+                    "amount",
+                    "paymentIdempotencyId",
+                    "type"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "paymentIdempotencyId": {
+                      "title": "Payment Idempotency Id",
+                      "pattern": "^.{1,35}$",
+                      "type": "string",
+                      "description": "Id for the payment"
+                    },
+                    "type": {
+                      "enum": [
+                        "DOMESTIC_PAYMENT"
+                      ],
+                      "title": "Payment Type",
+                      "type": "string",
+                      "description": "type of the payment"
+                    },
+                    "contextType": {
+                      "default": "OTHER",
+                      "enum": [
+                        "BILL",
+                        "GOODS",
+                        "SERVICES",
+                        "OTHER",
+                        "PERSON_TO_PERSON"
+                      ],
+                      "title": "Context Type",
+                      "type": "string",
+                      "description": "__Optional__. The payment context code. This defaults to `OTHER` if not specified."
+                    },
+                    "reference": {
+                      "title": "Reference",
+                      "pattern": "^.{1,18}$",
+                      "type": "string",
+                      "description": "__Mandatory__. The payment reference or description. Limited to a maximum of 18 characters long.",
+                      "example": "Bill payment"
+                    },
+                    "payee": {
+                      "title": "Payee",
+                      "required": [
+                        "accountIdentifications",
+                        "name"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "title": "Name",
+                          "pattern": "^.{1,18}$",
+                          "type": "string",
+                          "description": "__Mandatory__. The account holder name of the beneficiary.",
+                          "example": "Jane Doe"
+                        },
+                        "accountIdentifications": {
+                          "title": "Account Identifications",
+                          "type": "array",
+                          "items": {
+                            "required": [
+                              "identification",
+                              "type"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "title": "Account Identification Type",
+                                "type": "string",
+                                "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type."
+                              },
+                              "identification": {
+                                "title": "Account Identification",
+                                "type": "string",
+                                "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values."
+                              }
+                            }
+                          },
+                          "description": "__Mandatory__. The account identifications that identify the `Payee` bank account."
+                        },
+                        "address": {
+                          "title": "Address",
+                          "type": "object",
+                          "properties": {
+                            "addressLines": {
+                              "title": "Address Lines",
+                              "type": "array",
+                              "items": {
+                                "title": "Address Line",
+                                "type": "string"
+                              },
+                              "description": "__Optional__. The address line of the address"
+                            },
+                            "streetName": {
+                              "title": "Street Name",
+                              "type": "string",
+                              "description": "__Optional__. The street name of the address"
+                            },
+                            "buildingNumber": {
+                              "title": "Building Number",
+                              "type": "string",
+                              "description": "__Optional__. The building number of the address"
+                            },
+                            "postCode": {
+                              "title": "Postcode",
+                              "type": "string",
+                              "description": "__Optional__. The post code of the address"
+                            },
+                            "townName": {
+                              "title": "Town",
+                              "type": "string",
+                              "description": "__Optional__. The town name of the address"
+                            },
+                            "county": {
+                              "title": "County",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "description": "__Optional__. The list of counties for the address"
+                            },
+                            "country": {
+                              "title": "Country",
+                              "type": "string",
+                              "description": "__Conditional__. The 2-letter country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment"
+                            },
+                            "department": {
+                              "title": "Department",
+                              "type": "string",
+                              "description": "__Optional__. The department for the address"
+                            },
+                            "subDepartment": {
+                              "title": "Sub-department",
+                              "type": "string",
+                              "description": "__Optional__. The sub-department for the address"
+                            },
+                            "addressType": {
+                              "enum": [
+                                "BUSINESS",
+                                "CORRESPONDENCE",
+                                "DELIVERY_TO",
+                                "MAIL_TO",
+                                "PO_BOX",
+                                "POSTAL",
+                                "RESIDENTIAL",
+                                "STATEMENT",
+                                "UNKNOWN"
+                              ],
+                              "title": "Address Type",
+                              "type": "string",
+                              "description": "__Optional__. The type of address"
+                            }
+                          },
+                          "description": "__Conditional__. The address of the `Payee` or `Payer`."
+                        }
+                      },
+                      "description": "__Mandatory__. Details of the beneficiary [person or business]."
+                    },
+                    "payer": {
+                      "title": "Payer",
+                      "required": [
+                        "accountIdentifications"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "accountIdentifications": {
+                          "title": "Account Identifications",
+                          "type": "array",
+                          "items": {
+                            "required": [
+                              "identification",
+                              "type"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "enum": [
+                                  "IBAN"
+                                ],
+                                "title": "Account Identification Type",
+                                "type": "string",
+                                "description": "__Mandatory__. Should be IBAN only."
+                              },
+                              "identification": {
+                                "title": "Account Identification",
+                                "pattern": "DE\\d{20}",
+                                "type": "string",
+                                "description": "__Mandatory__. The IBAN value associated with the account identity"
+                              }
+                            }
+                          },
+                          "description": "__Mandatory__. The account identifications that identify the `Payer` bank account."
+                        },
+                        "address": {
+                          "title": "Address",
+                          "type": "object",
+                          "properties": {
+                            "addressLines": {
+                              "title": "Address Lines",
+                              "type": "array",
+                              "items": {
+                                "title": "Address Line",
+                                "type": "string"
+                              },
+                              "description": "__Optional__. The address line of the address"
+                            },
+                            "streetName": {
+                              "title": "Street Name",
+                              "type": "string",
+                              "description": "__Optional__. The street name of the address"
+                            },
+                            "buildingNumber": {
+                              "title": "Building Number",
+                              "type": "string",
+                              "description": "__Optional__. The building number of the address"
+                            },
+                            "postCode": {
+                              "title": "Postcode",
+                              "type": "string",
+                              "description": "__Optional__. The post code of the address"
+                            },
+                            "townName": {
+                              "title": "Town",
+                              "type": "string",
+                              "description": "__Optional__. The town name of the address"
+                            },
+                            "county": {
+                              "title": "County",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "description": "__Optional__. The list of counties for the address"
+                            },
+                            "country": {
+                              "title": "Country",
+                              "type": "string",
+                              "description": "__Conditional__. The 2-letter country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment"
+                            },
+                            "department": {
+                              "title": "Department",
+                              "type": "string",
+                              "description": "__Optional__. The department for the address"
+                            },
+                            "subDepartment": {
+                              "title": "Sub-department",
+                              "type": "string",
+                              "description": "__Optional__. The sub-department for the address"
+                            },
+                            "addressType": {
+                              "enum": [
+                                "BUSINESS",
+                                "CORRESPONDENCE",
+                                "DELIVERY_TO",
+                                "MAIL_TO",
+                                "PO_BOX",
+                                "POSTAL",
+                                "RESIDENTIAL",
+                                "STATEMENT",
+                                "UNKNOWN"
+                              ],
+                              "title": "Address Type",
+                              "type": "string",
+                              "description": "__Optional__. The type of address"
+                            }
+                          },
+                          "description": "__Conditional__. The address of the `Payee` or `Payer`."
+                        }
+                      }
+                    },
+                    "amount": {
+                      "title": "Amount",
+                      "required": [
+                        "amount",
+                        "currency"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "amount": {
+                          "title": "Amount",
+                          "minimum": 0,
+                          "type": "number",
+                          "description": "__Mandatory__. The monetary value"
+                        },
+                        "currency": {
+                          "title": "Currency",
+                          "pattern": "^[A-Z]{3,3}$",
+                          "type": "string",
+                          "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code"
+                        }
+                      },
+                      "description": "__Mandatory__. Monetary Amount."
+                    },
+                    "paymentDateTime": {
+                      "type": "string",
+                      "description": "__Optional__, If present date should be greater than or equal to current date",
+                      "format": "date-time"
+                    }
+                  },
+                  "description": "Domestic payment request schema"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "PaymentConstraintsResponse":{
+        "required":[
+          "institutionId",
+          "institutionCountry",
+          "paymentType",
+          "request"
+        ],
+        "type":"object",
+        "properties":{
+          "institutionId":{
+            "type":"string",
+            "description":"The id to represent the `Institution`.",
+            "example":"modelo-sandbox"
+          },
+          "institutionCountryCode":{
+            "type":"string",
+            "description":"2 letter ISO Country code of the `Institution`.",
+            "example":"GB"
+          },
+          "endpointPath":{
+            "type":"string",
+            "description":"Define the applicable API end point."
+          },
+          "endpointMethod":{
+            "type":"string",
+            "description":"Https Method for the endpoint."
+          },
+          "paymentType":{
+            "title": "Payment Type",
+            "type": "string",
+            "description": "Payment type associated.",
+            "enum": [
+              "DOMESTIC_PAYMENT",
+              "DOMESTIC_INSTANT_PAYMENT",
+              "DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+              "DOMESTIC_SCHEDULED_PAYMENT",
+              "DOMESTIC_PERIODIC_PAYMENT",
+              "INTERNATIONAL_PAYMENT",
+              "INTERNATIONAL_SCHEDULED_PAYMENT",
+              "INTERNATIONAL_PERIODIC_PAYMENT",
+              "BULK_PAYMENT"
+            ]
+          },
+          "request":{
+            "$ref":"#/components/schemas/RequestConstraints"
+          }
+        }
+      },
+      "RequestConstraints":{
+        "required":[
+          "body"
+        ],
+        "type":"object",
+        "description":"Object defining the constraints rules applicable for a given requests.",
+        "properties":{
+          "headers":{
+            "$ref":"#/components/schemas/Schema"
+          },
+          "body":{
+            "$ref":"#/components/schemas/Schema"
+          }
+        }
+      },
+      "ApiListResponseOfDataConstraints":{
+        "type":"object",
+        "properties":{
+          "meta":{
+            "$ref":"#/components/schemas/ResponseMeta"
+          },
+          "data":{
+            "type": "array",
+            "items": {
+              "$ref":"#/components/schemas/DataConstraintsResponse"
+            }
+          }
+        },
+        "example": {
+          "meta": {
+            "tracingId": "a43049c1dbc04d6f8c8e2dfdc523217a"
+          },
+          "data": [
+            {
+              "institutionId": "mock-sandbox",
+              "institutionCountryCode": "GB",
+              "endpointPath": "/account-auth-requests",
+              "endpointMethod": "POST",
+              "request": {
+                "headers": {
+                  "title": "Header",
+                  "type": "object",
+                  "properties": {
+                    "psuID": {
+                      "title": "PSU Id",
+                      "type": "string",
+                      "description": "__Mandatory__. The psu id"
+                    }
+                  }
+                },
+                "body": {
+                  "required": [
+                    "institutionId"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "userUuid": {
+                      "title": "User UUID",
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "institutionId": {
+                      "title": "Institution Identifier",
+                      "type": "string",
+                      "description": "__Mandatory__. The reference to the `Institution` which identifies which institution the authorisation request is sent to.",
+                      "example": "yapily-mock"
+                    },
+                    "oneTimeToken": {
+                      "title": "One Time Token",
+                      "type": "boolean",
+                      "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/pages/knowledge/yapily-concepts/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
+                      "example": false
+                    },
+                    "callback": {
+                      "title": "Callback",
+                      "type": "string",
+                      "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/pages/knowledge/yapily-concepts/callback_url/#using-a-callback-optional) for more information.",
+                      "example": "https://display-parameters.com"
+                    },
+                    "accountRequest": {
+                      "title": "Account Request",
+                      "type": "object",
+                      "properties": {
+                        "transactionFrom": {
+                          "title": "Transaction From Date",
+                          "type": "string",
+                          "description": "__Optional__. Used to specify the lower bound on when to pull transaction. This should be declared when accessing transaction older than 90 days for banks in the [CBI Globe](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe/).",
+                          "format": "date-time"
+                        },
+                        "transactionTo": {
+                          "title": "Transaction To Date",
+                          "type": "string",
+                          "description": "__Optional__. When performing a request using the consent, this is the latest date of transaction records that can be retrieved.",
+                          "format": "date-time"
+                        },
+                        "expiresAt": {
+                          "title": "Expires At",
+                          "type": "string",
+                          "description": "__Optional__. Used to set a hard date for when the user's associated `Consent` will expire.<br><br>**Note**: If this supported by the bank, specifying this is property is opting out of having a long-lived consent that can be perpetually re-authorised by the user. This will add an `expiresAt` field on the `Consent` object which will render it unusable after this date.<br><br>**Note**: This is not supported by every `Institution`. In such case, the request will not fail but the property will be ignored and the created `Consent` will not have an expiry date.",
+                          "format": "date-time"
+                        },
+                        "accountIdentifiers": {
+                          "title": "Account Info",
+                          "required": [
+                            "accountIdentification"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "accountId": {
+                              "type": "string",
+                              "description": "__Conditional__. Unique identifier of the account.",
+                              "example": "500000000000000000000001"
+                            },
+                            "accountIdentification": {
+                              "title": "Account Identifications",
+                              "required": [
+                                "identification",
+                                "type"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "enum": [
+                                    "SORT_CODE",
+                                    "ACCOUNT_NUMBER",
+                                    "IBAN",
+                                    "BBAN",
+                                    "BIC",
+                                    "PAN",
+                                    "MASKED_PAN",
+                                    "MSISDN",
+                                    "BSB",
+                                    "NCC",
+                                    "ABA",
+                                    "ABA_WIRE",
+                                    "ABA_ACH",
+                                    "EMAIL",
+                                    "ROLL_NUMBER",
+                                    "BLZ",
+                                    "IFS",
+                                    "CLABE",
+                                    "CTN",
+                                    "BRANCH_CODE",
+                                    "VIRTUAL_ACCOUNT_ID"
+                                  ],
+                                  "title": "Account Identification Type",
+                                  "type": "string",
+                                  "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+                                  "example": "SORT_CODE"
+                                },
+                                "identification": {
+                                  "title": "Account Identification",
+                                  "type": "string",
+                                  "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+                                  "example": "401016"
+                                }
+                              }
+                            }
+                          },
+                          "description": "__Conditional__. Used to create a request for the balance of the account specified. Once the user authorises the request, only the balance can be obtained by executing [GET Account Balances](./#get-account-balances).<br><br> This can be specified in conjunction with `accountIdentifiersForTransaction` to generate a `Consent` that can both access the accounts balance and transactions."
+                        },
+                        "accountIdentifiersForTransaction": {
+                          "type": "array",
+                          "items": {
+                            "required": [
+                              "accountIdentification"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "accountId": {
+                                "type": "string",
+                                "description": "__Conditional__. Unique identifier of the account.",
+                                "example": "500000000000000000000001"
+                              },
+                              "accountIdentification": {
+                                "title": "Account Identifications",
+                                "required": [
+                                  "identification",
+                                  "type"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "enum": [
+                                      "SORT_CODE",
+                                      "ACCOUNT_NUMBER",
+                                      "IBAN",
+                                      "BBAN",
+                                      "BIC",
+                                      "PAN",
+                                      "MASKED_PAN",
+                                      "MSISDN",
+                                      "BSB",
+                                      "NCC",
+                                      "ABA",
+                                      "ABA_WIRE",
+                                      "ABA_ACH",
+                                      "EMAIL",
+                                      "ROLL_NUMBER",
+                                      "BLZ",
+                                      "IFS",
+                                      "CLABE",
+                                      "CTN",
+                                      "BRANCH_CODE",
+                                      "VIRTUAL_ACCOUNT_ID"
+                                    ],
+                                    "title": "Account Identification Type",
+                                    "type": "string",
+                                    "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+                                    "example": "SORT_CODE"
+                                  },
+                                  "identification": {
+                                    "title": "Account Identification",
+                                    "type": "string",
+                                    "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+                                    "example": "401016"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "description": "__Conditional__. Used to create a request for the transactions of the account specified. Once the user authorises the request, only the transactions can be obtained by executing [GET Account Transactions](./#get-account-transactions). <br><br>This can be specified in conjunction with `accountIdentifiersForBalance` to generate a `Consent` that can both access the accounts balance and transactions."
+                        },
+                        "accountIdentifiersForBalance": {
+                          "type": "array",
+                          "items": {
+                            "required": [
+                              "accountIdentification"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "accountId": {
+                                "type": "string",
+                                "description": "__Conditional__. Unique identifier of the account.",
+                                "example": "500000000000000000000001"
+                              },
+                              "accountIdentification": {
+                                "title": "Account Identifications",
+                                "required": [
+                                  "identification",
+                                  "type"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "enum": [
+                                      "SORT_CODE",
+                                      "ACCOUNT_NUMBER",
+                                      "IBAN",
+                                      "BBAN",
+                                      "BIC",
+                                      "PAN",
+                                      "MASKED_PAN",
+                                      "MSISDN",
+                                      "BSB",
+                                      "NCC",
+                                      "ABA",
+                                      "ABA_WIRE",
+                                      "ABA_ACH",
+                                      "EMAIL",
+                                      "ROLL_NUMBER",
+                                      "BLZ",
+                                      "IFS",
+                                      "CLABE",
+                                      "CTN",
+                                      "BRANCH_CODE",
+                                      "VIRTUAL_ACCOUNT_ID"
+                                    ],
+                                    "title": "Account Identification Type",
+                                    "type": "string",
+                                    "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+                                    "example": "SORT_CODE"
+                                  },
+                                  "identification": {
+                                    "title": "Account Identification",
+                                    "type": "string",
+                                    "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+                                    "example": "401016"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "description": "__Conditional__. Used to create a request for the transactions of the account specified. Once the user authorises the request, only the transactions can be obtained by executing [GET Account Transactions](./#get-account-transactions). <br><br>This can be specified in conjunction with `accountIdentifiersForBalance` to generate a `Consent` that can both access the accounts balance and transactions."
+                        },
+                        "featureScope": {
+                          "title": "Feature Scope",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Used to describe what functions are supported by the associated `Institution`"
+                        }
+                      },
+                      "description": "Account authorisation request schema"
+                    }
+                  },
+                  "description": "The request body containing an `AccountAuthorisationRequest` json payload"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DataConstraintsResponse":{
+        "required":[
+          "institutionId",
+          "institutionCountry",
+          "request"
+        ],
+        "type":"object",
+        "properties":{
+          "institutionId":{
+            "type":"string",
+            "description":"The id to represent the `Institution`.",
+            "example":"modelo-sandbox"
+          },
+          "institutionCountryCode":{
+            "type":"string",
+            "description":"2 letter ISO Country code of the `Institution`.",
+            "example":"GB"
+          },
+          "endpointPath":{
+            "type":"string",
+            "description":"Define the applicable API end point."
+          },
+          "endpointMethod":{
+            "type":"string",
+            "description":"Https Method for the endpoint."
+          },
+          "request":{
+            "$ref":"#/components/schemas/RequestConstraints"
+          }
+        }
+      },
+      "Schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "maximum": {
+            "type": "number"
+          },
+          "exclusiveMaximum": {
+            "type": "number"
+          },
+          "minimum": {
+            "type": "number"
+          },
+          "exclusiveMinimum": {
+            "type": "number"
+          },
+          "pattern": {
+            "type": "string",
+            "format": "regex"
+          },
+          "maxItems": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "uniqueItems": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "enum": {
+            "type": "array",
+            "items": {
+            },
+            "minItems": 1,
+            "uniqueItems": false
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "array",
+              "boolean",
+              "integer",
+              "number",
+              "object",
+              "string"
+            ]
+          },
+          "contains": {
+            "$ref": "#/components/schemas/Schema"
+          },
+          "not": {
+            "$ref": "#/components/schemas/Schema"
+          },
+          "if": {
+            "$ref": "#/components/schemas/Schema"
+          },
+          "then": {
+            "$ref": "#/components/schemas/Schema"
+          },
+          "else": {
+            "$ref": "#/components/schemas/Schema"
+          },
+          "allOf": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Schema"
+            }
+          },
+          "oneOf": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Schema"
+            }
+          },
+          "anyOf": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Schema"
+            }
+          },
+          "items": {
+            "$ref": "#/components/schemas/Schema"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Schema"
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          },
+          "default": {
+          },
+          "example": {
+          },
+          "$defs": {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/components/schemas/Schema" }
+          },
+          "$ref": {
+            "type": "string"
+          },
+          "x-yapily-annotations": {
+            "type": "object",
+            "properties": {
+              "lastUpdatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "x-yapily-validations": {
+            "type": "object",
+            "properties": {
+              "maxDurationFromNow": {
+                "type": "string",
+                "format": "duration"
+              }
+            }
+          }
+        },
+        "additionalProperties": false
       }
     },
     "securitySchemes": {
