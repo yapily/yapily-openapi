@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.24.1",
+    "version": "2.25.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -18648,6 +18648,16 @@
           "default": {
           },
           "example": {
+          },
+          "dependentRequired": {
+            "description":"dependentRequired keyword is used to satisfy dependency between fields",
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": { "type": "string" },
+              "uniqueItems": true,
+              "default": []
+            }
           },
           "$defs": {
             "type": "object",
