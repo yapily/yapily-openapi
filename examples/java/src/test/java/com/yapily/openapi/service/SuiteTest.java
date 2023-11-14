@@ -1,10 +1,5 @@
 package com.yapily.openapi.service;
 
-import java.io.IOException;
-import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,21 +11,11 @@ import org.openapitools.client.api.FinancialDataApi;
 import org.openapitools.client.api.PaymentsApi;
 import org.openapitools.client.api.UsersApi;
 import org.openapitools.client.auth.HttpBasicAuth;
-import org.openapitools.client.model.Account;
-import org.openapitools.client.model.AccountAuthorisationResponse;
-import org.openapitools.client.model.ApiResponseOfAccountAuthorisationResponse;
-import org.openapitools.client.model.ApiResponseOfPaymentAuthorisationRequestResponse;
-import org.openapitools.client.model.ApiResponseOfPaymentResponse;
-import org.openapitools.client.model.ApiResponseOfUserDeleteResponse;
-import org.openapitools.client.model.ApplicationUser;
-import org.openapitools.client.model.NewApplicationUser;
-import org.openapitools.client.model.PaymentAuthorisationRequestResponse;
-import org.openapitools.client.model.PaymentRequest;
-import org.openapitools.client.model.PaymentResponse;
-import org.openapitools.client.model.PaymentResponses;
-import org.openapitools.client.model.Transaction;
+import org.openapitools.client.model.*;
 
-import com.google.gson.JsonObject;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.fail;
 
@@ -56,7 +41,7 @@ public class SuiteTest {
     void setup() {
         basicAuth.setUsername(System.getenv("APP_UUID"));
         basicAuth.setPassword(System.getenv("APP_SECRET"));
-       
+        System.out.println("APP ID is -> ["+System.getenv("APP_UUID")+"]");
         final UsersApi usersApi = new UsersApi(defaultClient);
         final AuthorisationsApi authApi = new AuthorisationsApi(defaultClient);
         final PaymentsApi paymentsApi = new PaymentsApi(defaultClient);
@@ -98,8 +83,7 @@ public class SuiteTest {
             ApiResponseOfUserDeleteResponse deletedUser = userService.deleteUser(confirmedUser.getUuid());
             Assertions.assertNotNull(deletedUser);
         } catch (ApiException | IOException e) {
-            fail("Should not have thrown exception");
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
@@ -134,8 +118,15 @@ public class SuiteTest {
             ApiResponseOfUserDeleteResponse deletedUser = userService.deleteUser(confirmedUser.getUuid());
             Assertions.assertNotNull(deletedUser);
         } catch (ApiException | IOException e) {
-            fail("Should not have thrown exception");
-            e.printStackTrace();
+            handleException(e);
+        }
+    }
+
+    private static void handleException(Exception e) {
+        if (e instanceof ApiException) {
+            fail("Should not have thrown APIException: " + ((ApiException) e).getResponseBody());
+        } else {
+            fail("Should not have thrown exception: " + e.getStackTrace());
         }
     }
 }

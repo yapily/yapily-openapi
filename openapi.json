@@ -69,6 +69,10 @@
     {
       "description": "The constraints endpoints can be used to retrieve institution specific data requirements and rules that will apply when performing other operations.",
       "name": "Constraints"
+    },
+    {
+      "description": "Application Management endpoints help with creating and managing client sub-applications.",
+      "name": "Application Management"
     }
   ],
   "x-tagGroups": [
@@ -87,7 +91,8 @@
         "Virtual Accounts",
         "Variable Recurring Payments",
         "Hosted Pages",
-        "Constraints"
+        "Constraints",
+        "Application Management"
       ]
     }
   ],
@@ -9210,6 +9215,446 @@
           "Constraints"
         ]
       }
+    },
+    "/applications": {
+      "post": {
+        "description": "Creates a sub-application under the given root application id provided in the authentication token. The sub-application can use the root's credentials to call the API",
+        "summary": "Creates a sub-application for the root application id provided in the authentication token",
+        "x-beta": true,
+        "operationId": "createSubApplication",
+        "requestBody": {
+          "description": "The sub-application to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationRequest"
+              },
+              "examples": {
+                "Create Sub-application Request": {
+                  "$ref": "#/components/examples/application-request"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Create Sub-application Response": {
+                    "$ref": "#/components/examples/application-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfApplicationResponse"
+                }
+              }
+            },
+            "description": "Sub-application was successfully created"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/application-error-response-code-400"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            },
+            "description": "There are validation errors"
+          },
+          "401": {
+            "description": "Either authentication credentials were not supplied, or they were invalid.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/error-response-code-401"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden from accessing the requested Application.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Application with given root id not found.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Application Management"
+        ]
+      },
+      "get": {
+        "description": "Retrieves sub-applications for the root application provided in the authentication token. If a sub-application is provided in the authentication token, it will return an empty list.",
+        "summary": "Retrieve sub-applications for the root application provided in the authentication token.",
+        "x-beta": true,
+        "operationId": "searchApplications",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchApplicationsParameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The sub-applications that are returned as part of the search results.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiListOfApplicationResponse"
+                },
+                "examples": {
+                  "Get Applications Response": {
+                    "$ref": "#/components/examples/application-responses"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There are validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Either authentication credentials were not supplied, or they were invalid.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/error-response-code-401"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden from accessing the requested Application.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Application Management"
+        ]
+      }
+    },
+    "/applications/{applicationId}": {
+      "get": {
+        "description": "Retrieves an application by the id provided in the path",
+        "x-beta": true,
+        "operationId": "getApplicationById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "applicationId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the application being fetched"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Get Application By Id Response": {
+                    "$ref": "#/components/examples/application-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfApplicationResponse"
+                }
+              }
+            },
+            "description": "Application was successfully fetched"
+          },
+          "401": {
+            "description": "Either authentication credentials were not supplied, or they were invalid.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/error-response-code-401"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden from accessing the requested Application.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Application with given id not found.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Application Management"
+        ],
+        "summary": "Get application details"
+      },
+      "put": {
+        "description": "Updates the application properties for the application with the given ID in the path",
+        "x-beta": true,
+        "operationId": "updateApplication",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "applicationId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the application being updated"
+          }
+        ],
+        "requestBody": {
+          "description": "The application to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationRequest"
+              },
+              "examples": {
+                "Update Application Request": {
+                  "$ref": "#/components/examples/application-request"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Update Application Response": {
+                    "$ref": "#/components/examples/application-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfApplicationResponse"
+                }
+              }
+            },
+            "description": "Application was successfully updated"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/application-error-response-code-400"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            },
+            "description": "There are validation errors"
+          },
+          "401": {
+            "description": "Either authentication credentials were not supplied, or they were invalid.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/error-response-code-401"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden from accessing the requested Application.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Application Management"
+        ],
+        "summary": "Update an Application"
+      },
+      "delete": {
+        "description": "Deletes the application with the given ID in the path",
+        "x-beta": true,
+        "operationId": "deleteApplication",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "applicationId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the application being deleted"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Application was successfully deleted"
+          },
+          "401": {
+            "description": "Either authentication credentials were not supplied, or they were invalid.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/error-response-code-401"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden from accessing the requested Application.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Application with given id not found.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Application Management"
+        ],
+        "summary": "Delete an application"
+      }
     }
   },
   "components": {
@@ -9222,6 +9667,44 @@
         "schema": {
           "type": "string",
           "description": "Valid event type Id"
+        }
+      },
+      "SearchApplicationsParameters": {
+        "in": "query",
+        "name": "publicFilterValues",
+        "style": "form",
+        "explode": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "applicationIds": {
+              "type": "array",
+              "description": "Sub-application ids to filter the results for. If provided, the results will only include sub-applications with the given ids. Non-existent ids will be ignored.",
+              "maxItems": 15,
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "offset": {
+              "type": "integer",
+              "description": "The number of results to skip.",
+              "minimum": 0,
+              "default": 0
+            },
+            "limit": {
+              "type": "integer",
+              "description": "The maximum number of results to return.",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 1000
+            },
+            "sort": {
+              "type": "string",
+              "description": "The field to sort the results by.<br><br>Possible values:<ul><li>`last_updated` (ascending)</li><li>`-last_updated` (descending)</li><li>`name` (ascending)</li><li>`-name` (descending)</li><li>`uuid` (ascending)</li><li>`-uuid` (descending)</li></ul>",
+              "default": "name"
+            }
+          }
         }
       }
     },
@@ -14296,6 +14779,52 @@
           }
         }
       },
+      "ApplicationResponseListMeta": {
+        "type": "object",
+        "properties": {
+          "tracingId": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "description": "The number of applications in the current page."
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "self": {
+                "type": "object",
+                "properties": {
+                  "offset": {
+                    "type": "integer",
+                    "format": "int32",
+                    "minimum": 0,
+                    "description": "The number of skipped applications."
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "format": "int32",
+                    "minimum": 0,
+                    "description": "The maximum number of applications for the current page."
+                  },
+                  "sort": {
+                    "type": "string",
+                    "description": "The field by which results are sorted by. Default direction is ascending, descending is identified by a \"-\" prefix."
+                  }
+                }
+              },
+              "totalCount": {
+                "type": "integer",
+                "format": "int32",
+                "minimum": 0,
+                "description": "The total number of applications that match the given filter."
+              }
+            }
+          }
+        }
+      },
       "ResponseMeta": {
         "type": "object",
         "properties": {
@@ -14349,7 +14878,7 @@
           "data": {
             "description": "Data from the institution to provide to the PSU to complete authorisation. The language is determined by the institution and may vary.",
             "type": "array",
-            "items":{
+            "items": {
               "type": "string"
             },
             "example": [
@@ -14496,7 +15025,7 @@
                   "type": "object",
                   "properties": {
                     "type": {
-                      "allOf" : [
+                      "allOf": [
                         {
                           "$ref": "#/components/schemas/AccountIdentificationType"
                         }
@@ -14527,7 +15056,7 @@
                   "type": "object",
                   "properties": {
                     "type": {
-                      "allOf" : [
+                      "allOf": [
                         {
                           "$ref": "#/components/schemas/AccountIdentificationType"
                         }
@@ -17538,7 +18067,7 @@
           "amountToPay": {
             "type": "number",
             "description": "The payment amount",
-            "minimum": 0.01 ,
+            "minimum": 0.01,
             "example": 10.50
           },
           "currency": {
@@ -17647,7 +18176,7 @@
         "properties": {
           "code": {
             "type": "string",
-            "description" : "The ISO 20022 `PaymentStatusCode`. One of : <br> ACSC <br> ACCC <br> ACCP  <br> ACSP <br> ACTC <br> ACWC <br> ACWP <br> ACFC <br> RCVD <br> PART <br> PATC <br> PDNG <br> RJCT <br> CANC",
+            "description": "The ISO 20022 `PaymentStatusCode`. One of : <br> ACSC <br> ACCC <br> ACCP  <br> ACSP <br> ACTC <br> ACWC <br> ACWP <br> ACFC <br> RCVD <br> PART <br> PATC <br> PDNG <br> RJCT <br> CANC",
             "example": "ACSC"
           },
           "name": {
@@ -17752,14 +18281,14 @@
           "phases": {
             "description": "The phase reached by the payment and its timestamp.",
             "type": "array",
-            "items":{
+            "items": {
               "$ref": "#/components/schemas/HostedPaymentPhase"
             }
           },
           "statusDetails": {
             "description": "Details of the payment status.",
             "type": "array",
-            "items":{
+            "items": {
               "$ref": "#/components/schemas/HostedPaymentStatusDetails"
             }
           },
@@ -17820,16 +18349,16 @@
           }
         }
       },
-      "ApiListResponseOfPaymentConstraints":{
-        "type":"object",
-        "properties":{
+      "ApiListResponseOfPaymentConstraints": {
+        "type": "object",
+        "properties": {
           "meta": {
             "$ref": "#/components/schemas/ResponseListMeta"
           },
-          "data":{
+          "data": {
             "type": "array",
             "items": {
-              "$ref":"#/components/schemas/PaymentConstraintsResponse"
+              "$ref": "#/components/schemas/PaymentConstraintsResponse"
             }
           }
         },
@@ -18165,66 +18694,66 @@
           ]
         }
       },
-      "PaymentConstraintsResponse":{
-        "required":[
+      "PaymentConstraintsResponse": {
+        "required": [
           "institutionId",
           "institutionCountry",
           "paymentType",
           "request"
         ],
-        "type":"object",
-        "properties":{
-          "institutionId":{
-            "type":"string",
-            "description":"The id to represent the `Institution`.",
-            "example":"modelo-sandbox"
+        "type": "object",
+        "properties": {
+          "institutionId": {
+            "type": "string",
+            "description": "The id to represent the `Institution`.",
+            "example": "modelo-sandbox"
           },
-          "institutionCountryCode":{
-            "type":"string",
-            "description":"2 letter ISO Country code of the `Institution`.",
-            "example":"GB"
+          "institutionCountryCode": {
+            "type": "string",
+            "description": "2 letter ISO Country code of the `Institution`.",
+            "example": "GB"
           },
-          "endpointPath":{
-            "type":"string",
-            "description":"Define the applicable API end point."
+          "endpointPath": {
+            "type": "string",
+            "description": "Define the applicable API end point."
           },
-          "endpointMethod":{
-            "type":"string",
-            "description":"Https Method for the endpoint."
+          "endpointMethod": {
+            "type": "string",
+            "description": "Https Method for the endpoint."
           },
-          "paymentType":{
+          "paymentType": {
             "$ref": "#/components/schemas/PaymentTypeOfConstraints"
           },
-          "request":{
-            "$ref":"#/components/schemas/RequestConstraints"
+          "request": {
+            "$ref": "#/components/schemas/RequestConstraints"
           }
         }
       },
-      "RequestConstraints":{
-        "required":[
+      "RequestConstraints": {
+        "required": [
           "body"
         ],
-        "type":"object",
-        "description":"Object defining the constraints rules applicable for a given requests.",
-        "properties":{
-          "headers":{
-            "$ref":"#/components/schemas/Schema"
+        "type": "object",
+        "description": "Object defining the constraints rules applicable for a given requests.",
+        "properties": {
+          "headers": {
+            "$ref": "#/components/schemas/Schema"
           },
-          "body":{
-            "$ref":"#/components/schemas/Schema"
+          "body": {
+            "$ref": "#/components/schemas/Schema"
           }
         }
       },
-      "ApiListResponseOfDataConstraints":{
-        "type":"object",
-        "properties":{
-          "meta":{
-            "$ref":"#/components/schemas/ResponseMeta"
+      "ApiListResponseOfDataConstraints": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
           },
-          "data":{
+          "data": {
             "type": "array",
             "items": {
-              "$ref":"#/components/schemas/DataConstraintsResponse"
+              "$ref": "#/components/schemas/DataConstraintsResponse"
             }
           }
         },
@@ -18504,34 +19033,34 @@
           ]
         }
       },
-      "DataConstraintsResponse":{
-        "required":[
+      "DataConstraintsResponse": {
+        "required": [
           "institutionId",
           "institutionCountry",
           "request"
         ],
-        "type":"object",
-        "properties":{
-          "institutionId":{
-            "type":"string",
-            "description":"The id to represent the `Institution`.",
-            "example":"modelo-sandbox"
+        "type": "object",
+        "properties": {
+          "institutionId": {
+            "type": "string",
+            "description": "The id to represent the `Institution`.",
+            "example": "modelo-sandbox"
           },
-          "institutionCountryCode":{
-            "type":"string",
-            "description":"2 letter ISO Country code of the `Institution`.",
-            "example":"GB"
+          "institutionCountryCode": {
+            "type": "string",
+            "description": "2 letter ISO Country code of the `Institution`.",
+            "example": "GB"
           },
-          "endpointPath":{
-            "type":"string",
-            "description":"Define the applicable API end point."
+          "endpointPath": {
+            "type": "string",
+            "description": "Define the applicable API end point."
           },
-          "endpointMethod":{
-            "type":"string",
-            "description":"Https Method for the endpoint."
+          "endpointMethod": {
+            "type": "string",
+            "description": "Https Method for the endpoint."
           },
-          "request":{
-            "$ref":"#/components/schemas/RequestConstraints"
+          "request": {
+            "$ref": "#/components/schemas/RequestConstraints"
           }
         }
       },
@@ -18650,18 +19179,22 @@
           "example": {
           },
           "dependentRequired": {
-            "description":"dependentRequired keyword is used to satisfy dependency between fields",
+            "description": "dependentRequired keyword is used to satisfy dependency between fields",
             "type": "object",
             "additionalProperties": {
               "type": "array",
-              "items": { "type": "string" },
+              "items": {
+                "type": "string"
+              },
               "uniqueItems": true,
               "default": []
             }
           },
           "$defs": {
             "type": "object",
-            "additionalProperties": { "$ref": "#/components/schemas/Schema" }
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Schema"
+            }
           },
           "$ref": {
             "type": "string"
@@ -18686,6 +19219,144 @@
           }
         },
         "additionalProperties": false
+      },
+      "ApplicationRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "merchantCategoryCode",
+          "ppcUserGroup",
+          "isContractPresent"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "format": "^[a-zA-Z0-9 \\-_\\[\\]\\(\\)]+$",
+            "description": "The name of the application"
+          },
+          "merchantCategoryCode": {
+            "type": "string",
+            "format": "^\\d{4}$",
+            "description": "The ISO-18245 merchant category code of the merchant the application is being created for.<br><br>Allowed values:<ul><li>`0742` (Veterinary Services)</li><li>`0763` (Agricultural Cooperatives)</li><li>`0780` (Landscaping and Horticultural Services)</li><li>`1520` (General Contractor/Residential Building)</li><li>`1711` (Heating, Plumbing, Air Conditioning Contractors)</li><li>`1731` (Electrical Contractors)</li><li>`1740` (Masonry, Stonework, Tile Setting, Plastering, Insulation Contractors)</li><li>`1750` (Carpentry)</li><li>`1761` (Roof, Siding, and Sheet Metal Work Contractors)</li><li>`1771` (Contractors, Concrete)</li><li>`1799` (Special Trade Contractor - Not Elsewhere Classified)</li><li>`2741` (Miscellaneous Publishing and Printing Services)</li><li>`2791` (Typesetting, Plate Making and Related Services (Business to Business MCC))</li><li>`2842` (Specialty Cleaning, Polishing and Sanitation Preparations (Business to Business MCC))</li><li>`3000` (United Airlines)</li><li>`3001` (American Airlines)</li><li>`3002` (Pan American)</li><li>`3003` (Eurofly Airlines)</li><li>`3004` (Dragon Airlines)</li><li>`3005` (British Airways)</li><li>`3006` (Japan Air Lines)</li><li>`3007` (Air France)</li><li>`3008` (Lufthansa)</li><li>`3009` (Air Canada)</li><li>`3010` (KLM)</li><li>`3011` (AeroFlot)</li><li>`3012` (Qantas)</li><li>`3013` (Alitalia)</li><li>`3014` (Saudi Arabian Airlines)</li><li>`3015` (SWISS)</li><li>`3016` (SAS)</li><li>`3017` (South African Airway)</li><li>`3018` (Varig (Brazil))</li><li>`3020` (Air India)</li><li>`3021` (Air Algerie)</li><li>`3022` (PAL AIR)</li><li>`3023` (Mexicana)</li><li>`3024` (Pakistan International)</li><li>`3025` (Air New Zealand Ltd.)</li><li>`3026` (Emirates Airlines)</li><li>`3027` (UTA/InterAir)</li><li>`3028` (Air Malta)</li><li>`3029` (SN Brussels Airlines - SN BRUSSELS)</li><li>`3030` (Aerolineas Argentinas)</li><li>`3031` (Olympic Airways)</li><li>`3032` (El Al)</li><li>`3033` (Ansett Airlines)</li><li>`3034` (ETIHADAIR)</li><li>`3035` (TAP (Portugal))</li><li>`3036` (VASP (Brazil))</li><li>`3037` (EgyptAir)</li><li>`3038` (Kuwait Airways)</li><li>`3039` (Avianca)</li><li>`3040` (GulfAir (Bahrain))</li><li>`3041` (Balkan-Bulgarian)</li><li>`3042` (FinnAir)</li><li>`3043` (Aer Lingus)</li><li>`3044` (Air Lanka)</li><li>`3045` (Nigeria Airways)</li><li>`3046` (Cruzeiro do Sul (Bra))</li><li>`3047` (THY (Turkey))</li><li>`3048` (Royal Air Maroc)</li><li>`3049` (Tunis Air)</li><li>`3050` (Icelandair)</li><li>`3051` (Austrian Airlines)</li><li>`3052` (LANAIR)</li><li>`3053` (AVIACO (Spain))</li><li>`3054` (Ladeco (Chile))</li><li>`3055` (LAB (Bolivia))</li><li>`3056` (JetAir)</li><li>`3057` (Virgin America – VIR AMER)</li><li>`3058` (Delta)</li><li>`3059` (DBA Airlines-DBA AIR)</li><li>`3060` (NWA Air)</li><li>`3061` (Continental)</li><li>`3062` (Hapag-Lloyd Express - HLX)</li><li>`3063` (US Airways)</li><li>`3064` (Adria Airways)</li><li>`3065` (Airinter (AirInternational))</li><li>`3066` (Southwest)</li><li>`3068` (AIR STANA)</li><li>`3069` (Sun Country Air)</li><li>`3070` (Pacific Southwest Airlines (PSA))</li><li>`3071` (Air British Columbia)</li><li>`3072` (CEBU PAC)</li><li>`3073` (Air Cal)</li><li>`3075` (Singapore Airlines)</li><li>`3076` (Aeromexico)</li><li>`3077` (Thai Airways)</li><li>`3078` (China Airlines)</li><li>`3079` (Jetstar Airways - Jetstar)</li><li>`3081` (NordAir)</li><li>`3082` (Korean Airlines)</li><li>`3083` (Air Afrique)</li><li>`3084` (Eva Airlines)</li><li>`3085` (Midwest Express Airlines, Inc)</li><li>`3087` (Metro Airlines)</li><li>`3088` (Croatia Airlines)</li><li>`3089` (Tans Saero)</li><li>`3090` (Uni Airways)</li><li>`3094` (Zambia Airways)</li><li>`3096` (Air Zimbabwe)</li><li>`3097` (Spanair (abbreviation: SPANAIR))</li><li>`3098` (Asiana Airlines)</li><li>`3099` (Cathay Pacific)</li><li>`3100` (Malaysian Airline Sys)</li><li>`3102` (Iberia)</li><li>`3103` (Garuda (Indonesia))</li><li>`3105` (Piedmont)</li><li>`3106` (Braathens S.A.F.E. (Norway))</li><li>`3110` (Wings Airways)</li><li>`3111` (British Midland)</li><li>`3112` (Windward Island)</li><li>`3117` (Venezolana Int de Aviacion)</li><li>`3118` (Valley Airlines)</li><li>`3125` (Tan Airlines)</li><li>`3126` (Talair PTY Ltd.)</li><li>`3127` (Taca International)</li><li>`3129` (Surinam Airways)</li><li>`3130` (Sunworld International Airways)</li><li>`3131` (VLM Air)</li><li>`3132` (Frontier Airlines)</li><li>`3133` (Sunbelt Airlines)</li><li>`3135` (Sudan Airlines)</li><li>`3136` (Qatar Air)</li><li>`3137` (Singleton)</li><li>`3138` (Simmons Airlines)</li><li>`3141` (Seair Alaska)</li><li>`3143` (Scenic Airlines)</li><li>`3144` (Virgin Atlantic)</li><li>`3145` (San Juan)</li><li>`3146` (Luxair)</li><li>`3148` (Air Littoral SA)</li><li>`3151` (Air Laire)</li><li>`3154` (Princeville)</li><li>`3156` (Go Fly)</li><li>`3159` (PBA-Provincetwn-Bstn Air)</li><li>`3161` (All Nippon Airways)</li><li>`3164` (Norontair)</li><li>`3165` (New York Helicopter)</li><li>`3167` (Aero Continente - AEROCONTINENTE)</li><li>`3170` (Mount Cook)</li><li>`3171` (Canadian Airlines)</li><li>`3172` (Nation Air)</li><li>`3174` (JetBlue Airways)</li><li>`3175` (Middle East Air)</li><li>`3176` (Metroflight Airlines)</li><li>`3177` (AirTran Airways)</li><li>`3178` (Mesa Air)</li><li>`3180` (Westjet Airlines-WESTJET)</li><li>`3181` (Malev Hungarian Airlines)</li><li>`3182` (LOT (Poland))</li><li>`3183` (Oman Aviation - OMAN AIR)</li><li>`3184` (LIAT)</li><li>`3185` (LAV (Venezuela))</li><li>`3186` (LAP (Paraguay))</li><li>`3187` (LACSA (Costa Rica))</li><li>`3188` (Virgin Express - VIR EXP)</li><li>`3190` (Jugoslav Air)</li><li>`3191` (Island Airlines)</li><li>`3192` (Iran Air)</li><li>`3193` (Indian Airlines)</li><li>`3195` (Holiday Airlines)</li><li>`3196` (Hawaiian Air)</li><li>`3197` (Havasu Airlines)</li><li>`3198` (Harbor Airlines)</li><li>`3199` (Servicios Aereos Militares)</li><li>`3200` (Guyana Airways)</li><li>`3203` (Golden Pacific Air)</li><li>`3204` (Freedom Airlines)</li><li>`3206` (China Eastern Airlines (Abbr: China East Air))</li><li>`3207` (Empresa Ecuatoriana)</li><li>`3211` (Norwegian Air Shuttle - NORWEGIANAIR)</li><li>`3212` (Dominicana de Aviacion)</li><li>`3213` (Malmo Aviation - MALMO AV)</li><li>`3215` (Dan Air Services)</li><li>`3216` (Cumberland Airlines)</li><li>`3217` (CSA-Ceskoslovenske Aeroln)</li><li>`3218` (Crown Air)</li><li>`3219` (Copa)</li><li>`3220` (Compania Faucett)</li><li>`3221` (Transportes Aeros Mil)</li><li>`3222` (Command Airways)</li><li>`3223` (Comair)</li><li>`3226` (Skyways Air- SKYWAYS)</li><li>`3228` (Cayman Airways)</li><li>`3229` (SAETA)</li><li>`3231` (SAHSA)</li><li>`3233` (Capitol Air)</li><li>`3234` (CARIBAIR)</li><li>`3235` (Brockway Air)</li><li>`3236` (Air Arabia Airlines - Air Arab)</li><li>`3238` (Bemidji Aviation)</li><li>`3239` (Bar Harbor Airlines)</li><li>`3240` (Bahamasair)</li><li>`3241` (Aviateca (Guatemala))</li><li>`3242` (Avensa)</li><li>`3243` (Austrian Air Service)</li><li>`3245` (Easy Jet - EASYJET)</li><li>`3246` (Ryan Air - RYANAIR)</li><li>`3247` (Gol Airlines - GOL)</li><li>`3248` (Tam Airlines - TAM)</li><li>`3251` (Aloha Airlines)</li><li>`3252` (ALM-Antilean Airlines)</li><li>`3253` (America West)</li><li>`3254` (U.S. Air Shuttle)</li><li>`3256` (Alaska Airlines Inc.)</li><li>`3259` (American Trans Air)</li><li>`3260` (Spirit Airlines - SPIRIT)</li><li>`3261` (Air China)</li><li>`3262` (Reno Air)</li><li>`3263` (Aero Servicio Carabobo)</li><li>`3266` (Air Seychelles)</li><li>`3267` (Air Panama International)</li><li>`3268` (Air Pacific)</li><li>`3275` (Air Nevada)</li><li>`3276` (Air Midwest)</li><li>`3277` (Air Madagascar)</li><li>`3279` (Air LA)</li><li>`3280` (Air Jamaica)</li><li>`3282` (Air Djibouti)</li><li>`3284` (Aero Virgin Islands)</li><li>`3285` (AeroPeru)</li><li>`3286` (Aero Nicaraguensis)</li><li>`3287` (Aero Coach Aviation)</li><li>`3291` (Ariana Afghan)</li><li>`3292` (Cyprus Airways)</li><li>`3293` (Ecuatoriana)</li><li>`3294` (Ethiopian Airlines)</li><li>`3295` (Kenya Airways)</li><li>`3296` (Air Berlin-AIRBERLIN)</li><li>`3297` (Tarom Romanian Air Transport)</li><li>`3298` (Air Mauritius)</li><li>`3299` (Wideroe's Flyveselskap)</li><li>`3351` (Affiliated Auto Rental)</li><li>`3352` (American International)</li><li>`3353` (Brooks Rent a Car)</li><li>`3354` (Action Auto Rental)</li><li>`3355` (SIXT Car Rental)</li><li>`3357` (Hertz)</li><li>`3359` (Payless Car Rental)</li><li>`3360` (Snappy Car Rental)</li><li>`3361` (Airways Rent a Car)</li><li>`3362` (Altra Auto Rental)</li><li>`3364` (Agency Rent a Car)</li><li>`3366` (Budget Rent a Car)</li><li>`3368` (Holiday R-A-C)</li><li>`3370` (Rent-a-Wreck)</li><li>`3374` (Accent Rent-A-Car)</li><li>`3376` (Ajax R-A-C)</li><li>`3380` (Triangle Rent a Car)</li><li>`3381` (Europ Car)</li><li>`3385` (Tropical R-A-C)</li><li>`3386` (Showcase Rental Cars)</li><li>`3387` (Alamo Rent a Car)</li><li>`3388` (Merchants Rent-A-Car, Inc)</li><li>`3389` (Avis R-A-C)</li><li>`3390` (Dollar R-A-C)</li><li>`3391` (Europe by Car)</li><li>`3393` (National Car Rental)</li><li>`3394` (Kemwell Group R-A-C)</li><li>`3395` (Thrify Car Rental)</li><li>`3396` (Tilden R-A-C)</li><li>`3398` (Econo Car R-A-C)</li><li>`3400` (Auto Host Car Rentals)</li><li>`3405` (Enterprise R-A-C)</li><li>`3409` (General Rent-a-Car)</li><li>`3412` (A-1 R-A-C)</li><li>`3414` (Godfrey National)</li><li>`3420` (ANSA International)</li><li>`3421` (Allstate Rent-a-Car)</li><li>`3423` (Avcar Rent-a-Car)</li><li>`3425` (Automate Rent-a-Car)</li><li>`3427` (Avon Rent-a-Car)</li><li>`3428` (Carey Rent-a-Car)</li><li>`3429` (Insurance Rent-a-Car)</li><li>`3430` (Major Rent-a-Car)</li><li>`3431` (Replacement Rent-a-Car)</li><li>`3432` (Reserve Rent-a-Car)</li><li>`3433` (Ugly Duckling R-A-C)</li><li>`3434` (USA Rent-a-Car)</li><li>`3435` (Value Rent-a-Car)</li><li>`3436` (Autohansa Rent-a-Car)</li><li>`3437` (Cite)</li><li>`3438` (Interenet Rent-a-Car)</li><li>`3439` (Millville Rent-a-Car)</li><li>`3441` (Advantage Rent A Car)</li><li>`3501` (Holiday Inns)</li><li>`3502` (Best Western Hotels)</li><li>`3503` (Sheraton)</li><li>`3504` (Hilton)</li><li>`3505` (Forte Hotels)</li><li>`3506` (Golden Tulip Hotels)</li><li>`3507` (Friendship Inns)</li><li>`3508` (Quality Inns)</li><li>`3509` (Marriott)</li><li>`3510` (Days Inn Colonial Resort)</li><li>`3511` (Arabella Hotels)</li><li>`3512` (Intercontinental Hotels)</li><li>`3513` (Westin)</li><li>`3514` (Amerisuites)</li><li>`3515` (Rodeway Inn)</li><li>`3516` (LaQuinta Motor Inns)</li><li>`3517` (Americana Hotels)</li><li>`3518` (Sol Hotels)</li><li>`3519` (Pullman International Hotels)</li><li>`3520` (Meridien Hotels)</li><li>`3521` (Royal Lahaina Resort)</li><li>`3522` (Tokyo Group)</li><li>`3523` (Peninsula Hotels)</li><li>`3524` (WelcomGroup Hotels)</li><li>`3525` (Dunfey Hotels)</li><li>`3526` (Prince Hotels)</li><li>`3527` (Downtowner Passport)</li><li>`3528` (Red Lion Inns)</li><li>`3529` (CP (Canadian Pacific))</li><li>`3530` (Renaissance Hotels)</li><li>`3531` (Kauai Coconut Beach Resort)</li><li>`3532` (Royal Kona Resort)</li><li>`3533` (Hotel Ibis)</li><li>`3534` (Southern Pacific)</li><li>`3535` (Hilton International)</li><li>`3536` (AMFAC Hotels)</li><li>`3537` (ANA Hotels)</li><li>`3538` (Concorde Hotels)</li><li>`3539` (Summerfield Suites Hotel)</li><li>`3540` (Iberotel Hotels)</li><li>`3541` (Hotel Okura)</li><li>`3542` (Royal Hotels)</li><li>`3543` (Four Seasons)</li><li>`3544` (Cigna Hotels)</li><li>`3545` (Shangri-La International)</li><li>`3546` (Hotel Sierra)</li><li>`3548` (Hotels Melia)</li><li>`3549` (Auberge des Governeurs)</li><li>`3550` (Regal 8 Inns)</li><li>`3551` (Mirage Hotel and Casino)</li><li>`3552` (Coast Hotel)</li><li>`3553` (Park Inn by Radisson)</li><li>`3554` (Pinehurst Resort)</li><li>`3555` (Treasure Island Hotel and Casino)</li><li>`3556` (Barton Creek Resort)</li><li>`3557` (Manhattan East Suite Hotels)</li><li>`3558` (Jolly Hotels)</li><li>`3559` (Candlewood Suites)</li><li>`3560` (Aladdin Resort and Casino)</li><li>`3561` (Golden Nugget)</li><li>`3562` (Comfort Inns)</li><li>`3563` (Journey's End Motels)</li><li>`3564` (Sam's Town Hotel and Casino)</li><li>`3565` (Relax Inns)</li><li>`3566` (Garden Place Hotel)</li><li>`3567` (Soho Grand Hotel)</li><li>`3568` (Ladbroke Hotels)</li><li>`3569` (Tribeca Grand Hotel)</li><li>`3570` (Forum Hotels)</li><li>`3571` (Grand Wailea Resort)</li><li>`3572` (Miyako Hotel)</li><li>`3573` (Sandman Hotels)</li><li>`3574` (Venture Inn)</li><li>`3575` (Vagabond Hotels)</li><li>`3576` (La Quinta Resort)</li><li>`3577` (Mandarin Oriental Hotel)</li><li>`3578` (Frankenmuth Bavarian)</li><li>`3579` (Hotel Mercure)</li><li>`3580` (Hotel Del Coronado)</li><li>`3581` (Delta Hotels)</li><li>`3582` (California Hotel and Casino)</li><li>`3583` (Radisson BLU)</li><li>`3584` (Princess Hotels International)</li><li>`3585` (Hungar Hotels)</li><li>`3586` (Sokos Hotels)</li><li>`3587` (Doral Hotels)</li><li>`3588` (Helmsley Hotels)</li><li>`3589` (Doral Golf Resort)</li><li>`3590` (Fairmont Hotel)</li><li>`3591` (Sonesta Hotels)</li><li>`3592` (Omni Hotels)</li><li>`3593` (Cunard Hotels)</li><li>`3594` (Arizona Biltmore)</li><li>`3595` (Hospitality Inns)</li><li>`3596` (Wynn Las Vegas)</li><li>`3597` (Riverside Resort and Casino)</li><li>`3598` (Regent International Hotels)</li><li>`3599` (Pannonia Hotels)</li><li>`3600` (Saddlebrook Resort - Tampa)</li><li>`3601` (Trade Winds Resorts)</li><li>`3602` (Hudson Hotel)</li><li>`3603` (Noah's Hotel)</li><li>`3604` (Hilton Garden Inn)</li><li>`3605` (Jurys Doyle Hotel Group)</li><li>`3606` (Jefferson Hotel)</li><li>`3607` (Fountainebleau Resort)</li><li>`3608` (Gaylord Opryland)</li><li>`3609` (Gaylord Palms)</li><li>`3610` (Gaylord Texan)</li><li>`3611` (C MON INN)</li><li>`3612` (Movenpick Hotels)</li><li>`3613` (Microtel Inns & Suites)</li><li>`3614` (Americinn)</li><li>`3615` (Travelodge Motels)</li><li>`3617` (America's Best Value Inn)</li><li>`3618` (Great Wolf)</li><li>`3619` (Aloft)</li><li>`3620` (Binion's Horseshoe Club)</li><li>`3621` (Extended Stay)</li><li>`3622` (Merlin Hotel)</li><li>`3623` (Dorint Hotels)</li><li>`3624` (Lady Luck Hotel and Casino)</li><li>`3625` (Hotel Universale)</li><li>`3626` (Studio Plus)</li><li>`3627` (Extended Stay America)</li><li>`3628` (Excalibur Hotel and Casino)</li><li>`3629` (Dan Hotels)</li><li>`3630` (Extended Stay Deluxe)</li><li>`3631` (Sleep Inn)</li><li>`3632` (The Phoenician)</li><li>`3633` (Rank Hotels)</li><li>`3634` (Swissotel)</li><li>`3635` (Reso Hotel)</li><li>`3636` (Sarova Hotels)</li><li>`3637` (Ramada Inns)</li><li>`3638` (Howard Johnson)</li><li>`3639` (Mount Charlotte Thistle)</li><li>`3640` (Hyatt Motels)</li><li>`3641` (Sofitel Hotels)</li><li>`3642` (Novotel)</li><li>`3643` (Steigenberger Hotels)</li><li>`3644` (EconoLodges)</li><li>`3645` (Queens Moat Houses)</li><li>`3646` (Swallow Hotels)</li><li>`3647` (Husa Hotels)</li><li>`3648` (De Vere Hotels)</li><li>`3649` (Radisson)</li><li>`3650` (Red Roof Inns)</li><li>`3651` (Imperial London Hotel)</li><li>`3652` (Embassy Hotels)</li><li>`3653` (Penta Hotels)</li><li>`3654` (Loews Hotels)</li><li>`3655` (Scandic Hotels)</li><li>`3656` (Sara Hotels)</li><li>`3657` (Oberoi Hotels)</li><li>`3658` (New Otani Hotels)</li><li>`3659` (Taj Hotels International)</li><li>`3660` (Knights Inn)</li><li>`3661` (Metropole Hotels)</li><li>`3662` (Circus Circus Hotel and Casino)</li><li>`3663` (Hoteles El Presidente)</li><li>`3664` (Flag Inns)</li><li>`3665` (Hampton Inn Hotels)</li><li>`3666` (Stakis Hotels)</li><li>`3667` (Luxor Hotel and Casino)</li><li>`3668` (Maritim Hotels)</li><li>`3669` (Eldorado Hotel and Casino)</li><li>`3670` (Arcade Hotels)</li><li>`3671` (Arctia Hotels)</li><li>`3672` (Campanile Hotels)</li><li>`3673` (IBUSZ Hotels)</li><li>`3674` (Rantasipi Hotels)</li><li>`3675` (Interhotel CEDOK)</li><li>`3676` (Monte Carlo Hotel and Casino)</li><li>`3677` (Climat de France Hotels)</li><li>`3678` (Cumulus Hotels)</li><li>`3679` (Silver Legacy Hotel and Casino)</li><li>`3680` (Hoteis Othan)</li><li>`3681` (Adams Mark Hotels)</li><li>`3682` (Sahara Hotel and Casino)</li><li>`3683` (Bradbury Suites)</li><li>`3684` (Budget Hosts Inns)</li><li>`3685` (Budgetel Hotels)</li><li>`3686` (Suisse Chalet)</li><li>`3687` (Clarion Hotels)</li><li>`3688` (Compri Hotels)</li><li>`3689` (Consort Hotels)</li><li>`3690` (Courtyard Inns)</li><li>`3691` (Dillon Inn)</li><li>`3692` (Doubletree)</li><li>`3693` (Drury Inn)</li><li>`3694` (Economy Inns of America)</li><li>`3695` (Embassy Suites)</li><li>`3696` (Excel Inn)</li><li>`3697` (Fairfield Hotels)</li><li>`3698` (Harley Hotels)</li><li>`3699` (Midway Motor Lodge)</li><li>`3700` (Motel 6)</li><li>`3701` (La Mansion Del Rio)</li><li>`3702` (The Registry Hotels)</li><li>`3703` (Residence Inn)</li><li>`3704` (Royce Hotels)</li><li>`3705` (Sandman Inn)</li><li>`3706` (Shilo Inn)</li><li>`3707` (Shoney's Inn)</li><li>`3708` (Virgin River Hotel and Casino)</li><li>`3709` (Super 8 Motels)</li><li>`3710` (The Ritz Carlton Hotels)</li><li>`3711` (Flag Inns (Australia))</li><li>`3712` (Buffalo Bill's Hotel and Casino)</li><li>`3713` (Quality Pacific Hotel)</li><li>`3714` (Four Seasons Hotels-Austr)</li><li>`3715` (Fairfield Inn)</li><li>`3716` (Carlton Hotels)</li><li>`3717` (City Lodge Hotels)</li><li>`3718` (Karos Hotels)</li><li>`3719` (Protea Hotels)</li><li>`3720` (Southern Sun Hotels)</li><li>`3721` (Hilton Conrad Hotels)</li><li>`3722` (Wyndham Hotels)</li><li>`3723` (Rica Hotels)</li><li>`3724` (Inter Nor Hotels)</li><li>`3725` (SeaPines Plantation)</li><li>`3726` (Rio Suites)</li><li>`3727` (Broadmoor Hotel)</li><li>`3728` (Bally's Hotel and Casino)</li><li>`3729` (John Ascuaga's Nugget)</li><li>`3730` (MGM Grand Hotel)</li><li>`3731` (Harrah's Hotels and Casinos)</li><li>`3732` (Opryland Hotel)</li><li>`3733` (Boca Raton Resort)</li><li>`3734` (Harvey/Bristol Hotels)</li><li>`3735` (Master Economy Inns)</li><li>`3736` (Colorado Belle/Edgewater Resort)</li><li>`3737` (Riviera Hotel and Casino)</li><li>`3738` (Tropicana Resort & Casino)</li><li>`3739` (Woodside Hotels & Resorts)</li><li>`3740` (Towneplace Suites)</li><li>`3741` (Millennium Hotel)</li><li>`3742` (Club Med)</li><li>`3743` (Biltmore Hotel and Suites)</li><li>`3744` (Carefree Resorts)</li><li>`3745` (St. Regis Hotel)</li><li>`3746` (The Eliot Hotel)</li><li>`3747` (ClubCorp/ClubResorts)</li><li>`3748` (Wellesley Inns)</li><li>`3749` (The Beverly Hills Hotel)</li><li>`3750` (Crown Plaza Hotels)</li><li>`3751` (Homewood Suites)</li><li>`3752` (Peabody Hotels)</li><li>`3753` (Greenbriar Resorts)</li><li>`3754` (Amelia Island Plantation)</li><li>`3755` (The Homestead)</li><li>`3757` (Canyon Ranch)</li><li>`3758` (Kahala Mandarion Oriental Hotel)</li><li>`3759` (The Orchid at Mauna Lani)</li><li>`3760` (Halekulani Hotel/Waikiki Parc)</li><li>`3761` (Primadonna Hotel and Casino)</li><li>`3762` (Whisky Pete's Hotel and Casino)</li><li>`3763` (Chateau Elan Winery and Resort)</li><li>`3764` (Beau Rivage Hotel and Casino)</li><li>`3765` (Bellagio)</li><li>`3766` (Fremont Hotel and Casino)</li><li>`3767` (Main Street Hotel and Casino)</li><li>`3768` (Silver Star Hotel and Casino)</li><li>`3769` (Stratosphere Hotel and Casino)</li><li>`3770` (SpringHill Suites)</li><li>`3771` (Caesar's Resort)</li><li>`3772` (Nemacolin Woodlands)</li><li>`3773` (The Venetian Resort Hotel and Casino)</li><li>`3774` (New York-New York Hotel and Casino)</li><li>`3775` (Sands Resort)</li><li>`3776` (Nevele Grande Resort and Country Club)</li><li>`3777` (Mandalay Bay Resort)</li><li>`3778` (Four Points Hotels)</li><li>`3779` (W Hotels)</li><li>`3780` (Disney Resorts)</li><li>`3781` (Patricia Grand Resort Hotels)</li><li>`3782` (Rosen Hotels & Resort)</li><li>`3783` (Town and Country Resort and Convention Center)</li><li>`3784` (First Hospitality Hotel)</li><li>`3785` (Outrigger Hotels and Resorts)</li><li>`3786` (Ohana Hotel of Hawaii)</li><li>`3787` (Caribe Royale Resort Suites & Villas)</li><li>`3788` (Ala Moana Hotel / Ala Moana Hotels)</li><li>`3789` (Smugglers' Notch Resort)</li><li>`3790` (Raffles Hotels)</li><li>`3791` (Staybridge Suites)</li><li>`3792` (Claridge Casino Hotel)</li><li>`3793` (The Flamingo Hotels)</li><li>`3794` (Grand Casino Hotels)</li><li>`3795` (Paris Las Vegas Hotel)</li><li>`3796` (Peppermill Hotel Casino)</li><li>`3797` (Atlantic City Hilton)</li><li>`3798` (Embassy Vacation Resort)</li><li>`3799` (Hale Koa Hotel)</li><li>`3800` (Homestead)</li><li>`3801` (Wilderness Hotel and Golf Resort)</li><li>`3802` (The Palace Hotel)</li><li>`3807` (Element)</li><li>`3808` (LXR)</li><li>`3810` (La Costa Resort)</li><li>`3811` (Premier Travel Inn)</li><li>`3812` (Hyatt Place)</li><li>`3813` (Hotel Indigo)</li><li>`3814` (The Roosevelt Hotel NY)</li><li>`3815` (Holiday Inn Nickelodeon)</li><li>`3816` (Home2 Suites)</li><li>`3817` (Affinia)</li><li>`3818` (Mainstay Suites)</li><li>`3819` (Oxford Suites)</li><li>`3820` (Jumeirah Essex House)</li><li>`3821` (Caribe Royale)</li><li>`3822` (Crossland)</li><li>`3823` (Grand Sierra Resort)</li><li>`3824` (Aria)</li><li>`3825` (Vdara)</li><li>`3826` (Autograph)</li><li>`3827` (Galt House)</li><li>`3828` (Cosmopolitan of Las Vegas)</li><li>`3829` (Country Inn by Carlson)</li><li>`3830` (Park Plaza Hotel)</li><li>`3831` (Waldorf)</li><li>`4011` (Railroads)</li><li>`4111` (Local and Suburban Commuter Passenger Transportation, including Ferries)</li><li>`4112` (Passenger Rail (train))</li><li>`4119` (Ambulance Services)</li><li>`4121` (Taxicabs and Limousines)</li><li>`4131` (Bus Lines, includes Charters/Tour Buses)</li><li>`4214` (Motor Freight Carriers and Trucking-Local and Long Distance, Moving & Storage Companies, and Local Delivery)</li><li>`4215` (Courier Services-Air and Ground, and Freight Forwarders)</li><li>`4225` (Public Warehousing-Farm products, Refrigerated Goods, Household Goods, and Storage)</li><li>`4411` (Steamship and Cruise Lines)</li><li>`4457` (Boat Rentals and Leasing)</li><li>`4468` (Marinas, Marine Service, and Supplies)</li><li>`4511` (Airlines and Air Carriers)</li><li>`4582` (Airports, Flying Fields, and Airport Terminals)</li><li>`4722` (Travel Agencies)</li><li>`4723` (Package Tour Operators (Germany Only))</li><li>`4761` (Telemarketing of Travel Related Services and Vitamins)</li><li>`4784` (Bridge and Road Fees, Tolls)</li><li>`4789` (Transportation Services-not elsewhere classified)</li><li>`4812` (Telecommunication Equipment and Telephone Sales)</li><li>`4813` (Special Telecom Merchant)</li><li>`4814` (Telecommunication Services, Including Local and Long Distance Calls, Credit Card Calls, Call Through Use of Magnetic-Strip-Reading Telephones, and Fax Services)</li><li>`4815` (Monthly Summary Telephone Charges)</li><li>`4816` (Computer Network/Information Services and other Online Services such as electronic bulletin board, e-mail, web site hosting services, or Internet access)</li><li>`4821` (Telegraph Services)</li><li>`4829` (Quasi Cash - Money Transfer)</li><li>`4899` (Cable, Satellite, and Other Pay Television and Radio Services)</li><li>`4900` (Utilities-Electric, Gas, Water, and Sanitary)</li><li>`5013` (Motor Vehicle Supplies and New Parts (Business to Business MCC))</li><li>`5021` (Office Furniture (Business to Business MCC))</li><li>`5039` (Construction Materials Not Elsewhere Classified (Business to Business MCC))</li><li>`5044` (Photographic, Photocopy, Microfilm Equipment and Supplies (Business to Business MCC))</li><li>`5045` (Computers, Computer Peripheral Equipment, and Software)</li><li>`5046` (Commercial Equipment Not Elsewhere Classified (Business to Business MCC))</li><li>`5047` (Dental/Laboratory/Medical/Ophthalmic Hospital Equipment and Supplies)</li><li>`5051` (Metal Service Centers and Offices (Business to Business MCC))</li><li>`5065` (Electrical Parts and Equipment (Business to Business MCC))</li><li>`5072` (Hardware, Plumbing, Heat Equipment and Supplies (Business to Business MCC))</li><li>`5074` (Plumbing and Heating Equipment and Supplies (Business to Business MCC))</li><li>`5085` (Industrial Supplies Not Elsewhere Classified (Business to Business MCC))</li><li>`5094` (Precious Stones, Metals, Watches and Jewelry (Business to Business MCC))</li><li>`5099` (Durable Goods Not Elsewhere Classified (Business to Business MCC))</li><li>`5111` (Stationery, Office Supplies, and Printing and Writing Paper)</li><li>`5122` (Drugs, Drug Proprietary's, and Druggists' Sundries)</li><li>`5131` (Piece Goods, Notions and Other Dry Goods (Business to Business MCC))</li><li>`5137` (Men's, Women's and Children's Uniforms (Business to Business MCC))</li><li>`5139` (Commercial Footwear (Business to Business MCC))</li><li>`5169` (Chemicals and Allied Products Not Elsewhere Classified (Business to Business MCC))</li><li>`5172` (Petroleum and Products (Business to Business MCC))</li><li>`5192` (Books, Periodicals and Newspapers (Business to Business MCC))</li><li>`5193` (Florist Suppliers, Nursery Stock & Flowers (Business to Business MCC))</li><li>`5198` (Paints, Varnishes and Supplies (Business to Business MCC))</li><li>`5199` (Non-durable Goods Not Elsewhere Classified (Business to Business MCC))</li><li>`5200` (Home Supply Warehouse)</li><li>`5211` (Lumber & Building Materials Stores)</li><li>`5231` (Glass, Paint, and Wallpaper Stores)</li><li>`5251` (Hardware Stores, Equipment Utilities Regulated)</li><li>`5261` (Nurseries and Lawn and Garden Supply Stores)</li><li>`5271` (Mobile Home Dealer)</li><li>`5300` (Wholesale Club with or without membership fee)</li><li>`5309` (Duty Free Stores)</li><li>`5310` (Discount Store)</li><li>`5311` (Department Stores)</li><li>`5331` (Variety Stores)</li><li>`5399` (Miscellaneous General Merchandise)</li><li>`5411` (Grocery Stores and Supermarkets)</li><li>`5422` (Freezer & Locker Meat Provisions)</li><li>`5441` (Candy, Nut, and Confectionary Stores)</li><li>`5451` (Dairy Product Stores)</li><li>`5462` (Bakeries)</li><li>`5499` (Miscellaneous Food Stores-Convenience Stores and Specialty Markets)</li><li>`5511` (Car and Truck Dealers (New and Used)- Sales, Service, Repairs, Parts, and Leasing)</li><li>`5521` (Car and Truck Dealers (Used)- Sales, Service, Repairs, Parts, and Leasing)</li><li>`5532` (Automotive Tire Stores)</li><li>`5531` (Auto and Home Supply Stores)</li><li>`5533` (Automotive Parts and Accessories Stores)</li><li>`5541` (Service Stations (with or without Ancillary Services))</li><li>`5542` (Automated Fuel Dispensers)</li><li>`5551` (Boat Dealers)</li><li>`5561` (Camper, Recreational and Utility Trailer Dealers)</li><li>`5571` (Motorcycle Dealers)</li><li>`5592` (Motor Home Dealers)</li><li>`5598` (Snowmobile Dealers)</li><li>`5599` (Miscellaneous Automotive, Aircraft, and Farm Equipment Dealers --Not Elsewhere Classified)</li><li>`5611` (Men's & Boys' Clothing and Accessory Stores)</li><li>`5621` (Women's Ready-to-Wear Stores)</li><li>`5631` (Women's Accessory and Specialty Stores)</li><li>`5641` (Children's and Infants' Wear Stores)</li><li>`5651` (Family Clothing Stores)</li><li>`5655` (Sports and Riding Apparel Stores)</li><li>`5661` (Shoe Stores)</li><li>`5681` (Furriers & Fur Shops)</li><li>`5691` (Men's and Women's Clothing Stores)</li><li>`5697` (Tailors, Seamstresses, Mending, Alterations)</li><li>`5698` (Wig & Toupee Shops)</li><li>`5699` (Miscellaneous Apparel and Accessory Stores)</li><li>`5712` (Furniture, Home Furnishings, and Equipment Stores, except Appliances)</li><li>`5713` (Floor coverings, Rugs)</li><li>`5714` (Drapery, Window Covering, and Upholstery Stores)</li><li>`5718` (Fireplaces, Fireplace Screens and Accessories Stores)</li><li>`5719` (Miscellaneous Home Furnishing Specialty Stores)</li><li>`5722` (Household Appliance Stores)</li><li>`5732` (Electronics Stores)</li><li>`5733` (Music Stores-Musical Instruments, Pianos, and Sheet Music)</li><li>`5734` (Computer Software Stores)</li><li>`5735` (Record Stores)</li><li>`5811` (Caterers - Prepare & Delivery)</li><li>`5812` (Eating Places and Restaurants)</li><li>`5813` (Drinking Places (Alcoholic Beverages) - Bars, Taverns, Nightclubs, Cocktail Lounges, and Discotheques)</li><li>`5814` (Quick Payment Service-Fast Food Restaurants)</li><li>`5815` (Digital Goods – Media, Books, Movies, Music)</li><li>`5816` (Digital Goods – Games)</li><li>`5817` (Digital Goods – Applications (Excludes Games))</li><li>`5818` (Large Digital Goods Merchant)</li><li>`5912` (Drug Stores and Pharmacies)</li><li>`5921` (Package Stores--Beer, Wine, and Liquor)</li><li>`5931` (Used Merchandise and Secondhand Stores)</li><li>`5932` (Antique Shop)</li><li>`5933` (Pawn Shop)</li><li>`5935` (Wrecking and Salvage Yards)</li><li>`5937` (Antique Reproduction Stores)</li><li>`5940` (Bicycle Shop-Sales and Services)</li><li>`5941` (Sporting Goods Stores)</li><li>`5942` (Book Stores)</li><li>`5943` (Stationery, Office and School Supply Stores)</li><li>`5944` (Jewelry, Watch, Clock, and Silverware Stores)</li><li>`5945` (Hobby, Toy and Game Stores)</li><li>`5946` (Camera and Photographic Supply Stores)</li><li>`5947` (Gift, Card, Novelty, and Souvenir Stores)</li><li>`5948` (Luggage and Leather Goods Stores)</li><li>`5949` (Sewing, Needlework, Fabric, and Piece Good Stores)</li><li>`5950` (Glassware and Crystal Stores)</li><li>`5960` (Direct Marketing Insurance Services)</li><li>`5961` (Mail Order)</li><li>`5962` (Direct Marketing -- Travel Related Arrangement Services)</li><li>`5963` (Direct Selling Establishments/Door to Door Sales)</li><li>`5964` (Catalog Merchant)</li><li>`5965` (Combined Catalog and Retail Merchant)</li><li>`5966` (Outbound Telemarketing Merchant)</li><li>`5967` (Direct Marketing -- Inbound Telemarketing Merchants)</li><li>`5968` (Continuity/Subscription Merchants)</li><li>`5969` (Direct Marketing/Direct Marketers--Not Elsewhere Classified)</li><li>`5970` (Artist Supply and Craft Stores)</li><li>`5971` (Art Dealers and Galleries)</li><li>`5972` (Stamp and Coin Stores)</li><li>`5973` (Religious Goods Stores)</li><li>`5975` (Hearing Aids--Sales, Service, and Supplies)</li><li>`5976` (Orthopedic Goods and Prosthetic Devices)</li><li>`5977` (Cosmetic Stores)</li><li>`5978` (Typewriter Stores--Sales, Service, and Rentals)</li><li>`5983` (Fuel Dealers--Fuel Oil, Wood, Coal, and Liquefied Petroleum)</li><li>`5992` (Florists)</li><li>`5993` (Cigar Stores & Stands)</li><li>`5994` (News Dealers & Newsstands)</li><li>`5995` (Pet Shops, Pet Food, and Supplies)</li><li>`5996` (Swimming Pools--Sales, Supplies, and Services)</li><li>`5997` (Electric Razor Stores Sales & Services)</li><li>`5998` (Tent and Awning Stores)</li><li>`5999` (Miscellaneous & Specialty Retail Stores)</li><li>`6010` (Financial Institutions--Manual Cash Disbursements)</li><li>`6011` (Financial Institutions--Automated Cash Disbursements)</li><li>`6012` (Quasi Cash - Financial Institution - Merchandise and Services)</li><li>`6050` (Quasi Cash - Member Financial Institution)</li><li>`6051` (MasterCard - Quasi Cash-Merchant)</li><li>`6211` (Securities - Brokers and Dealers)</li><li>`6300` (Insurance Sales and Underwriting)</li><li>`6381` (Insurance - Premiums)</li><li>`6399` (Insurance - Not Elsewhere Classified)</li><li>`6513` (Real Estate Agents and Managers - Rentals; Property Management)</li><li>`6529` (Remote Stored Value Load - Member Financial Institution)</li><li>`6530` (Remote Stored Value Load - Merchant)</li><li>`6531` (Payment Service Provider)</li><li>`6532` (Payment Transaction - Member)</li><li>`6533` (Payment Transaction - Merchant)</li><li>`6534` (Money Transfer - Member Financial Institution)</li><li>`6535` (Value Purchase - Member Financial Institution)</li><li>`6536` (MoneySend Intracountry)</li><li>`6537` (MoneySend Intercountry)</li><li>`6538` (MoneySend Funding)</li><li>`6540` (POI Funding Transactions (Excluding MoneySend))</li><li>`7011` (Lodging - Hotels, Motels, and Resorts)</li><li>`7012` (Timeshares)</li><li>`7032` (Sporting and Recreational Camps)</li><li>`7033` (Trailer Parks and Campgrounds)</li><li>`7210` (Laundry, Cleaning, and Garment Services)</li><li>`7211` (Laundry Services - Family and Commercial)</li><li>`7216` (Dry Cleaners)</li><li>`7217` (Carpet and Upholstery Cleaning)</li><li>`7221` (Photographic Studios)</li><li>`7230` (Beauty and Barber Shops)</li><li>`7251` (Shoe Repair Shops, Shoe Shine Parlors, and Hat Cleaning Shops)</li><li>`7261` (Funeral Services and Crematories)</li><li>`7273` (Dating Services)</li><li>`7276` (Tax Preparation Services)</li><li>`7277` (Counseling Services - Debt, Marriage, and Personal)</li><li>`7278` (Buying and Shopping Services and Clubs)</li><li>`7296` (Clothing Rental - Costumes, Uniforms and Formal Wear)</li><li>`7297` (Massage Parlors)</li><li>`7298` (Health and Beauty Spas)</li><li>`7299` (Miscellaneous Personal Services - Not Elsewhere Classified)</li><li>`7311` (Advertising Services)</li><li>`7321` (Consumer Credit Reporting Agencies)</li><li>`7332` (Blueprinting and Photocopying Services)</li><li>`7333` (Commercial Photography, Art, and Graphics)</li><li>`7338` (Quick Copy, Reproduction Service)</li><li>`7339` (Stenographic Service)</li><li>`7342` (Exterminating and Disinfecting Services)</li><li>`7349` (Cleaning, Maintenance & Janitorial Services)</li><li>`7361` (Employment Agencies and Temporary Help Services)</li><li>`7372` (Computer Programming, Data Processing, and Integrated Systems Design Services)</li><li>`7375` (Information Retrieval Services (Business to Business MCC))</li><li>`7379` (Computer Maintenance, Repair and Services (Business to Business MCC))</li><li>`7392` (Management, Consulting, and Public Relations Services)</li><li>`7393` (Detective Agencies, Protective Agencies, and Security Services, including Armored Cars and Guard Dogs)</li><li>`7394` (Equipment, Tool, Furniture, and Appliance Rental and Leasing)</li><li>`7395` (Photofinishing Laboratories and Photo Developing)</li><li>`7399` (Business Services)</li><li>`7511` (Truck Stops)</li><li>`7512` (Automobile Rental Agency)</li><li>`7513` (Truck and Utility Trailer Rentals)</li><li>`7519` (Motor Home and Recreational Vehicle Rentals)</li><li>`7523` (Parking Lots and Garages)</li><li>`7524` (Express Payment Service Mechants - Parking Lots and Garages)</li><li>`7531` (Automotive Top & Body Shops)</li><li>`7534` (Tire Retreading & Repair)</li><li>`7535` (Automotive Paint Shops)</li><li>`7538` (Automotive Service Shops (Non-Dealer))</li><li>`7542` (Car Washes)</li><li>`7549` (Towing Services)</li><li>`7622` (Electronic Repair Shops)</li><li>`7623` (Air Conditioning and Refrigeration Repair Shops)</li><li>`7629` (Electrical and Small Appliance Repair Shops)</li><li>`7631` (Watch, Clock, and Jewelry Repair Shops)</li><li>`7641` (Furniture - Reupholster, Repair, and Refinishing)</li><li>`7692` (Welding Services)</li><li>`7699` (Miscellaneous Repair Shops and Related Services)</li><li>`7778` (Citishare Cash Advance)</li><li>`7800` (Government-Owned Lotteries)</li><li>`7801` (Government-Licensed Casinos (Online Gambling))</li><li>`7802` (Government-Licensed Horse/Dog Racing)</li><li>`7829` (Motion Picture & Video Tape Production and Distribution (Business to Business MCC))</li><li>`7832` (Motion Picture Theater)</li><li>`7841` (DVD/Video Tape Rental Stores)</li><li>`7911` (Dance Halls, Studios & Schools)</li><li>`7922` (Theatrical Producers (except Motion Pictures) and Ticket Agencies)</li><li>`7929` (Bands, Orchestras & Misc Entertainment)</li><li>`7932` (Billiards & Pool Establishments)</li><li>`7933` (Bowling Alleys)</li><li>`7941` (Commercial Sports, Professional Sports Clubs, Athletic Fields, and Sports Promoters)</li><li>`7991` (Tourist Attractions and Exhibits)</li><li>`7992` (Public Golf Courses)</li><li>`7993` (Video Amusement Game Supply)</li><li>`7994` (Video Game Arcades and Establishments)</li><li>`7995` (Betting, including Lottery Tickets, Casino Gaming Chips, Off- Track Betting, and Wagers at Race Track)</li><li>`7996` (Amusement Parks, Circuses, Carnivals, and Fortune Tellers)</li><li>`7997` (Membership Clubs (Sports, Recreation, Athletic), Country Clubs, and Private Golf Courses)</li><li>`7998` (Aquarium, Seaquarium, Dolphinariums)</li><li>`7999` (Recreation Services - Not Elsewhere Classified)</li><li>`8011` (Doctors and Physicians - Not Elsewhere Classified)</li><li>`8021` (Dentists and Orthodontists)</li><li>`8031` (Osteopathic Physicians)</li><li>`8041` (Chiropractors)</li><li>`8042` (Optometrists and Ophthalmologists)</li><li>`8043` (Opticians, Optical Goods and Eyeglasses)</li><li>`8049` (Podiatrists and Chiropodists)</li><li>`8050` (Nursing and Personal Care Facilities)</li><li>`8062` (Hospitals)</li><li>`8071` (Medical and Dental Laboratories)</li><li>`8099` (Medical Services Health Practitioners - No Elsewhere Classified)</li><li>`8111` (Legal Services and Attorneys)</li><li>`8211` (Elementary and Secondary Schools)</li><li>`8220` (Colleges, Universities, Professional Schools, and Junior Colleges)</li><li>`8241` (Correspondence Schools)</li><li>`8244` (Business and Secretarial Schools)</li><li>`8249` (Trade and Vocational Schools)</li><li>`8299` (Schools and Educational Services - Not Elsewhere Classified)</li><li>`8351` (Child Care Services)</li><li>`8398` (Charitable and Social Service Organizations)</li><li>`8641` (Civic, Social, and Fraternal Associations)</li><li>`8651` (Political Organizations)</li><li>`8661` (Religious Organizations)</li><li>`8675` (Automobile Associations)</li><li>`8699` (Membership Organizations - Not Elsewhere Classified)</li><li>`8734` (Testing Laboratories (Not Medical) - (Business to Business MCC))</li><li>`8911` (Architectural, Engineering, and Surveying Services)</li><li>`8931` (Accounting, Auditing, and Bookkeeping Services)</li><li>`8999` (Professional Services - Not Elsewhere Classified)</li><li>`9211` (Court Costs, including Alimony and Child Support)</li><li>`9222` (Fines)</li><li>`9223` (Bail & Bond Payments)</li><li>`9311` (Tax Payments)</li><li>`9399` (Government Services - Not Elsewhere Classified)</li><li>`9401` (i-Purchasing)</li><li>`9402` (Postal Services)</li><li>`9405` (U.S. Fed Government Agencies)</li><li>`9700` (Automated Referral Service)</li><li>`9701` (Visa Credential Server)</li><li>`9702` (GCAS Emergency Services)</li><li>`9751` (U.K. Supermarkets, Electronic Hot File)</li><li>`9752` (U.K. Petrol Stations, Electronic Hot File)</li><li>`9753` (Consumer Electronics/Furniture Store)</li><li>`9754` (Quasi Cash - Gambling-Horse Racing, Dog Racing, State Lotteries)</li><li>`9950` (Intra-Company Purchases)</li></ul>",
+            "example": "0742"
+          },
+          "ppcUserGroup": {
+            "type": "string",
+            "description": "The payment user group from the purpose code list for the application.<br><br>Allowed values:<ul><li>WHOLESALE_FI_FI</li><li>COMMERCIAL</li><li>CONSUMER_GOODS_SERVICES</li><li>FINANCE</li><li>INSURANCE</li><li>PROPERTY</li><li>UTILITIES</li><li>TAX</li><li>SALARIES_INCOMES</li><li>INVESTMENTS</li><li>FOREIGN_EXCHANGE</li><li>GOVERNMENT</li><li>BENEFIT_PAYMENTS</li><li>MEDICAL</li><li>PENSIONS</li></ul>",
+            "example": "WHOLESALE_FI_FI"
+          },
+          "callbackUrls": {
+            "type": "array",
+            "description": "The application callback URLs",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isContractPresent": {
+            "type": "boolean",
+            "description": "Indicates if a contract is in place with the merchant and a KYB process has been completed"
+          }
+        }
+      },
+      "ApplicationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The id of the application returned",
+            "example": "2698db90-6635-4f76-b673-5ce8e2aeda0e"
+          },
+          "rootApplicationId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The id of the root application",
+            "example": "eb25e1ee-f6af-4131-92fe-748e177bf950"
+          },
+          "name": {
+            "type": "string",
+            "format": "^[a-zA-Z0-9 \\-_\\[\\]\\(\\)]+$",
+            "description": "The name of the application"
+          },
+          "merchantCategoryCode": {
+            "type": "string",
+            "format": "^\\d{4}$",
+            "description": "The ISO-18245 merchant category code of the merchant the application is being created for.<br><br>Allowed values:<ul><li>`0742` (Veterinary Services)</li><li>`0763` (Agricultural Cooperatives)</li><li>`0780` (Landscaping and Horticultural Services)</li><li>`1520` (General Contractor/Residential Building)</li><li>`1711` (Heating, Plumbing, Air Conditioning Contractors)</li><li>`1731` (Electrical Contractors)</li><li>`1740` (Masonry, Stonework, Tile Setting, Plastering, Insulation Contractors)</li><li>`1750` (Carpentry)</li><li>`1761` (Roof, Siding, and Sheet Metal Work Contractors)</li><li>`1771` (Contractors, Concrete)</li><li>`1799` (Special Trade Contractor - Not Elsewhere Classified)</li><li>`2741` (Miscellaneous Publishing and Printing Services)</li><li>`2791` (Typesetting, Plate Making and Related Services (Business to Business MCC))</li><li>`2842` (Specialty Cleaning, Polishing and Sanitation Preparations (Business to Business MCC))</li><li>`3000` (United Airlines)</li><li>`3001` (American Airlines)</li><li>`3002` (Pan American)</li><li>`3003` (Eurofly Airlines)</li><li>`3004` (Dragon Airlines)</li><li>`3005` (British Airways)</li><li>`3006` (Japan Air Lines)</li><li>`3007` (Air France)</li><li>`3008` (Lufthansa)</li><li>`3009` (Air Canada)</li><li>`3010` (KLM)</li><li>`3011` (AeroFlot)</li><li>`3012` (Qantas)</li><li>`3013` (Alitalia)</li><li>`3014` (Saudi Arabian Airlines)</li><li>`3015` (SWISS)</li><li>`3016` (SAS)</li><li>`3017` (South African Airway)</li><li>`3018` (Varig (Brazil))</li><li>`3020` (Air India)</li><li>`3021` (Air Algerie)</li><li>`3022` (PAL AIR)</li><li>`3023` (Mexicana)</li><li>`3024` (Pakistan International)</li><li>`3025` (Air New Zealand Ltd.)</li><li>`3026` (Emirates Airlines)</li><li>`3027` (UTA/InterAir)</li><li>`3028` (Air Malta)</li><li>`3029` (SN Brussels Airlines - SN BRUSSELS)</li><li>`3030` (Aerolineas Argentinas)</li><li>`3031` (Olympic Airways)</li><li>`3032` (El Al)</li><li>`3033` (Ansett Airlines)</li><li>`3034` (ETIHADAIR)</li><li>`3035` (TAP (Portugal))</li><li>`3036` (VASP (Brazil))</li><li>`3037` (EgyptAir)</li><li>`3038` (Kuwait Airways)</li><li>`3039` (Avianca)</li><li>`3040` (GulfAir (Bahrain))</li><li>`3041` (Balkan-Bulgarian)</li><li>`3042` (FinnAir)</li><li>`3043` (Aer Lingus)</li><li>`3044` (Air Lanka)</li><li>`3045` (Nigeria Airways)</li><li>`3046` (Cruzeiro do Sul (Bra))</li><li>`3047` (THY (Turkey))</li><li>`3048` (Royal Air Maroc)</li><li>`3049` (Tunis Air)</li><li>`3050` (Icelandair)</li><li>`3051` (Austrian Airlines)</li><li>`3052` (LANAIR)</li><li>`3053` (AVIACO (Spain))</li><li>`3054` (Ladeco (Chile))</li><li>`3055` (LAB (Bolivia))</li><li>`3056` (JetAir)</li><li>`3057` (Virgin America – VIR AMER)</li><li>`3058` (Delta)</li><li>`3059` (DBA Airlines-DBA AIR)</li><li>`3060` (NWA Air)</li><li>`3061` (Continental)</li><li>`3062` (Hapag-Lloyd Express - HLX)</li><li>`3063` (US Airways)</li><li>`3064` (Adria Airways)</li><li>`3065` (Airinter (AirInternational))</li><li>`3066` (Southwest)</li><li>`3068` (AIR STANA)</li><li>`3069` (Sun Country Air)</li><li>`3070` (Pacific Southwest Airlines (PSA))</li><li>`3071` (Air British Columbia)</li><li>`3072` (CEBU PAC)</li><li>`3073` (Air Cal)</li><li>`3075` (Singapore Airlines)</li><li>`3076` (Aeromexico)</li><li>`3077` (Thai Airways)</li><li>`3078` (China Airlines)</li><li>`3079` (Jetstar Airways - Jetstar)</li><li>`3081` (NordAir)</li><li>`3082` (Korean Airlines)</li><li>`3083` (Air Afrique)</li><li>`3084` (Eva Airlines)</li><li>`3085` (Midwest Express Airlines, Inc)</li><li>`3087` (Metro Airlines)</li><li>`3088` (Croatia Airlines)</li><li>`3089` (Tans Saero)</li><li>`3090` (Uni Airways)</li><li>`3094` (Zambia Airways)</li><li>`3096` (Air Zimbabwe)</li><li>`3097` (Spanair (abbreviation: SPANAIR))</li><li>`3098` (Asiana Airlines)</li><li>`3099` (Cathay Pacific)</li><li>`3100` (Malaysian Airline Sys)</li><li>`3102` (Iberia)</li><li>`3103` (Garuda (Indonesia))</li><li>`3105` (Piedmont)</li><li>`3106` (Braathens S.A.F.E. (Norway))</li><li>`3110` (Wings Airways)</li><li>`3111` (British Midland)</li><li>`3112` (Windward Island)</li><li>`3117` (Venezolana Int de Aviacion)</li><li>`3118` (Valley Airlines)</li><li>`3125` (Tan Airlines)</li><li>`3126` (Talair PTY Ltd.)</li><li>`3127` (Taca International)</li><li>`3129` (Surinam Airways)</li><li>`3130` (Sunworld International Airways)</li><li>`3131` (VLM Air)</li><li>`3132` (Frontier Airlines)</li><li>`3133` (Sunbelt Airlines)</li><li>`3135` (Sudan Airlines)</li><li>`3136` (Qatar Air)</li><li>`3137` (Singleton)</li><li>`3138` (Simmons Airlines)</li><li>`3141` (Seair Alaska)</li><li>`3143` (Scenic Airlines)</li><li>`3144` (Virgin Atlantic)</li><li>`3145` (San Juan)</li><li>`3146` (Luxair)</li><li>`3148` (Air Littoral SA)</li><li>`3151` (Air Laire)</li><li>`3154` (Princeville)</li><li>`3156` (Go Fly)</li><li>`3159` (PBA-Provincetwn-Bstn Air)</li><li>`3161` (All Nippon Airways)</li><li>`3164` (Norontair)</li><li>`3165` (New York Helicopter)</li><li>`3167` (Aero Continente - AEROCONTINENTE)</li><li>`3170` (Mount Cook)</li><li>`3171` (Canadian Airlines)</li><li>`3172` (Nation Air)</li><li>`3174` (JetBlue Airways)</li><li>`3175` (Middle East Air)</li><li>`3176` (Metroflight Airlines)</li><li>`3177` (AirTran Airways)</li><li>`3178` (Mesa Air)</li><li>`3180` (Westjet Airlines-WESTJET)</li><li>`3181` (Malev Hungarian Airlines)</li><li>`3182` (LOT (Poland))</li><li>`3183` (Oman Aviation - OMAN AIR)</li><li>`3184` (LIAT)</li><li>`3185` (LAV (Venezuela))</li><li>`3186` (LAP (Paraguay))</li><li>`3187` (LACSA (Costa Rica))</li><li>`3188` (Virgin Express - VIR EXP)</li><li>`3190` (Jugoslav Air)</li><li>`3191` (Island Airlines)</li><li>`3192` (Iran Air)</li><li>`3193` (Indian Airlines)</li><li>`3195` (Holiday Airlines)</li><li>`3196` (Hawaiian Air)</li><li>`3197` (Havasu Airlines)</li><li>`3198` (Harbor Airlines)</li><li>`3199` (Servicios Aereos Militares)</li><li>`3200` (Guyana Airways)</li><li>`3203` (Golden Pacific Air)</li><li>`3204` (Freedom Airlines)</li><li>`3206` (China Eastern Airlines (Abbr: China East Air))</li><li>`3207` (Empresa Ecuatoriana)</li><li>`3211` (Norwegian Air Shuttle - NORWEGIANAIR)</li><li>`3212` (Dominicana de Aviacion)</li><li>`3213` (Malmo Aviation - MALMO AV)</li><li>`3215` (Dan Air Services)</li><li>`3216` (Cumberland Airlines)</li><li>`3217` (CSA-Ceskoslovenske Aeroln)</li><li>`3218` (Crown Air)</li><li>`3219` (Copa)</li><li>`3220` (Compania Faucett)</li><li>`3221` (Transportes Aeros Mil)</li><li>`3222` (Command Airways)</li><li>`3223` (Comair)</li><li>`3226` (Skyways Air- SKYWAYS)</li><li>`3228` (Cayman Airways)</li><li>`3229` (SAETA)</li><li>`3231` (SAHSA)</li><li>`3233` (Capitol Air)</li><li>`3234` (CARIBAIR)</li><li>`3235` (Brockway Air)</li><li>`3236` (Air Arabia Airlines - Air Arab)</li><li>`3238` (Bemidji Aviation)</li><li>`3239` (Bar Harbor Airlines)</li><li>`3240` (Bahamasair)</li><li>`3241` (Aviateca (Guatemala))</li><li>`3242` (Avensa)</li><li>`3243` (Austrian Air Service)</li><li>`3245` (Easy Jet - EASYJET)</li><li>`3246` (Ryan Air - RYANAIR)</li><li>`3247` (Gol Airlines - GOL)</li><li>`3248` (Tam Airlines - TAM)</li><li>`3251` (Aloha Airlines)</li><li>`3252` (ALM-Antilean Airlines)</li><li>`3253` (America West)</li><li>`3254` (U.S. Air Shuttle)</li><li>`3256` (Alaska Airlines Inc.)</li><li>`3259` (American Trans Air)</li><li>`3260` (Spirit Airlines - SPIRIT)</li><li>`3261` (Air China)</li><li>`3262` (Reno Air)</li><li>`3263` (Aero Servicio Carabobo)</li><li>`3266` (Air Seychelles)</li><li>`3267` (Air Panama International)</li><li>`3268` (Air Pacific)</li><li>`3275` (Air Nevada)</li><li>`3276` (Air Midwest)</li><li>`3277` (Air Madagascar)</li><li>`3279` (Air LA)</li><li>`3280` (Air Jamaica)</li><li>`3282` (Air Djibouti)</li><li>`3284` (Aero Virgin Islands)</li><li>`3285` (AeroPeru)</li><li>`3286` (Aero Nicaraguensis)</li><li>`3287` (Aero Coach Aviation)</li><li>`3291` (Ariana Afghan)</li><li>`3292` (Cyprus Airways)</li><li>`3293` (Ecuatoriana)</li><li>`3294` (Ethiopian Airlines)</li><li>`3295` (Kenya Airways)</li><li>`3296` (Air Berlin-AIRBERLIN)</li><li>`3297` (Tarom Romanian Air Transport)</li><li>`3298` (Air Mauritius)</li><li>`3299` (Wideroe's Flyveselskap)</li><li>`3351` (Affiliated Auto Rental)</li><li>`3352` (American International)</li><li>`3353` (Brooks Rent a Car)</li><li>`3354` (Action Auto Rental)</li><li>`3355` (SIXT Car Rental)</li><li>`3357` (Hertz)</li><li>`3359` (Payless Car Rental)</li><li>`3360` (Snappy Car Rental)</li><li>`3361` (Airways Rent a Car)</li><li>`3362` (Altra Auto Rental)</li><li>`3364` (Agency Rent a Car)</li><li>`3366` (Budget Rent a Car)</li><li>`3368` (Holiday R-A-C)</li><li>`3370` (Rent-a-Wreck)</li><li>`3374` (Accent Rent-A-Car)</li><li>`3376` (Ajax R-A-C)</li><li>`3380` (Triangle Rent a Car)</li><li>`3381` (Europ Car)</li><li>`3385` (Tropical R-A-C)</li><li>`3386` (Showcase Rental Cars)</li><li>`3387` (Alamo Rent a Car)</li><li>`3388` (Merchants Rent-A-Car, Inc)</li><li>`3389` (Avis R-A-C)</li><li>`3390` (Dollar R-A-C)</li><li>`3391` (Europe by Car)</li><li>`3393` (National Car Rental)</li><li>`3394` (Kemwell Group R-A-C)</li><li>`3395` (Thrify Car Rental)</li><li>`3396` (Tilden R-A-C)</li><li>`3398` (Econo Car R-A-C)</li><li>`3400` (Auto Host Car Rentals)</li><li>`3405` (Enterprise R-A-C)</li><li>`3409` (General Rent-a-Car)</li><li>`3412` (A-1 R-A-C)</li><li>`3414` (Godfrey National)</li><li>`3420` (ANSA International)</li><li>`3421` (Allstate Rent-a-Car)</li><li>`3423` (Avcar Rent-a-Car)</li><li>`3425` (Automate Rent-a-Car)</li><li>`3427` (Avon Rent-a-Car)</li><li>`3428` (Carey Rent-a-Car)</li><li>`3429` (Insurance Rent-a-Car)</li><li>`3430` (Major Rent-a-Car)</li><li>`3431` (Replacement Rent-a-Car)</li><li>`3432` (Reserve Rent-a-Car)</li><li>`3433` (Ugly Duckling R-A-C)</li><li>`3434` (USA Rent-a-Car)</li><li>`3435` (Value Rent-a-Car)</li><li>`3436` (Autohansa Rent-a-Car)</li><li>`3437` (Cite)</li><li>`3438` (Interenet Rent-a-Car)</li><li>`3439` (Millville Rent-a-Car)</li><li>`3441` (Advantage Rent A Car)</li><li>`3501` (Holiday Inns)</li><li>`3502` (Best Western Hotels)</li><li>`3503` (Sheraton)</li><li>`3504` (Hilton)</li><li>`3505` (Forte Hotels)</li><li>`3506` (Golden Tulip Hotels)</li><li>`3507` (Friendship Inns)</li><li>`3508` (Quality Inns)</li><li>`3509` (Marriott)</li><li>`3510` (Days Inn Colonial Resort)</li><li>`3511` (Arabella Hotels)</li><li>`3512` (Intercontinental Hotels)</li><li>`3513` (Westin)</li><li>`3514` (Amerisuites)</li><li>`3515` (Rodeway Inn)</li><li>`3516` (LaQuinta Motor Inns)</li><li>`3517` (Americana Hotels)</li><li>`3518` (Sol Hotels)</li><li>`3519` (Pullman International Hotels)</li><li>`3520` (Meridien Hotels)</li><li>`3521` (Royal Lahaina Resort)</li><li>`3522` (Tokyo Group)</li><li>`3523` (Peninsula Hotels)</li><li>`3524` (WelcomGroup Hotels)</li><li>`3525` (Dunfey Hotels)</li><li>`3526` (Prince Hotels)</li><li>`3527` (Downtowner Passport)</li><li>`3528` (Red Lion Inns)</li><li>`3529` (CP (Canadian Pacific))</li><li>`3530` (Renaissance Hotels)</li><li>`3531` (Kauai Coconut Beach Resort)</li><li>`3532` (Royal Kona Resort)</li><li>`3533` (Hotel Ibis)</li><li>`3534` (Southern Pacific)</li><li>`3535` (Hilton International)</li><li>`3536` (AMFAC Hotels)</li><li>`3537` (ANA Hotels)</li><li>`3538` (Concorde Hotels)</li><li>`3539` (Summerfield Suites Hotel)</li><li>`3540` (Iberotel Hotels)</li><li>`3541` (Hotel Okura)</li><li>`3542` (Royal Hotels)</li><li>`3543` (Four Seasons)</li><li>`3544` (Cigna Hotels)</li><li>`3545` (Shangri-La International)</li><li>`3546` (Hotel Sierra)</li><li>`3548` (Hotels Melia)</li><li>`3549` (Auberge des Governeurs)</li><li>`3550` (Regal 8 Inns)</li><li>`3551` (Mirage Hotel and Casino)</li><li>`3552` (Coast Hotel)</li><li>`3553` (Park Inn by Radisson)</li><li>`3554` (Pinehurst Resort)</li><li>`3555` (Treasure Island Hotel and Casino)</li><li>`3556` (Barton Creek Resort)</li><li>`3557` (Manhattan East Suite Hotels)</li><li>`3558` (Jolly Hotels)</li><li>`3559` (Candlewood Suites)</li><li>`3560` (Aladdin Resort and Casino)</li><li>`3561` (Golden Nugget)</li><li>`3562` (Comfort Inns)</li><li>`3563` (Journey's End Motels)</li><li>`3564` (Sam's Town Hotel and Casino)</li><li>`3565` (Relax Inns)</li><li>`3566` (Garden Place Hotel)</li><li>`3567` (Soho Grand Hotel)</li><li>`3568` (Ladbroke Hotels)</li><li>`3569` (Tribeca Grand Hotel)</li><li>`3570` (Forum Hotels)</li><li>`3571` (Grand Wailea Resort)</li><li>`3572` (Miyako Hotel)</li><li>`3573` (Sandman Hotels)</li><li>`3574` (Venture Inn)</li><li>`3575` (Vagabond Hotels)</li><li>`3576` (La Quinta Resort)</li><li>`3577` (Mandarin Oriental Hotel)</li><li>`3578` (Frankenmuth Bavarian)</li><li>`3579` (Hotel Mercure)</li><li>`3580` (Hotel Del Coronado)</li><li>`3581` (Delta Hotels)</li><li>`3582` (California Hotel and Casino)</li><li>`3583` (Radisson BLU)</li><li>`3584` (Princess Hotels International)</li><li>`3585` (Hungar Hotels)</li><li>`3586` (Sokos Hotels)</li><li>`3587` (Doral Hotels)</li><li>`3588` (Helmsley Hotels)</li><li>`3589` (Doral Golf Resort)</li><li>`3590` (Fairmont Hotel)</li><li>`3591` (Sonesta Hotels)</li><li>`3592` (Omni Hotels)</li><li>`3593` (Cunard Hotels)</li><li>`3594` (Arizona Biltmore)</li><li>`3595` (Hospitality Inns)</li><li>`3596` (Wynn Las Vegas)</li><li>`3597` (Riverside Resort and Casino)</li><li>`3598` (Regent International Hotels)</li><li>`3599` (Pannonia Hotels)</li><li>`3600` (Saddlebrook Resort - Tampa)</li><li>`3601` (Trade Winds Resorts)</li><li>`3602` (Hudson Hotel)</li><li>`3603` (Noah's Hotel)</li><li>`3604` (Hilton Garden Inn)</li><li>`3605` (Jurys Doyle Hotel Group)</li><li>`3606` (Jefferson Hotel)</li><li>`3607` (Fountainebleau Resort)</li><li>`3608` (Gaylord Opryland)</li><li>`3609` (Gaylord Palms)</li><li>`3610` (Gaylord Texan)</li><li>`3611` (C MON INN)</li><li>`3612` (Movenpick Hotels)</li><li>`3613` (Microtel Inns & Suites)</li><li>`3614` (Americinn)</li><li>`3615` (Travelodge Motels)</li><li>`3617` (America's Best Value Inn)</li><li>`3618` (Great Wolf)</li><li>`3619` (Aloft)</li><li>`3620` (Binion's Horseshoe Club)</li><li>`3621` (Extended Stay)</li><li>`3622` (Merlin Hotel)</li><li>`3623` (Dorint Hotels)</li><li>`3624` (Lady Luck Hotel and Casino)</li><li>`3625` (Hotel Universale)</li><li>`3626` (Studio Plus)</li><li>`3627` (Extended Stay America)</li><li>`3628` (Excalibur Hotel and Casino)</li><li>`3629` (Dan Hotels)</li><li>`3630` (Extended Stay Deluxe)</li><li>`3631` (Sleep Inn)</li><li>`3632` (The Phoenician)</li><li>`3633` (Rank Hotels)</li><li>`3634` (Swissotel)</li><li>`3635` (Reso Hotel)</li><li>`3636` (Sarova Hotels)</li><li>`3637` (Ramada Inns)</li><li>`3638` (Howard Johnson)</li><li>`3639` (Mount Charlotte Thistle)</li><li>`3640` (Hyatt Motels)</li><li>`3641` (Sofitel Hotels)</li><li>`3642` (Novotel)</li><li>`3643` (Steigenberger Hotels)</li><li>`3644` (EconoLodges)</li><li>`3645` (Queens Moat Houses)</li><li>`3646` (Swallow Hotels)</li><li>`3647` (Husa Hotels)</li><li>`3648` (De Vere Hotels)</li><li>`3649` (Radisson)</li><li>`3650` (Red Roof Inns)</li><li>`3651` (Imperial London Hotel)</li><li>`3652` (Embassy Hotels)</li><li>`3653` (Penta Hotels)</li><li>`3654` (Loews Hotels)</li><li>`3655` (Scandic Hotels)</li><li>`3656` (Sara Hotels)</li><li>`3657` (Oberoi Hotels)</li><li>`3658` (New Otani Hotels)</li><li>`3659` (Taj Hotels International)</li><li>`3660` (Knights Inn)</li><li>`3661` (Metropole Hotels)</li><li>`3662` (Circus Circus Hotel and Casino)</li><li>`3663` (Hoteles El Presidente)</li><li>`3664` (Flag Inns)</li><li>`3665` (Hampton Inn Hotels)</li><li>`3666` (Stakis Hotels)</li><li>`3667` (Luxor Hotel and Casino)</li><li>`3668` (Maritim Hotels)</li><li>`3669` (Eldorado Hotel and Casino)</li><li>`3670` (Arcade Hotels)</li><li>`3671` (Arctia Hotels)</li><li>`3672` (Campanile Hotels)</li><li>`3673` (IBUSZ Hotels)</li><li>`3674` (Rantasipi Hotels)</li><li>`3675` (Interhotel CEDOK)</li><li>`3676` (Monte Carlo Hotel and Casino)</li><li>`3677` (Climat de France Hotels)</li><li>`3678` (Cumulus Hotels)</li><li>`3679` (Silver Legacy Hotel and Casino)</li><li>`3680` (Hoteis Othan)</li><li>`3681` (Adams Mark Hotels)</li><li>`3682` (Sahara Hotel and Casino)</li><li>`3683` (Bradbury Suites)</li><li>`3684` (Budget Hosts Inns)</li><li>`3685` (Budgetel Hotels)</li><li>`3686` (Suisse Chalet)</li><li>`3687` (Clarion Hotels)</li><li>`3688` (Compri Hotels)</li><li>`3689` (Consort Hotels)</li><li>`3690` (Courtyard Inns)</li><li>`3691` (Dillon Inn)</li><li>`3692` (Doubletree)</li><li>`3693` (Drury Inn)</li><li>`3694` (Economy Inns of America)</li><li>`3695` (Embassy Suites)</li><li>`3696` (Excel Inn)</li><li>`3697` (Fairfield Hotels)</li><li>`3698` (Harley Hotels)</li><li>`3699` (Midway Motor Lodge)</li><li>`3700` (Motel 6)</li><li>`3701` (La Mansion Del Rio)</li><li>`3702` (The Registry Hotels)</li><li>`3703` (Residence Inn)</li><li>`3704` (Royce Hotels)</li><li>`3705` (Sandman Inn)</li><li>`3706` (Shilo Inn)</li><li>`3707` (Shoney's Inn)</li><li>`3708` (Virgin River Hotel and Casino)</li><li>`3709` (Super 8 Motels)</li><li>`3710` (The Ritz Carlton Hotels)</li><li>`3711` (Flag Inns (Australia))</li><li>`3712` (Buffalo Bill's Hotel and Casino)</li><li>`3713` (Quality Pacific Hotel)</li><li>`3714` (Four Seasons Hotels-Austr)</li><li>`3715` (Fairfield Inn)</li><li>`3716` (Carlton Hotels)</li><li>`3717` (City Lodge Hotels)</li><li>`3718` (Karos Hotels)</li><li>`3719` (Protea Hotels)</li><li>`3720` (Southern Sun Hotels)</li><li>`3721` (Hilton Conrad Hotels)</li><li>`3722` (Wyndham Hotels)</li><li>`3723` (Rica Hotels)</li><li>`3724` (Inter Nor Hotels)</li><li>`3725` (SeaPines Plantation)</li><li>`3726` (Rio Suites)</li><li>`3727` (Broadmoor Hotel)</li><li>`3728` (Bally's Hotel and Casino)</li><li>`3729` (John Ascuaga's Nugget)</li><li>`3730` (MGM Grand Hotel)</li><li>`3731` (Harrah's Hotels and Casinos)</li><li>`3732` (Opryland Hotel)</li><li>`3733` (Boca Raton Resort)</li><li>`3734` (Harvey/Bristol Hotels)</li><li>`3735` (Master Economy Inns)</li><li>`3736` (Colorado Belle/Edgewater Resort)</li><li>`3737` (Riviera Hotel and Casino)</li><li>`3738` (Tropicana Resort & Casino)</li><li>`3739` (Woodside Hotels & Resorts)</li><li>`3740` (Towneplace Suites)</li><li>`3741` (Millennium Hotel)</li><li>`3742` (Club Med)</li><li>`3743` (Biltmore Hotel and Suites)</li><li>`3744` (Carefree Resorts)</li><li>`3745` (St. Regis Hotel)</li><li>`3746` (The Eliot Hotel)</li><li>`3747` (ClubCorp/ClubResorts)</li><li>`3748` (Wellesley Inns)</li><li>`3749` (The Beverly Hills Hotel)</li><li>`3750` (Crown Plaza Hotels)</li><li>`3751` (Homewood Suites)</li><li>`3752` (Peabody Hotels)</li><li>`3753` (Greenbriar Resorts)</li><li>`3754` (Amelia Island Plantation)</li><li>`3755` (The Homestead)</li><li>`3757` (Canyon Ranch)</li><li>`3758` (Kahala Mandarion Oriental Hotel)</li><li>`3759` (The Orchid at Mauna Lani)</li><li>`3760` (Halekulani Hotel/Waikiki Parc)</li><li>`3761` (Primadonna Hotel and Casino)</li><li>`3762` (Whisky Pete's Hotel and Casino)</li><li>`3763` (Chateau Elan Winery and Resort)</li><li>`3764` (Beau Rivage Hotel and Casino)</li><li>`3765` (Bellagio)</li><li>`3766` (Fremont Hotel and Casino)</li><li>`3767` (Main Street Hotel and Casino)</li><li>`3768` (Silver Star Hotel and Casino)</li><li>`3769` (Stratosphere Hotel and Casino)</li><li>`3770` (SpringHill Suites)</li><li>`3771` (Caesar's Resort)</li><li>`3772` (Nemacolin Woodlands)</li><li>`3773` (The Venetian Resort Hotel and Casino)</li><li>`3774` (New York-New York Hotel and Casino)</li><li>`3775` (Sands Resort)</li><li>`3776` (Nevele Grande Resort and Country Club)</li><li>`3777` (Mandalay Bay Resort)</li><li>`3778` (Four Points Hotels)</li><li>`3779` (W Hotels)</li><li>`3780` (Disney Resorts)</li><li>`3781` (Patricia Grand Resort Hotels)</li><li>`3782` (Rosen Hotels & Resort)</li><li>`3783` (Town and Country Resort and Convention Center)</li><li>`3784` (First Hospitality Hotel)</li><li>`3785` (Outrigger Hotels and Resorts)</li><li>`3786` (Ohana Hotel of Hawaii)</li><li>`3787` (Caribe Royale Resort Suites & Villas)</li><li>`3788` (Ala Moana Hotel / Ala Moana Hotels)</li><li>`3789` (Smugglers' Notch Resort)</li><li>`3790` (Raffles Hotels)</li><li>`3791` (Staybridge Suites)</li><li>`3792` (Claridge Casino Hotel)</li><li>`3793` (The Flamingo Hotels)</li><li>`3794` (Grand Casino Hotels)</li><li>`3795` (Paris Las Vegas Hotel)</li><li>`3796` (Peppermill Hotel Casino)</li><li>`3797` (Atlantic City Hilton)</li><li>`3798` (Embassy Vacation Resort)</li><li>`3799` (Hale Koa Hotel)</li><li>`3800` (Homestead)</li><li>`3801` (Wilderness Hotel and Golf Resort)</li><li>`3802` (The Palace Hotel)</li><li>`3807` (Element)</li><li>`3808` (LXR)</li><li>`3810` (La Costa Resort)</li><li>`3811` (Premier Travel Inn)</li><li>`3812` (Hyatt Place)</li><li>`3813` (Hotel Indigo)</li><li>`3814` (The Roosevelt Hotel NY)</li><li>`3815` (Holiday Inn Nickelodeon)</li><li>`3816` (Home2 Suites)</li><li>`3817` (Affinia)</li><li>`3818` (Mainstay Suites)</li><li>`3819` (Oxford Suites)</li><li>`3820` (Jumeirah Essex House)</li><li>`3821` (Caribe Royale)</li><li>`3822` (Crossland)</li><li>`3823` (Grand Sierra Resort)</li><li>`3824` (Aria)</li><li>`3825` (Vdara)</li><li>`3826` (Autograph)</li><li>`3827` (Galt House)</li><li>`3828` (Cosmopolitan of Las Vegas)</li><li>`3829` (Country Inn by Carlson)</li><li>`3830` (Park Plaza Hotel)</li><li>`3831` (Waldorf)</li><li>`4011` (Railroads)</li><li>`4111` (Local and Suburban Commuter Passenger Transportation, including Ferries)</li><li>`4112` (Passenger Rail (train))</li><li>`4119` (Ambulance Services)</li><li>`4121` (Taxicabs and Limousines)</li><li>`4131` (Bus Lines, includes Charters/Tour Buses)</li><li>`4214` (Motor Freight Carriers and Trucking-Local and Long Distance, Moving & Storage Companies, and Local Delivery)</li><li>`4215` (Courier Services-Air and Ground, and Freight Forwarders)</li><li>`4225` (Public Warehousing-Farm products, Refrigerated Goods, Household Goods, and Storage)</li><li>`4411` (Steamship and Cruise Lines)</li><li>`4457` (Boat Rentals and Leasing)</li><li>`4468` (Marinas, Marine Service, and Supplies)</li><li>`4511` (Airlines and Air Carriers)</li><li>`4582` (Airports, Flying Fields, and Airport Terminals)</li><li>`4722` (Travel Agencies)</li><li>`4723` (Package Tour Operators (Germany Only))</li><li>`4761` (Telemarketing of Travel Related Services and Vitamins)</li><li>`4784` (Bridge and Road Fees, Tolls)</li><li>`4789` (Transportation Services-not elsewhere classified)</li><li>`4812` (Telecommunication Equipment and Telephone Sales)</li><li>`4813` (Special Telecom Merchant)</li><li>`4814` (Telecommunication Services, Including Local and Long Distance Calls, Credit Card Calls, Call Through Use of Magnetic-Strip-Reading Telephones, and Fax Services)</li><li>`4815` (Monthly Summary Telephone Charges)</li><li>`4816` (Computer Network/Information Services and other Online Services such as electronic bulletin board, e-mail, web site hosting services, or Internet access)</li><li>`4821` (Telegraph Services)</li><li>`4829` (Quasi Cash - Money Transfer)</li><li>`4899` (Cable, Satellite, and Other Pay Television and Radio Services)</li><li>`4900` (Utilities-Electric, Gas, Water, and Sanitary)</li><li>`5013` (Motor Vehicle Supplies and New Parts (Business to Business MCC))</li><li>`5021` (Office Furniture (Business to Business MCC))</li><li>`5039` (Construction Materials Not Elsewhere Classified (Business to Business MCC))</li><li>`5044` (Photographic, Photocopy, Microfilm Equipment and Supplies (Business to Business MCC))</li><li>`5045` (Computers, Computer Peripheral Equipment, and Software)</li><li>`5046` (Commercial Equipment Not Elsewhere Classified (Business to Business MCC))</li><li>`5047` (Dental/Laboratory/Medical/Ophthalmic Hospital Equipment and Supplies)</li><li>`5051` (Metal Service Centers and Offices (Business to Business MCC))</li><li>`5065` (Electrical Parts and Equipment (Business to Business MCC))</li><li>`5072` (Hardware, Plumbing, Heat Equipment and Supplies (Business to Business MCC))</li><li>`5074` (Plumbing and Heating Equipment and Supplies (Business to Business MCC))</li><li>`5085` (Industrial Supplies Not Elsewhere Classified (Business to Business MCC))</li><li>`5094` (Precious Stones, Metals, Watches and Jewelry (Business to Business MCC))</li><li>`5099` (Durable Goods Not Elsewhere Classified (Business to Business MCC))</li><li>`5111` (Stationery, Office Supplies, and Printing and Writing Paper)</li><li>`5122` (Drugs, Drug Proprietary's, and Druggists' Sundries)</li><li>`5131` (Piece Goods, Notions and Other Dry Goods (Business to Business MCC))</li><li>`5137` (Men's, Women's and Children's Uniforms (Business to Business MCC))</li><li>`5139` (Commercial Footwear (Business to Business MCC))</li><li>`5169` (Chemicals and Allied Products Not Elsewhere Classified (Business to Business MCC))</li><li>`5172` (Petroleum and Products (Business to Business MCC))</li><li>`5192` (Books, Periodicals and Newspapers (Business to Business MCC))</li><li>`5193` (Florist Suppliers, Nursery Stock & Flowers (Business to Business MCC))</li><li>`5198` (Paints, Varnishes and Supplies (Business to Business MCC))</li><li>`5199` (Non-durable Goods Not Elsewhere Classified (Business to Business MCC))</li><li>`5200` (Home Supply Warehouse)</li><li>`5211` (Lumber & Building Materials Stores)</li><li>`5231` (Glass, Paint, and Wallpaper Stores)</li><li>`5251` (Hardware Stores, Equipment Utilities Regulated)</li><li>`5261` (Nurseries and Lawn and Garden Supply Stores)</li><li>`5271` (Mobile Home Dealer)</li><li>`5300` (Wholesale Club with or without membership fee)</li><li>`5309` (Duty Free Stores)</li><li>`5310` (Discount Store)</li><li>`5311` (Department Stores)</li><li>`5331` (Variety Stores)</li><li>`5399` (Miscellaneous General Merchandise)</li><li>`5411` (Grocery Stores and Supermarkets)</li><li>`5422` (Freezer & Locker Meat Provisions)</li><li>`5441` (Candy, Nut, and Confectionary Stores)</li><li>`5451` (Dairy Product Stores)</li><li>`5462` (Bakeries)</li><li>`5499` (Miscellaneous Food Stores-Convenience Stores and Specialty Markets)</li><li>`5511` (Car and Truck Dealers (New and Used)- Sales, Service, Repairs, Parts, and Leasing)</li><li>`5521` (Car and Truck Dealers (Used)- Sales, Service, Repairs, Parts, and Leasing)</li><li>`5532` (Automotive Tire Stores)</li><li>`5531` (Auto and Home Supply Stores)</li><li>`5533` (Automotive Parts and Accessories Stores)</li><li>`5541` (Service Stations (with or without Ancillary Services))</li><li>`5542` (Automated Fuel Dispensers)</li><li>`5551` (Boat Dealers)</li><li>`5561` (Camper, Recreational and Utility Trailer Dealers)</li><li>`5571` (Motorcycle Dealers)</li><li>`5592` (Motor Home Dealers)</li><li>`5598` (Snowmobile Dealers)</li><li>`5599` (Miscellaneous Automotive, Aircraft, and Farm Equipment Dealers --Not Elsewhere Classified)</li><li>`5611` (Men's & Boys' Clothing and Accessory Stores)</li><li>`5621` (Women's Ready-to-Wear Stores)</li><li>`5631` (Women's Accessory and Specialty Stores)</li><li>`5641` (Children's and Infants' Wear Stores)</li><li>`5651` (Family Clothing Stores)</li><li>`5655` (Sports and Riding Apparel Stores)</li><li>`5661` (Shoe Stores)</li><li>`5681` (Furriers & Fur Shops)</li><li>`5691` (Men's and Women's Clothing Stores)</li><li>`5697` (Tailors, Seamstresses, Mending, Alterations)</li><li>`5698` (Wig & Toupee Shops)</li><li>`5699` (Miscellaneous Apparel and Accessory Stores)</li><li>`5712` (Furniture, Home Furnishings, and Equipment Stores, except Appliances)</li><li>`5713` (Floor coverings, Rugs)</li><li>`5714` (Drapery, Window Covering, and Upholstery Stores)</li><li>`5718` (Fireplaces, Fireplace Screens and Accessories Stores)</li><li>`5719` (Miscellaneous Home Furnishing Specialty Stores)</li><li>`5722` (Household Appliance Stores)</li><li>`5732` (Electronics Stores)</li><li>`5733` (Music Stores-Musical Instruments, Pianos, and Sheet Music)</li><li>`5734` (Computer Software Stores)</li><li>`5735` (Record Stores)</li><li>`5811` (Caterers - Prepare & Delivery)</li><li>`5812` (Eating Places and Restaurants)</li><li>`5813` (Drinking Places (Alcoholic Beverages) - Bars, Taverns, Nightclubs, Cocktail Lounges, and Discotheques)</li><li>`5814` (Quick Payment Service-Fast Food Restaurants)</li><li>`5815` (Digital Goods – Media, Books, Movies, Music)</li><li>`5816` (Digital Goods – Games)</li><li>`5817` (Digital Goods – Applications (Excludes Games))</li><li>`5818` (Large Digital Goods Merchant)</li><li>`5912` (Drug Stores and Pharmacies)</li><li>`5921` (Package Stores--Beer, Wine, and Liquor)</li><li>`5931` (Used Merchandise and Secondhand Stores)</li><li>`5932` (Antique Shop)</li><li>`5933` (Pawn Shop)</li><li>`5935` (Wrecking and Salvage Yards)</li><li>`5937` (Antique Reproduction Stores)</li><li>`5940` (Bicycle Shop-Sales and Services)</li><li>`5941` (Sporting Goods Stores)</li><li>`5942` (Book Stores)</li><li>`5943` (Stationery, Office and School Supply Stores)</li><li>`5944` (Jewelry, Watch, Clock, and Silverware Stores)</li><li>`5945` (Hobby, Toy and Game Stores)</li><li>`5946` (Camera and Photographic Supply Stores)</li><li>`5947` (Gift, Card, Novelty, and Souvenir Stores)</li><li>`5948` (Luggage and Leather Goods Stores)</li><li>`5949` (Sewing, Needlework, Fabric, and Piece Good Stores)</li><li>`5950` (Glassware and Crystal Stores)</li><li>`5960` (Direct Marketing Insurance Services)</li><li>`5961` (Mail Order)</li><li>`5962` (Direct Marketing -- Travel Related Arrangement Services)</li><li>`5963` (Direct Selling Establishments/Door to Door Sales)</li><li>`5964` (Catalog Merchant)</li><li>`5965` (Combined Catalog and Retail Merchant)</li><li>`5966` (Outbound Telemarketing Merchant)</li><li>`5967` (Direct Marketing -- Inbound Telemarketing Merchants)</li><li>`5968` (Continuity/Subscription Merchants)</li><li>`5969` (Direct Marketing/Direct Marketers--Not Elsewhere Classified)</li><li>`5970` (Artist Supply and Craft Stores)</li><li>`5971` (Art Dealers and Galleries)</li><li>`5972` (Stamp and Coin Stores)</li><li>`5973` (Religious Goods Stores)</li><li>`5975` (Hearing Aids--Sales, Service, and Supplies)</li><li>`5976` (Orthopedic Goods and Prosthetic Devices)</li><li>`5977` (Cosmetic Stores)</li><li>`5978` (Typewriter Stores--Sales, Service, and Rentals)</li><li>`5983` (Fuel Dealers--Fuel Oil, Wood, Coal, and Liquefied Petroleum)</li><li>`5992` (Florists)</li><li>`5993` (Cigar Stores & Stands)</li><li>`5994` (News Dealers & Newsstands)</li><li>`5995` (Pet Shops, Pet Food, and Supplies)</li><li>`5996` (Swimming Pools--Sales, Supplies, and Services)</li><li>`5997` (Electric Razor Stores Sales & Services)</li><li>`5998` (Tent and Awning Stores)</li><li>`5999` (Miscellaneous & Specialty Retail Stores)</li><li>`6010` (Financial Institutions--Manual Cash Disbursements)</li><li>`6011` (Financial Institutions--Automated Cash Disbursements)</li><li>`6012` (Quasi Cash - Financial Institution - Merchandise and Services)</li><li>`6050` (Quasi Cash - Member Financial Institution)</li><li>`6051` (MasterCard - Quasi Cash-Merchant)</li><li>`6211` (Securities - Brokers and Dealers)</li><li>`6300` (Insurance Sales and Underwriting)</li><li>`6381` (Insurance - Premiums)</li><li>`6399` (Insurance - Not Elsewhere Classified)</li><li>`6513` (Real Estate Agents and Managers - Rentals; Property Management)</li><li>`6529` (Remote Stored Value Load - Member Financial Institution)</li><li>`6530` (Remote Stored Value Load - Merchant)</li><li>`6531` (Payment Service Provider)</li><li>`6532` (Payment Transaction - Member)</li><li>`6533` (Payment Transaction - Merchant)</li><li>`6534` (Money Transfer - Member Financial Institution)</li><li>`6535` (Value Purchase - Member Financial Institution)</li><li>`6536` (MoneySend Intracountry)</li><li>`6537` (MoneySend Intercountry)</li><li>`6538` (MoneySend Funding)</li><li>`6540` (POI Funding Transactions (Excluding MoneySend))</li><li>`7011` (Lodging - Hotels, Motels, and Resorts)</li><li>`7012` (Timeshares)</li><li>`7032` (Sporting and Recreational Camps)</li><li>`7033` (Trailer Parks and Campgrounds)</li><li>`7210` (Laundry, Cleaning, and Garment Services)</li><li>`7211` (Laundry Services - Family and Commercial)</li><li>`7216` (Dry Cleaners)</li><li>`7217` (Carpet and Upholstery Cleaning)</li><li>`7221` (Photographic Studios)</li><li>`7230` (Beauty and Barber Shops)</li><li>`7251` (Shoe Repair Shops, Shoe Shine Parlors, and Hat Cleaning Shops)</li><li>`7261` (Funeral Services and Crematories)</li><li>`7273` (Dating Services)</li><li>`7276` (Tax Preparation Services)</li><li>`7277` (Counseling Services - Debt, Marriage, and Personal)</li><li>`7278` (Buying and Shopping Services and Clubs)</li><li>`7296` (Clothing Rental - Costumes, Uniforms and Formal Wear)</li><li>`7297` (Massage Parlors)</li><li>`7298` (Health and Beauty Spas)</li><li>`7299` (Miscellaneous Personal Services - Not Elsewhere Classified)</li><li>`7311` (Advertising Services)</li><li>`7321` (Consumer Credit Reporting Agencies)</li><li>`7332` (Blueprinting and Photocopying Services)</li><li>`7333` (Commercial Photography, Art, and Graphics)</li><li>`7338` (Quick Copy, Reproduction Service)</li><li>`7339` (Stenographic Service)</li><li>`7342` (Exterminating and Disinfecting Services)</li><li>`7349` (Cleaning, Maintenance & Janitorial Services)</li><li>`7361` (Employment Agencies and Temporary Help Services)</li><li>`7372` (Computer Programming, Data Processing, and Integrated Systems Design Services)</li><li>`7375` (Information Retrieval Services (Business to Business MCC))</li><li>`7379` (Computer Maintenance, Repair and Services (Business to Business MCC))</li><li>`7392` (Management, Consulting, and Public Relations Services)</li><li>`7393` (Detective Agencies, Protective Agencies, and Security Services, including Armored Cars and Guard Dogs)</li><li>`7394` (Equipment, Tool, Furniture, and Appliance Rental and Leasing)</li><li>`7395` (Photofinishing Laboratories and Photo Developing)</li><li>`7399` (Business Services)</li><li>`7511` (Truck Stops)</li><li>`7512` (Automobile Rental Agency)</li><li>`7513` (Truck and Utility Trailer Rentals)</li><li>`7519` (Motor Home and Recreational Vehicle Rentals)</li><li>`7523` (Parking Lots and Garages)</li><li>`7524` (Express Payment Service Mechants - Parking Lots and Garages)</li><li>`7531` (Automotive Top & Body Shops)</li><li>`7534` (Tire Retreading & Repair)</li><li>`7535` (Automotive Paint Shops)</li><li>`7538` (Automotive Service Shops (Non-Dealer))</li><li>`7542` (Car Washes)</li><li>`7549` (Towing Services)</li><li>`7622` (Electronic Repair Shops)</li><li>`7623` (Air Conditioning and Refrigeration Repair Shops)</li><li>`7629` (Electrical and Small Appliance Repair Shops)</li><li>`7631` (Watch, Clock, and Jewelry Repair Shops)</li><li>`7641` (Furniture - Reupholster, Repair, and Refinishing)</li><li>`7692` (Welding Services)</li><li>`7699` (Miscellaneous Repair Shops and Related Services)</li><li>`7778` (Citishare Cash Advance)</li><li>`7800` (Government-Owned Lotteries)</li><li>`7801` (Government-Licensed Casinos (Online Gambling))</li><li>`7802` (Government-Licensed Horse/Dog Racing)</li><li>`7829` (Motion Picture & Video Tape Production and Distribution (Business to Business MCC))</li><li>`7832` (Motion Picture Theater)</li><li>`7841` (DVD/Video Tape Rental Stores)</li><li>`7911` (Dance Halls, Studios & Schools)</li><li>`7922` (Theatrical Producers (except Motion Pictures) and Ticket Agencies)</li><li>`7929` (Bands, Orchestras & Misc Entertainment)</li><li>`7932` (Billiards & Pool Establishments)</li><li>`7933` (Bowling Alleys)</li><li>`7941` (Commercial Sports, Professional Sports Clubs, Athletic Fields, and Sports Promoters)</li><li>`7991` (Tourist Attractions and Exhibits)</li><li>`7992` (Public Golf Courses)</li><li>`7993` (Video Amusement Game Supply)</li><li>`7994` (Video Game Arcades and Establishments)</li><li>`7995` (Betting, including Lottery Tickets, Casino Gaming Chips, Off- Track Betting, and Wagers at Race Track)</li><li>`7996` (Amusement Parks, Circuses, Carnivals, and Fortune Tellers)</li><li>`7997` (Membership Clubs (Sports, Recreation, Athletic), Country Clubs, and Private Golf Courses)</li><li>`7998` (Aquarium, Seaquarium, Dolphinariums)</li><li>`7999` (Recreation Services - Not Elsewhere Classified)</li><li>`8011` (Doctors and Physicians - Not Elsewhere Classified)</li><li>`8021` (Dentists and Orthodontists)</li><li>`8031` (Osteopathic Physicians)</li><li>`8041` (Chiropractors)</li><li>`8042` (Optometrists and Ophthalmologists)</li><li>`8043` (Opticians, Optical Goods and Eyeglasses)</li><li>`8049` (Podiatrists and Chiropodists)</li><li>`8050` (Nursing and Personal Care Facilities)</li><li>`8062` (Hospitals)</li><li>`8071` (Medical and Dental Laboratories)</li><li>`8099` (Medical Services Health Practitioners - No Elsewhere Classified)</li><li>`8111` (Legal Services and Attorneys)</li><li>`8211` (Elementary and Secondary Schools)</li><li>`8220` (Colleges, Universities, Professional Schools, and Junior Colleges)</li><li>`8241` (Correspondence Schools)</li><li>`8244` (Business and Secretarial Schools)</li><li>`8249` (Trade and Vocational Schools)</li><li>`8299` (Schools and Educational Services - Not Elsewhere Classified)</li><li>`8351` (Child Care Services)</li><li>`8398` (Charitable and Social Service Organizations)</li><li>`8641` (Civic, Social, and Fraternal Associations)</li><li>`8651` (Political Organizations)</li><li>`8661` (Religious Organizations)</li><li>`8675` (Automobile Associations)</li><li>`8699` (Membership Organizations - Not Elsewhere Classified)</li><li>`8734` (Testing Laboratories (Not Medical) - (Business to Business MCC))</li><li>`8911` (Architectural, Engineering, and Surveying Services)</li><li>`8931` (Accounting, Auditing, and Bookkeeping Services)</li><li>`8999` (Professional Services - Not Elsewhere Classified)</li><li>`9211` (Court Costs, including Alimony and Child Support)</li><li>`9222` (Fines)</li><li>`9223` (Bail & Bond Payments)</li><li>`9311` (Tax Payments)</li><li>`9399` (Government Services - Not Elsewhere Classified)</li><li>`9401` (i-Purchasing)</li><li>`9402` (Postal Services)</li><li>`9405` (U.S. Fed Government Agencies)</li><li>`9700` (Automated Referral Service)</li><li>`9701` (Visa Credential Server)</li><li>`9702` (GCAS Emergency Services)</li><li>`9751` (U.K. Supermarkets, Electronic Hot File)</li><li>`9752` (U.K. Petrol Stations, Electronic Hot File)</li><li>`9753` (Consumer Electronics/Furniture Store)</li><li>`9754` (Quasi Cash - Gambling-Horse Racing, Dog Racing, State Lotteries)</li><li>`9950` (Intra-Company Purchases)</li></ul>",
+            "example": "0742"
+          },
+          "ppcUserGroup": {
+            "type": "string",
+            "description": "The payment user group from the purpose code list for the application.<br><br>Allowed values:<ul><li>WHOLESALE_FI_FI</li><li>COMMERCIAL</li><li>CONSUMER_GOODS_SERVICES</li><li>FINANCE</li><li>INSURANCE</li><li>PROPERTY</li><li>UTILITIES</li><li>TAX</li><li>SALARIES_INCOMES</li><li>INVESTMENTS</li><li>FOREIGN_EXCHANGE</li><li>GOVERNMENT</li><li>BENEFIT_PAYMENTS</li><li>MEDICAL</li><li>PENSIONS</li></ul>",
+            "example": "WHOLESALE_FI_FI"
+          },
+          "callbackUrls": {
+            "type": "array",
+            "description": "The application callback URLs",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isContractPresent": {
+            "type": "boolean",
+            "description": "Indicates if a contract is in place with the merchant and a KYB process has been completed"
+          }
+        }
+      },
+      "ApiResponseOfApplicationResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ApplicationResponse"
+          }
+        }
+      },
+      "ApiListOfApplicationResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ApplicationResponseListMeta"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplicationResponse"
+            }
+          }
+        }
+      },
+      "ValidationError": {
+        "required": [
+          "fieldName",
+          "error"
+        ],
+        "properties": {
+          "fieldName": {
+            "type": "string",
+            "format": "string",
+            "description": "name of the field with error"
+          },
+          "error": {
+            "type": "string",
+            "enum": [
+              "MANDATORY",
+              "INVALID_FORMAT"
+            ]
+          }
+        }
+      },
+      "ValidationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -21779,11 +22450,11 @@
         "value": {
           "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
           "applicationUserId": "john.doe@company.com",
-          "institutionIdentifiers" : {
+          "institutionIdentifiers": {
             "institutionId": "modelo-sandbox",
             "institutionCountryCode": "GB"
           },
-          "userSettings" : {
+          "userSettings": {
             "language": "en",
             "location": "GB"
           },
@@ -21837,11 +22508,11 @@
             "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
             "applicationUserId": "john.doe@company.com",
             "applicationId": "64949de6-6510-4d70-9500-d4aa094c506c",
-            "institutionIdentifiers" : {
+            "institutionIdentifiers": {
               "institutionId": "modelo-sandbox",
               "institutionCountryCode": "GB"
             },
-            "userSettings" : {
+            "userSettings": {
               "language": "en",
               "location": "GB"
             },
@@ -21895,11 +22566,11 @@
         "value": {
           "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
           "applicationUserId": "john.doe@company.com",
-          "institutionIdentifiers" : {
+          "institutionIdentifiers": {
             "institutionId": "modelo-sandbox",
             "institutionCountryCode": "GB"
           },
-          "userSettings" : {
+          "userSettings": {
             "language": "en",
             "location": "GB"
           },
@@ -21952,11 +22623,11 @@
             "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
             "applicationUserId": "john.doe@company.com",
             "applicationId": "64949de6-6510-4d70-9500-d4aa094c506c",
-            "institutionIdentifiers" : {
+            "institutionIdentifiers": {
               "institutionId": "modelo-sandbox",
               "institutionCountryCode": "GB"
             },
-            "userSettings" : {
+            "userSettings": {
               "language": "en",
               "location": "GB"
             },
@@ -22015,11 +22686,11 @@
             "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
             "applicationUserId": "john.doe@company.com",
             "applicationId": "64949de6-6510-4d70-9500-d4aa094c506c",
-            "institutionIdentifiers" : {
+            "institutionIdentifiers": {
               "institutionId": "modelo-sandbox",
               "institutionCountryCode": "GB"
             },
-            "userSettings" : {
+            "userSettings": {
               "language": "en",
               "location": "GB"
             },
@@ -22065,8 +22736,6 @@
             "payments": [
               {
                 "paymentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "hostedPaymentId": "a5065217-e0b0-42e1-a0e1-8be209b24f2a",
-                "consentId": "1e2e5167-8519-4c19-b016-8f2f0c6e38b6",
                 "institutionIdentifiers": {
                   "institutionId": "string",
                   "institutionCountryCode": "GB"
@@ -22177,7 +22846,76 @@
           }
         }
       },
-      "400-error-response":{
+      "application-request": {
+        "value": {
+          "name": "Merchant Uno",
+          "merchantCategoryCode": 7995,
+          "ppcUserGroup": "WHOLESALE_FI_FI",
+          "callbackUrls": [
+            "https://www.callback-service.com"
+          ],
+          "isContractPresent": true
+        }
+      },
+      "application-response": {
+        "value": {
+          "meta": {
+            "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154"
+          },
+          "data": {
+            "id": "2698db90-6635-4f76-b673-5ce8e2aeda0e",
+            "name": "Merchant Uno",
+            "merchantCategoryCode": 7995,
+            "ppcUserGroup": "WHOLESALE_FI_FI",
+            "callbackUrls": [
+              "https://www.callback-service.com"
+            ],
+            "isContractPresent": true,
+            "rootApplicationId": "eb25e1ee-f6af-4131-92fe-748e177bf950"
+          }
+        }
+      },
+      "application-responses": {
+        "value": {
+          "meta": {
+            "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+            "count": 1,
+            "pagination":  {
+              "offset": 0,
+              "limit": 1,
+              "totalCount": 1
+            }
+          },
+          "data": [
+            {
+              "id": "2698db90-6635-4f76-b673-5ce8e2aeda0e",
+              "name": "Merchant Uno",
+              "merchantCategoryCode": 7995,
+              "ppcUserGroup": "WHOLESALE_FI_FI",
+              "callbackUrls": [
+                "https://www.callback-service.com"
+              ],
+              "isContractPresent": true,
+              "rootApplicationId": "eb25e1ee-f6af-4131-92fe-748e177bf950"
+            }
+          ]
+        }
+      },
+      "application-error-response-code-400": {
+        "value": {
+          "name-is-mandatory": {
+            "value": {
+              "errors": [
+                {
+                  "fieldName": "name",
+                  "error": "MANDATORY"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "400-error-response": {
         "description": "400 Error",
         "value": {
           "error": {
