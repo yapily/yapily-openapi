@@ -8,6 +8,8 @@ import org.openapitools.client.model.ApiResponseOfPaymentAuthorisationRequestRes
 import org.openapitools.client.model.PaymentAuthorisationRequest;
 import org.openapitools.client.model.PaymentRequest;
 
+import java.util.UUID;
+
 public class AuthorisationService {
 
     private final AuthorisationsApi api;
@@ -16,11 +18,11 @@ public class AuthorisationService {
         this.api = apiClient;
     }
 
-    public ApiResponseOfAccountAuthorisationResponse createAccountAuthRequest(final String applicationUserUuid, final String institutionId, String psuId, String psuCorpId,
+    public ApiResponseOfAccountAuthorisationResponse createAccountAuthRequest(final UUID userUuid, final String institutionId, String psuId, String psuCorpId,
                                                                               String psuIpAdd,
                                                                               Boolean raw) throws ApiException {
         AccountAuthorisationRequest accountRequest = new AccountAuthorisationRequest();
-        accountRequest.setApplicationUserId(applicationUserUuid);
+        accountRequest.setUserUuid(userUuid);
         accountRequest.setInstitutionId(institutionId);
         return api.initiateAccountRequest(accountRequest, psuId, psuCorpId, psuIpAdd, raw);
     }

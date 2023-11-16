@@ -42,7 +42,7 @@ class AuthorisationServiceTest {
     void createAccountAuthRequest() throws ApiException {
         ApiResponseOfAccountAuthorisationResponse accResponse = mock(ApiResponseOfAccountAuthorisationResponse.class);
         when(apiClient.initiateAccountRequest(any(AccountAuthorisationRequest.class), anyString(), anyString(), anyString(), anyBoolean())).thenReturn(accResponse);
-        assertNotNull(service.createAccountAuthRequest(UUID.randomUUID().toString(), "institution", "", "", "", false));
+        assertNotNull(service.createAccountAuthRequest(UUID.randomUUID(), "institution", "", "", "", false));
     }
 
     @Test

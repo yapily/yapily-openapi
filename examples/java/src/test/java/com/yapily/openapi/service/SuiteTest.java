@@ -59,13 +59,11 @@ public class SuiteTest {
         try {
             // user setup
             NewApplicationUser newUser = new NewApplicationUser();
-            newUser.setReferenceId("java user");
-            newUser.setApplicationUserId(UUID.randomUUID().toString());
             // create the user
             ApplicationUser confirmedUser = userService.createUser(newUser);
             Assertions.assertNotNull(confirmedUser);
             // account request
-            ApiResponseOfAccountAuthorisationResponse accountReqResp = authService.createAccountAuthRequest(confirmedUser.getApplicationUserId(), INSTITUTION, psuId, psuCorpId, psuIpAdd, false);
+            ApiResponseOfAccountAuthorisationResponse accountReqResp = authService.createAccountAuthRequest(confirmedUser.getUuid(), INSTITUTION, psuId, psuCorpId, psuIpAdd, false);
 
             AccountAuthorisationResponse accountReqRespData = accountReqResp.getData();
             Assertions.assertNotNull(accountReqRespData);
@@ -80,6 +78,7 @@ public class SuiteTest {
                 Assertions.assertFalse(transactions.isEmpty());
             }
             // user removal
+            // DeleteUser fails with timeout connection error
             ApiResponseOfUserDeleteResponse deletedUser = userService.deleteUser(confirmedUser.getUuid());
             Assertions.assertNotNull(deletedUser);
         } catch (ApiException | IOException e) {
@@ -115,6 +114,7 @@ public class SuiteTest {
             PaymentResponses payments = paymentsService.fetchPayment(paymentsRespData.getId(), consentToken, psuId, psuCorpId, psuIpAdd, false);
             Assertions.assertNotNull(payments);
             // user removal
+            // DeleteUser fails with timeout connection error
             ApiResponseOfUserDeleteResponse deletedUser = userService.deleteUser(confirmedUser.getUuid());
             Assertions.assertNotNull(deletedUser);
         } catch (ApiException | IOException e) {

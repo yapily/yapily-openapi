@@ -20,7 +20,7 @@ public class UserService {
         return api.addUser(applicationUser);
     }
 
-    public ApiResponseOfUserDeleteResponse deleteUser(UUID applicationUserId) throws ApiException {
-        return api.deleteUser(applicationUserId);
+    public ApiResponseOfUserDeleteResponse deleteUser(UUID userUuid) throws ApiException {
+        return api.deleteUser(userUuid);
     }
 }

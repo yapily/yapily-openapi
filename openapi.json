@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.25.0",
+    "version": "2.26.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -11628,6 +11628,16 @@
           "institutionConsentId": {
             "type": "string",
             "description": "Identification of the consent at the Institution."
+          },
+          "softDeleted": {
+            "type": "boolean",
+            "description": "__Conditional__. Used to denote that the consent has been soft deleted",
+            "example": false
+          },
+          "deletedByInstitution": {
+            "type": "boolean",
+            "description": "__Conditional__. Denotes whether the consent has been deleted on the institution side or not, however only if that functionality is provided by the institution otherwise it remains as null",
+            "example": false
           }
         }
       },
@@ -19339,13 +19349,16 @@
             "description": "name of the field with error"
           },
           "error": {
-            "type": "string",
-            "enum": [
-              "MANDATORY",
-              "INVALID_FORMAT"
-            ]
+            "$ref": "#/components/schemas/EnumError"
           }
         }
+      },
+      "EnumError": {
+        "type": "string",
+        "enum": [
+          "MANDATORY",
+          "INVALID_FORMAT"
+        ]
       },
       "ValidationErrorResponse": {
         "type": "object",
