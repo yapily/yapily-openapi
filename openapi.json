@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.26.0",
+    "version": "2.28.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -7203,7 +7203,8 @@
                         "amount": 100,
                         "currency": "GBP"
                       },
-                      "maxCumulativeNumberOfPayments": 10
+                      "maxCumulativeNumberOfPayments": 10,
+                      "recurringPaymentCategory": "ONGOING"
                     },
                     "initiationDetails": {
                       "reference": "Bill Payment",
@@ -7319,7 +7320,8 @@
                             "amount": 100,
                             "currency": "GBP"
                           },
-                          "maxCumulativeNumberOfPayments": 10
+                          "maxCumulativeNumberOfPayments": 10,
+                          "recurringPaymentCategory": "ONGOING"
                         },
                         "payer": {
                           "name": "John Doe",
@@ -9655,6 +9657,280 @@
         ],
         "summary": "Delete an application"
       }
+    },
+    "/applications/{applicationId}/vrp": {
+      "post": {
+        "description": "Create application vrp configuration",
+        "summary": "Create application VRP configuration by Application Id",
+        "x-beta": true,
+        "operationId": "createApplicationVRPConfigurationByApplicationId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "applicationId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the application that vrp configuration being created for"
+          }
+        ],
+        "requestBody": {
+          "description": "The vrp configuration to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VrpConfiguration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Application vrp configuration was successfully created"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/application-error-response-code-400"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            },
+            "description": "There are validation errors"
+          },
+          "401": {
+            "description": "Either authentication credentials were not supplied, or they were invalid.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/401VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden from accessing the requested Application.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/403VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "VRP Configuration with given application id not found.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/500VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Application Management"
+        ]
+      },
+      "put": {
+        "description": "Update application vrp configuration",
+        "summary": "Update application VRP configuration by Application Id",
+        "x-beta": true,
+        "operationId": "updateApplicationVRPConfigurationByApplicationId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "applicationId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the application that vrp configuration being created for"
+          }
+        ],
+        "requestBody": {
+          "description": "The vrp configuration to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VrpConfiguration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Application vrp configuration was successfully updated"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/application-error-response-code-400"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            },
+            "description": "There are validation errors"
+          },
+          "401": {
+            "description": "Either authentication credentials were not supplied, or they were invalid.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/401VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden from accessing the requested Application.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/403VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "VRP Configuration with given application id not found.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/500VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Application Management"
+        ]
+      },
+      "get": {
+        "description": "Get application vrp configuration",
+        "summary": "Get application VRP configuration by Application Id",
+        "x-beta": true,
+        "operationId": "getApplicationVRPConfigurationByApplicationId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "applicationId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the application that vrp configuration being created for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/VrpConfiguration"
+                }
+              }
+            },
+            "description": "Application vrp configuration was successfully fetched"
+          },
+          "400": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "$ref": "#/components/examples/application-error-response-code-400"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            },
+            "description": "There are validation errors"
+          },
+          "401": {
+            "description": "Either authentication credentials were not supplied, or they were invalid.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/401VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden from accessing the requested Application.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/403VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "VRP Configuration with given application id not found.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/500VirtualAccountsApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Application Management"
+        ]
+      }
     }
   },
   "components": {
@@ -10659,7 +10935,8 @@
         "example": {
           "error": {
             "code": 401,
-            "status": "UNAUTHORIZED"
+            "status": "UNAUTHORIZED",
+            "message": "Full authentication is required to access this resource"
           },
           "monitoring": []
         }
@@ -13491,6 +13768,37 @@
           "OTHER",
           "PERSON_TO_PERSON"
         ]
+      },
+      "PaymentContextTypeV1_2": {
+        "title": "Payment Code",
+        "type": "string",
+        "default": "OTHER",
+        "description": "__Optional__. The payment context code. This defaults to `OTHER` if not specified.",
+        "enum": [
+          "BILL",
+          "GOODS",
+          "SERVICES",
+          "OTHER",
+          "PERSON_TO_PERSON",
+          "BILL_IN_ADVANCE", 
+          "BILL_IN_ARREARS", 
+          "ECOMMERCE_MERCHANT", 
+          "FACE_TO_FACE_POS", 
+          "TRANSFER_TO_SELF",
+          "TRANSFER_TO_THIRD_PARTY", 
+          "PISP_PAYEE"
+        ]
+      },
+      "PaymentContextTypeV2": {
+        "title": "Payment Code",
+        "type": "string",
+        "description": "__Optional__. The payment context code. Allowed values are [BILL_IN_ADVANCE, BILL_IN_ARREARS, ECOMMERCE_MERCHANT, FACE_TO_FACE_POS, TRANSFER_TO_SELF,TRANSFER_TO_THIRD_PARTY, PISP_PAYEE ]."
+      },
+      "PaymentContextTypeV2Response": {
+        "title": "Payment Code",
+        "type": "string",
+        "default": "OTHER",
+        "description": "The payment context code. Allowed values are [BILL_IN_ADVANCE, BILL_IN_ARREARS, ECOMMERCE_MERCHANT, FACE_TO_FACE_POS, TRANSFER_TO_SELF,TRANSFER_TO_THIRD_PARTY, PISP_PAYEE ]."
       },
       "PaymentContextTypeResponse": {
         "title": "Payment Code",
@@ -16977,7 +17285,7 @@
             }
           },
           "contextType": {
-            "$ref": "#/components/schemas/PaymentContextType"
+            "$ref": "#/components/schemas/PaymentContextTypeV2"
           },
           "institutionId": {
             "type": "string",
@@ -17251,9 +17559,7 @@
       },
       "NonSweepingControlParameters": {
         "required": [
-          "psuAuthenticationMethods",
-          "maxAmountPerPayment",
-          "periodicLimits"
+          "psuAuthenticationMethods"
         ],
         "type": "object",
         "description": "Define the restrictions and limits for payment orders as part of Non-Sweeping VRP consent",
@@ -17287,6 +17593,14 @@
             ],
             "description": "__Optional__. Max cumulative amount that can be submitted under this consent."
           },
+          "initialPayment": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Amount"
+              }
+            ],
+            "description": "__Mandatory__. Initial payment to be charged under this consent. If enforced, this amount must match the first payment amount executed using this consent."
+          },
           "maxCumulativeNumberOfPayments": {
             "type": "integer",
             "format": "int32",
@@ -17301,6 +17615,10 @@
             "type": "string",
             "format": "date-time",
             "description": "__Optional__. End date when the consent expires and becomes invalid."
+          },
+          "recurringPaymentCategory": {
+            "type": "string",
+            "description": "The use-case for the VRP consent supported by the bank. Allowed values: <br>`ONGOING` <br>`SUBSCRIPTION`"
           }
         }
       },
@@ -17565,7 +17883,7 @@
             "description": "__Mandatory__. Chosen authentication method for submission step. Allowed values are [SCA_REQUIRED, SCA_NOT_REQUIRED]."
           },
           "contextType": {
-            "$ref": "#/components/schemas/PaymentContextType"
+            "$ref": "#/components/schemas/PaymentContextTypeV1_2"
           },
           "paymentAmount": {
             "$ref": "#/components/schemas/Amount"
@@ -17678,9 +17996,7 @@
       },
       "NonSweepingPeriodicLimits": {
         "required": [
-          "totalMaxAmount",
-          "frequency",
-          "alignment"
+          "totalMaxAmount"
         ],
         "type": "object",
         "properties": {
@@ -17694,11 +18010,11 @@
           },
           "frequency": {
             "type": "string",
-            "description": "__Mandatory__. Frequency for which the payment limits are enforced. Allowed values are [DAILY, WEEKLY, FORTNIGHTLY, MONTHLY, YEARLY]."
+            "description": "__Mandatory__. Frequency for which the payment limits are enforced. Allowed values are [DAILY, WEEKLY, FORTNIGHTLY, MONTHLY, YEARLY]. This field cannot be enforced when `recurringPaymentCategory=ONGOING`."
           },
           "alignment": {
             "type": "string",
-            "description": "__Mandatory__. Period alignment for which the payment limits are enforced. Allowed values are [CONSENT, CALENDAR]. If CONSENT, then period starts on consent creation date. If CALENDAR, then period lines up with the frequency e.g. WEEKLY period will begin at start of the week in question."
+            "description": "__Mandatory__. Period alignment for which the payment limits are enforced. Allowed values are [CONSENT, CALENDAR]. If CONSENT, then period starts on consent creation date. If CALENDAR, then period lines up with the frequency e.g. WEEKLY period will begin at start of the week in question. This field cannot be enforced when `recurringPaymentCategory=ONGOING`."
           },
           "maxNumberOfPayments": {
             "type": "integer",
@@ -19368,6 +19684,75 @@
             "items": {
               "$ref": "#/components/schemas/ValidationError"
             }
+          }
+        }
+      },
+      "VrpConfiguration": {
+        "properties": {
+          "maximumIndividualAmount": {
+            "description": "Maximum amount per transaction",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Amount"
+              }
+            ]
+          },
+          "maximumCumulativeAmount": {
+            "description": "Maximum cumulative amount",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Amount"
+              }
+            ]
+          },
+          "maximumCumulativeNumberOfPayments": {
+            "description": "Maximum cumulative number of payments",
+            "type": "integer",
+            "minimum": 0
+          },
+          "periodicLimits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VrpPeriodicLimit"
+            },
+            "minItems": 1
+          },
+          "recurringPaymentCategory": {
+            "description": "Payment Category with allowed values: ONGOING, SUBSCRIPTION",
+            "type": "string",
+            "example": "ONGOING"
+          }
+        }
+      },
+      "VrpPeriodicLimit": {
+        "required": [
+          "maximumAmount",
+          "frequency",
+          "alignment"
+        ],
+        "properties": {
+          "maximumAmount": {
+            "description": "Maximum amount that can be specified in all payment instructions in a given period under this VRP consent. If the Alignment is Calendar, the limit is pro-rated in the first period to the remaining number of days.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Amount"
+              }
+            ]
+          },
+          "frequency": {
+            "type": "string",
+            "description": "Frequency for which the payment limits are enforced. Allowed values are [MONTHLY].",
+            "enum": [
+              "MONTHLY"
+            ]
+          },
+          "alignment": {
+            "type": "string",
+            "description": "Period alignment for which the payment limits are enforced. Allowed values are [CONSENT, CALENDAR]. If CONSENT, then period starts on consent creation date. If CALENDAR, then period lines up with the frequency e.g. WEEKLY period will begin at start of the week in question.",
+            "enum": [
+              "CONSENT",
+              "CALENDAR"
+            ]
           }
         }
       }

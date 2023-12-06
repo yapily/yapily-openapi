@@ -28,7 +28,10 @@ public class SuiteTest {
     private static final String CONSENT = "consentToken";
 
 
-    private final ApiClient defaultClient = Configuration.getDefaultApiClient();
+    private final ApiClient defaultClient = Configuration.getDefaultApiClient()
+            .setConnectTimeout(60000)
+            .setReadTimeout(60000)
+            .setWriteTimeout(60000);
     private final HttpBasicAuth basicAuth = (HttpBasicAuth) defaultClient.getAuthentication("basicAuth");
 
     private UserService userService;
@@ -123,6 +126,7 @@ public class SuiteTest {
     }
 
     private static void handleException(Exception e) {
+        System.out.println(e);
         if (e instanceof ApiException) {
             fail("Should not have thrown APIException: " + ((ApiException) e).getResponseBody());
         } else {

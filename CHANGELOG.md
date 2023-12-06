@@ -5,6 +5,18 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.28.1] - 2023-12-06
+### Added
+- Added `recurringPaymentCategory` for Non Sweeping VRPs. Add support for additional non sweeping VRP changes.
+
+## [2.28.0] - 2023-12-01
+### Added
+- Added recurringPaymentCategory, maximumCumulativeAmount and maximumCumulativeNumberOfPayments fields for applications VRP configuration (Application Management)
+
+## [2.27.0] - 2023-11-16
+### Added
+- Added endpoints to manage applications VRP configurations (Application Management)
+
 ## [2.26.0] - 2023-11-15
 ### Added
 - Refactor ValidationError enum
