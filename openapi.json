@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.28.0",
+    "version": "2.28.1",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -13780,12 +13780,12 @@
           "SERVICES",
           "OTHER",
           "PERSON_TO_PERSON",
-          "BILL_IN_ADVANCE", 
-          "BILL_IN_ARREARS", 
-          "ECOMMERCE_MERCHANT", 
-          "FACE_TO_FACE_POS", 
+          "BILL_IN_ADVANCE",
+          "BILL_IN_ARREARS",
+          "ECOMMERCE_MERCHANT",
+          "FACE_TO_FACE_POS",
           "TRANSFER_TO_SELF",
-          "TRANSFER_TO_THIRD_PARTY", 
+          "TRANSFER_TO_THIRD_PARTY",
           "PISP_PAYEE"
         ]
       },
@@ -19732,7 +19732,7 @@
         ],
         "properties": {
           "maximumAmount": {
-            "description": "Maximum amount that can be specified in all payment instructions in a given period under this VRP consent. If the Alignment is Calendar, the limit is pro-rated in the first period to the remaining number of days.",
+            "description": "__Mandatory__. Maximum amount that can be specified in all payment instructions in a given period under this VRP consent. If the Alignment is Calendar, the limit is pro-rated in the first period to the remaining number of days.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/Amount"
@@ -19740,21 +19740,27 @@
             ]
           },
           "frequency": {
-            "type": "string",
-            "description": "Frequency for which the payment limits are enforced. Allowed values are [MONTHLY].",
-            "enum": [
-              "MONTHLY"
-            ]
+            "$ref": "#/components/schemas/FrequencyEnum"
           },
           "alignment": {
-            "type": "string",
-            "description": "Period alignment for which the payment limits are enforced. Allowed values are [CONSENT, CALENDAR]. If CONSENT, then period starts on consent creation date. If CALENDAR, then period lines up with the frequency e.g. WEEKLY period will begin at start of the week in question.",
-            "enum": [
-              "CONSENT",
-              "CALENDAR"
-            ]
+            "$ref": "#/components/schemas/AlignmentEnum"
           }
         }
+      },
+      "FrequencyEnum": {
+        "type": "string",
+        "description": "__Mandatory__. Frequency for which the payment limits are enforced. Allowed values are [MONTHLY].",
+        "enum": [
+            "MONTHLY"
+        ]
+      },
+      "AlignmentEnum": {
+        "type": "string",
+        "description": "__Mandatory__. Period alignment for which the payment limits are enforced. Allowed values are [CONSENT, CALENDAR]. If CONSENT, then period starts on consent creation date. If CALENDAR, then period lines up with the frequency e.g. WEEKLY period will begin at start of the week in question.",
+        "enum": [
+            "CONSENT",
+            "CALENDAR"
+        ]
       }
     },
     "securitySchemes": {
