@@ -4,6 +4,22 @@ All notable changes to the API definition will be recorded here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+## [2.28.5] - 2024-01-31
+### Changed
+- Change to use PaymentContextType instead of PaymentContextTypeV1_2 for all related endpoints
+
+## [2.28.4] - 2024-01-24
+### Added
+- Added missing fields `paymentLifecycleId` to SubmissionResponse of VRP payment endpoints
+
+## [2.28.3] - 2024-01-23
+### Added
+- Added new fields `purposeCode`, `payee.accountType` and new enums to field `contextType` to align to latest OBUK spec for TRI pilot. And also update the examples
+
+## [2.28.2] - 2023-12-11
+### Added
+- Updated `Consent` schema field `isDeletedByInstitution` to indicate the consent was successfully deleted with the institution
+
 
 ## [2.28.1] - 2023-12-08
 ### Fixed

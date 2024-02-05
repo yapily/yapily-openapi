@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.28.1",
+    "version": "2.28.5",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -11906,14 +11906,9 @@
             "type": "string",
             "description": "Identification of the consent at the Institution."
           },
-          "softDeleted": {
+          "isDeletedByInstitution": {
             "type": "boolean",
-            "description": "__Conditional__. Used to denote that the consent has been soft deleted",
-            "example": false
-          },
-          "deletedByInstitution": {
-            "type": "boolean",
-            "description": "__Conditional__. Denotes whether the consent has been deleted on the institution side or not, however only if that functionality is provided by the institution otherwise it remains as null",
+            "description": "Denotes whether the consent has been deleted on the institution side or not when a DELETE method is executed on a Yapily consent if that functionality is provided by the institution",
             "example": false
           }
         }
@@ -13407,6 +13402,9 @@
               "$ref": "#/components/schemas/AccountIdentification"
             }
           },
+          "accountType": {
+            "$ref": "#/components/schemas/PayeeAccountType"
+          },
           "address": {
             "$ref": "#/components/schemas/Address"
           },
@@ -13766,19 +13764,6 @@
           "GOODS",
           "SERVICES",
           "OTHER",
-          "PERSON_TO_PERSON"
-        ]
-      },
-      "PaymentContextTypeV1_2": {
-        "title": "Payment Code",
-        "type": "string",
-        "default": "OTHER",
-        "description": "__Optional__. The payment context code. This defaults to `OTHER` if not specified.",
-        "enum": [
-          "BILL",
-          "GOODS",
-          "SERVICES",
-          "OTHER",
           "PERSON_TO_PERSON",
           "BILL_IN_ADVANCE",
           "BILL_IN_ARREARS",
@@ -13788,6 +13773,16 @@
           "TRANSFER_TO_THIRD_PARTY",
           "PISP_PAYEE"
         ]
+      },
+      "PaymentPurposeCode": {
+        "title": "Payment Purpose Code",
+        "type": "string",
+        "description": "__Optional__. The payment purpose code. <br><br>Allowed values: INTP,DEPT,BEXP,LICF,SERV,SUPP,TRAD,SUBS,GDSV,ROYA,COMT,CHAR,ECPR,CLPR,INTE,LOAN,LOAR,INPC,INPR,INSC,INSU,LIFI,PPTI,HLRP,HLST,PDEP,IVPT,REBT,REFU,CDBL,CPKC,EDUC,FEES,GAMB,LOTT,GIFT,INSM,REOD,GOVT,TCSC,BLDM,RENT,DIVD,INVS,SAVG,HLTI,DNTS,LTCF,MDCS,VIEW,BECH,BENE,SSBE,PEFC,PENS,ADCS,BONU,COMM,SALA,ESTX,HSTX,INTX,PTXP,RDTX,TAXS,VATX,WHLD,TAXR,CBTV,ELEC,GASB,PHON,UBIL,WTER . <br><br>See [Payment Purpose code](https://docs.yapily.com/pages/payments/payments-resources/tri-pilot/) to see the definition of each code" 
+      },
+      "PayeeAccountType": {
+        "title": "Payee Account Type",
+        "type": "string",
+        "description": "__Optional__. The payee account type. <br><br>Allowed values: BUSINESS, BUSINESS_SAVING, CHARITY, COLLECTION, CORPORATE, E_WALLET, GOVERNMENT, INVESTMENT, INVESTMENT_ISA, JOINT_PERSONAL, PENSION, PERSONAL, PERSONAL_SAVING, PREMIER, WEALTH ."
       },
       "PaymentContextTypeV2": {
         "title": "Payment Code",
@@ -14135,6 +14130,9 @@
           },
           "contextType": {
             "$ref": "#/components/schemas/PaymentContextType"
+          },
+          "purposeCode": {
+            "$ref": "#/components/schemas/PaymentPurposeCode"
           },
           "type": {
             "$ref": "#/components/schemas/PaymentType"
@@ -17883,7 +17881,7 @@
             "description": "__Mandatory__. Chosen authentication method for submission step. Allowed values are [SCA_REQUIRED, SCA_NOT_REQUIRED]."
           },
           "contextType": {
-            "$ref": "#/components/schemas/PaymentContextTypeV1_2"
+            "$ref": "#/components/schemas/PaymentContextType"
           },
           "paymentAmount": {
             "$ref": "#/components/schemas/Amount"
@@ -17902,6 +17900,9 @@
             "type": "string"
           },
           "paymentIdempotencyId": {
+            "type": "string"
+          },
+          "paymentLifecycleId": {
             "type": "string"
           },
           "institutionConsentId": {
@@ -20174,6 +20175,8 @@
               "currency": "GBP"
             },
             "reference": "Bill Payment",
+            "contextType": "BILL_IN_ARREARS",
+            "purposeCode" : "COMT",
             "type": "DOMESTIC_PAYMENT",
             "payee": {
               "name": "Jane Doe",
@@ -20189,7 +20192,8 @@
                   "type": "ACCOUNT_NUMBER",
                   "identification": "12345678"
                 }
-              ]
+              ],
+              "accountType": "BUSINESS_SAVING"
             }
           }
         }
@@ -20236,6 +20240,8 @@
             "currency": "GBP"
           },
           "reference": "Bill Payment",
+          "contextType": "BILL_IN_ARREARS",
+          "purposeCode" : "COMT",
           "type": "DOMESTIC_PAYMENT",
           "payee": {
             "name": "Jane Doe",
@@ -20251,7 +20257,8 @@
                 "type": "ACCOUNT_NUMBER",
                 "identification": "12345678"
               }
-            ]
+            ],
+            "accountType": "BUSINESS_SAVING"
           }
         }
       },
@@ -20263,6 +20270,8 @@
               "type": "DOMESTIC_PAYMENT",
               "paymentIdempotencyId": "d78fy48uh8f9odhde68dfi38di9",
               "reference": "payment1",
+              "contextType": "BILL_IN_ARREARS",
+              "purposeCode" : "COMT",
               "amount": {
                 "amount": 2.00,
                 "currency": "GBP"
@@ -20278,7 +20287,8 @@
                     "type": "SORT_CODE",
                     "identification": "123456"
                   }
-                ]
+                ],
+                "accountType": "BUSINESS_SAVING"
               }
             },
             {
@@ -20318,6 +20328,8 @@
                 "type": "DOMESTIC_PAYMENT",
                 "paymentIdempotencyId": "d78fy48uh8f9odhde68dfi38di9",
                 "reference": "payment1",
+                "contextType": "BILL_IN_ARREARS",
+                "purposeCode" : "COMT",
                 "amount": {
                   "amount": 2.00,
                   "currency": "GBP"
@@ -20333,13 +20345,16 @@
                       "type": "SORT_CODE",
                       "identification": "123456"
                     }
-                  ]
+                  ],
+                  "accountType": "BUSINESS_SAVING"
                 }
               },
               {
                 "type": "DOMESTIC_PAYMENT",
                 "paymentIdempotencyId": "4279gdy8t63dg73gd8gx87738dg",
                 "reference": "payment2",
+                "contextType": "BILL_IN_ARREARS",
+                "purposeCode" : "COMT",
                 "amount": {
                   "amount": 5.00,
                   "currency": "GBP"
@@ -20355,7 +20370,8 @@
                       "type": "SORT_CODE",
                       "identification": "654321"
                     }
-                  ]
+                  ],
+                  "accountType": "BUSINESS_SAVING"
                 }
               }
             ]
