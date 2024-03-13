@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
     "title": "Yapily API",
-    "version": "2.30.0",
+    "version": "2.30.1",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/pages/resources/support/",
@@ -4488,7 +4488,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountBeneficiaries",
-        "x-beta": true,
         "summary": "Get List Of Beneficiaries",
         "description": "Gets the list of beneficiaries (individual or business account) to which a Pay Out can be made.",
         "parameters": [
@@ -4796,7 +4795,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountBeneficiary",
-        "x-beta": true,
         "summary": "Get Beneficiary",
         "parameters": [
           {
@@ -4969,7 +4967,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccounts",
-        "x-beta": true,
         "summary": "Get Accounts",
         "description": "Retrieve a list of all virtual accounts held",
         "parameters": [
@@ -5222,7 +5219,6 @@
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountPayOut",
-        "x-beta": true,
         "summary": "Create Pay Out",
         "description": "Initiate a payment from a specified virtual account to a previously added beneficiary using any of the schemes that it supports <br> When subscribed to virtualAccount.payOut.status notifications, further updates on payment processing status will be delivered asynchronously ",
         "parameters": [
@@ -5341,7 +5337,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountById",
-        "x-beta": true,
         "summary": "Get Account",
         "description": "Get the details of a specific account using its Id",
         "parameters": [
@@ -5603,7 +5598,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountPayments",
-        "x-beta": true,
         "summary": "Get Payments",
         "description": "Retrieve a list of virtual account payments",
         "parameters": [
@@ -5767,7 +5761,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getPaymentsById",
-        "x-beta": true,
         "summary": "Get Payment",
         "description": "Get the details of a specific payment using its Id",
         "parameters": [
@@ -5869,7 +5862,6 @@
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountTransfer",
-        "x-beta": true,
         "summary": "Create Virtual Account Transfer",
         "description": "Create a transfer between two virtual accounts",
         "parameters": [
@@ -5995,7 +5987,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getPayInDetails",
-        "x-beta": true,
         "summary": "Get Pay-In Details",
         "description": "Get the details of a pay-in transaction",
         "parameters": [
@@ -6105,7 +6096,6 @@
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountClient",
-        "x-beta": true,
         "summary": "Create Virtual Account Client",
         "description": "Create a new virtual account client (individual or business client). Available for clients who have direct onboarding permissions only. Please contact your CSM to enquire about access",
         "parameters": [
@@ -6254,7 +6244,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountClients",
-        "x-beta": true,
         "summary": "Get List of Virtual Account Clients",
         "description": "Get Virtual Account Clients (individual or business client).",
         "parameters": [
@@ -6440,7 +6429,6 @@
           "Virtual Accounts"
         ],
         "operationId": "createVirtualAccountRefund",
-        "x-beta": true,
         "summary": "Create Refund",
         "description": "Create a refund for a payment received into a virtual account. Funds are returned to the source account. When subscribed to `virtualAccount.refund.status` notifications, updates on the refund status are delivered asynchronously.",
         "parameters": [
@@ -6557,7 +6545,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountRefunds",
-        "x-beta": true,
         "summary": "Get list of refunds",
         "description": "Retrieve a list of refunds",
         "parameters": [
@@ -6695,7 +6682,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountRefundById",
-        "x-beta": true,
         "summary": "Get Refund By Id",
         "description": "Get the details of a refund by its ID",
         "parameters": [
@@ -6815,7 +6801,6 @@
           "Virtual Accounts"
         ],
         "operationId": "getVirtualAccountClientById",
-        "x-beta": true,
         "summary": "Get a Virtual Account Client by ID",
         "description": "Get a Virtual Account Client using its ID. Restricted to applications with direct onboarding permissions only",
         "parameters": [
@@ -8944,6 +8929,7 @@
       "post": {
         "description": "Used to initiate a VRP consent / mandate request through Yapily Hosted Pages",
         "operationId": "createHostedVRPConsentRequest",
+        "x-beta": true,
         "parameters": [
           {
             "description": "__Mandatory__. The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
@@ -9040,6 +9026,7 @@
       "get": {
         "description": "Used to get all VRP consent requests initiated through Yapily Hosted Pages",
         "operationId": "getHostedVRPConsentRequests",
+        "x-beta": true,
         "parameters": [
           {
             "description": "__Mandatory__. The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
@@ -9123,6 +9110,7 @@
       "get": {
         "description": "Used to get details of a VRP Consent Request",
         "operationId": "getHostedConsentRequest",
+        "x-beta": true,
         "parameters": [
           {
             "description": "The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
@@ -9215,6 +9203,7 @@
       "post": {
         "description": "Revoke Hosted VRP Consent Request",
         "operationId": "revokeHostedConsentRequest",
+        "x-beta": true,
         "parameters": [
           {
             "description": "The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
@@ -9307,6 +9296,7 @@
       "post": {
         "description": "Creates a Variable Recurring Payment",
         "operationId": "createHostedVrpPayment",
+        "x-beta": true,
         "parameters": [
           {
             "description": "Unique Identifier of the Consent Request",
@@ -9409,6 +9399,7 @@
       "get": {
         "description": "Used to get details of a VRP Payment",
         "operationId": "getHostedVRPPaymentRequest",
+        "x-beta": true,
         "parameters": [
           {
             "description": "Unique Identifier of the Consent Request",
@@ -9510,6 +9501,7 @@
       "post": {
         "description": "Confirms whether there are available funds on the Payer account to execute a Variable Recurring Payment after obtaining the user's authorisation. <br><br>Features:<ul><li>`VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION`</li></ul>",
         "operationId": "createHostedVrpFundsConfirmation",
+        "x-beta": true,
         "parameters": [
           {
             "description": "Unique Identifier of the Consent Request",
