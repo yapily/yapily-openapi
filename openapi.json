@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-    "version": "2.31.1",
+    "version": "2.31.2",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -25456,7 +25456,7 @@
                   {
                       "uuid": "3b908179-6faa-42e1-8129-8fd0ff1fc68f",
                       "applicationUuid": "3020bf54-e254-40ba-ba7b-fc959774486a",
-                      "applicationUserId": "bojack@9tees.com",
+                      "applicationUserId": "string",
                       "createdAt": "2022-10-17T08:51:02.463Z",
                       "institutionConsents": [
                           {
@@ -25521,7 +25521,7 @@
               "value": {
                   "uuid": "3b908179-6faa-42e1-8129-8fd0ff1fc68f",
                   "applicationUuid": "3020bf54-e254-40ba-ba7b-fc959774486a",
-                  "applicationUserId": "bojack@9tees.com",
+                  "applicationUserId": "string",
                   "createdAt": "2022-10-17T08:51:02.463Z",
                   "institutionConsents": [
                       {
