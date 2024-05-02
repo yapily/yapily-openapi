@@ -5,6 +5,14 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.31.4] - 2024-05-02
+### Changed
+- Rename operationId to a shorter form, compatible with the SwaggerCodeGen
+  
+## [2.31.3] - 2024-04-22
+### Changed
+- Added a new enum value 'ACCO' to PaymentIsoStatusCodeEnum
+
 ## [2.31.2] - 2024-03-27
 ### Changed
 - Updated applicationUserId to not hardcode an email for Get /users endpoints
