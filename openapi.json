@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-    "version": "2.31.3",
+    "version": "2.31.5",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -1765,7 +1765,7 @@
                   "required": true
               },
               "responses": {
-                  "201": {
+                  "200": {
                       "content": {
                           "application/json;charset=UTF-8": {
                               "examples": {
@@ -1778,7 +1778,7 @@
                               }
                           }
                       },
-                      "description": "Created"
+                      "description": "Ok"
                   },
                   "default": {
                       "content": {
@@ -20595,7 +20595,7 @@
               "properties": {
                   "phaseName": {
                       "type": "string",
-                      "description": "The name of the hosted payment process phase. Allowed values are : <ul> <li> INITIATED  -  Payment process initiated </li><li> DECLINED  -  Payment process failed and will not proceed further </li><li> INSTITUTION_SUBMITTED  -  Payment institution submitted </li><li> EMBEDDED_CREDENTIAL_REQUESTED  -  For embedded banks, a UI element to collect user credentials was displayed </li><li> AUTHORISATION_INITIATED  -  All details required for payment initiation have been collected </li><li> VALIDATION_COMPLETED  -  The payment payload was validated successfully </li><li> AUTHORISATION_CREATED  -  Payment authorisation request created with Institution </li><li> EMBEDDED_CODE_REQUESTED  -  For embedded banks, a UI element to collect SCA for initiated consent was displayed </li><li> EMBEDDED_TYPE_REQUESTED  -  For embedded banks, a UI element to allow the user to select their preferred SCA method for this consent authorisation was displayed  </li><li> EMBEDDED_DECOUPLED_AUTHORISATION  -  For embedded banks, decoupled authoirisation was initiated by the bank </li><li> EMBEDDED_CODE_COLLECTED  -  For embedded banks, SCA code was collected for consent authorisation </li><li> EMBEDDED_TYPE_SELECTED  -  For embedded banks, preferred SCA method was selected for consent authorisation </li><li> CONSENT_POLLING_STARTED  -  We start polling the bank for consent authorisation status </li><li> CONSENT_POLLING_ENDED  -  We finish polling the bank for consent authorisation status </li><li> AUTHORISED  -  Payment authorisation completed </li><li> AUTHORISATION_FAILED  -  Payment authorisation failed and will not proceed further </li><li> AUTHORISATION_REJECTED  -  Payment authorisation rejected and will not proceed further </li><li> SUBMITTED  -  Payment execution created and submitted to Institution </li><li> ACCEPTED  -  Payment execution accepted by Institution and awaiting settlement </li><li> REJECTED  -  Payment or Authorisation request rejected by Institution and will not proceed further </li><li> SETTLEMENT_COMPLETED  -  Payment settlement completed </li><li> STATUS_POLLING_STARTED  -  Payment status polling started </li><li> STATUS_POLLING_ENDED  -  Payment status polling ended </li><li> MERCHANT_ACKNOWLEDGED  -  Payment acknowledgement received from merchant </li><li> FINISHED  -  Payment process completed </li> </ul>"
+                      "description": "The name of the hosted payment process phase. Allowed values are : <ul> <li>    INITIATED - Payment process initiated</li><li>    DECLINED - Payment process failed and will not proceed further</li><li>    INSTITUTION_SUBMITTED - Payment institution submitted</li><li>    EMBEDDED_CREDENTIAL_REQUESTED - For embedded banks, a UI element to collect user credentials was displayed</li><li>    CREDENTIALS_ERROR - embedded credentials refused by intittution</li><li>    AUTHORISATION_INITIATED - All details required for payment initiation have been collected</li><li>    VALIDATION_COMPLETED - The payment payload was validated successfully</li><li>    VALIDATION_FAILED - The payment data provided failed validation</li><li>    AUTHORISATION_CREATED - Payment authorisation request created with Institution</li><li>    EMBEDDED_CODE_REQUESTED - For embedded banks, a UI element to collect SCA for initiated consent was displayed</li><li>    EMBEDDED_TYPE_REQUESTED - For embedded banks, a UI element to allow the user to select their preferred SCA method for this consent authorisation was displayed</li><li>    DECOUPLED_AUTHORISATION - For embedded banks, decoupled authoirisation was initiated by the bank</li><li>    EMBEDDED_CODE_COLLECTED - For embedded banks, SCA code was collected for consent authorisation</li><li>    EMBEDDED_TYPE_SELECTED - For embedded banks, preferred SCA method was selected for consent authorisation</li><li>    PRE_AUTHORISED - pre authorisation was initiated by bank</li><li>    CONSENT_POLLING_STARTED - We start polling the bank for consent authorisation status</li><li>    CONSENT_POLLING_ENDED - We finish polling the bank for consent authorisation status</li><li>    AUTHORISED - Payment authorisation completed</li><li>    AUTHORISATION_FAILED - Payment authorisation failed and will not proceed further</li><li>    AUTHORISATION_REJECTED - Payment authorisation rejected and will not proceed further</li><li>    SUBMITTED - Payment execution created and submitted to Institution</li><li>    SUBMITTED_AUTO - Payment execution created and submitted to Institution</li><li>    ACCEPTED - Payment execution accepted by Institution and awaiting settlement</li><li>    REJECTED - Payment or Authorisation request rejected by Institution and will not proceed further</li><li>    SETTLEMENT_COMPLETED - Payment settlement completed</li><li>    STATUS_POLLING_STARTED - Payment status polling started</li><li>    STATUS_POLLING_ENDED - Payment status polling ended</li><li>    MERCHANT_ACKNOWLEDGED - Payment acknowledgement received from merchant</li><li>    FINISHED - Payment process completed</li></ul>"
                   },
                   "phaseCreatedAt": {
                       "type": "string",

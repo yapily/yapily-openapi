@@ -5,6 +5,14 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [2.31.6] - 2024-05-07
+### Changed
+- Update phase list for hosted endpoint
+
+## [2.31.5] - 2024-05-07
+### Changed
+- Changed response code for consent-auth-code to 200 to match what is actually returned
+
 ## [2.31.4] - 2024-05-02
 ### Changed
 - Rename operationId to a shorter form, compatible with the SwaggerCodeGen
