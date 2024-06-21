@@ -5,6 +5,16 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [3.0.0] - 2024-06-19
+### Changed
+- Removed Virtual Accounts endpoints.
+
+
+## [2.32.0] - 2024-05-18
+### Changed
+- Added optional 'sub-application' header to Create, Get and Delete Event Subscription endpoints to support sub-applications in Notifications Service.
+
+
 ## [2.31.6] - 2024-05-07
 ### Changed
 - Update phase list for hosted endpoint
