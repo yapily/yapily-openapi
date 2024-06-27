@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-    "version": "2.32.0",
+      "version": "4.0.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -77,6 +77,10 @@
       {
           "description": "Enrichment endpoints enable our customers to enrich transaction data. ",
           "name": "Enrichment"
+      },
+      {
+          "description": "Webhook endpoints enable our customers to register webhooks to receive notifications for various webhook events categories for their application. Once registered successfully, customers should receive notifications for those events registered.",
+          "name": "Webhooks"
       }
   ],
   "x-tagGroups": [
@@ -96,7 +100,8 @@
               "Hosted Pages",
               "Constraints",
               "Application Management",
-              "Enrichment"
+              "Enrichment",
+              "Webhooks"
           ]
       }
   ],
@@ -9612,6 +9617,374 @@
                   "Application Management"
               ]
           }
+      },
+      "/webhook/events/categories": {
+        "get": {
+          "tags": [
+            "Webhooks"
+          ],
+          "x-beta": true,
+          "description": "Retrieve a comprehensive list of event categories that can be registered for webhook notifications in your application. These event categories can be used to subscribe a webhook to specific events, enabling your application to receive real-time notifications when these events occur.",
+          "summary": "Get Webhook Categories",
+          "operationId": "getWebhookEventsCategories",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "SuccessfulResponse": {
+                      "value": {
+                        "metadata": {
+                          "tracingId": "f2425b79-974d-43f8-a5a2-ec771b2d9297\n"
+                        },
+                        "data": {
+                          "categories": [
+                            {
+                              "name": "payment.state.success",
+                              "description": "An event sent when payment reaches a terminal successful status"
+                            },
+                            {
+                              "name": "payment.state.failed",
+                              "description": "An event sent when payment reaches a terminal failed status"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "metadata": {
+                        "$ref": "#/components/schemas/Metadata"
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "categories": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/components/schemas/CategoryStructure"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "There are validation errors",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An unexpected error occurred.",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/webhook/events": {
+        "post": {
+          "tags": [
+            "Webhooks"
+          ],
+          "x-beta": true,
+          "description": "Register a webhook to one or multiple event categories to receive real-time notifications when specific events occur in your application.",
+          "summary": "Register Webhook Event",
+          "operationId": "registerWebhook",
+          "requestBody": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "applicationId",
+                    "categories",
+                    "callbackUrl"
+                  ],
+                  "properties": {
+                    "applicationId": {
+                      "type": "string",
+                      "description": "user application id",
+                      "format": "uuid"
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "webhook event category name"
+                      }
+                    },
+                    "callbackUrl": {
+                      "type": "object",
+                      "required": [
+                        "main"
+                      ],
+                      "properties": {
+                        "main": {
+                          "type": "object",
+                          "description": "primary webhook url used to send events to",
+                          "required": [
+                            "url"
+                          ],
+                          "properties": {
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "backup": {
+                          "type": "object",
+                          "description": "backup webhook url used to send events to in case the main one is not responding",
+                          "properties": {
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "metadata": {
+                      "$ref": "#/components/schemas/UserMetadata"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "$ref": "#/components/responses/WebhookDetailsWithSecret"
+            },
+            "400": {
+              "description": "There are validation errors",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An unexpected error occurred.",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "Webhooks"
+          ],
+          "x-beta": true,
+          "description": "Retrieve the list of registered webhooks for your application",
+          "summary": "Retrieve All Webhook Events",
+          "operationId": "getRegisteredWebhooks",
+          "responses": {
+            "200": {
+              "description": "retrieve all registered webhook",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "metadata": {
+                        "$ref": "#/components/schemas/Metadata"
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "active": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/components/schemas/RegisteredWebhookWithStatus"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "There are validation errors",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An unexpected error occurred.",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/webhook/events/{webhook_id}": {
+        "delete": {
+          "tags": [
+            "Webhooks"
+          ],
+          "x-beta": true,
+          "description": "Delete a webhook event for a specified webhook ID, unregistering it from receiving any further notifications for the subscribed event categories in your application.",
+          "summary": "Delete Webhook Event",
+          "operationId": "deleteWebhook",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/WebhookIdParameter"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "delete webhook succeeded",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "metadata": {
+                        "$ref": "#/components/schemas/Metadata"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/RegisteredWebhook"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "There are validation errors",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Webhook id not found",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An unexpected error occurred.",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/webhook/secrets/{webhook_id}": {
+        "post": {
+          "tags": [
+            "Webhooks"
+          ],
+          "x-beta": true,
+          "description": "Reset webhook secret for a webhook that is already registered to your application",
+          "summary": "Reset Webhook Secret",
+          "operationId": "webhookSecretReset",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/WebhookIdParameter"
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json;charset=UTF-8":{
+                "schema": {
+                  "type": "object",
+                  "required": ["delay"],
+                  "properties": {
+                    "delay": {
+                      "type": "number",
+                      "description": "delay in seconds",
+                      "minimum": 0,
+                      "maximum": 86400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "$ref": "#/components/responses/WebhookDetailsWithSecret"
+            },
+            "400": {
+              "description": "There are validation errors",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Webhook id not found",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An unexpected error occurred.",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
   },
   "components": {
@@ -9663,6 +10036,17 @@
                       }
                   }
               }
+          },
+          "WebhookIdParameter": {
+            "name": "webhook_id",
+            "in": "path",
+            "description": "Registered webhook id",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
           }
       },
       "schemas": {
@@ -18868,7 +19252,130 @@
                   "CONSENT",
                   "CALENDAR"
               ]
+          },
+          "UserMetadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Metadata": {
+            "type": "object",
+            "properties": {
+              "tracingId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "yapily tracing id"
+              }
+            }
+          },
+          "WebhookDetailsWithSecret": {
+            "type": "object",
+            "properties": {
+              "metadata": {
+                "$ref": "#/components/schemas/Metadata"
+              },
+              "data": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RegisteredWebhookWithStatus"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "webhookSecret": {
+                        "type": "string",
+                        "description": "HMAC secret needed to validate that the request payload is genuine"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+        "RegisteredWebhookWithStatus": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/RegisteredWebhook"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "$ref": "#/components/schemas/WebhookStatusType"
+                }
+              }
+            }
+          ]
+        },
+        "WebhookStatusType": {
+          "type": "string",
+          "enum": [
+            "active",
+            "paused"
+          ]
+        },
+        "RegisteredWebhook": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "the UUID of the registered webhook, used to update or remove the webhook",
+              "format": "uuid"
+            },
+            "applicationId": {
+              "type": "string",
+              "description": "user applicaiton id",
+              "format": "uuid"
+            },
+            "categories": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "webhook event category name"
+              }
+            },
+            "callbackUrl": {
+              "type": "object",
+              "properties": {
+                "main": {
+                  "type": "object",
+                  "description": "primary webhook url used to send events to",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "backup": {
+                  "type": "object",
+                  "description": "backup webhook url used to send events to in case the main one is not responding",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "metadata": {
+              "$ref": "#/components/schemas/UserMetadata"
+            }
           }
+        },
+        "CategoryStructure": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "webhook event category name"
+            },
+            "description": {
+              "type": "string",
+              "description": "description of the webhook event category"
+            }
+          }
+        }
       },
       "securitySchemes": {
           "basicAuth": {
@@ -23012,6 +23519,37 @@
           }
       },
       "responses": {
+          "WebhookDetailsWithSecret": {
+            "description": "webhook details including the secret",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "metadata": {
+                      "$ref": "#/components/schemas/Metadata"
+                    },
+                    "data": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/RegisteredWebhookWithStatus"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "webhookSecret": {
+                              "type": "string",
+                              "description": "HMAC secret needed to validate that the request payload is genuine"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
           "200": {
               "description": "ok"
           },
