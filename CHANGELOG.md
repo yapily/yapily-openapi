@@ -5,6 +5,10 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [4.1.0] - 2024-06-28
+### Changed
+- Added `id` and renamed `merchantName` to `name` in the `merchant` object for Get Categorised Transactions response
+
 ## [4.0.0] - 2024-06-25
 ### Changed
 - Added Webhooks endpoints to Retrieve webhook event categories, Register new webhook event, Retrieve all registered webhooks, Delete a webhook event, Reset webhook secret
