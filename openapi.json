@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -17545,6 +17545,10 @@
                           "$ref": "#/components/schemas/HostedPaymentPhase"
                       }
                   },
+                  "paymentStatus": {
+                    "type": "string",
+                    "description": "Payment status based on latest HostedAuthPaymentPhase in phases. Value can be <ul> <li>PENDING  -  Payment pending processing</li> <li>COMPLETED  -  Payment processing completed</li> <li>FAILED  -  Payment process failed</li></ul>"
+                  },
                   "statusDetails": {
                       "description": "Details of the payment status.",
                       "type": "array",
@@ -22820,24 +22824,25 @@
                                       "phaseCreatedAt": "2021-06-10T11:27:13.887Z"
                                   }
                               ],
-                              "statusDetails": [
-                                  {
-                                      "status": "PENDING",
-                                      "statusUpdateDate": "2021-06-10T11:27:11.867Z",
-                                      "isoStatus": {
-                                          "code": "PDNG",
-                                          "name": "Pending"
-                                      }
-                                  },
-                                  {
-                                      "status": "COMPLETED",
-                                      "statusUpdateDate": "2021-06-10T11:27:13.887Z",
-                                      "isoStatus": {
-                                          "code": "ACSC",
-                                          "name": "AcceptedSettlementCompleted"
-                                      }
-                                  }
-                              ],
+                            "paymentStatus": "COMPLETED",
+                            "statusDetails": [
+                              {
+                                "status": "PENDING",
+                                "statusUpdateDate": "2021-06-10T11:27:11.867Z",
+                                "isoStatus": {
+                                  "code": "PDNG",
+                                  "name": "Pending"
+                                }
+                              },
+                              {
+                                "status": "COMPLETED",
+                                "statusUpdateDate": "2021-06-10T11:27:13.887Z",
+                                "isoStatus": {
+                                  "code": "ACSC",
+                                  "name": "AcceptedSettlementCompleted"
+                                }
+                              }
+                            ],
                               "institutionPaymentId": "string",
                               "paymentLifecycleId": "string",
                               "paymentIdempotencyId": "04ab4536gaerfc0e1f93c4f4",
