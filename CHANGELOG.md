@@ -5,6 +5,11 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [4.2.1] - 2024-07-09
+### Changed
+- Add missing query parameter `page` to retrieve categorisation endpoint
+- Add new error status `406` to webhook registration endpoint when maximum number of registered webhooks has been reached
+
 ## [4.2.0] - 2024-07-02
 ### Changed
 - Added a new field 'paymentStatus' to HostedPayment in ApiResponseOfGetHostedPaymentRequest

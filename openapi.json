@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "4.2.0",
+      "version": "4.2.1",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -6648,13 +6648,6 @@
                                       "type": "string",
                                       "format": "date-time",
                                       "description": "__Optional__. Returned transactions will be on or before this date (yyyy-MM-dd'T'HH:mm:ss.SSSZ)."
-                                  },
-                                  "sort": {
-                                      "enum": [
-                                          "-date",
-                                          "date"
-                                      ],
-                                      "description": "__Optional__. Sort transaction records by date ascending with 'date' or descending with '-date'. The default sort order is descending"
                                   }
                               }
                           },
@@ -6663,8 +6656,7 @@
                                   "value": {
                                       "countryCode": "GB",
                                       "from": "2019-08-24T14:15:22Z",
-                                      "before": "2019-08-24T14:15:22Z",
-                                      "sort": "-date"
+                                      "before": "2019-08-24T14:15:22Z"
                                   }
                               }
                           }
@@ -6674,46 +6666,59 @@
           }
       },
       "/accounts/{accountId}/transactions/categorisation/{categorisationId}": {
-          "parameters": [
-              {
-                  "description": "__Mandatory__. The `consent-token` containing the user's authorisation to make the request.",
-                  "example": "{consentToken}",
-                  "in": "header",
-                  "name": "consent",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "schema": {
-                      "type": "string"
-                  },
-                  "name": "accountId",
-                  "in": "path",
-                  "required": true,
-                  "description": "Unique identifier for account"
-              },
-              {
-                  "schema": {
-                      "type": "string"
-                  },
-                  "name": "categorisationId",
-                  "in": "path",
-                  "required": true,
-                  "description": "Unique identifier for transaction categorisation request"
-              },
-              {
-                  "description": "__Optional__. The maximum number of transaction records to be returned. Must be between 1 and 1000.",
-                  "in": "query",
-                  "name": "limit",
-                  "required": false,
-                  "schema": {
-                      "type": "integer",
-                      "format": "int32"
-                  }
-              }
-          ],
+        "parameters": [
+          {
+            "description": "__Mandatory__. The `consent-token` containing the user's authorisation to make the request.",
+            "example": "{consentToken}",
+            "in": "header",
+            "name": "consent",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier for account"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "name": "categorisationId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier for transaction categorisation request"
+          },
+          {
+            "description": "__Optional__. The maximum number of transaction records to be returned. Must be between 100 and 1000. If not specified will default to 100.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 100,
+              "maximum": 1000
+            }
+          },
+          {
+            "description": "__Optional__. The page number to be returned. If not specified will default to 1.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1
+            }
+          }
+        ],
           "get": {
               "summary": "Get Categorised Transactions",
               "description": "Retrieve a set of categorised transactions using a provided categorisation ID (__Note__: A categorisation ID will only be valid for 30 mins after a __transactions.categorisation.successful__ wedhook has be received)",
@@ -9777,6 +9782,16 @@
             },
             "400": {
               "description": "There are validation errors",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponse"
+                  }
+                }
+              }
+            },
+            "406": {
+              "description": "Maximum number of registered webhooks has been reached",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
