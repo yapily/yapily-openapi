@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "4.3.1",
+      "version": "4.4.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -9411,7 +9411,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/401VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "401 Error Response": {
+                                      "$ref": "#/components/examples/401-error-response"
+                                  }
                               }
                           }
                       }
@@ -9421,7 +9426,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/403VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "403 Error Response": {
+                                      "$ref": "#/components/examples/403-error-response"
+                                  }
                               }
                           }
                       }
@@ -9431,7 +9441,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "404 Error Response": {
+                                      "$ref": "#/components/examples/404-error-response"
+                                  }
                               }
                           }
                       }
@@ -9441,7 +9456,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/500VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "500 Error Response": {
+                                      "$ref": "#/components/examples/500-error-response"
+                                  }
                               }
                           }
                       }
@@ -9503,7 +9523,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/401VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "401 Error Response": {
+                                      "$ref": "#/components/examples/401-error-response"
+                                  }
                               }
                           }
                       }
@@ -9513,7 +9538,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/403VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "403 Error Response": {
+                                      "$ref": "#/components/examples/403-error-response"
+                                  }
                               }
                           }
                       }
@@ -9523,7 +9553,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "404 Error Response": {
+                                      "$ref": "#/components/examples/404-error-response"
+                                  }
                               }
                           }
                       }
@@ -9533,7 +9568,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/500VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "500 Error Response": {
+                                      "$ref": "#/components/examples/500-error-response"
+                                  }
                               }
                           }
                       }
@@ -9591,7 +9631,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/401VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "401 Error Response": {
+                                      "$ref": "#/components/examples/401-error-response"
+                                  }
                               }
                           }
                       }
@@ -9601,7 +9646,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/403VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "403 Error Response": {
+                                      "$ref": "#/components/examples/403-error-response"
+                                  }
                               }
                           }
                       }
@@ -9611,7 +9661,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "404 Error Response": {
+                                      "$ref": "#/components/examples/404-error-response"
+                                  }
                               }
                           }
                       }
@@ -9621,7 +9676,12 @@
                       "content": {
                           "application/json;charset=UTF-8": {
                               "schema": {
-                                  "$ref": "#/components/schemas/500VirtualAccountsApiErrorResponse"
+                                  "$ref": "#/components/schemas/ApiErrorResponse"
+                              },
+                              "examples": {
+                                  "500 Error Response": {
+                                      "$ref": "#/components/examples/500-error-response"
+                                  }
                               }
                           }
                       }
@@ -11028,150 +11088,6 @@
                               }
                           }
                       ]
-                  },
-                  "monitoring": []
-              }
-          },
-          "401VirtualAccountsApiErrorResponse": {
-              "type": "object",
-              "properties": {
-                  "error": {
-                      "$ref": "#/components/schemas/ErrorDetails"
-                  },
-                  "monitoring": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/MonitoringEndpointStatus"
-                      }
-                  }
-              },
-              "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
-              "example": {
-                  "error": {
-                      "code": 401,
-                      "status": "UNAUTHORIZED",
-                      "message": "Full authentication is required to access this resource"
-                  },
-                  "monitoring": []
-              }
-          },
-          "403VirtualAccountsApiErrorResponse": {
-              "type": "object",
-              "properties": {
-                  "error": {
-                      "$ref": "#/components/schemas/ErrorDetails"
-                  },
-                  "monitoring": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/MonitoringEndpointStatus"
-                      }
-                  }
-              },
-              "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
-              "example": {
-                  "error": {
-                      "code": 403,
-                      "status": "FORBIDDEN",
-                      "supportUrl": "https://support.yapily.com/",
-                      "source": "USER",
-                      "issues": [
-                          {
-                              "type": "INVALID_REQUEST",
-                              "code": "Yapily.gateway.api.scope.required",
-                              "message": "You don't have the right scope to access this resource"
-                          }
-                      ]
-                  },
-                  "monitoring": []
-              }
-          },
-          "404VirtualAccountsApiErrorResponse": {
-              "type": "object",
-              "properties": {
-                  "error": {
-                      "$ref": "#/components/schemas/ErrorDetails"
-                  },
-                  "monitoring": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/MonitoringEndpointStatus"
-                      }
-                  }
-              },
-              "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
-              "example": {
-                  "error": {
-                      "tracingId": "1e982b70f5f44a8383df1e1dc3f8ebf7",
-                      "code": 404,
-                      "status": "NOT_FOUND",
-                      "supportUrl": "https://support.yapily.com/",
-                      "source": "CLIENT",
-                      "issues": [
-                          {
-                              "type": "INVALID_REQUEST",
-                              "code": "yapily.generic.error",
-                              "message": "404 NOT_FOUND"
-                          }
-                      ]
-                  },
-                  "monitoring": []
-              }
-          },
-          "424VirtualAccountsApiErrorResponse": {
-              "type": "object",
-              "properties": {
-                  "error": {
-                      "$ref": "#/components/schemas/ErrorDetails"
-                  },
-                  "monitoring": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/MonitoringEndpointStatus"
-                      }
-                  }
-              },
-              "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
-              "example": {
-                  "error": {
-                      "tracingId": "553f33e10469443788cd366618b1ef78",
-                      "code": 424,
-                      "status": "FAILED_DEPENDENCY",
-                      "supportUrl": "https://support.yapily.com/",
-                      "source": "INSTITUTION",
-                      "issues": [
-                          {
-                              "type": "INVALID_REQUEST",
-                              "code": "FAILED_THIRD_PARTY_DEPENDENCY",
-                              "message": "A request to a third party provider failed. Error message: [null] Error code: [INVALID_BANK_BENEFICIARY]"
-                          }
-                      ]
-                  },
-                  "monitoring": []
-              }
-          },
-          "500VirtualAccountsApiErrorResponse": {
-              "type": "object",
-              "properties": {
-                  "error": {
-                      "$ref": "#/components/schemas/ErrorDetails"
-                  },
-                  "monitoring": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/MonitoringEndpointStatus"
-                      }
-                  }
-              },
-              "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
-              "example": {
-                  "error": {
-                      "tracingId": "55abe4b0cf2642fface78876d2547f91",
-                      "code": 500,
-                      "status": "INTERNAL_SERVER_ERROR",
-                      "supportUrl": "https://support.yapily.com/",
-                      "source": "YAPILY",
-                      "issues": []
                   },
                   "monitoring": []
               }
@@ -22493,7 +22409,8 @@
                       "code": 401,
                       "status": "UNAUTHORIZED",
                       "message": "Full authentication is required to access this resource"
-                  }
+                  },
+                  "monitoring": []
               }
           },
           "extend-consent-error-response-code-400": {
@@ -23508,6 +23425,25 @@
                   }
               }
           },
+          "403-error-response": {
+              "description": "403 Error",
+              "value": {
+                  "error": {
+                      "code": 403,
+                      "status": "FORBIDDEN",
+                      "supportUrl": "https://support.yapily.com/",
+                      "source": "USER",
+                      "issues": [
+                          {
+                            "type": "INVALID_REQUEST",
+                            "code": "Yapily.gateway.api.scope.required",
+                            "message": "You don't have the right scope to access this resource"
+                          }
+                      ]
+                  },
+                  "monitoring": []
+              }
+          },
           "404-error-response": {
               "description": "404 Error",
               "value": {
@@ -23597,7 +23533,7 @@
               "content": {
                   "application/json": {
                       "schema": {
-                          "$ref": "#/components/schemas/401VirtualAccountsApiErrorResponse"
+                          "$ref": "#/components/schemas/ApiErrorResponse"
                       }
                   }
               }
@@ -23607,7 +23543,7 @@
               "content": {
                   "application/json": {
                       "schema": {
-                          "$ref": "#/components/schemas/403VirtualAccountsApiErrorResponse"
+                          "$ref": "#/components/schemas/ApiErrorResponse"
                       }
                   }
               }
@@ -23617,7 +23553,7 @@
               "content": {
                   "application/json": {
                       "schema": {
-                          "$ref": "#/components/schemas/404VirtualAccountsApiErrorResponse"
+                          "$ref": "#/components/schemas/ApiErrorResponse"
                       }
                   }
               }
@@ -23627,7 +23563,7 @@
               "content": {
                   "application/json": {
                       "schema": {
-                          "$ref": "#/components/schemas/424VirtualAccountsApiErrorResponse"
+                          "$ref": "#/components/schemas/ApiErrorResponse"
                       }
                   }
               }
@@ -23637,7 +23573,7 @@
               "content": {
                   "application/json": {
                       "schema": {
-                          "$ref": "#/components/schemas/500VirtualAccountsApiErrorResponse"
+                          "$ref": "#/components/schemas/ApiErrorResponse"
                       }
                   }
               }
