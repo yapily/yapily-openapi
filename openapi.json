@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "4.4.0",
+      "version": "4.4.1",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -6304,12 +6304,11 @@
           "post": {
               "summary": "Trigger transaction categorisation",
               "description": "Trigger categorisation for a specified set of transactions",
-              "x-beta": true,
               "tags": [
                   "Enrichment"
               ],
               "responses": {
-                  "201": {
+                "201": {
                       "description": "Created",
                       "content": {
                           "application/json": {
@@ -6360,270 +6359,51 @@
                           }
                       }
                   },
-                  "400": {
-                      "description": "Bad Request",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 400,
-                                              "status": "BAD_REQUEST",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "BAD_REQUEST",
-                                                      "code": 10030,
-                                                      "message": "The server could not understand the request due to invalid syntax"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  },
-                                  "properties": {
-                                      "error": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "code": {
-                                                  "type": "number"
-                                              },
-                                              "status": {
-                                                  "type": "string"
-                                              },
-                                              "supportUrl": {
-                                                  "type": "string"
-                                              },
-                                              "source": {
-                                                  "type": "string"
-                                              },
-                                              "issues": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "type": {
-                                                              "type": "string"
-                                                          },
-                                                          "code": {
-                                                              "type": "number",
-                                                              "description": "A 5 digit error code"
-                                                          },
-                                                          "message": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 400,
-                                              "status": "BAD_REQUEST",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "BAD_REQUEST",
-                                                      "code": 10030,
-                                                      "message": "The server could not understand the request due to invalid syntax"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  }
-                              }
-                          }
+                "400": {
+                  "description": "There are validation errors",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/400-error-response"
+                        }
                       }
-                  },
-                  "401": {
-                      "description": "Unauthorized",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 401,
-                                              "status": "UNAUTHORIZED",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "CREDENTIALS",
-                                                      "code": 10030,
-                                                      "message": "Authentication header not present"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  },
-                                  "properties": {
-                                      "error": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "code": {
-                                                  "type": "number"
-                                              },
-                                              "status": {
-                                                  "type": "string"
-                                              },
-                                              "supportUrl": {
-                                                  "type": "string"
-                                              },
-                                              "source": {
-                                                  "type": "string"
-                                              },
-                                              "issues": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "type": {
-                                                              "type": "string"
-                                                          },
-                                                          "code": {
-                                                              "type": "number",
-                                                              "description": "A 5 digit error code"
-                                                          },
-                                                          "message": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 401,
-                                              "status": "UNAUTHORIZED",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "CREDENTIALS",
-                                                      "code": 10030,
-                                                      "message": "Authentication header not present"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                  },
-                  "500": {
-                      "description": "Internal Server Error",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 500,
-                                              "status": "INTERNAL SERVER ERROR",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "INTERNAL_SERVER_ERROR",
-                                                      "code": 10030,
-                                                      "message": "Unexpected server error"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  },
-                                  "properties": {
-                                      "error": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "code": {
-                                                  "type": "number"
-                                              },
-                                              "status": {
-                                                  "type": "string"
-                                              },
-                                              "supportUrl": {
-                                                  "type": "string"
-                                              },
-                                              "source": {
-                                                  "type": "string"
-                                              },
-                                              "issues": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "type": {
-                                                              "type": "string"
-                                                          },
-                                                          "code": {
-                                                              "type": "number",
-                                                              "description": "A 5 digit error code"
-                                                          },
-                                                          "message": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 500,
-                                              "status": "INTERNAL SERVER ERROR",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "INTERNAL_SERVER_ERROR",
-                                                      "code": 10030,
-                                                      "message": "Unexpected server error"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
+                    }
                   }
+                },
+                "401": {
+                  "description": "Authentication Error",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/401-error-response"
+                        }
+                      }
+                    }
+                  }
+                },
+                "500": {
+                  "description": "An unexpected error occurred.",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/500-error-response"
+                        }
+                      }
+                    }
+                  }
+                }
               },
               "operationId": "post-accounts-accountId-transactions-categorisation",
               "requestBody": {
@@ -6727,570 +6507,365 @@
           "get": {
               "summary": "Get Categorised Transactions",
               "description": "Retrieve a set of categorised transactions using a provided categorisation ID (__Note__: A categorisation ID will only be valid for 30 mins after a __transactions.categorisation.successful__ wedhook has be received)",
-              "x-beta": true,
               "tags": [
                   "Enrichment"
               ],
               "responses": {
-                  "200": {
-                      "description": "OK",
-                      "content": {
-                          "application/json": {
-                              "schema": {
+                "200": {
+                  "description": "OK",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "meta": {
+                            "type": "object",
+                            "properties": {
+                              "tracingId": {
+                                "type": "string"
+                              },
+                              "count": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "data": {
+                            "type": "object",
+                            "properties": {
+                              "transactions": {
+                                "type": "array",
+                                "items": {
                                   "type": "object",
                                   "properties": {
-                                      "meta": {
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "date": {
+                                      "type": "string"
+                                    },
+                                    "bookingDateTime": {
+                                      "type": "string",
+                                      "format": "date-time"
+                                    },
+                                    "valueDateTime": {
+                                      "type": "string",
+                                      "format": "date-time"
+                                    },
+                                    "status": {
+                                      "type": "string"
+                                    },
+                                    "amount": {
+                                      "type": "integer"
+                                    },
+                                    "currency": {
+                                      "type": "string"
+                                    },
+                                    "transactionAmount": {
+                                      "type": "object",
+                                      "properties": {
+                                        "amount": {
+                                          "type": "integer"
+                                        },
+                                        "currency": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "reference": {
+                                      "type": "string"
+                                    },
+                                    "description": {
+                                      "type": "string"
+                                    },
+                                    "transactionInformation": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "proprietaryBankTransactionCode": {
+                                      "type": "object",
+                                      "properties": {
+                                        "code": {
+                                          "type": "string"
+                                        },
+                                        "issuer": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "isoBankTransactionCode": {
+                                      "type": "object",
+                                      "properties": {
+                                        "domainCode": {
                                           "type": "object",
                                           "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "count": {
-                                                  "type": "integer"
-                                              }
+                                            "code": {
+                                              "type": "string"
+                                            },
+                                            "name": {
+                                              "type": "string"
+                                            }
                                           }
-                                      },
-                                      "data": {
+                                        },
+                                        "familyCode": {
                                           "type": "object",
                                           "properties": {
-                                              "transactions": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "id": {
-                                                              "type": "string"
-                                                          },
-                                                          "date": {
-                                                              "type": "string"
-                                                          },
-                                                          "bookingDateTime": {
-                                                              "type": "string",
-                                                              "format": "date-time"
-                                                          },
-                                                          "valueDateTime": {
-                                                              "type": "string",
-                                                              "format": "date-time"
-                                                          },
-                                                          "status": {
-                                                              "type": "string"
-                                                          },
-                                                          "amount": {
-                                                              "type": "integer"
-                                                          },
-                                                          "currency": {
-                                                              "type": "string"
-                                                          },
-                                                          "transactionAmount": {
-                                                              "type": "object",
-                                                              "properties": {
-                                                                  "amount": {
-                                                                      "type": "integer"
-                                                                  },
-                                                                  "currency": {
-                                                                      "type": "string"
-                                                                  }
-                                                              }
-                                                          },
-                                                          "reference": {
-                                                              "type": "string"
-                                                          },
-                                                          "description": {
-                                                              "type": "string"
-                                                          },
-                                                          "transactionInformation": {
-                                                              "type": "array",
-                                                              "items": {
-                                                                  "type": "string"
-                                                              }
-                                                          },
-                                                          "proprietaryBankTransactionCode": {
-                                                              "type": "object",
-                                                              "properties": {
-                                                                  "code": {
-                                                                      "type": "string"
-                                                                  },
-                                                                  "issuer": {
-                                                                      "type": "string"
-                                                                  }
-                                                              }
-                                                          },
-                                                          "isoBankTransactionCode": {
-                                                              "type": "object",
-                                                              "properties": {
-                                                                  "domainCode": {
-                                                                      "type": "object",
-                                                                      "properties": {
-                                                                          "code": {
-                                                                              "type": "string"
-                                                                          },
-                                                                          "name": {
-                                                                              "type": "string"
-                                                                          }
-                                                                      }
-                                                                  },
-                                                                  "familyCode": {
-                                                                      "type": "object",
-                                                                      "properties": {
-                                                                          "code": {
-                                                                              "type": "string"
-                                                                          },
-                                                                          "name": {
-                                                                              "type": "string"
-                                                                          }
-                                                                      }
-                                                                  },
-                                                                  "subFamilyCode": {
-                                                                      "type": "object",
-                                                                      "properties": {
-                                                                          "code": {
-                                                                              "type": "string"
-                                                                          },
-                                                                          "name": {
-                                                                              "type": "string"
-                                                                          }
-                                                                      }
-                                                                  }
-                                                              }
-                                                          },
-                                                          "balance": {
-                                                              "type": "object",
-                                                              "properties": {
-                                                                  "type": {
-                                                                      "type": "string"
-                                                                  },
-                                                                  "balanceAmount": {
-                                                                      "type": "object",
-                                                                      "properties": {
-                                                                          "amount": {
-                                                                              "type": "integer"
-                                                                          },
-                                                                          "currency": {
-                                                                              "type": "string"
-                                                                          }
-                                                                      }
-                                                                  }
-                                                              }
-                                                          },
-                                                          "enrichment": {
-                                                              "type": "object",
-                                                              "properties": {
-                                                                  "categorisation": {
-                                                                      "type": "object",
-                                                                      "properties": {
-                                                                          "categories": {
-                                                                              "type": "array",
-                                                                              "items": {
-                                                                                  "type": "string"
-                                                                              }
-                                                                          }
-                                                                      }
-                                                                  },
-                                                                  "recurrence": {
-                                                                      "type": "string"
-                                                                  },
-                                                                  "transactionHash": {
-                                                                      "type": "object",
-                                                                      "properties": {
-                                                                          "hash": {
-                                                                              "type": "string"
-                                                                          }
-                                                                      }
-                                                                  },
-                                                                  "merchant": {
-                                                                      "type": "object",
-                                                                      "properties": {
-                                                                          "id": {
-                                                                              "type": "string"
-                                                                          },
-                                                                          "name": {
-                                                                              "type": "string"
-                                                                          }
-                                                                      }
-                                                                  },
-                                                                  "paymentProcessor": {
-                                                                      "type": "string"
-                                                                  }
-                                                              }
-                                                          },
-                                                          "hash": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
+                                            "code": {
+                                              "type": "string"
+                                            },
+                                            "name": {
+                                              "type": "string"
+                                            }
                                           }
-                                      },
-                                      "links": {
+                                        },
+                                        "subFamilyCode": {
                                           "type": "object",
-                                          "properties":{
-                                          "first": {
+                                          "properties": {
+                                            "code": {
                                               "type": "string"
-                                          },
-                                          "prev": {
+                                            },
+                                            "name": {
                                               "type": "string"
-                                          },
-                                          "self": {
-                                              "type": "string"
-                                          },
-                                          "next": {
-                                              "type": "string"
-                                          },
-                                          "last": {
-                                              "type": "string"
+                                            }
                                           }
-                                          }
+                                        }
                                       }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "meta": {
-                                              "tracingId": "string",
-                                              "count": 1
-                                          },
-                                          "data": {
-                                              "transactions": [
-                                                  {
-                                                      "id": "string",
-                                                      "date": "string",
-                                                      "bookingDateTime": "2019-08-24T14:15:22Z",
-                                                      "valueDateTime": "2019-08-24T14:15:22Z",
-                                                      "status": "string",
-                                                      "amount": 0,
-                                                      "currency": "string",
-                                                      "transactionAmount": {
-                                                          "amount": 0,
-                                                          "currency": "string"
-                                                      },
-                                                      "reference": "string",
-                                                      "description": "string",
-                                                      "transactionInformation": [
-                                                          "string"
-                                                      ],
-                                                      "proprietaryBankTransactionCode": {
-                                                          "code": "string",
-                                                          "issuer": "string"
-                                                      },
-                                                      "isoBankTransactionCode": {
-                                                          "domainCode": {
-                                                              "code": "string",
-                                                              "name": "string"
-                                                          },
-                                                          "familyCode": {
-                                                              "code": "string",
-                                                              "name": "string"
-                                                          },
-                                                          "subFamilyCode": {
-                                                              "code": "string",
-                                                              "name": "string"
-                                                          }
-                                                      },
-                                                      "balance": {
-                                                          "type": "string",
-                                                          "balanceAmount": {
-                                                              "amount": 0,
-                                                              "currency": "string"
-                                                          }
-                                                      },
-                                                      "enrichment": {
-                                                          "categorisation": {
-                                                              "categories": [
-                                                                  "string"
-                                                              ]
-                                                          },
-                                                          "recurrence": "string",
-                                                          "transactionHash": {
-                                                              "hash": "string"
-                                                          },
-                                                          "merchant": {
-                                                              "id": "string",
-                                                              "name": "string"
-                                                          },
-                                                          "paymentProcessor": "string"
-                                                      },
-                                                      "hash": "string"
-                                                  }
-                                              ]
-                                          },
-                                          "links": {
-                                              "first": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=aaa",
-                                              "prev": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=bbb",
-                                              "self": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ccc",
-                                              "next": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ddd",
-                                              "last": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=zzz"
+                                    },
+                                    "balance": {
+                                      "type": "object",
+                                      "properties": {
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "balanceAmount": {
+                                          "type": "object",
+                                          "properties": {
+                                            "amount": {
+                                              "type": "integer"
+                                            },
+                                            "currency": {
+                                              "type": "string"
+                                            }
                                           }
+                                        }
                                       }
+                                    },
+                                    "enrichment": {
+                                      "type": "object",
+                                      "properties": {
+                                        "categorisation": {
+                                          "type": "object",
+                                          "properties": {
+                                            "categories": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "recurrence": {
+                                          "type": "string"
+                                        },
+                                        "transactionHash": {
+                                          "type": "object",
+                                          "properties": {
+                                            "hash": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        },
+                                        "merchant": {
+                                          "type": "object",
+                                          "properties": {
+                                            "id": {
+                                              "type": "string"
+                                            },
+                                            "name": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        },
+                                        "paymentProcessor": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
+                                    "hash": {
+                                      "type": "string"
+                                    }
                                   }
+                                }
                               }
+                            }
+                          },
+                          "links": {
+                            "type": "object",
+                            "properties": {
+                              "first": {
+                                "type": "string"
+                              },
+                              "prev": {
+                                "type": "string"
+                              },
+                              "self": {
+                                "type": "string"
+                              },
+                              "next": {
+                                "type": "string"
+                              },
+                              "last": {
+                                "type": "string"
+                              }
+                            }
                           }
-                      }
-                  },
-                  "400": {
-                      "description": "Bad Request",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 400,
-                                              "status": "BAD_REQUEST",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "BAD_REQUEST",
-                                                      "code": 10030,
-                                                      "message": "The server could not understand the request due to invalid syntax"
-                                                  }
-                                              ]
-                                          }
-                                      }
+                        }
+                      },
+                      "examples": {
+                        "Example 1": {
+                          "value": {
+                            "meta": {
+                              "tracingId": "string",
+                              "count": 1
+                            },
+                            "data": {
+                              "transactions": [
+                                {
+                                  "id": "string",
+                                  "date": "string",
+                                  "bookingDateTime": "2019-08-24T14:15:22Z",
+                                  "valueDateTime": "2019-08-24T14:15:22Z",
+                                  "status": "string",
+                                  "amount": 0,
+                                  "currency": "string",
+                                  "transactionAmount": {
+                                    "amount": 0,
+                                    "currency": "string"
                                   },
-                                  "properties": {
-                                      "error": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "code": {
-                                                  "type": "number"
-                                              },
-                                              "status": {
-                                                  "type": "string"
-                                              },
-                                              "supportUrl": {
-                                                  "type": "string"
-                                              },
-                                              "source": {
-                                                  "type": "string"
-                                              },
-                                              "issues": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "type": {
-                                                              "type": "string"
-                                                          },
-                                                          "code": {
-                                                              "type": "number",
-                                                              "description": "A 5 digit error code"
-                                                          },
-                                                          "message": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 400,
-                                              "status": "BAD_REQUEST",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "BAD_REQUEST",
-                                                      "code": 10030,
-                                                      "message": "The server could not understand the request due to invalid syntax"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                  },
-                  "401": {
-                      "description": "Unauthorized",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 401,
-                                              "status": "UNAUTHORIZED",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "CREDENTIALS",
-                                                      "code": 10030,
-                                                      "message": "Authentication header not present"
-                                                  }
-                                              ]
-                                          }
-                                      }
+                                  "reference": "string",
+                                  "description": "string",
+                                  "transactionInformation": [
+                                    "string"
+                                  ],
+                                  "proprietaryBankTransactionCode": {
+                                    "code": "string",
+                                    "issuer": "string"
                                   },
-                                  "properties": {
-                                      "error": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "code": {
-                                                  "type": "number"
-                                              },
-                                              "status": {
-                                                  "type": "string"
-                                              },
-                                              "supportUrl": {
-                                                  "type": "string"
-                                              },
-                                              "source": {
-                                                  "type": "string"
-                                              },
-                                              "issues": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "type": {
-                                                              "type": "string"
-                                                          },
-                                                          "code": {
-                                                              "type": "number",
-                                                              "description": "A 5 digit error code"
-                                                          },
-                                                          "message": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 401,
-                                              "status": "UNAUTHORIZED",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "CREDENTIALS",
-                                                      "code": 10030,
-                                                      "message": "Authentication header not present"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                  },
-                  "500": {
-                      "description": "Internal Server Error",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 500,
-                                              "status": "INTERNAL SERVER ERROR",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "INTERNAL_SERVER_ERROR",
-                                                      "code": 30000,
-                                                      "message": "Unexpected server error"
-                                                  }
-                                              ]
-                                          }
-                                      }
+                                  "isoBankTransactionCode": {
+                                    "domainCode": {
+                                      "code": "string",
+                                      "name": "string"
+                                    },
+                                    "familyCode": {
+                                      "code": "string",
+                                      "name": "string"
+                                    },
+                                    "subFamilyCode": {
+                                      "code": "string",
+                                      "name": "string"
+                                    }
                                   },
-                                  "properties": {
-                                      "error": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "code": {
-                                                  "type": "number"
-                                              },
-                                              "status": {
-                                                  "type": "string"
-                                              },
-                                              "supportUrl": {
-                                                  "type": "string"
-                                              },
-                                              "source": {
-                                                  "type": "string"
-                                              },
-                                              "issues": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "type": {
-                                                              "type": "string"
-                                                          },
-                                                          "code": {
-                                                              "type": "number",
-                                                              "description": "A 5 digit error code"
-                                                          },
-                                                          "message": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 500,
-                                              "status": "INTERNAL SERVER ERROR",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "INTERNAL_SERVER_ERROR",
-                                                      "code": 10030,
-                                                      "message": "Unexpected server error"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  }
-                              }
+                                  "balance": {
+                                    "type": "string",
+                                    "balanceAmount": {
+                                      "amount": 0,
+                                      "currency": "string"
+                                    }
+                                  },
+                                  "enrichment": {
+                                    "categorisation": {
+                                      "categories": [
+                                        "string"
+                                      ]
+                                    },
+                                    "recurrence": "string",
+                                    "transactionHash": {
+                                      "hash": "string"
+                                    },
+                                    "merchant": {
+                                      "id": "string",
+                                      "name": "string"
+                                    },
+                                    "paymentProcessor": "string"
+                                  },
+                                  "hash": "string"
+                                }
+                              ]
+                            },
+                            "links": {
+                              "first": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=aaa",
+                              "prev": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=bbb",
+                              "self": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ccc",
+                              "next": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ddd",
+                              "last": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=zzz"
+                            }
                           }
+                        }
                       }
+                    }
                   }
+                },
+                "400": {
+                  "description": "There are validation errors",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/400-error-response"
+                        }
+                      }
+                    }
+                  }
+                },
+                "401": {
+                  "description": "Authentication Error",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/401-error-response"
+                        }
+                      }
+                    }
+                  }
+                },
+                "404": {
+                  "description": "Webhook id not found",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/404-error-response"
+                        }
+                      }
+                    }
+                  }
+                },
+                "500": {
+                  "description": "An unexpected error occurred.",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/500-error-response"
+                        }
+                      }
+                    }
+                  }
+                }
               },
               "operationId": "get-accounts-transactions-categorised"
           }
@@ -7309,9 +6884,8 @@
           ],
           "get": {
               "summary": "Get the list of all categories for a specific account type",
-              "x-beta": true,
               "responses": {
-                  "200": {
+                "200": {
                       "description": "OK",
                       "content": {
                           "application/json": {
@@ -7359,291 +6933,70 @@
                                           }
                                       }
                                   }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "meta": {
-                                              "tracingId": "string"
-                                          },
-                                          "data": {
-                                              "incoming": [
-                                                  "string"
-                                              ],
-                                              "outgoing": [
-                                                  "string"
-                                              ]
-                                          }
-                                      }
-                                  }
                               }
                           }
                       }
                   },
-                  "400": {
-                      "description": "Bad Request",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 400,
-                                              "status": "BAD_REQUEST",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "BAD_REQUEST",
-                                                      "code": 10030,
-                                                      "message": "The server could not understand the request due to invalid syntax"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  },
-                                  "properties": {
-                                      "error": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "code": {
-                                                  "type": "number"
-                                              },
-                                              "status": {
-                                                  "type": "string"
-                                              },
-                                              "supportUrl": {
-                                                  "type": "string"
-                                              },
-                                              "source": {
-                                                  "type": "string"
-                                              },
-                                              "issues": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "type": {
-                                                              "type": "string"
-                                                          },
-                                                          "code": {
-                                                              "type": "number",
-                                                              "description": "A 5 digit error code"
-                                                          },
-                                                          "message": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 400,
-                                              "status": "BAD_REQUEST",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "BAD_REQUEST",
-                                                      "code": 10030,
-                                                      "message": "The server could not understand the request due to invalid syntax"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  }
-                              }
-                          }
+                "400": {
+                  "description": "There are validation errors",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/400-error-response"
+                        }
                       }
-                  },
-                  "401": {
-                      "description": "Unauthorized",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 401,
-                                              "status": "UNAUTHORIZED",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "CREDENTIALS",
-                                                      "code": 10030,
-                                                      "message": "Authentication header not present"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  },
-                                  "properties": {
-                                      "error": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "code": {
-                                                  "type": "number"
-                                              },
-                                              "status": {
-                                                  "type": "string"
-                                              },
-                                              "supportUrl": {
-                                                  "type": "string"
-                                              },
-                                              "source": {
-                                                  "type": "string"
-                                              },
-                                              "issues": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "type": {
-                                                              "type": "string"
-                                                          },
-                                                          "code": {
-                                                              "type": "number",
-                                                              "description": "A 5 digit error code"
-                                                          },
-                                                          "message": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 401,
-                                              "status": "UNAUTHORIZED",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "CREDENTIALS",
-                                                      "code": 10030,
-                                                      "message": "Authentication header not present"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                  },
-                  "500": {
-                      "description": "Internal Server Error",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 500,
-                                              "status": "INTERNAL SERVER ERROR",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "INTERNAL_SERVER_ERROR",
-                                                      "code": 30000,
-                                                      "message": "Unexpected server error"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  },
-                                  "properties": {
-                                      "error": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              },
-                                              "code": {
-                                                  "type": "number"
-                                              },
-                                              "status": {
-                                                  "type": "string"
-                                              },
-                                              "supportUrl": {
-                                                  "type": "string"
-                                              },
-                                              "source": {
-                                                  "type": "string"
-                                              },
-                                              "issues": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                          "type": {
-                                                              "type": "string"
-                                                          },
-                                                          "code": {
-                                                              "type": "number",
-                                                              "description": "A 5 digit error code"
-                                                          },
-                                                          "message": {
-                                                              "type": "string"
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "error": {
-                                              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                                              "code": 500,
-                                              "status": "INTERNAL SERVER ERROR",
-                                              "supportUrl": "https://support.yapily.com/",
-                                              "source": "YAPILY",
-                                              "issues": [
-                                                  {
-                                                      "type": "INTERNAL_SERVER_ERROR",
-                                                      "code": 10030,
-                                                      "message": "Unexpected server error"
-                                                  }
-                                              ]
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
+                    }
                   }
+                },
+                "401": {
+                  "description": "Authentication Error",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/401-error-response"
+                        }
+                      }
+                    }
+                  }
+                },
+                "404": {
+                  "description": "Webhook id not found",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/404-error-response"
+                        }
+                      }
+                    }
+                  }
+                },
+                "500": {
+                  "description": "An unexpected error occurred.",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/500-error-response"
+                        }
+                      }
+                    }
+                  }
+                }
               },
               "operationId": "get-categorisation-accountType",
               "description": "Returns the list of categories that can be returned for a specific account type (consumer or business)",
@@ -9697,7 +9050,6 @@
           "tags": [
             "Webhooks"
           ],
-          "x-beta": true,
           "description": "Retrieve a comprehensive list of event categories that can be registered for webhook notifications in your application. These event categories can be used to subscribe a webhook to specific events, enabling your application to receive real-time notifications when these events occur.",
           "summary": "Get Webhook Categories",
           "operationId": "getWebhookEventsCategories",
@@ -9749,12 +9101,32 @@
                 }
               }
             },
+            "401": {
+              "description": "Authentication Error",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
+                  }
+                }
+              }
+            },
             "400": {
               "description": "There are validation errors",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/400-error-response"
+                    }
                   }
                 }
               }
@@ -9764,7 +9136,12 @@
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
                   }
                 }
               }
@@ -9777,7 +9154,6 @@
           "tags": [
             "Webhooks"
           ],
-          "x-beta": true,
           "description": "Register a webhook to one or multiple event categories to receive real-time notifications when specific events occur in your application.",
           "summary": "Register Webhook Event",
           "operationId": "registerWebhook",
@@ -9845,12 +9221,32 @@
             "201": {
               "$ref": "#/components/responses/WebhookDetailsWithSecret"
             },
+            "401": {
+              "description": "Authentication Error",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
+                  }
+                }
+              }
+            },
             "400": {
               "description": "There are validation errors",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/400-error-response"
+                    }
                   }
                 }
               }
@@ -9860,7 +9256,12 @@
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/406-error-response"
+                    }
                   }
                 }
               }
@@ -9870,7 +9271,12 @@
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
                   }
                 }
               }
@@ -9881,7 +9287,6 @@
           "tags": [
             "Webhooks"
           ],
-          "x-beta": true,
           "description": "Retrieve the list of registered webhooks for your application",
           "summary": "Retrieve All Webhook Events",
           "operationId": "getRegisteredWebhooks",
@@ -9912,12 +9317,32 @@
                 }
               }
             },
+            "401": {
+              "description": "Authentication Error",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
+                  }
+                }
+              }
+            },
             "400": {
               "description": "There are validation errors",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/400-error-response"
+                    }
                   }
                 }
               }
@@ -9927,7 +9352,12 @@
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
                   }
                 }
               }
@@ -9940,7 +9370,6 @@
           "tags": [
             "Webhooks"
           ],
-          "x-beta": true,
           "description": "Delete a webhook event for a specified webhook ID, unregistering it from receiving any further notifications for the subscribed event categories in your application.",
           "summary": "Delete Webhook Event",
           "operationId": "deleteWebhook",
@@ -9968,12 +9397,32 @@
                 }
               }
             },
+            "401": {
+              "description": "Authentication Error",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
+                  }
+                }
+              }
+            },
             "400": {
               "description": "There are validation errors",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/400-error-response"
+                    }
                   }
                 }
               }
@@ -9983,7 +9432,12 @@
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/404-error-response"
+                    }
                   }
                 }
               }
@@ -9993,7 +9447,12 @@
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
                   }
                 }
               }
@@ -10006,7 +9465,6 @@
           "tags": [
             "Webhooks"
           ],
-          "x-beta": true,
           "description": "Reset webhook secret for a webhook that is already registered to your application",
           "summary": "Reset Webhook Secret",
           "operationId": "webhookSecretReset",
@@ -10037,12 +9495,32 @@
             "201": {
               "$ref": "#/components/responses/WebhookDetailsWithSecret"
             },
+            "401": {
+              "description": "Authentication Error",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
+                  }
+                }
+              }
+            },
             "400": {
               "description": "There are validation errors",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/400-error-response"
+                    }
                   }
                 }
               }
@@ -10052,7 +9530,12 @@
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/404-error-response"
+                    }
                   }
                 }
               }
@@ -10062,7 +9545,12 @@
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponse"
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
                   }
                 }
               }
@@ -11092,6 +10580,70 @@
                   "monitoring": []
               }
           },
+        "ApiErrorResponseV2": {
+          "type": "object",
+          "description": "API Error Response",
+          "properties": {
+            "error": {
+              "required": [
+                "tracingId",
+                "code",
+                "status",
+                "issues"
+              ],
+              "type": "object",
+              "properties": {
+                "tracingId": {
+                  "type": "string",
+                  "description": "Unique identifier of the request, used by Yapily for support purposes"
+                },
+                "code": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Numeric HTTP status code associated with the error"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Textual description of the HTTP status"
+                },
+                "supportUrl": {
+                  "type": "string",
+                  "description": "Link to where further information regarding the error can be found"
+                },
+                "source": {
+                  "type": "string",
+                  "description": "Source of the error. This may be YAPILY, the INSTITUTION, or the USER"
+                },
+                "issues": {
+                  "type": "array",
+                  "description": "List of issues relating to the error",
+                  "items": {
+                    "required": [
+                      "message",
+                      "code"
+                    ],
+                    "type": "object",
+                    "description": "Detailed information regarding the issue that was experienced during processing of the request",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "Category of the issue"
+                      },
+                      "code": {
+                        "type": "string",
+                        "description": "5 digit Error Code that uniquely identifies the type of issue, for full list of error codes pelase check our documentation"
+                      },
+                      "message": {
+                        "type": "string",
+                        "description": "Human readable description of the issue that was experienced"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
           "Application": {
               "type": "object",
               "description": "Information about the application.",
@@ -23463,6 +23015,25 @@
                   }
               }
           },
+        "406-error-response": {
+          "description": "404 Error",
+          "value": {
+            "error": {
+              "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+              "code": 406,
+              "status": "NOT_ACCEPTABLE",
+              "supportUrl": "https://support.yapily.com/",
+              "source": "YAPILY",
+              "issues": [
+                {
+                  "type": "RESOURCE",
+                  "code": 14007,
+                  "message": "Maximum number of resources that can be created has been reached"
+                }
+              ]
+            }
+          }
+        },
           "500-error-response": {
               "description": "500 Error",
               "value": {
