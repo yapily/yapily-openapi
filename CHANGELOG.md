@@ -5,6 +5,18 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [4.7.0] - 2024-08-29
+### Removed
+- Monitoring object from responses of all endpoints
+
+## [4.6.0] - 2024-08-19
+### Changed
+- Added a new endpoint for retrieving Bulk Payment File Status
+
+## [4.5.0] - 2024-08-19
+### Changed
+- Added a new bulk payment endpoint to retrieve the status of each payment submitted for given bulkPaymentId
+
 ## [4.4.1] - 2024-07-22
 ### Changed
 - fix webhook and data+ error response schema and examples

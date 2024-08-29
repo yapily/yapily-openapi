@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "4.4.1",
+      "version": "4.7.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -1750,6 +1750,176 @@
               ]
           }
       },
+    "/bulk-payments/{bulkPaymentId}": {
+      "get": {
+        "description": "Returns the bulk file status of the bulk payment for given bulkPaymentId",
+        "summary": "Returns the bulk file status",
+        "tags": [
+          "Payments"
+        ],
+        "operationId": "getBulkPaymentStatus",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "consent",
+            "description": "__Mandatory__. The `consent token` containing the user's authorisation to make the request.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "bulkPaymentId",
+            "description": "__Mandatory__. Bulk payment id returned when bulk payment request was submitted.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "tracingId": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "consentId": {
+                          "type": "string"
+                        },
+                        "statusDetails": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "bankStatus": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "type": "string"
+                                },
+                                "updatedAt": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Successful 200 OK": {
+                    "value": {
+                      "meta": {
+                        "tracingId": "27b47dca-fb0f-4448-b470-1cd2d5516d0f"
+                      },
+                      "data": {
+                        "id": "76ad88c7-6e99-4a16-a277-e428a73d1e86",
+                        "consentId": "5daeb980-5ff5-49db-b7a0-e93dd9c93533",
+                        "statusDetails": {
+                          "status": "COMPLETED",
+                          "updatedAt": "2024-07-25T18:14:52.672Z",
+                          "bankStatus": {
+                            "status": "COMPLETED",
+                            "updatedAt": "2024-07-25T18:14:52.672Z"
+                          }
+                        },
+                        "createdAt": "2024-07-25T18:14:52.672Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Required parameter missing or invalid",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/400-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bulk payment not found for provided id",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/404-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
       "/consent-auth-code": {
           "post": {
               "description": "Used to obtain a Yapily Consent object containing the `consentToken` once the user has authenticated and you have an OAuth2 authorisation code `auth-code` and state `auth-state`.",
@@ -3517,6 +3687,114 @@
                   "Payments"
               ]
           }
+      },
+      "/bulk-payments/{bulkPaymentId}/details": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "consent",
+            "description": "__Mandatory__. The `consent token` containing the user's authorisation to make the request.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "bulkPaymentId",
+            "description": "__Mandatory__. Bulk payment id returned when bulk payment request was submitted",
+            "required": true
+          }
+        ],
+        "get": {
+          "description": "Retrieve details of each payment submitted for a given bulkPaymentId",
+          "operationId": "getBulkPaymentDetailsById",
+          "x-beta": true,
+          "summary": "Get payment details for bulkPaymentId",
+          "tags": [
+            "Payments"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BulkPaymentDetailsByIdResponse"
+                  },
+                  "examples": {
+                    "Successful 200 OK": {
+                      "$ref": "#/components/examples/bulk-payment-details-by-id-response"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "There are validation errors",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/400-error-response"
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Authentication Error",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/404-error-response"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An unexpected error occurred.",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "/pre-auth-requests": {
           "x-yapily-features": [
@@ -10515,12 +10793,6 @@
                   "error": {
                       "$ref": "#/components/schemas/ApiError"
                   },
-                  "monitoring": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/MonitoringEndpointStatus"
-                      }
-                  },
                   "raw": {
                       "type": "array",
                       "items": {
@@ -10539,8 +10811,7 @@
                       },
                       "source": "INSTITUTION",
                       "status": "FAILED_DEPENDENCY"
-                  },
-                  "monitoring": []
+                  }
               }
           },
           "ApiErrorResponse": {
@@ -10548,12 +10819,6 @@
               "properties": {
                   "error": {
                       "$ref": "#/components/schemas/ErrorDetails"
-                  },
-                  "monitoring": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/MonitoringEndpointStatus"
-                      }
                   }
               },
               "description": "Used to return errors from the bank from each request<ul><li>`400` - Returned by any `POST` endpoint when the body does not conform to the contract</li><li>`401` - Returned by any endpoint when an invalid `authToken` is used for authentication</li><li>`403` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the `Consent` is no longer authorised to access financial data or to make a payment</li><li>`404` - Returned by any endpoint where there are path parameters and the path parameters supplied are unable to find the desired resource</li><li>`409` - Returned by any `POST` endpoint when creating a resource that conflicts with any other existing resource e.g. [Create User](https://docs.yapily.com/api/#create-user)</li><li>`424` - Returned by any [Financial Data](https://docs.yapily.com/api/#yapily-api-financial-data) and any [Payments](https://docs.yapily.com/api/#yapily-api-payments) endpoint when the feature to be accessed is not supported by the `Institution`.</li><li>`500` - Returned by any endpoint when Yapily is down. If you encounter any false positives, please <a href=\"mailto:support@yapily.com\">notify us</a></li></ul>",
@@ -10576,8 +10841,7 @@
                               }
                           }
                       ]
-                  },
-                  "monitoring": []
+                  }
               }
           },
         "ApiErrorResponseV2": {
@@ -10727,6 +10991,47 @@
                       }
                   }
               }
+          },
+          "BulkPaymentDetailsByIdResponse": {
+            "type": "object",
+            "properties": {
+              "meta": {
+                "type": "object",
+                "properties": {
+                  "tracingId": {
+                    "type": "string"
+                  }
+                }
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "consentId": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "payments": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "reference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "EmbeddedAccountAuthorisationResponse": {
               "type": "object",
@@ -12664,12 +12969,6 @@
                       "items": {
                           "$ref": "#/components/schemas/FeatureEnum"
                       }
-                  },
-                  "monitoring": {
-                      "type": "object",
-                      "additionalProperties": {
-                          "$ref": "#/components/schemas/MonitoringFeatureStatus"
-                      }
                   }
               }
           },
@@ -12819,41 +13118,6 @@
                   "merchantCategoryCode": {
                       "type": "string",
                       "description": "Defines the underlying services and goods that the merchant provides. Specified as a 3-letter ISO 18245 code "
-                  }
-              }
-          },
-          "MonitoringEndpointStatus": {
-              "type": "object",
-              "properties": {
-                  "lastTested": {
-                      "type": "string",
-                      "format": "date-time"
-                  },
-                  "resourceEndpoint": {
-                      "type": "string"
-                  },
-                  "span": {
-                      "type": "string",
-                      "format": "iso8601"
-                  },
-                  "status": {
-                      "$ref": "#/components/schemas/MonitoringStatusEnum"
-                  }
-              }
-          },
-          "MonitoringFeatureStatus": {
-              "type": "object",
-              "properties": {
-                  "lastTested": {
-                      "type": "string",
-                      "format": "date-time"
-                  },
-                  "span": {
-                      "type": "string",
-                      "format": "iso8601"
-                  },
-                  "status": {
-                      "$ref": "#/components/schemas/MonitoringStatusEnum"
                   }
               }
           },
@@ -14836,24 +15100,6 @@
                   "date",
                   "-date"
               ]
-          },
-          "MonitoringStatusEnum": {
-              "type": "string",
-              "description": "The latest operational status.",
-              "enum": [
-                  "Up",
-                  "Down",
-                  "Warning",
-                  "Unknown",
-                  "Expired"
-              ],
-              "x-enumDescriptions": {
-                  "Up": "All the resources are UP or a mix of resources that are UP and EXPIRED",
-                  "Down": "All the resources are DOWN or a mix of resources that are DOWN and EXPIRED",
-                  "Warning": "Mix of resources that are UP and DOWN",
-                  "Unknown": "There are no tested resources",
-                  "Expired": "All the resources are EXPIRED"
-              }
           },
           "StatementReference": {
               "type": "object",
@@ -17632,7 +17878,7 @@
                   "editedByUser": {
                       "type": "boolean",
                       "description": "Indicates if the user edited the control parameters during authorisation"
-            
+
                   }
               }
           },
@@ -18881,6 +19127,24 @@
           }
       },
       "examples": {
+          "bulk-payment-details-by-id-response": {
+            "value": {
+              "meta": {
+                "tracingId": "27b47dca-fb0f-4448-b470-1cd2d5516d0f"
+              },
+              "data": {
+                "id": "e75d2c85-08e9-4a48-8d14-f789186f2a19",
+                "consentId": "5daeb980-5ff5-49db-b7a0-e93dd9c93533",
+                "createdAt": "2024-07-25T18:14:52.672Z",
+                "Payments": [
+                  {
+                    "reference": "Test 1",
+                    "status": "Accepted Settlement In Process"
+                  }
+                ]
+              }
+            }
+          },
           "berlin-group-example-acc-auth-request": {
               "description": "Berlin Group Example Request",
               "value": {
@@ -21961,8 +22225,7 @@
                       "code": 401,
                       "status": "UNAUTHORIZED",
                       "message": "Full authentication is required to access this resource"
-                  },
-                  "monitoring": []
+                  }
               }
           },
           "extend-consent-error-response-code-400": {
@@ -22981,10 +23244,11 @@
               "description": "403 Error",
               "value": {
                   "error": {
+                      "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
                       "code": 403,
                       "status": "FORBIDDEN",
                       "supportUrl": "https://support.yapily.com/",
-                      "source": "USER",
+                      "source": "YAPILY",
                       "issues": [
                           {
                             "type": "INVALID_REQUEST",
@@ -22992,8 +23256,7 @@
                             "message": "You don't have the right scope to access this resource"
                           }
                       ]
-                  },
-                  "monitoring": []
+                  }
               }
           },
           "404-error-response": {
