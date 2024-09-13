@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "4.7.0",
+      "version": "4.8.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -152,6 +152,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
                       "in": "query",
                       "name": "raw",
@@ -228,6 +231,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                    "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
@@ -331,6 +337,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                    "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
@@ -442,6 +451,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
                       "in": "query",
                       "name": "raw",
@@ -543,6 +555,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                      "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
@@ -647,6 +662,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
                       "in": "query",
                       "name": "raw",
@@ -722,6 +740,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
                       "in": "query",
                       "name": "raw",
@@ -795,6 +816,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                      "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. The maximum number of transaction records to be returned. Must be between 1 and 1000.",
@@ -882,6 +906,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. The maximum number of transaction records to be returned. Must be between 1 and 1000.",
                       "in": "query",
                       "name": "limit",
@@ -967,6 +994,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. The maximum number of transaction records to be returned. Must be between 1 and 1000.",
                       "in": "query",
                       "name": "limit",
@@ -1050,6 +1080,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                      "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Returned transactions will be on or after this date (yyyy-MM-dd'T'HH:mm:ss.SSSZ). ",
@@ -1182,6 +1215,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
                       "in": "query",
                       "name": "raw",
@@ -1275,6 +1311,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                    "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
@@ -1374,6 +1413,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                      "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Acceptable value: `categorisation`. When set, will include enrichment data in the transactions returned. <br><br>Enrichment data is optional, e.g. when 'categorisation' enrichment data is requested, the enrichment response will include categorisation data and merchant name, only if it can be evaluated from the transaction. This service is limited for UK institution transactions currently. __This is a legacy feature and will be deprecated. Date TBC__",
@@ -1750,7 +1792,7 @@
               ]
           }
       },
-    "/bulk-payments/{bulkPaymentId}": {
+      "/bulk-payments/{bulkPaymentId}": {
       "get": {
         "description": "Returns the bulk file status of the bulk payment for given bulkPaymentId",
         "summary": "Returns the bulk file status",
@@ -2397,6 +2439,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
                       "in": "query",
                       "name": "raw",
@@ -2502,6 +2547,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                      "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
@@ -2810,6 +2858,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
                       "in": "query",
                       "name": "raw",
@@ -2912,6 +2963,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                      "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
@@ -3041,6 +3095,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                    "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
@@ -3278,6 +3335,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
                       "in": "query",
                       "name": "raw",
@@ -3509,6 +3569,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
                       "in": "query",
                       "name": "raw",
@@ -3633,6 +3696,9 @@
                           "title": "User IP Address",
                           "type": "string"
                       }
+                  },
+                  {
+                      "$ref": "#/components/parameters/SubAppHeader"
                   },
                   {
                       "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
@@ -3842,6 +3908,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                      "$ref": "#/components/parameters/SubAppHeader"
                   }
               ],
               "requestBody": {
@@ -3928,6 +3997,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                      "$ref": "#/components/parameters/SubAppHeader"
                   }
               ],
               "requestBody": {
@@ -4643,14 +4715,7 @@
               "x-beta": true,
               "parameters": [
                 {
-                  "description": "The sub-application ID to which event type is being subscribed to",
-                  "in": "header",
-                  "name": "sub-application",
-                  "required": false,
-                  "schema": {
-                    "type": "string",
-                    "format": "uuid"
-                  }
+                    "$ref": "#/components/parameters/SubAppHeader"
                 }
               ],
               "requestBody": {
@@ -4736,14 +4801,7 @@
                       "$ref": "#/components/parameters/EventTypeId"
                   },
                   {
-                    "description": "The sub-application ID for which details of specific event type will be returned",
-                    "in": "header",
-                    "name": "sub-application",
-                    "required": false,
-                    "schema": {
-                      "type": "string",
-                      "format": "uuid"
-                    }
+                      "$ref": "#/components/parameters/SubAppHeader"
                   }
               ],
               "responses": {
@@ -6353,6 +6411,9 @@
                       }
                   },
                   {
+                      "$ref": "#/components/parameters/SubAppHeader"
+                  },
+                  {
                       "description": "__Optional__. Returned transactions will be on or after this date (yyyy-MM-dd'T'HH:mm:ss.SSSZ).",
                       "in": "query",
                       "name": "from",
@@ -6570,6 +6631,9 @@
                   }
               },
               {
+                  "$ref": "#/components/parameters/SubAppHeader"
+              },
+              {
                   "schema": {
                       "type": "string"
                   },
@@ -6757,6 +6821,9 @@
             "in": "path",
             "required": true,
             "description": "Unique identifier for transaction categorisation request"
+          },
+          {
+            "$ref": "#/components/parameters/SubAppHeader"
           },
           {
             "description": "__Optional__. The maximum number of transaction records to be returned. Must be between 100 and 1000. If not specified will default to 100.",
@@ -7158,6 +7225,9 @@
                   "in": "path",
                   "required": true,
                   "description": "type of bank account (consumer or business)"
+              },
+              {
+                  "$ref": "#/components/parameters/SubAppHeader"
               }
           ],
           "get": {
@@ -9897,7 +9967,17 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+        "SubAppHeader": {
+          "description": "The sub-application ID to which event type is being subscribed to",
+          "in": "header",
+          "name": "sub-application",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
           }
+        }
       },
       "schemas": {
           "Account": {

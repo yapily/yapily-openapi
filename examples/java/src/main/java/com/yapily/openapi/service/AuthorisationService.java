@@ -19,21 +19,21 @@ public class AuthorisationService {
     }
 
     public ApiResponseOfAccountAuthorisationResponse createAccountAuthRequest(final UUID userUuid, final String institutionId, String psuId, String psuCorpId,
-                                                                              String psuIpAdd,
+                                                                              String psuIpAdd, UUID subAppId,
                                                                               Boolean raw) throws ApiException {
         AccountAuthorisationRequest accountRequest = new AccountAuthorisationRequest();
         accountRequest.setUserUuid(userUuid);
         accountRequest.setInstitutionId(institutionId);
-        return api.initiateAccountRequest(accountRequest, psuId, psuCorpId, psuIpAdd, raw);
+        return api.initiateAccountRequest(accountRequest, psuId, psuCorpId, psuIpAdd, subAppId, raw);
     }
 
-    public ApiResponseOfPaymentAuthorisationRequestResponse createPaymentAuthRequest(final String applicationUserUuid, String psuId, String psuCorpId, String psuIpAdd,
+    public ApiResponseOfPaymentAuthorisationRequestResponse createPaymentAuthRequest(final String applicationUserUuid, String psuId, String psuCorpId, String psuIpAdd, UUID subAppId,
                                                                                      Boolean raw, PaymentRequest paymentRequest, String institutionId) throws ApiException {
         PaymentAuthorisationRequest paymentAuthorisationRequest = new PaymentAuthorisationRequest();
         paymentAuthorisationRequest.setPaymentRequest(paymentRequest);
         paymentAuthorisationRequest.setApplicationUserId(applicationUserUuid);
         paymentAuthorisationRequest.setInstitutionId(institutionId);
-        return api.createPaymentAuthorisation(paymentAuthorisationRequest, psuId, psuCorpId, psuIpAdd, raw);
+        return api.createPaymentAuthorisation(paymentAuthorisationRequest, psuId, psuCorpId, psuIpAdd, subAppId, raw);
     }
 
 
