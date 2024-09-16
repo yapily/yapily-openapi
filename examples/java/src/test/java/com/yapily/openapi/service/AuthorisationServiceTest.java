@@ -27,7 +27,6 @@ class AuthorisationServiceTest {
 
     @Mock
     private AuthorisationsApi apiClient;
-
     @Mock
     private PaymentRequest paymentReq;
 
@@ -43,13 +42,13 @@ class AuthorisationServiceTest {
     void createAccountAuthRequest() throws ApiException {
         ApiResponseOfAccountAuthorisationResponse accResponse = mock(ApiResponseOfAccountAuthorisationResponse.class);
         when(apiClient.initiateAccountRequest(any(AccountAuthorisationRequest.class), anyString(), anyString(), anyString(), any(UUID.class), anyBoolean())).thenReturn(accResponse);
-        assertNotNull(service.createAccountAuthRequest(UUID.randomUUID(), "institution", "", "", "", subAppId, false));
+        assertNotNull(service.createAccountAuthRequest(UUID.randomUUID(), "institution", "", "", "", UUID.fromString(subAppId), false));
     }
 
     @Test
     void createPaymentAuthRequest() throws ApiException {
         ApiResponseOfPaymentAuthorisationRequestResponse paymentResp = mock(ApiResponseOfPaymentAuthorisationRequestResponse.class);
         when(apiClient.createPaymentAuthorisation(any(PaymentAuthorisationRequest.class), anyString(), anyString(), anyString(), any(UUID.class), anyBoolean())).thenReturn(paymentResp);
-        assertNotNull(service.createPaymentAuthRequest(UUID.randomUUID().toString(), "", "", "", subAppId, false, paymentReq, ""));
+        assertNotNull(service.createPaymentAuthRequest(UUID.randomUUID().toString(), "", "", "", UUID.fromString(subAppId), false, paymentReq, ""));
     }
 }
