@@ -35,6 +35,8 @@ class PaymentsServiceTest {
 
     private PaymentsService service;
 
+    private static final String subAppId = "bbcc4621-d88f-4a94-ae2f-b38072bf5087";
+
     @BeforeEach
     void setUp() {
         service = new PaymentsService(apiClient);
@@ -43,8 +45,8 @@ class PaymentsServiceTest {
     @Test
     void createPaymentRequestCall() throws ApiException {
         ApiResponseOfPaymentResponse paymentResponse = mock(ApiResponseOfPaymentResponse.class);
-        when(apiClient.createPayment(anyString(), any(PaymentRequest.class), anyString(), anyString(), anyString(), anyBoolean())).thenReturn(paymentResponse);
-        assertNotNull(service.createPaymentRequestCall("i-am-a-consent", paymentRequest, "", "", "", false));
+        when(apiClient.createPayment(anyString(), any(PaymentRequest.class), anyString(), anyString(), anyString(), any(UUID.class), anyBoolean())).thenReturn(paymentResponse);
+        assertNotNull(service.createPaymentRequestCall("i-am-a-consent", paymentRequest, "", "", "", subAppId, false));
     }
 
     @Test

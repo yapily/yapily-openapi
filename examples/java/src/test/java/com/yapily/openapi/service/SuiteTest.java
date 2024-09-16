@@ -26,7 +26,7 @@ public class SuiteTest {
     private static final String psuCorpId = "";
     private static final String psuIpAdd = "";
     private static final String CONSENT = "consentToken";
-
+    private static final String subAppId = "bbcc4621-d88f-4a94-ae2f-b38072bf5087";
 
     private final ApiClient defaultClient = Configuration.getDefaultApiClient()
             .setConnectTimeout(60000)
@@ -66,7 +66,7 @@ public class SuiteTest {
             ApplicationUser confirmedUser = userService.createUser(newUser);
             Assertions.assertNotNull(confirmedUser);
             // account request
-            ApiResponseOfAccountAuthorisationResponse accountReqResp = authService.createAccountAuthRequest(confirmedUser.getUuid(), INSTITUTION, psuId, psuCorpId, psuIpAdd, false);
+            ApiResponseOfAccountAuthorisationResponse accountReqResp = authService.createAccountAuthRequest(confirmedUser.getUuid(), INSTITUTION, psuId, psuCorpId, psuIpAdd, subAppId,false);
 
             AccountAuthorisationResponse accountReqRespData = accountReqResp.getData();
             Assertions.assertNotNull(accountReqRespData);
@@ -74,10 +74,10 @@ public class SuiteTest {
             // fetch the token used for other calls
             String consentToken = consentService.fetchConsentFromAuth(accountReqRespData.getAuthorisationUrl(), defaultClient.getBasePath());
             // then fetch the accounts
-            List<Account> accounts = accountService.getAccounts(consentToken, psuId, psuCorpId, psuIpAdd, false);
+            List<Account> accounts = accountService.getAccounts(consentToken, psuId, psuCorpId, psuIpAdd, subAppId,false);
             Assertions.assertFalse(accounts.isEmpty());
             for (Account acc : accounts) {
-                List<Transaction> transactions = accountService.getTransactions(acc.getId(), consentToken, psuId, psuCorpId, psuIpAdd, null, null, null, null, null, null, null, false);
+                List<Transaction> transactions = accountService.getTransactions(acc.getId(), consentToken, psuId, psuCorpId, psuIpAdd, subAppId,null, null, null, null, null, null, null, false);
                 Assertions.assertFalse(transactions.isEmpty());
             }
             // user removal
@@ -102,7 +102,7 @@ public class SuiteTest {
             // payment request and payment auth request
             PaymentRequest paymentRequest = paymentsService.createPaymentRequest();
             ApiResponseOfPaymentAuthorisationRequestResponse paymentsReqResp =
-                    authService.createPaymentAuthRequest(confirmedUser.getApplicationUserId(), psuId, psuCorpId, psuIpAdd, false,
+                    authService.createPaymentAuthRequest(confirmedUser.getApplicationUserId(), psuId, psuCorpId, psuIpAdd, subAppId,false,
                                                          paymentRequest, INSTITUTION);
             PaymentAuthorisationRequestResponse paymentsReqRespData = paymentsReqResp.getData();
             Assertions.assertNotNull(paymentsReqRespData);
@@ -111,10 +111,10 @@ public class SuiteTest {
             String consentToken = consentService.fetchConsentFromAuth(paymentsReqRespData.getAuthorisationUrl(), defaultClient.getBasePath());
             Assertions.assertNotNull(consentToken);
             // then fetch the accounts
-            ApiResponseOfPaymentResponse paymentResponse = paymentsService.createPaymentRequestCall(consentToken, paymentRequest, psuId, psuCorpId, psuIpAdd, false);
+            ApiResponseOfPaymentResponse paymentResponse = paymentsService.createPaymentRequestCall(consentToken, paymentRequest, psuId, psuCorpId, psuIpAdd,subAppId, false);
             PaymentResponse paymentsRespData = paymentResponse.getData();
             Assertions.assertNotNull(paymentsRespData);
-            PaymentResponses payments = paymentsService.fetchPayment(paymentsRespData.getId(), consentToken, psuId, psuCorpId, psuIpAdd, false);
+            PaymentResponses payments = paymentsService.fetchPayment(paymentsRespData.getId(), consentToken, psuId, psuCorpId, psuIpAdd, subAppId,false);
             Assertions.assertNotNull(payments);
             // user removal
             // DeleteUser fails with timeout connection error

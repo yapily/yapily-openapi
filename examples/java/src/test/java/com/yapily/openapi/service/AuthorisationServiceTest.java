@@ -32,6 +32,7 @@ class AuthorisationServiceTest {
     private PaymentRequest paymentReq;
 
     private AuthorisationService service;
+    private static final String subAppId = "bbcc4621-d88f-4a94-ae2f-b38072bf5087";
 
     @BeforeEach
     void setUp() {
@@ -41,14 +42,14 @@ class AuthorisationServiceTest {
     @Test
     void createAccountAuthRequest() throws ApiException {
         ApiResponseOfAccountAuthorisationResponse accResponse = mock(ApiResponseOfAccountAuthorisationResponse.class);
-        when(apiClient.initiateAccountRequest(any(AccountAuthorisationRequest.class), anyString(), anyString(), anyString(), anyBoolean())).thenReturn(accResponse);
-        assertNotNull(service.createAccountAuthRequest(UUID.randomUUID(), "institution", "", "", "", false));
+        when(apiClient.initiateAccountRequest(any(AccountAuthorisationRequest.class), anyString(), anyString(), anyString(), any(UUID.class), anyBoolean())).thenReturn(accResponse);
+        assertNotNull(service.createAccountAuthRequest(UUID.randomUUID(), "institution", "", "", "", subAppId, false));
     }
 
     @Test
     void createPaymentAuthRequest() throws ApiException {
         ApiResponseOfPaymentAuthorisationRequestResponse paymentResp = mock(ApiResponseOfPaymentAuthorisationRequestResponse.class);
-        when(apiClient.createPaymentAuthorisation(any(PaymentAuthorisationRequest.class), anyString(), anyString(), anyString(), anyBoolean())).thenReturn(paymentResp);
-        assertNotNull(service.createPaymentAuthRequest(UUID.randomUUID().toString(), "", "", "", false, paymentReq, ""));
+        when(apiClient.createPaymentAuthorisation(any(PaymentAuthorisationRequest.class), anyString(), anyString(), anyString(), any(UUID.class), anyBoolean())).thenReturn(paymentResp);
+        assertNotNull(service.createPaymentAuthRequest(UUID.randomUUID().toString(), "", "", "", subAppId, false, paymentReq, ""));
     }
 }
