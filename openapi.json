@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "4.8.0",
+      "version": "4.9.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -63,8 +63,12 @@
           "name": "Variable Recurring Payments"
       },
       {
-          "description": "Hosted Pages endpoints for payments and data products",
-          "name": "Hosted Pages"
+        "description": "Hosted Payment Pages endpoints for payments products",
+        "name": "Hosted Payment Pages"
+      },
+      {
+        "description": "Hosted Consent Pages endpoints for data products",
+        "name": "Hosted Consent Pages"
       },
       {
           "description": "The constraints endpoints can be used to retrieve institution specific data requirements and rules that will apply when performing other operations.",
@@ -97,7 +101,8 @@
               "Financial Profile",
               "Notifications",
               "Variable Recurring Payments",
-              "Hosted Pages",
+              "Hosted Payment Pages",
+              "Hosted Consent Pages",
               "Constraints",
               "Application Management",
               "Enrichment",
@@ -7353,6 +7358,208 @@
               ]
           }
       },
+      "/hosted/consent-requests" : {
+        "post": {
+          "description": "Used to initiate a consent request using Yapily Hosted Pages.",
+          "x-beta": true,
+          "operationId": "createHostedConsentRequest",
+          "requestBody": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Create Hosted Consent Request": {
+                    "$ref": "#/components/examples/create-hosted-consent-request"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/CreateHostedConsentRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "Create Hosted Consent Request Response": {
+                      "$ref": "#/components/examples/create-hosted-consent-response"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseOfCreateHostedConsentRequest"
+                  }
+                }
+              },
+              "description": "Created"
+            },
+            "400": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "400 Error Response": {
+                      "$ref": "#/components/examples/400-error-response"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseError"
+                  }
+                }
+              },
+              "description": "Bad Request"
+            },
+            "401": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "401 Error Response": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseError"
+                  }
+                }
+              },
+              "description": "Unauthorized. Credentials are missing or invalid"
+            },
+            "500": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "500 Error Response": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseError"
+                  }
+                }
+              },
+              "description": "Unexpected Error"
+            },
+            "default": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "Error Response": {
+                      "$ref": "#/components/examples/error-response-code-401"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseError"
+                  }
+                }
+              },
+              "description": "Error Response"
+            }
+          },
+          "summary": "Create Hosted Consent Request",
+          "tags": [
+            "Hosted Consent Pages"
+          ]
+        }
+      },
+      "/hosted/consent-requests/{consentRequestId}": {
+        "get": {
+          "description": "Used to get details of a hosted consent request",
+          "x-beta": true,
+          "operationId": "getHostedConsentRequest",
+          "parameters": [
+            {
+              "description": "Unique Identifier of the consent request",
+              "in": "path",
+              "name": "consentRequestId",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "Get Hosted Consent Request Response": {
+                      "$ref": "#/components/examples/get-hosted-consent-response"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseOfGetHostedConsentRequest"
+                  }
+                }
+              },
+              "description": "Ok"
+            },
+            "401": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "401 Error Response": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseError"
+                  }
+                }
+              },
+              "description": "Unauthorized"
+            },
+            "404": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "404 Error Response": {
+                      "$ref": "#/components/examples/404-error-response"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseError"
+                  }
+                }
+              },
+              "description": "Not Found"
+            },
+            "500": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "500 Error Response": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseError"
+                  }
+                }
+              },
+              "description": "Unexpected Error"
+            },
+            "default": {
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "examples": {
+                    "Error Response": {
+                      "$ref": "#/components/examples/error-response-code-401"
+                    }
+                  },
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiResponseError"
+                  }
+                }
+              },
+              "description": "Error Response"
+            }
+          },
+          "summary": "Get Hosted Consent Request",
+          "tags": [
+            "Hosted Consent Pages"
+          ]
+        }
+      },
       "/hosted/payment-requests": {
           "x-yapily-features": [
               "INITIATE_DOMESTIC_SINGLE_PAYMENT"
@@ -7455,7 +7662,7 @@
               },
               "summary": "Create Hosted payment request",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           }
       },
@@ -7558,7 +7765,7 @@
               },
               "summary": "Create Pay By Link",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           }
       },
@@ -7657,7 +7864,7 @@
               },
               "summary": "Get Hosted payment request",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           }
       },
@@ -7756,7 +7963,7 @@
               },
               "summary": "Create VRP Consent",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           },
           "get": {
@@ -7838,14 +8045,14 @@
               },
               "summary": "Get Hosted VRP Consent Requests",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           }
       },
       "/hosted/vrp/consent-requests/{consentRequestId}": {
           "get": {
               "description": "Used to get details of a VRP Consent Request",
-              "operationId": "getHostedConsentRequest",
+              "operationId": "getHostedVrpConsentRequest",
         "x-beta": true,
               "parameters": [
                   {
@@ -7931,7 +8138,7 @@
               },
               "summary": "Get Hosted VRP Consent Request",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           }
       },
@@ -8024,7 +8231,7 @@
               },
               "summary": "Revoke Hosted VRP Consent Request",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           }
       },
@@ -8127,7 +8334,7 @@
               },
               "summary": "Create VRP Payment",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           }
       },
@@ -8229,7 +8436,7 @@
               },
               "summary": "Get VRP payment",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           }
       },
@@ -8333,7 +8540,7 @@
               },
               "summary": "Check Funds Availability",
               "tags": [
-                  "Hosted Pages"
+                  "Hosted Payment Pages"
               ]
           }
       },
@@ -10460,6 +10667,38 @@
                   "BRANCH_CODE",
                   "VIRTUAL_ACCOUNT_ID"
               ]
+          },
+          "HostedAccountRequest": {
+            "type": "object",
+            "description": "__Conditional__. Used to further specify details of the `Consent` to request <br><br>Conditions:<ol><li>Mandatory to specify the individual scopes to request from the user at the `Institution` for an account authorisation</li><li>Mandatory to specify an expiry time on the created `Consent` at which time will render it unusable</li><li>Mandatory to specify the date range that the created `Consent` will be able to access transactions for (given the range is support for the `Institution`)</li></ol>",
+            "properties": {
+              "transactionFrom": {
+                "type": "string",
+                "description": "__Optional__. Specifies the earliest date of the transaction records to be returned.<br><br> You must supply this field to retrieve transactions older than 90 days for banks accessed via the the [CBI Globe Gateway](https://docs.yapily.com/pages/data/financial-data-resources/data-restrictions/#cbi-globe-gateway).",
+                "format": "date-time",
+                "example": "2020-01-01T00:00:00Z"
+              },
+              "transactionTo": {
+                "type": "string",
+                "description": "__Optional__. Specifies the latest date of the transaction records to be returned.",
+                "format": "date-time",
+                "example": "2021-01-01T00:00:00Z"
+              },
+              "expiresAt": {
+                "type": "string",
+                "description": "__Optional__. Used to set a hard date for when the user's associated `Consent` will expire.<br><br>**Note**: If this supported by the bank, specifying this is property is opting out of having a long-lived consent that can be perpetually re-authorised by the user. This will add an `expiresAt` field on the `Consent` object which will render it unusable after this date.<br><br>**Note**: This is not supported by every `Institution`. In such case, the request will not fail but the property will be ignored and the created `Consent` will not have an expiry date.",
+                "format": "date-time",
+                "example": "2025-01-01T00:00:00Z"
+              },
+              "featureScope": {
+                "uniqueItems": true,
+                "type": "array",
+                "description": "__Optional__. Used to granularly specify the set of features that the user will give their consent for when requesting access to their account information. Depending on the `Institution`, this may also populate a consent screen which list these scopes before the user authorises.<br><br>This endpoint accepts allow all [Financial Data Features](/guides/financial-data/features/#feature-list) that the `Institution` supports.To find out which scopes an `Institution` supports, check [GET Institution](./#get-institution).",
+                "items": {
+                  "$ref": "#/components/schemas/FeatureEnum"
+                }
+              }
+            }
           },
           "HostedVrpAccountIdentificationType": {
               "title": "Account Identification Type",
@@ -16903,6 +17142,43 @@
                   }
               }
           },
+          "CreateHostedConsentRequest": {
+            "required": [
+              "redirectUrl",
+              "institutionIdentifiers"
+            ],
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "__Conditional__. Yapily Identifier for the `User` returned by the create user step POST /users. You must provide either a `userId` or `applicationUserId`."
+              },
+              "applicationUserId": {
+                "type": "string",
+                "description": "__Conditional__. Your own `User` reference. This field allows you to use your own unique references for individual users. Where the `User` reference doesn't have an associated Yapily `userId`, a new `userId` is created and linked to it. You must provide either a `userId` or `applicationUserId`."
+              },
+              "institutionIdentifiers": {
+                "$ref": "#/components/schemas/InstitutionIdentifiers"
+              },
+              "userSettings": {
+                "$ref": "#/components/schemas/UserSettings"
+              },
+              "redirectUrl": {
+                "type": "string",
+                "description": "URL of your server to redirect the user after completion of the consent flow.",
+                "example": "https://tpp-application.com"
+              },
+              "oneTimeToken": {
+                "type": "boolean",
+                "description": "Used to receive a oneTimeToken rather than a consentToken at the redirectUrl for additional security.",
+                "example": "false"
+              },
+              "accountRequest": {
+                "$ref": "#/components/schemas/HostedAccountRequest"
+              }
+            }
+          },
           "CreateHostedPaymentRequest": {
               "required": [
                   "redirectUrl",
@@ -17152,6 +17428,94 @@
               },
               "description": "The payment amount and currency"
           },
+          "HostedConsentRequestResponse" : {
+            "type": "object",
+            "properties": {
+              "consentRequestId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Unique Id of the consent request."
+              },
+              "userId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Unique Id for the `User` assigned by Yapily."
+              },
+              "applicationUserId": {
+                "type": "string",
+                "description": "Your reference to the `User`."
+              },
+              "applicationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Unique Id of the `Application` the user is associated with."
+              },
+              "institutionIdentifiers": {
+                "$ref": "#/components/schemas/InstitutionIdentifiersResponse"
+              },
+              "userSettings": {
+                "$ref": "#/components/schemas/UserSettings"
+              },
+              "redirectUrl": {
+                "type": "string",
+                "description": "URL of consent server to redirect the user after completion of the consent flow.",
+                "example": "https://tpp-application.com"
+              },
+              "accountRequestDetails": {
+                "$ref": "#/components/schemas/HostedAccountRequestDetailsResponse"
+              },
+              "hostedUrl": {
+                "type": "string",
+                "description": "The URL of Hosted UI page for the applicationId which initiates the user journey for the consent. <br> URL would be appended with authToken, applicationId and userSettings."
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time at which the consent was created."
+              },
+              "authorisationExpiresAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time at which the auth Token will expire."
+              },
+              "status": {
+                "type": "string",
+                "description": "Current status of the consent request. Allowed values are [AWAITING_AUTHORIZATION, AUTHORIZED, REJECTED, REVOKED, FAILED, EXPIRED, AWAITING_DECOUPLED_AUTHORIZATION]"
+              }
+            }
+          },
+          "HostedAccountRequestDetailsResponse": {
+            "description": "Details of the Account Request.",
+            "type": "object",
+            "properties": {
+              "transactionFrom": {
+                "type": "string",
+                "description": "Specifies the earliest date of the transaction records to be returned.<br><br> You must supply this field to retrieve transactions older than 90 days for banks accessed via the the [CBI Globe Gateway](https://docs.yapily.com/pages/data/financial-data-resources/data-restrictions/#cbi-globe-gateway).",
+                "format": "date-time",
+                "example": "2020-01-01T00:00:00Z"
+              },
+              "transactionTo": {
+                "type": "string",
+                "description": "Specifies the latest date of the transaction records to be returned.",
+                "format": "date-time",
+                "example": "2021-01-01T00:00:00Z"
+              },
+              "expiresAt": {
+                "type": "string",
+                "description": "Specify the set a hard date for when the user's associated `Consent` will expire.<br><br>**Note**: If this supported by the bank, specifying this is property is opting out of having a long-lived consent that can be perpetually re-authorised by the user. This will add an `expiresAt` field on the `Consent` object which will render it unusable after this date.<br><br>**Note**: This is not supported by every `Institution`. In such case, the request will not fail but the property will be ignored and the created `Consent` will not have an expiry date.",
+                "format": "date-time",
+                "example": "2025-01-01T00:00:00Z"
+              },
+              "featureScope": {
+                "uniqueItems": true,
+                "type": "array",
+                "description": "Specify the set of features that the user will give their consent for when requesting access to their account information. Depending on the `Institution`, this may also populate a consent screen which list these scopes before the user authorises.<br><br>This endpoint accepts allow all [Financial Data Features](/guides/financial-data/features/#feature-list) that the `Institution` supports.To find out which scopes an `Institution` supports, check [GET Institution](./#get-institution).",
+                "items": {
+                  "$ref": "#/components/schemas/FeatureEnum"
+                }
+              }
+            }
+          },
           "HostedPaymentRequestResponse": {
               "type": "object",
               "properties": {
@@ -17208,7 +17572,7 @@
                   },
                   "status": {
                       "type": "string",
-                      "description": "Current status of the payment request. <br> Possible Values: <br> ACTIVE <br> INACTIVE"
+                      "description": "Current status of the payment request."
                   }
               }
           },
@@ -17259,6 +17623,92 @@
                       "example": "AcceptedCreditSettlementCompleted"
                   }
               }
+          },
+          "ApiResponseOfGetHostedConsentRequest": {
+            "type": "object",
+            "properties": {
+              "meta": {
+                "$ref": "#/components/schemas/ResponseMeta"
+              },
+              "data": {
+                "$ref": "#/components/schemas/HostedGetConsentRequestResponse"
+              }
+            }
+          },
+          "HostedGetConsentRequestResponse": {
+            "type": "object",
+            "properties": {
+              "consentRequestId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Unique Id of the consent request."
+              },
+              "userId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Unique Id for the `User` assigned by Yapily."
+              },
+              "applicationUserId": {
+                "type": "string",
+                "description": "Your reference to the `User`."
+              },
+              "applicationId": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Unique Id of the `Application` the user is associated with."
+              },
+              "institutionIdentifiers": {
+                "$ref": "#/components/schemas/InstitutionIdentifiersResponse"
+              },
+              "userSettings": {
+                "$ref": "#/components/schemas/UserSettings"
+              },
+              "redirectUrl": {
+                "type": "string",
+                "description": "URL of consent server to redirect the user after completion of the consent flow.",
+                "example": "https://tpp-application.com"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time at which the payment was created."
+              },
+              "authorisationExpiresAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time at which the auth Token will expire."
+              },
+              "status": {
+                "type": "string",
+                "description": "Current status of the consent request. Allowed values are [AWAITING_AUTHORIZATION, AUTHORIZED, REJECTED, REVOKED, FAILED, EXPIRED, AWAITING_DECOUPLED_AUTHORIZATION]"
+              },
+              "phases": {
+                "description": "The phase reached by the consent and its timestamp.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/HostedConsentPhase"
+                }
+              },
+              "consentToken": {
+                "type": "string",
+                "description": "Represents the authorisation to gain access to the requested features. Required to access account information."
+              }
+            }
+          },
+          "HostedConsentPhase": {
+            "type": "object",
+            "properties": {
+              "phaseName": {
+                "type": "string",
+                "description": "The name of the hosted consent process phase. Allowed values are : <ul> <li> INITIATED - Process initiated </li> <li> INSTITUTION_SUBMITTED - Consent institution submitted </li> <li>    AUTHORISATION_INITIATED - All details required for consent initiation have been collected</li> <li> AUTHORISATION_CREATED - Consent authorisation request created with Institution, awaiting authorisation completion </li> <li> AUTHORISATION_FAILED - Consent authorisation failed and will not proceed further</li> <li> AUTHORISATION_REJECTED - Consent Authorisation request rejected by Institution and will not proceed further </li> <li>    DECOUPLED_AUTHORISATION - For embedded banks, decoupled authorisation was initiated by the bank</li> <li>    EMBEDDED_CREDENTIAL_REQUESTED - For embedded banks, a UI element to collect user credentials was displayed</li> <li>    EMBEDDED_CODE_REQUESTED - For embedded banks, a UI element to collect SCA for initiated consent was displayed</li><li>    EMBEDDED_TYPE_REQUESTED - For embedded banks, a UI element to allow the user to select their preferred SCA method for this consent authorisation was displayed</li> <li>    EMBEDDED_CODE_COLLECTED - For embedded banks, SCA code was collected for consent authorisation</li><li>    EMBEDDED_TYPE_SELECTED - For embedded banks, preferred SCA method was selected for consent authorisation</li> <li>    CONSENT_POLLING_STARTED - We start polling the bank for consent authorisation status</li><li>    CONSENT_POLLING_ENDED - We finish polling the bank for consent authorisation status</li> <li> AUTHORISED - Consent authorisation completed </li> <li> FINISHED - Process finished </li>  </ul>"
+              },
+              "phaseCreatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time at which the phase of the hosted Consent was created."
+              }
+            },
+            "description": "The phase of the Consent Request."
           },
           "ApiResponseOfGetHostedPaymentRequest": {
               "type": "object",
@@ -17404,6 +17854,17 @@
                       "$ref": "#/components/schemas/AmountDetailsResponse"
                   }
               }
+          },
+          "ApiResponseOfCreateHostedConsentRequest": {
+            "type": "object",
+            "properties": {
+              "meta": {
+                "$ref": "#/components/schemas/ResponseMeta"
+              },
+              "data": {
+                "$ref": "#/components/schemas/HostedConsentRequestResponse"
+              }
+            }
           },
           "ApiResponseOfCreateHostedPaymentRequest": {
               "type": "object",
@@ -22318,6 +22779,72 @@
                   }
               }
           },
+          "create-hosted-consent-request": {
+            "description": "Create Hosted Consent Request",
+            "value": {
+              "userId": "ca412fdf-5a30-43a2-88b7-5964a24a8e55",
+              "applicationUserId": "string",
+              "institutionIdentifiers": {
+                "institutionId": "modelo-sandbox",
+                "institutionCountryCode": "GB"
+              },
+              "userSettings": {
+                "language": "en",
+                "location": "GB"
+              },
+              "redirectUrl": "https://tpp-application.com/",
+              "authorisationExpiresAt": "2021-06-10T11:36:54.887Z",
+              "oneTimeToken": false,
+              "accountRequest": {
+                "transactionFrom": "2023-07-01T00:00:00.000Z",
+                "transactionTo": "2023-08-01T00:00:00.000Z",
+                "expiresAt": "2023-11-01T00:00:00.000Z",
+                "featureScope": [
+                  "ACCOUNTS",
+                  "ACCOUNT",
+                  "ACCOUNT_BALANCES",
+                  "ACCOUNT_TRANSACTIONS",
+                  "IDENTITY"
+                ]
+              }
+            }
+          },
+          "create-hosted-consent-response": {
+            "description": "Create Hosted Consent Response",
+            "value": {
+              "meta": {
+                "tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"
+              },
+              "data": {
+                "consentRequestId": "507e515f-c22d-4bab-9801-606c94e7f749",
+                "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+                "applicationUserId": "string",
+                "applicationId": "64949de6-6510-4d70-9500-d4aa094c506c",
+                "institutionIdentifiers": {
+                  "institutionId": "modelo-sandbox",
+                  "institutionCountryCode": "GB"
+                },
+                "userSettings": {
+                  "language": "en",
+                  "location": "GB"
+                },
+                "redirectUrl": "https://tpp-application.com/",
+                "accountRequestDetails": {
+                  "featureScope": [
+                    "ACCOUNTS",
+                    "ACCOUNT",
+                    "ACCOUNT_BALANCES",
+                    "ACCOUNT_TRANSACTIONS",
+                    "IDENTITY"
+                  ]
+                },
+                "hostedUrl": "https://prototypes.yapily.com/auth-link1.html",
+                "createdAt": "2024-09-13T11:14:04.766Z",
+                "authorisationExpiresAt": "2024-09-13T11:24:04.000Z",
+                "status": "AWAITING_AUTHORIZATION"
+              }
+            }
+          },
           "create-hosted-payment-request": {
               "description": "Create Hosted payment request",
               "value": {
@@ -22547,6 +23074,67 @@
                       "status": "ACTIVE"
                   }
               }
+          },
+          "get-hosted-consent-response": {
+            "description": "Get Hosted Consent Request Response",
+            "value": {
+              "meta": {
+                "tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"
+              },
+              "data": {
+                "consentRequestId": "507e515f-c22d-4bab-9801-606c94e7f749",
+                "userId": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+                "applicationUserId": "string",
+                "applicationId": "64949de6-6510-4d70-9500-d4aa094c506c",
+                "institutionIdentifiers": {
+                  "institutionId": "modelo-sandbox",
+                  "institutionCountryCode": "GB"
+                },
+                "userSettings": {
+                  "language": "en",
+                  "location": "GB"
+                },
+                "redirectUrl": "https://tpp-application.com/",
+                "createdAt": "2024-09-13T11:14:04.766Z",
+                "authorisationExpiresAt": "2024-10-10T11:36:54.887Z",
+                "status": "AUTHORIZED",
+                "phases": [
+                  {
+                    "phaseName": "INITIATED",
+                    "phaseCreatedAt": "2024-09-11T16:19:59.707Z"
+                  },
+                  {
+                    "phaseName": "INSTITUTION_SUBMITTED",
+                    "phaseCreatedAt": "2024-09-11T16:20:19.097Z"
+                  },
+                  {
+                    "phaseName": "AUTHORISATION_INITIATED",
+                    "phaseCreatedAt": "2024-09-11T16:20:47.077Z"
+                  },
+                  {
+                    "phaseName": "AUTHORISATION_CREATED",
+                    "phaseCreatedAt": "2024-09-11T16:20:48.212Z"
+                  },
+                  {
+                    "phaseName": "CONSENT_POLLING_STARTED",
+                    "phaseCreatedAt": "2024-09-11T16:20:57.654Z"
+                  },
+                  {
+                    "phaseName": "CONSENT_POLLING_ENDED",
+                    "phaseCreatedAt": "2024-09-11T16:20:58.288Z"
+                  },
+                  {
+                    "phaseName": "AUTHORISED",
+                    "phaseCreatedAt": "2024-09-11T16:20:58.288Z"
+                  },
+                  {
+                    "phaseName": "FINISHED",
+                    "phaseCreatedAt": "2024-09-11T16:20:58.288Z"
+                  }
+                ],
+                "consentToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6Im1vZGVsby1zYW5kYm94IiwiQ09OU0VOVCI6IjU2YTQyMjQ0LTQxNGEtNGI1Mi04YzRmLTRhZDJhNTBlODJmZSIsIkFQUExJQ0FUSU9OX1VTRVJfSUQiOiJtb2ZlLTIiLCJVU0VSIjoiY2E0MTJmZGYtNWEzMC00M2EyLTg4YjctNTk2NGEyNGE4ZTU1In0.gorwpnUjSr5dzQJLR32M2geWOj7yK9xMsZmq27ssY9xP_xGmWfUL_aqVHYyQ4r5KWw6Xb6RjvO839st8chJLtg"
+              }
+            }
           },
           "get-hosted-payment-request-response": {
               "description": "Get Hosted payment request Response",
