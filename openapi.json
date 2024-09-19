@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "4.9.0",
+      "version": "4.10.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -17555,10 +17555,6 @@
                   "hostedUrl": {
                       "type": "string",
                       "description": "The URL of Hosted UI page for the applicationId which initiates the user journey for the payment. <br> URL would be appended with authToken, applicationId and userSettings."
-                  },
-                  "authToken": {
-                      "type": "string",
-                      "description": "The JWT Token signed by the certificate-vault using Yapily's keys."
                   },
                   "createdAt": {
                       "type": "string",
