@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "4.10.0",
+      "version": "5.0.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -7239,57 +7239,58 @@
               "summary": "Get the list of all categories for a specific account type",
               "responses": {
                 "200": {
-                      "description": "OK",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "properties": {
-                                      "meta": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              }
-                                          }
-                                      },
-                                      "data": {
-                                          "type": "object",
-                                          "properties": {
-                                              "incoming": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "string"
-                                                  }
-                                              },
-                                              "outgoing": {
-                                                  "type": "array",
-                                                  "items": {
-                                                      "type": "string"
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  },
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "meta": {
-                                              "tracingId": "string"
-                                          },
-                                          "data": {
-                                              "incoming": [
-                                                  "string"
-                                              ],
-                                              "outgoing": [
-                                                  "string"
-                                              ]
-                                          }
-                                      }
-                                  }
+                  "description": "OK",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "meta": {
+                            "type": "object",
+                            "properties": {
+                              "tracingId": {
+                                "type": "string"
                               }
+                            }
+                          },
+                          "data": {
+                            "$ref": "#/components/schemas/GetCategoriesResponse"
                           }
+                        }
+                      },
+                      "examples": {
+                        "Example consumer": {
+                          "value": {
+                            "meta": {
+                              "tracingId": "string"
+                            },
+                            "data": {
+                              "labels": [
+                                "ATM/bank deposit",
+                                "Benefits",
+                                "ATM/bank withdrawal",
+                                "App stores"
+                              ]
+                            }
+                          }
+                        },
+                        "Example business": {
+                          "value": {
+                            "meta": {
+                              "tracingId": "string"
+                            },
+                            "data": {
+                              "labels": [
+                                "client deposit",
+                                "cost of goods sold - customer return"
+                              ]
+                            }
+                          }
+                        }
                       }
-                  },
+                    }
+                  }
+                },
                 "400": {
                   "description": "There are validation errors",
                   "content": {
@@ -11993,6 +11994,17 @@
                       "writeOnly": true
                   }
               }
+          },
+          "GetCategoriesResponse": {
+            "type": "object",
+            "properties": {
+              "labels": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "ChargeBearerType": {
               "type": "string",
