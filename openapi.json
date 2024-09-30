@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "5.0.0",
+      "version": "5.1.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -1753,7 +1753,7 @@
                               }
                           },
                           "schema": {
-                              "$ref": "#/components/schemas/BulkPaymentRequest"
+                              "$ref": "#/components/schemas/SubmitBulkPaymentRequest"
                           }
                       }
                   },
@@ -1798,175 +1798,163 @@
           }
       },
       "/bulk-payments/{bulkPaymentId}": {
-      "get": {
-        "description": "Returns the bulk file status of the bulk payment for given bulkPaymentId",
-        "summary": "Returns the bulk file status",
-        "tags": [
-          "Payments"
-        ],
-        "operationId": "getBulkPaymentStatus",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
+        "get": {
+          "description": "Returns the bulk file status of the bulk payment for given bulkPaymentId",
+          "summary": "Get Bulk Payment File Status",
+          "tags": [
+            "Payments"
+          ],
+          "operationId": "getBulkPaymentStatus",
+          "parameters": [
+            {
+              "schema": {
+                "type": "string"
+              },
+              "in": "header",
+              "name": "consent",
+              "description": "__Mandatory__. The `consent token` containing the user's authorisation to make the request.",
+              "required": true
             },
-            "in": "header",
-            "name": "consent",
-            "description": "__Mandatory__. The `consent token` containing the user's authorisation to make the request.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "name": "bulkPaymentId",
-            "description": "__Mandatory__. Bulk payment id returned when bulk payment request was submitted.",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "meta": {
-                      "type": "object",
-                      "properties": {
-                        "tracingId": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "consentId": {
-                          "type": "string"
-                        },
-                        "statusDetails": {
-                          "type": "object",
-                          "properties": {
-                            "status": {
-                              "type": "string"
-                            },
-                            "updatedAt": {
-                              "type": "string"
-                            },
-                            "bankStatus": {
-                              "type": "object",
-                              "properties": {
-                                "status": {
-                                  "type": "string"
-                                },
-                                "updatedAt": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "createdAt": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "Successful 200 OK": {
-                    "value": {
+            {
+              "schema": {
+                "type": "string"
+              },
+              "in": "path",
+              "name": "bulkPaymentId",
+              "description": "__Mandatory__. Bulk payment id returned when bulk payment request was submitted.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
                       "meta": {
-                        "tracingId": "27b47dca-fb0f-4448-b470-1cd2d5516d0f"
+                        "type": "object",
+                        "properties": {
+                          "tracingId": {
+                            "type": "string"
+                          }
+                        }
                       },
                       "data": {
-                        "id": "76ad88c7-6e99-4a16-a277-e428a73d1e86",
-                        "consentId": "5daeb980-5ff5-49db-b7a0-e93dd9c93533",
-                        "statusDetails": {
-                          "status": "COMPLETED",
-                          "updatedAt": "2024-07-25T18:14:52.672Z",
-                          "bankStatus": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "description": "Unique identifier of the Bulk Payment",
+                            "type": "string"
+                          },
+                          "consentId": {
+                            "description": "Identification of the consent.",
+                            "type": "string"
+                          },
+                          "statusDetails": {
+                            "type": "object",
+                            "properties": {
+                              "status": {
+                                "type": "string",
+                                "description": "Bulk file status. Enum: `COMPLETED` `PENDING` `FAILED` `UNKNOWN`"
+                              },
+                              "updatedAt": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Successful 200 OK": {
+                      "value": {
+                        "meta": {
+                          "tracingId": "27b47dca-fb0f-4448-b470-1cd2d5516d0f"
+                        },
+                        "data": {
+                          "id": "76ad88c7-6e99-4a16-a277-e428a73d1e86",
+                          "consentId": "5daeb980-5ff5-49db-b7a0-e93dd9c93533",
+                          "statusDetails": {
                             "status": "COMPLETED",
                             "updatedAt": "2024-07-25T18:14:52.672Z"
-                          }
-                        },
-                        "createdAt": "2024-07-25T18:14:52.672Z"
+                          },
+                          "createdAt": "2024-07-25T18:14:52.672Z"
+                        }
                       }
                     }
                   }
                 }
               }
-            }
-          },
-          "400": {
-            "description": "Required parameter missing or invalid",
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponseV2"
-                },
-                "examples": {
-                  "Example-1": {
-                    "$ref": "#/components/examples/400-error-response"
+            },
+            "400": {
+              "description": "Required parameter missing or invalid",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/400-error-response"
+                    }
                   }
                 }
               }
-            }
-          },
-          "401": {
-            "description": "Authentication Error",
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponseV2"
-                },
-                "examples": {
-                  "Example-1": {
-                    "$ref": "#/components/examples/401-error-response"
+            },
+            "401": {
+              "description": "Authentication Error",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
                   }
                 }
               }
-            }
-          },
-          "404": {
-            "description": "Bulk payment not found for provided id",
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponseV2"
-                },
-                "examples": {
-                  "Example-1": {
-                    "$ref": "#/components/examples/404-error-response"
+            },
+            "404": {
+              "description": "Bulk payment not found for provided id",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/404-error-response"
+                    }
                   }
                 }
               }
-            }
-          },
-          "500": {
-            "description": "An unexpected error occurred.",
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponseV2"
-                },
-                "examples": {
-                  "Example-1": {
-                    "$ref": "#/components/examples/500-error-response"
+            },
+            "500": {
+              "description": "An unexpected error occurred.",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
                   }
                 }
               }
             }
           }
         }
-      }
-    },
+      },
       "/consent-auth-code": {
           "post": {
               "description": "Used to obtain a Yapily Consent object containing the `consentToken` once the user has authenticated and you have an OAuth2 authorisation code `auth-code` and state `auth-state`.",
@@ -3758,114 +3746,6 @@
                   "Payments"
               ]
           }
-      },
-      "/bulk-payments/{bulkPaymentId}/details": {
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "consent",
-            "description": "__Mandatory__. The `consent token` containing the user's authorisation to make the request.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "name": "bulkPaymentId",
-            "description": "__Mandatory__. Bulk payment id returned when bulk payment request was submitted",
-            "required": true
-          }
-        ],
-        "get": {
-          "description": "Retrieve details of each payment submitted for a given bulkPaymentId",
-          "operationId": "getBulkPaymentDetailsById",
-          "x-beta": true,
-          "summary": "Get payment details for bulkPaymentId",
-          "tags": [
-            "Payments"
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json;charset=UTF-8": {
-                  "schema": {
-                    "$ref": "#/components/schemas/BulkPaymentDetailsByIdResponse"
-                  },
-                  "examples": {
-                    "Successful 200 OK": {
-                      "$ref": "#/components/examples/bulk-payment-details-by-id-response"
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "There are validation errors",
-              "content": {
-                "application/json;charset=UTF-8": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponseV2"
-                  },
-                  "examples": {
-                    "Example-1": {
-                      "$ref": "#/components/examples/400-error-response"
-                    }
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Authentication Error",
-              "content": {
-                "application/json;charset=UTF-8": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponseV2"
-                  },
-                  "examples": {
-                    "Example-1": {
-                      "$ref": "#/components/examples/401-error-response"
-                    }
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {
-                "application/json;charset=UTF-8": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponseV2"
-                  },
-                  "examples": {
-                    "Example-1": {
-                      "$ref": "#/components/examples/404-error-response"
-                    }
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "An unexpected error occurred.",
-              "content": {
-                "application/json;charset=UTF-8": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiErrorResponseV2"
-                  },
-                  "examples": {
-                    "Example-1": {
-                      "$ref": "#/components/examples/500-error-response"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       },
       "/pre-auth-requests": {
           "x-yapily-features": [
@@ -11916,6 +11796,39 @@
               },
               "description": "The payment request object defining the details of the bulk payment"
           },
+          "SubmitBulkPaymentRequest": {
+          "required": [
+            "payments"
+          ],
+          "type": "object",
+          "properties": {
+            "idempotencyId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "pattern": "^\\S{1,40}$",
+              "description": "__Optional__. An alphanumeric string (1-40 chars) used for idempotency. Unique per consent ID for 24 hours. Prevents duplicate bulk file payment submissions.",
+              "example": "1cc3e60d-5500-42be-aaeb-3c5e2f5ed048"
+            },
+            "payments": {
+              "type": "array",
+              "description": "__Mandatory__. The array of `PaymentRequest` objects to initiate in the bulk payment.",
+              "items": {
+                "$ref": "#/components/schemas/PaymentRequest"
+              }
+            },
+            "originatorIdentificationNumber": {
+              "type": "string",
+              "description": "__Conditional__. The identification number of the originator.<ul><li>Mandatory for AIB bulk payments</li></ul>"
+            },
+            "executionDateTime": {
+              "type": "string",
+              "description": "__Optional__. Used to schedule the bulk payment to be executed at a future date if supported by the `Institution`.",
+              "format": "date-time"
+            }
+          },
+          "description": "The payment request object defining the details of the bulk payment"
+        },
           "Categorisation": {
               "type": "object",
               "description": "Income and Expense categorisation that the Yapily categorisation engine has determined for the transaction.",
@@ -20185,58 +20098,59 @@
               }
           },
           "uk-bulk-payment-example-request": {
-              "description": "UK Bulk Payment Example Request",
-              "value": {
-                  "payments": [
+            "description": "UK Bulk Payment Example Request",
+            "value": {
+              "idempotencyId": "1cc3e60d-5500-42be-aaeb-3c5e2f5ed048",
+              "payments": [
+                {
+                  "type": "DOMESTIC_PAYMENT",
+                  "paymentIdempotencyId": "d78fy48uh8f9odhde68dfi38di9",
+                  "reference": "payment1",
+                  "contextType": "BILL_IN_ARREARS",
+                  "purposeCode": "COMT",
+                  "amount": {
+                    "amount": 2.00,
+                    "currency": "GBP"
+                  },
+                  "payee": {
+                    "name": "Jane Doe",
+                    "accountIdentifications": [
                       {
-                          "type": "DOMESTIC_PAYMENT",
-                          "paymentIdempotencyId": "d78fy48uh8f9odhde68dfi38di9",
-                          "reference": "payment1",
-                          "contextType": "BILL_IN_ARREARS",
-              "purposeCode" : "COMT",
-                          "amount": {
-                "amount": 2.00,
-                              "currency": "GBP"
-                          },
-                          "payee": {
-                              "name": "Jane Doe",
-                              "accountIdentifications": [
-                                  {
-                                      "type": "ACCOUNT_NUMBER",
-                                      "identification": "12345678"
-                                  },
-                                  {
-                                      "type": "SORT_CODE",
-                                      "identification": "123456"
-                                  }
-                              ],
-                              "accountType": "BUSINESS_SAVING"
-                          }
+                        "type": "ACCOUNT_NUMBER",
+                        "identification": "12345678"
                       },
                       {
-                          "type": "DOMESTIC_PAYMENT",
-                          "paymentIdempotencyId": "4279gdy8t63dg73gd8gx87738dg",
-                          "reference": "payment2",
-                          "amount": {
-                "amount": 5.00,
-                              "currency": "GBP"
-                          },
-                          "payee": {
-                              "name": "John Doe",
-                              "accountIdentifications": [
-                                  {
-                                      "type": "ACCOUNT_NUMBER",
-                                      "identification": "87654321"
-                                  },
-                                  {
-                                      "type": "SORT_CODE",
-                                      "identification": "654321"
-                                  }
-                              ]
-                          }
+                        "type": "SORT_CODE",
+                        "identification": "123456"
                       }
-                  ]
-              }
+                    ],
+                    "accountType": "BUSINESS_SAVING"
+                  }
+                },
+                {
+                  "type": "DOMESTIC_PAYMENT",
+                  "paymentIdempotencyId": "4279gdy8t63dg73gd8gx87738dg",
+                  "reference": "payment2",
+                  "amount": {
+                    "amount": 5.00,
+                    "currency": "GBP"
+                  },
+                  "payee": {
+                    "name": "John Doe",
+                    "accountIdentifications": [
+                      {
+                        "type": "ACCOUNT_NUMBER",
+                        "identification": "87654321"
+                      },
+                      {
+                        "type": "SORT_CODE",
+                        "identification": "654321"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
           },
           "uk-bulk-payment-auth-example-request": {
               "description": "UK Bulk Payment Example Request",
