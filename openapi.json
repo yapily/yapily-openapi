@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "5.1.0",
+      "version": "5.2.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -9717,7 +9717,12 @@
                 }
               }
             }
-          }
+          },
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/SubAppHeader"
+            }
+          ]
         },
         "get": {
           "tags": [
@@ -9798,7 +9803,12 @@
                 }
               }
             }
-          }
+          },
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/SubAppHeader"
+            }
+          ]
         }
       },
       "/webhook/events/{webhook_id}": {
@@ -9810,6 +9820,9 @@
           "summary": "Delete Webhook Event",
           "operationId": "deleteWebhook",
           "parameters": [
+            {
+              "$ref": "#/components/parameters/SubAppHeader"
+            },
             {
               "$ref": "#/components/parameters/WebhookIdParameter"
             }
@@ -9905,6 +9918,9 @@
           "summary": "Reset Webhook Secret",
           "operationId": "webhookSecretReset",
           "parameters": [
+            {
+              "$ref": "#/components/parameters/SubAppHeader"
+            },
             {
               "$ref": "#/components/parameters/WebhookIdParameter"
             }
