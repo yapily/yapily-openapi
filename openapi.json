@@ -8467,8 +8467,7 @@
                               "DOMESTIC_PERIODIC_PAYMENT",
                               "INTERNATIONAL_PAYMENT",
                               "INTERNATIONAL_SCHEDULED_PAYMENT",
-                              "INTERNATIONAL_PERIODIC_PAYMENT",
-                              "BULK_PAYMENT"
+                              "INTERNATIONAL_PERIODIC_PAYMENT"
                           ]
                       }
                   },
@@ -14593,8 +14592,7 @@
                   "DOMESTIC_PERIODIC_PAYMENT",
                   "INTERNATIONAL_PAYMENT",
                   "INTERNATIONAL_SCHEDULED_PAYMENT",
-                  "INTERNATIONAL_PERIODIC_PAYMENT",
-                  "BULK_PAYMENT"
+                  "INTERNATIONAL_PERIODIC_PAYMENT"
               ]
           },
           "PaymentTypeResponse": {
@@ -14609,8 +14607,7 @@
                   "DOMESTIC_PERIODIC_PAYMENT",
                   "INTERNATIONAL_PAYMENT",
                   "INTERNATIONAL_SCHEDULED_PAYMENT",
-                  "INTERNATIONAL_PERIODIC_PAYMENT",
-                  "BULK_PAYMENT"
+                  "INTERNATIONAL_PERIODIC_PAYMENT"
               ]
           },
           "PaymentTypeOfConstraints": {
@@ -14625,8 +14622,7 @@
                   "DOMESTIC_PERIODIC_PAYMENT",
                   "INTERNATIONAL_PAYMENT",
                   "INTERNATIONAL_SCHEDULED_PAYMENT",
-                  "INTERNATIONAL_PERIODIC_PAYMENT",
-                  "BULK_PAYMENT"
+                  "INTERNATIONAL_PERIODIC_PAYMENT"
               ]
           },
           "PeriodicPaymentRequest": {
