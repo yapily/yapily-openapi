@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "5.2.0",
+      "version": "6.0.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -6639,7 +6639,8 @@
                           "schema": {
                               "type": "object",
                               "required": [
-                                  "countryCode"
+                                "categorisationType",
+                                "countryCode"
                               ],
                               "properties": {
                                   "countryCode": {
@@ -6648,7 +6649,7 @@
                                   },
                                   "categorisationType": {
                                     "type": "string",
-                                    "description": "__Optional__. Allowed values are consumer and business. If not provided, defaults to consumer"
+                                    "description": "__Mandatory__. Allowed values are `consumer` and `business`."
                                   },
                                   "from": {
                                       "type": "string",
