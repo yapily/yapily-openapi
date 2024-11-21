@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "6.0.0",
+      "version": "7.0.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -17415,10 +17415,6 @@
                 "type": "string",
                 "format": "date-time",
                 "description": "The date and time at which the auth Token will expire."
-              },
-              "status": {
-                "type": "string",
-                "description": "Current status of the consent request. Allowed values are [AWAITING_AUTHORIZATION, AUTHORIZED, REJECTED, REVOKED, FAILED, EXPIRED, AWAITING_DECOUPLED_AUTHORIZATION]"
               }
             }
           },
@@ -22775,8 +22771,7 @@
                 },
                 "hostedUrl": "https://prototypes.yapily.com/auth-link1.html",
                 "createdAt": "2024-09-13T11:14:04.766Z",
-                "authorisationExpiresAt": "2024-09-13T11:24:04.000Z",
-                "status": "AWAITING_AUTHORIZATION"
+                "authorisationExpiresAt": "2024-09-13T11:24:04.000Z"
               }
             }
           },
