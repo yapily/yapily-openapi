@@ -13915,7 +13915,7 @@
           "PaymentPurposeCode": {
               "title": "Payment Purpose Code",
               "type": "string",
-              "description": "__Optional__. The payment purpose code. <br><br>Allowed values: INTP,DEPT,BEXP,LICF,SERV,SUPP,TRAD,SUBS,GDSV,ROYA,COMT,CHAR,ECPR,CLPR,INTE,LOAN,LOAR,INPC,INPR,INSC,INSU,LIFI,PPTI,HLRP,HLST,PDEP,IVPT,REBT,REFU,CDBL,CPKC,EDUC,FEES,GAMB,LOTT,GIFT,INSM,REOD,GOVT,TCSC,BLDM,RENT,DIVD,INVS,SAVG,HLTI,DNTS,LTCF,MDCS,VIEW,BECH,BENE,SSBE,PEFC,PENS,ADCS,BONU,COMM,SALA,ESTX,HSTX,INTX,PTXP,RDTX,TAXS,VATX,WHLD,TAXR,CBTV,ELEC,GASB,PHON,UBIL,WTER . <br><br>See [Payment Purpose code](https://docs.yapily.com/pages/payments/payments-resources/tri-pilot/) to see the definition of each code"
+              "description": "__Optional__. The payment purpose code. <br><br>Allowed values: INTP, DEPT, BEXP, LICF, SERV, SUPP, TRAD, SUBS, GDSV, ROYA, COMT, CHAR, ECPR, CLPR, INTE, LOAN, LOAR, INPC, INPR, INSC, INSU, LIFI, PPTI, HLRP, HLST, PDEP, IVPT, REBT, REFU, CDBL, CPKC, EDUC, FEES, GAMB, LOTT, GIFT, INSM, REOD, GOVT, TCSC, BLDM, RENT, DIVD, INVS, SAVG, HLTI, DNTS, LTCF, MDCS, VIEW, BECH, BENE, SSBE, PEFC, PENS, ADCS, BONU, COMM, SALA, ESTX, HSTX, INTX, PTXP, RDTX, TAXS, VATX, WHLD, TAXR, CBTV, ELEC, GASB, PHON, UBIL, WTER . <br><br>See [Payment Purpose code](https://docs.yapily.com/pages/payments/payments-resources/tri-pilot/) to see the definition of each code"
           },
           "PayeeAccountType": {
               "title": "Payee Account Type",
