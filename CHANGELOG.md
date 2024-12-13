@@ -5,6 +5,10 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [7.2.0] - 2024-12-12
+### Changed
+Added "in UTC format" text for keys defination "bookingDateTime" and "valueDateTime" for Get Account Transactions response
+
 ## [7.1.1] - 2024-12-06
 ### Fixed
 Add a missing field to consentId retrieval response from GET /hosted/consent-requests/{consentRequestId}
