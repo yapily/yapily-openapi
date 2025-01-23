@@ -5,9 +5,13 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [8.0.0] - 2025-01-14
+### Changed
+Removed the `raw` query parameter and set its object as **deprecated**
+
 ## [7.2.0] - 2024-12-12
 ### Changed
-Added "in UTC format" text for keys defination "bookingDateTime" and "valueDateTime" for Get Account Transactions response
+Added "in UTC format" text for keys definition "bookingDateTime" and "valueDateTime" for Get Account Transactions response
 
 ## [7.1.1] - 2024-12-06
 ### Fixed

@@ -25,13 +25,13 @@ public class PaymentsService {
         this.api = apiClient;
     }
 
-    public ApiResponseOfPaymentResponse createPaymentRequestCall(String consent, PaymentRequest paymentRequest, String psuId, String psuCorporateId, String psuIpAddress, UUID subAppId, Boolean raw)
+    public ApiResponseOfPaymentResponse createPaymentRequestCall(String consent, PaymentRequest paymentRequest, String psuId, String psuCorporateId, String psuIpAddress, UUID subAppId)
             throws ApiException {
-        return api.createPayment(consent, paymentRequest, psuId, psuIpAddress, psuCorporateId, subAppId, raw);
+        return api.createPayment(consent, paymentRequest, psuId, psuIpAddress, psuCorporateId, subAppId);
     }
 
-    public PaymentResponses fetchPayment(String id, String consent, String psuId, String psuCorporateId, String psuIpAddress, UUID subAppId,Boolean raw) throws ApiException {
-        ApiResponseOfPaymentResponses paymentsResponses = api.getPayments(id, consent, psuId, psuCorporateId, psuIpAddress, subAppId, raw);
+    public PaymentResponses fetchPayment(String id, String consent, String psuId, String psuCorporateId, String psuIpAddress, UUID subAppId) throws ApiException {
+        ApiResponseOfPaymentResponses paymentsResponses = api.getPayments(id, consent, psuId, psuCorporateId, psuIpAddress, subAppId);
         return paymentsResponses.getData();
     }
 

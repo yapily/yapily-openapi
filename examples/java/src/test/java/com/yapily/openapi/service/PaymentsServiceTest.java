@@ -45,8 +45,8 @@ class PaymentsServiceTest {
     @Test
     void createPaymentRequestCall() throws ApiException {
         ApiResponseOfPaymentResponse paymentResponse = mock(ApiResponseOfPaymentResponse.class);
-        when(apiClient.createPayment(anyString(), any(PaymentRequest.class), anyString(), anyString(), anyString(), any(UUID.class), anyBoolean())).thenReturn(paymentResponse);
-        assertNotNull(service.createPaymentRequestCall("i-am-a-consent", paymentRequest, "", "", "", UUID.fromString(subAppId), false));
+        when(apiClient.createPayment(anyString(), any(PaymentRequest.class), anyString(), anyString(), anyString(), any(UUID.class))).thenReturn(paymentResponse);
+        assertNotNull(service.createPaymentRequestCall("i-am-a-consent", paymentRequest, "", "", "", UUID.fromString(subAppId)));
     }
 
     @Test

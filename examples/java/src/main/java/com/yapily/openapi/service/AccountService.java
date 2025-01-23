@@ -19,16 +19,15 @@ public class AccountService {
         this.api = apiClient;
     }
 
-    public List<Account> getAccounts(String consent, String psuId, String psuCorpId, String psuIpAdd, UUID subAppId,
-                                     Boolean raw) throws ApiException {
-        AccountApiListResponse accounts = api.getAccounts(consent, psuId, psuCorpId, psuIpAdd, subAppId, raw);
+    public List<Account> getAccounts(String consent, String psuId, String psuCorpId, String psuIpAdd, UUID subAppId) throws ApiException {
+        AccountApiListResponse accounts = api.getAccounts(consent, psuId, psuCorpId, psuIpAdd, subAppId);
         return accounts.getData();
     }
 
     public List<Transaction> getTransactions(String accountId, String consent, String psuId, String psuCorporateId, String psuIpAddress, UUID subAppId, List<String> with, String from, String before,
-                                             Integer limit, SortEnum sort, Integer offset, String cursor, Boolean raw)
+                                             Integer limit, SortEnum sort, Integer offset, String cursor)
             throws ApiException {
-        ApiListResponseOfTransaction transactions = api.getTransactions(accountId, consent, psuId, psuCorporateId, psuIpAddress, subAppId, with, from, before, limit, sort, offset, cursor, raw);
+        ApiListResponseOfTransaction transactions = api.getTransactions(accountId, consent, psuId, psuCorporateId, psuIpAddress, subAppId, with, from, before, limit, sort, offset, cursor);
         return transactions.getData();
     }
 

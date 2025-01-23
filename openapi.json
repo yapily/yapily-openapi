@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "7.2.0",
+      "version": "8.0.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -158,15 +158,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -239,15 +230,6 @@
                   },
                   {
                     "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -345,15 +327,6 @@
                   },
                   {
                     "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -457,15 +430,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -563,15 +527,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -668,15 +623,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -746,15 +692,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -833,15 +770,6 @@
                       "schema": {
                           "type": "integer",
                           "format": "int32"
-                      }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
                       }
                   }
               ],
@@ -922,15 +850,6 @@
                           "type": "integer",
                           "format": "int32"
                       }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -1009,15 +928,6 @@
                       "schema": {
                           "type": "integer",
                           "format": "int32"
-                      }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
                       }
                   }
               ],
@@ -1135,15 +1045,6 @@
                           "type": "integer",
                           "format": "int32"
                       }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -1221,15 +1122,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -1319,15 +1211,6 @@
                   },
                   {
                     "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -1489,15 +1372,6 @@
                       "schema": {
                           "type": "string"
                       }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -1625,15 +1499,6 @@
                       "schema": {
                           "type": "string"
                       }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -1732,15 +1597,6 @@
                       "required": false,
                       "schema": {
                           "type": "string"
-                      }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
                       }
                   }
               ],
@@ -2433,15 +2289,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -2543,15 +2390,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -2646,15 +2484,6 @@
                       "required": false,
                       "schema": {
                           "type": "string"
-                      }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
                       }
                   }
               ],
@@ -2751,15 +2580,6 @@
                       "schema": {
                           "type": "string"
                       }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -2852,15 +2672,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -2959,15 +2770,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -3091,15 +2893,6 @@
                   },
                   {
                     "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -3329,15 +3122,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -3440,15 +3224,6 @@
                       "required": true,
                       "schema": {
                           "type": "string"
-                      }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
                       }
                   }
               ],
@@ -3563,15 +3338,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "requestBody": {
@@ -3692,15 +3458,6 @@
                   },
                   {
                       "$ref": "#/components/parameters/SubAppHeader"
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
-                      }
                   }
               ],
               "responses": {
@@ -6323,15 +6080,6 @@
                       "required": false,
                       "schema": {
                           "type": "string"
-                      }
-                  },
-                  {
-                      "description": "__Optional__. Used to obtain the raw request and response to and from the <code>Institution</code>.",
-                      "in": "query",
-                      "name": "raw",
-                      "required": false,
-                      "schema": {
-                          "type": "boolean"
                       }
                   }
               ],
@@ -10175,6 +9923,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated": true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -10211,6 +9960,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated": true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -10659,6 +10409,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated": true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -10695,6 +10446,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated": true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -11015,6 +10767,7 @@
                       "$ref": "#/components/schemas/ApiError"
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -11376,6 +11129,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -11532,6 +11286,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -11590,6 +11345,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -11682,6 +11438,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -11915,6 +11672,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -12090,6 +11848,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -12126,6 +11885,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -12221,6 +11981,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -12577,6 +12338,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -12616,6 +12378,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -13179,6 +12942,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -13262,6 +13026,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -13881,6 +13646,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -14129,6 +13895,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -14456,6 +14223,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -14492,6 +14260,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -14536,6 +14305,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -14827,6 +14597,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -15148,8 +14919,9 @@
               }
           },
           "RawResponse": {
+              "deprecated": true,
               "type": "object",
-              "description": "Interaction (raw request and response) that occured with the `Institution` in order to fulfil a request.",
+              "description": "[DEPRECATED] Interaction (raw request and response) that occurred with the `Institution` in order to fulfil a request.",
               "properties": {
                   "request": {
                       "$ref": "#/components/schemas/RawRequest"
@@ -15564,6 +15336,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -15827,6 +15600,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -15961,6 +15735,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -15997,6 +15772,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -16033,6 +15809,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -16402,6 +16179,7 @@
                       "writeOnly": true
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -16435,6 +16213,7 @@
                       "writeOnly": true
                   },
                   "raw": {
+                      "deprecated":true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -16633,6 +16412,7 @@
                       "writeOnly": true
                   },
                   "raw": {
+                      "deprecated": true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -16891,6 +16671,7 @@
                       "writeOnly": true
                   },
                   "raw": {
+                      "deprecated": true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
@@ -16997,6 +16778,7 @@
                       }
                   },
                   "raw": {
+                      "deprecated": true,
                       "type": "array",
                       "items": {
                           "$ref": "#/components/schemas/RawResponse"
