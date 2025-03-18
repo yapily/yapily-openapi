@@ -24,10 +24,10 @@ public class AccountService {
         return accounts.getData();
     }
 
-    public List<Transaction> getTransactions(String accountId, String consent, String psuId, String psuCorporateId, String psuIpAddress, UUID subAppId, List<String> with, String from, String before,
+    public List<Transaction> getTransactions(String accountId, String consent, String psuId, String psuCorporateId, String psuIpAddress, UUID subAppId, String from, String before,
                                              Integer limit, SortEnum sort, Integer offset, String cursor)
             throws ApiException {
-        ApiListResponseOfTransaction transactions = api.getTransactions(accountId, consent, psuId, psuCorporateId, psuIpAddress, subAppId, with, from, before, limit, sort, offset, cursor);
+        ApiListResponseOfTransaction transactions = api.getTransactions(accountId, consent, psuId, psuCorporateId, psuIpAddress, subAppId, from, before, limit, sort, offset, cursor);
         return transactions.getData();
     }
 

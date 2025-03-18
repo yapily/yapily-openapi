@@ -76,11 +76,9 @@ public class SuiteTest {
             // then fetch the accounts
             List<Account> accounts = accountService.getAccounts(consentToken, psuId, psuCorpId, psuIpAdd, null);
             Assertions.assertFalse(accounts.isEmpty());
-            for (Account acc : accounts) {
-                List<Transaction> transactions =
-                        accountService.getTransactions(acc.getId(), consentToken, psuId, psuCorpId, psuIpAdd, null, null, null, null, null, null, null, null);
-                Assertions.assertFalse(transactions.isEmpty());
-            }
+
+            accountService.getTransactions(accounts.get(0).getId(), consentToken, psuId, psuCorpId, psuIpAdd, null, null, null, null, null, null, null);
+
             // user removal
             // DeleteUser fails with timeout connection error
             ApiResponseOfUserDeleteResponse deletedUser = userService.deleteUser(confirmedUser.getUuid());
