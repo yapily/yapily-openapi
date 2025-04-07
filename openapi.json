@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "9.1.0",
+      "version": "9.2.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -13756,7 +13756,8 @@
                   "DOMESTIC_PERIODIC_PAYMENT",
                   "INTERNATIONAL_PAYMENT",
                   "INTERNATIONAL_SCHEDULED_PAYMENT",
-                  "INTERNATIONAL_PERIODIC_PAYMENT"
+                  "INTERNATIONAL_PERIODIC_PAYMENT",
+                  "BULK_PAYMENT"
               ]
           },
           "PaymentTypeResponse": {
