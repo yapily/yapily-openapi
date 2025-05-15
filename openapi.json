@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "9.2.0",
+      "version": "10.0.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -2761,48 +2761,6 @@
               ]
           }
       },
-      "/features": {
-          "get": {
-              "description": "Used to retrieve all features available from Yapily. Each `Institution` supports a one, many or all of these features and can be seen in the features field of the `Institution` object.<br><br>Note: Every `Institution` does not necessarily support every feature. To see which features are available for a particular Institution, use either the [Get Institutions](https://docs.yapily.com/api/reference/#operation/getInstitutions) or [Get Institution](https://docs.yapily.com/api/reference/#operation/getInstitution) endpoint and check the features array within the `Institution` payload.",
-              "operationId": "getFeatureDetails",
-              "responses": {
-                  "200": {
-                      "content": {
-                          "application/json;charset=UTF-8": {
-                              "examples": {
-                                  "Example Response": {
-                                      "$ref": "#/components/examples/features-example-response"
-                                  }
-                              },
-                              "schema": {
-                                  "$ref": "#/components/schemas/ApiListResponseOfFeatureDetails"
-                              }
-                          }
-                      },
-                      "description": "Ok"
-                  },
-                  "default": {
-                      "content": {
-                          "application/json;charset=UTF-8": {
-                              "examples": {
-                                  "Error Response": {
-                                      "$ref": "#/components/examples/error-response-code-401"
-                                  }
-                              },
-                              "schema": {
-                                  "$ref": "#/components/schemas/ApiResponseError"
-                              }
-                          }
-                      },
-                      "description": "Error Response"
-                  }
-              },
-              "summary": "Get Features",
-              "tags": [
-                  "Institutions"
-              ]
-          }
-      },
       "/identity": {
           "x-yapily-features": [
               "IDENTITY"
@@ -2955,48 +2913,6 @@
               "summary": "Get Institution",
               "tags": [
                   "Institutions"
-              ]
-          }
-      },
-      "/me": {
-          "get": {
-              "description": "Get the information about the institutions configured in your application",
-              "operationId": "getApplicationMe",
-              "responses": {
-                  "200": {
-                      "content": {
-                          "application/json;charset=UTF-8": {
-                              "examples": {
-                                  "Example Response": {
-                                      "$ref": "#/components/examples/me-example-response"
-                                  }
-                              },
-                              "schema": {
-                                  "$ref": "#/components/schemas/Application"
-                              }
-                          }
-                      },
-                      "description": "Ok"
-                  },
-                  "default": {
-                      "content": {
-                          "application/json;charset=UTF-8": {
-                              "examples": {
-                                  "Error Response": {
-                                      "$ref": "#/components/examples/error-response-code-401"
-                                  }
-                              },
-                              "schema": {
-                                  "$ref": "#/components/schemas/ApiResponseError"
-                              }
-                          }
-                      },
-                      "description": "Error Response"
-                  }
-              },
-              "summary": "Get Application Self",
-              "tags": [
-                  "Application"
               ]
           }
       },
@@ -11733,23 +11649,6 @@
                   }
               }
           },
-          "FeatureDetails": {
-              "type": "object",
-              "description": "Features that an individual `Institution` may support. ",
-              "properties": {
-                  "feature": {
-                      "$ref": "#/components/schemas/FeatureEnum"
-                  },
-                  "endpoint": {
-                      "type": "string",
-                      "description": "Endpoints that are associated with the feature e.g. (available for use if an Institution supports a feature)."
-                  },
-                  "documentationUrl": {
-                      "type": "string",
-                      "description": "The link to further documentation regarding the feature."
-                  }
-              }
-          },
           "ApiListResponseOfDirectDebitResponse": {
               "type": "object",
               "properties": {
@@ -11783,46 +11682,6 @@
                   },
                   "paging": {
                       "$ref": "#/components/schemas/FilteredClientPayloadListDirectDebitResponse"
-                  },
-                  "tracingId": {
-                      "type": "string",
-                      "writeOnly": true
-                  }
-              }
-          },
-          "ApiListResponseOfFeatureDetails": {
-              "type": "object",
-              "properties": {
-                  "meta": {
-                      "$ref": "#/components/schemas/ResponseListMeta"
-                  },
-                  "data": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/FeatureDetails"
-                      }
-                  },
-                  "links": {
-                      "type": "object",
-                      "additionalProperties": {
-                          "type": "string"
-                      }
-                  },
-                  "forwardedData": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/ResponseForwardedData"
-                      }
-                  },
-                  "raw": {
-                      "deprecated":true,
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/RawResponse"
-                      }
-                  },
-                  "paging": {
-                      "$ref": "#/components/schemas/FilteredClientPayloadListFeatureDetails"
                   },
                   "tracingId": {
                       "type": "string",
@@ -12048,36 +11907,7 @@
                   }
               }
           },
-          "FilteredClientPayloadListFeatureDetails": {
-              "type": "object",
-              "properties": {
-                  "apiCall": {
-                      "$ref": "#/components/schemas/ApiCall"
-                  },
-                  "data": {
-                      "type": "array",
-                      "items": {
-                          "$ref": "#/components/schemas/FeatureDetails"
-                      }
-                  },
-                  "nextCursorHash": {
-                      "type": "string"
-                  },
-                  "nextLink": {
-                      "type": "string"
-                  },
-                  "pagingMap": {
-                      "type": "object",
-                      "additionalProperties": {
-                          "$ref": "#/components/schemas/FilterAndSort"
-                      }
-                  },
-                  "totalCount": {
-                      "type": "integer",
-                      "format": "int64"
-                  }
-              }
-          },
+
           "FilteredClientPayloadListInstitution": {
               "type": "object",
               "properties": {
@@ -20527,277 +20357,6 @@
                   "lastConfirmedAt": "2021-07-08T10:59:53.288Z"
               }
           },
-          "features-example-response": {
-              "description": "Example Response",
-              "value": {
-                  "meta": {
-                      "tracingId": "b39dc53cf01847098b13f22c559228dd",
-                      "count": 52
-                  },
-                  "data": [
-                      {
-                          "feature": "ACCOUNT",
-                          "endpoint": "https://api.yapily.com/account/{account-id}",
-                          "documentationUrl": "https://docs.yapily.com/#757fde49-a294-bbff-d5f9-2c21c5f57be0"
-                      },
-                      {
-                          "feature": "ACCOUNTS",
-                          "endpoint": "https://api.yapily.com/accounts",
-                          "documentationUrl": "https://docs.yapily.com/#23faf44e-1093-c676-63ea-369e41ea902d"
-                      },
-                      {
-                          "feature": "ACCOUNTS_WITHOUT_BALANCE",
-                          "endpoint": "https://api.yapily.com/account-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "ACCOUNT_BALANCES",
-                          "endpoint": "https://api.yapily.com/account/{account-id}/balances",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "ACCOUNT_BENEFICIARIES",
-                          "endpoint": "https://api.yapily.com/accounts/{accountId}/beneficiaries",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "ACCOUNT_DIRECT_DEBITS",
-                          "endpoint": "https://api.yapily.com/account/{accountId}/direct-debits",
-                          "documentationUrl": "https://docs.yapily.com/#a5affc0a-c9cf-4203-b126-4a1bdcb7700a"
-                      },
-                      {
-                          "feature": "ACCOUNT_PERIODIC_PAYMENTS",
-                          "endpoint": "https://api.yapily.com/account/{accountId}/periodic-payments",
-                          "documentationUrl": "https://docs.yapily.com/#98e43700-e9c7-4598-b337-42e86b099216"
-                      },
-                      {
-                          "feature": "ACCOUNT_REQUEST_DETAILS",
-                          "endpoint": "https://api.yapily.com/account-request/{authRequestId}",
-                          "documentationUrl": "https://docs.yapily.com/#c8da0a20-6cb9-4282-aba5-4c66113eb70b"
-                      },
-                      {
-                          "feature": "ACCOUNT_SCHEDULED_PAYMENTS",
-                          "endpoint": "https://api.yapily.com/account/{accountId}/scheduled-payments",
-                          "documentationUrl": "https://docs.yapily.com/#7eadb71e-d715-4c3f-927d-626c9e3a1303"
-                      },
-                      {
-                          "feature": "ACCOUNT_STATEMENT",
-                          "endpoint": "https://api.yapily.com/account/{accountId}/statements/{statementId}",
-                          "documentationUrl": "https://docs.yapily.com/?version=latest#29101d1e-2c52-4d36-900a-18435dca75e0"
-                      },
-                      {
-                          "feature": "ACCOUNT_STATEMENTS",
-                          "endpoint": "https://api.yapily.com/account/{accountId}/statements",
-                          "documentationUrl": "https://docs.yapily.com/#7358d865-3cf3-17da-cf0f-84a1af3b545f"
-                      },
-                      {
-                          "feature": "ACCOUNT_STATEMENT_FILE",
-                          "endpoint": "https://api.yapily.com/account/{accountId}/statements/{statementId}/file",
-                          "documentationUrl": "https://docs.yapily.com/#3987b1e1-6b9c-4770-96de-fa85e2025d48"
-                      },
-                      {
-                          "feature": "ACCOUNT_TRANSACTIONS",
-                          "endpoint": "https://api.yapily.com/account/{account-id}/transactions",
-                          "documentationUrl": "https://docs.yapily.com/#7358d865-3cf3-17da-cf0f-84a1af3b545f"
-                      },
-                      {
-                          "feature": "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
-                          "endpoint": "https://api.yapily.com/accounts/{accountId}/transactions",
-                          "documentationUrl": "https://docs.yapily.com/#7358d865-3cf3-17da-cf0f-84a1af3b545f"
-                      },
-                      {
-                          "feature": "ACCOUNT_WITHOUT_BALANCE",
-                          "endpoint": "https://api.yapily.com/account/{account-id}",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "CREATE_BULK_PAYMENT",
-                          "endpoint": "https://api.yapily.com/bulk-payments",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "CREATE_DOMESTIC_PERIODIC_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payments",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payments",
-                          "documentationUrl": "https://docs.yapily.com/#1fd6bf92-7333-4b46-be2c-1a92a3c72b1c"
-                      },
-                      {
-                          "feature": "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payments",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "CREATE_DOMESTIC_SINGLE_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payments",
-                          "documentationUrl": "https://docs.yapily.com/#4521aa4d-75c2-4c22-9629-acb96c14e4e6"
-                      },
-                      {
-                          "feature": "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payments",
-                          "documentationUrl": "https://docs.yapily.com/#1fd6bf92-7333-4b46-be2c-1a92a3c72b1c"
-                      },
-                      {
-                          "feature": "CREATE_INTERNATIONAL_PERIODIC_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payments",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payments",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payments",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "CREATE_SINGLE_PAYMENT_SORTCODE",
-                          "endpoint": "https://api.yapily.com/payment-sortcode",
-                          "documentationUrl": "https://docs.yapily.com/#4521aa4d-75c2-4c22-9629-acb96c14e4e6"
-                      },
-                      {
-                          "feature": "EXISTING_PAYMENTS_DETAILS",
-                          "endpoint": "https://api.yapily.com/payments/{payment-id}",
-                          "documentationUrl": "https://docs.yapily.com/#2e1a151e-59a7-4fa1-bd5b-5f6a0c4bf4cd"
-                      },
-                      {
-                          "feature": "EXISTING_PAYMENT_INITIATION_DETAILS",
-                          "endpoint": "https://api.yapily.com/payment-initiations/{paymentId}",
-                          "documentationUrl": "https://docs.yapily.com/#c8da0a20-6cb9-4282-aba5-4c66113eb70b"
-                      },
-                      {
-                          "feature": "IDENTITY",
-                          "endpoint": "https://api.yapily.com/identity",
-                          "documentationUrl": "https://docs.yapily.com/#8c62ef0f-0cfa-98e6-6b0b-cb2441eb2d51"
-                      },
-                      {
-                          "feature": "INITIATE_ACCOUNT_REQUEST",
-                          "endpoint": "https://api.yapily.com/account-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com/#c8da0a20-6cb9-4282-aba5-4c66113eb70b"
-                      },
-                      {
-                          "feature": "INITIATE_BULK_PAYMENT",
-                          "endpoint": "https://api.yapily.com/bulk-payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com#8e67c40c-4b0e-4f72-947c-065f1c84f46b"
-                      },
-                      {
-                          "feature": "INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "INITIATE_DOMESTIC_SINGLE_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com/#c8da0a20-6cb9-4282-aba5-4c66113eb70b"
-                      },
-                      {
-                          "feature": "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com/#8e67c40c-4b0e-4f72-947c-065f1c84f46b"
-                      },
-                      {
-                          "feature": "INITIATE_EMBEDDED_ACCOUNT_REQUEST",
-                          "endpoint": "https://api.yapily.com/embedded-account-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "INITIATE_EMBEDDED_DOMESTIC_SINGLE_PAYMENT",
-                          "endpoint": "https://api.yapily.com/embedded-payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "INITIATE_EMBEDDED_BULK_PAYMENT",
-                          "endpoint": "https://api.yapily.com/embedded-payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com/"
-                      },
-                      {
-                          "feature": "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "INITIATE_PRE_AUTHORISATION",
-                          "endpoint": "https://api.yapily.com/pre-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "INITIATE_SINGLE_PAYMENT_SORTCODE",
-                          "endpoint": "https://api.yapily.com/payment-sortcode-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com/#c8da0a20-6cb9-4282-aba5-4c66113eb70b"
-                      },
-                      {
-                          "feature": "OPEN_DATA_ATMS",
-                          "endpoint": "https://api.yapily.com/institutions/{institution-id}/atms",
-                          "documentationUrl": "https://docs.yapily.com/#f5d271e1-8375-4a4a-a446-6ab9fd823f79"
-                      },
-                      {
-                          "feature": "OPEN_DATA_PERSONAL_CURRENT_ACCOUNTS",
-                          "endpoint": "https://api.yapily.com/institutions/{institution-id}/personal-current-accounts",
-                          "documentationUrl": "https://docs.yapily.com/#6af35149-9db9-4eb4-862f-93187c64cbcd"
-                      },
-                      {
-                          "feature": "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
-                          "endpoint": "https://api.yapily.com/payments",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "READ_DOMESTIC_PERIODIC_PAYMENT_REFUND",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "READ_DOMESTIC_SCHEDULED_REFUND",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "READ_DOMESTIC_SINGLE_REFUND",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "READ_INTERNATIONAL_SCHEDULED_REFUND",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "READ_INTERNATIONAL_SINGLE_REFUND",
-                          "endpoint": "https://api.yapily.com/payment-auth-requests",
-                          "documentationUrl": "https://docs.yapily.com"
-                      },
-                      {
-                          "feature": "TRANSFER",
-                          "endpoint": "https://api.yapily.com/accounts/{accountId}/transfer",
-                          "documentationUrl": "https://docs.yapily.com/#c8da0a20-6cb9-4282-aba5-4c66113eb70b"
-                      }
-                  ]
-              }
-          },
           "identity-example-response": {
               "description": "Example Response",
               "value": {
@@ -20948,77 +20507,6 @@
                       "ACCOUNT_DIRECT_DEBITS",
                       "ACCOUNTS"
                   ]
-              }
-          },
-          "me-example-response": {
-              "description": "Example Response",
-              "value": {
-                  "uuid": "64949de6-6510-4d70-9500-d4aa094c506c",
-                  "name": "APPLICATION NAME",
-                  "active": true,
-                  "authCallbacks": [
-                      "https://display-parameters.com/"
-                  ],
-                  "institutions": [
-                      {
-                          "id": "modelo-sandbox",
-                          "name": "Modelo Sandbox",
-                          "fullName": "Modelo Sandbox",
-                          "countries": [
-                              {
-                                  "displayName": "United Kingdom",
-                                  "countryCode2": "GB"
-                              }
-                          ],
-                          "environmentType": "SANDBOX",
-                          "credentialsType": "OPEN_BANKING_UK_AUTO",
-                          "media": [
-                              {
-                                  "source": "https://images.yapily.com/image/ce2bfdbf-1ae2-4919-ab7b-e8b3d5e93b36?size=0",
-                                  "type": "icon"
-                              },
-                              {
-                                  "source": "https://images.yapily.com/image/ca502f24-d6df-4785-b4b8-1034b100af77?size=0",
-                                  "type": "logo"
-                              }
-                          ],
-                          "features": [
-                              "INITIATE_SINGLE_PAYMENT_SORTCODE",
-                              "CREATE_DOMESTIC_PERIODIC_PAYMENT",
-                              "ACCOUNT_REQUEST_DETAILS",
-                              "ACCOUNT_STATEMENT_FILE",
-                              "CREATE_SINGLE_PAYMENT_SORTCODE",
-                              "ACCOUNTS",
-                              "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
-                              "ACCOUNT_PERIODIC_PAYMENTS",
-                              "CREATE_DOMESTIC_SINGLE_PAYMENT",
-                              "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
-                              "EXISTING_PAYMENTS_DETAILS",
-                              "INITIATE_BULK_PAYMENT",
-                              "EXISTING_PAYMENT_INITIATION_DETAILS",
-                              "ACCOUNT_DIRECT_DEBITS",
-                              "ACCOUNT_TRANSACTIONS",
-                              "INITIATE_DOMESTIC_SINGLE_PAYMENT",
-                              "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
-                              "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
-                              "ACCOUNT_SCHEDULED_PAYMENTS",
-                              "ACCOUNT",
-                              "ACCOUNT_STATEMENTS",
-                              "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
-                              "CREATE_BULK_PAYMENT",
-                              "ACCOUNT_BALANCES",
-                              "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
-                              "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
-                              "ACCOUNT_BENEFICIARIES",
-                              "IDENTITY",
-                              "ACCOUNT_STATEMENT",
-                              "INITIATE_ACCOUNT_REQUEST"
-                          ]
-                      }
-                  ],
-                  "media": [],
-                  "created": "2020-11-09T10:05:29.897+0000",
-                  "updated": "2021-04-14T12:51:07.419+0000"
               }
           },
           "create-user-example-request": {
