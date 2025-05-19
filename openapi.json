@@ -5695,110 +5695,12 @@
               }
           ],
           "post": {
-              "summary": "Trigger transaction categorisation",
-              "description": "Trigger categorisation for a specified set of transactions",
-              "tags": [
-                  "Enrichment"
-              ],
-              "responses": {
-                "201": {
-                      "description": "Created",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "type": "object",
-                                  "x-examples": {
-                                      "Example 1": {
-                                          "meta": {
-                                              "tracingId": "string"
-                                          },
-                                          "data": {
-                                              "categorisationId": "b835bb6a-766d-42bf-8c0c-93921937925a"
-                                          }
-                                      }
-                                  },
-                                  "properties": {
-                                      "meta": {
-                                          "type": "object",
-                                          "properties": {
-                                              "tracingId": {
-                                                  "type": "string"
-                                              }
-                                          }
-                                      },
-                                      "data": {
-                                          "type": "object",
-                                          "properties": {
-                                              "categorisationId": {
-                                                  "type": "string",
-                                                  "format": "uuid"
-                                              }
-                                          }
-                                      }
-                                  }
-                              },
-                              "examples": {
-                                  "Example 1": {
-                                      "value": {
-                                          "meta": {
-                                              "tracingId": "string"
-                                          },
-                                          "data": {
-                                              "categorisationId": "b835bb6a-766d-42bf-8c0c-93921937925a"
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                  },
-                "400": {
-                  "description": "There are validation errors",
-                  "content": {
-                    "application/json;charset=UTF-8": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ApiErrorResponseV2"
-                      },
-                      "examples": {
-                        "Example-1": {
-                          "$ref": "#/components/examples/400-error-response"
-                        }
-                      }
-                    }
-                  }
-                },
-                "401": {
-                  "description": "Authentication Error",
-                  "content": {
-                    "application/json;charset=UTF-8": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ApiErrorResponseV2"
-                      },
-                      "examples": {
-                        "Example-1": {
-                          "$ref": "#/components/examples/401-error-response"
-                        }
-                      }
-                    }
-                  }
-                },
-                "500": {
-                  "description": "An unexpected error occurred.",
-                  "content": {
-                    "application/json;charset=UTF-8": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ApiErrorResponseV2"
-                      },
-                      "examples": {
-                        "Example-1": {
-                          "$ref": "#/components/examples/500-error-response"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
               "operationId": "post-accounts-accountId-transactions-categorisation",
+              "summary": "Transactions and Enrichment",
+              "description": "Trigger enrichment for the specified selection of transactions.",
+              "tags": [
+                  "Data Plus"
+              ],
               "requestBody": {
                   "content": {
                       "application/json": {
@@ -5811,7 +5713,7 @@
                               "properties": {
                                   "countryCode": {
                                       "type": "string",
-                                      "description": "_Mandatory_, ISO 3166-1 alpha-2 two-letter country codes e.g. GB"
+                                      "description": "__Mandatory__. Two-letter country code in ISO 3166-1 alpha-2 format (e.g. GB)"
                                   },
                                   "categorisationType": {
                                     "type": "string",
@@ -5841,6 +5743,68 @@
                           }
                       }
                   }
+              },
+              "responses": {
+                "201": {
+                      "description": "Created",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseOfCreateTransactionsCategorisationRequest"
+                              },
+                              "examples": {
+                                  "Example 1": {
+                                      "$ref": "#/components/examples/create-transactions-categorisation-response"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                "400": {
+                  "description": "Validation Error",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/400-error-response"
+                        }
+                      }
+                    }
+                  }
+                },
+                "401": {
+                  "description": "Authentication Error",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/401-error-response"
+                        }
+                      }
+                    }
+                  }
+                },
+                "500": {
+                  "description": "Unexpected Error",
+                  "content": {
+                    "application/json;charset=UTF-8": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ApiErrorResponseV2"
+                      },
+                      "examples": {
+                        "Example-1": {
+                          "$ref": "#/components/examples/500-error-response"
+                        }
+                      }
+                    }
+                  }
+                }
               }
           }
       },
@@ -5902,314 +5866,31 @@
           }
         ],
           "get": {
+              "deprecated": true,
+              "operationId": "get-accounts-transactions-categorised",
               "summary": "Get Categorised Transactions",
-              "description": "Retrieve a set of categorised transactions using a provided categorisation ID (__Note__: A categorisation ID will only be valid for 30 mins after a __transactions.categorisation.successful__ wedhook has be received)",
+              "description": "__Deprecated__. Retrieve a set of categorised transactions using a Categorisation ID.\n\nUse the [`/transactions/categorisation/{categorisationId}`](#/Enrichment/get-transactions-categorised) endpoint.",
               "tags": [
-                  "Enrichment"
+                  "Data Plus"
               ],
               "responses": {
                 "200": {
                   "description": "OK",
                   "content": {
-                    "application/json": {
+                      "application/json;charset=UTF-8": {
                       "schema": {
-                        "type": "object",
-                        "properties": {
-                          "meta": {
-                            "type": "object",
-                            "properties": {
-                              "tracingId": {
-                                "type": "string"
-                              },
-                              "count": {
-                                "type": "integer",
-                                "description": "total number of transactions available"
-                              },
-                              "pageCount": {
-                                "type": "integer",
-                                "description": "total number of pages available calculated based on the limit per page sent in the request"
-                              }
-                            }
-                          },
-                          "data": {
-                            "type": "object",
-                            "properties": {
-                              "transactions": {
-                                "type": "array",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "id": {
-                                      "type": "string"
-                                    },
-                                    "date": {
-                                      "type": "string"
-                                    },
-                                    "bookingDateTime": {
-                                      "type": "string",
-                                      "format": "date-time"
-                                    },
-                                    "valueDateTime": {
-                                      "type": "string",
-                                      "format": "date-time"
-                                    },
-                                    "status": {
-                                      "type": "string"
-                                    },
-                                    "amount": {
-                                      "type": "integer"
-                                    },
-                                    "currency": {
-                                      "type": "string"
-                                    },
-                                    "transactionAmount": {
-                                      "type": "object",
-                                      "properties": {
-                                        "amount": {
-                                          "type": "integer"
-                                        },
-                                        "currency": {
-                                          "type": "string"
-                                        }
-                                      }
-                                    },
-                                    "reference": {
-                                      "type": "string"
-                                    },
-                                    "description": {
-                                      "type": "string"
-                                    },
-                                    "transactionInformation": {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "proprietaryBankTransactionCode": {
-                                      "type": "object",
-                                      "properties": {
-                                        "code": {
-                                          "type": "string"
-                                        },
-                                        "issuer": {
-                                          "type": "string"
-                                        }
-                                      }
-                                    },
-                                    "isoBankTransactionCode": {
-                                      "type": "object",
-                                      "properties": {
-                                        "domainCode": {
-                                          "type": "object",
-                                          "properties": {
-                                            "code": {
-                                              "type": "string"
-                                            },
-                                            "name": {
-                                              "type": "string"
-                                            }
-                                          }
-                                        },
-                                        "familyCode": {
-                                          "type": "object",
-                                          "properties": {
-                                            "code": {
-                                              "type": "string"
-                                            },
-                                            "name": {
-                                              "type": "string"
-                                            }
-                                          }
-                                        },
-                                        "subFamilyCode": {
-                                          "type": "object",
-                                          "properties": {
-                                            "code": {
-                                              "type": "string"
-                                            },
-                                            "name": {
-                                              "type": "string"
-                                            }
-                                          }
-                                        }
-                                      }
-                                    },
-                                    "balance": {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string"
-                                        },
-                                        "balanceAmount": {
-                                          "type": "object",
-                                          "properties": {
-                                            "amount": {
-                                              "type": "integer"
-                                            },
-                                            "currency": {
-                                              "type": "string"
-                                            }
-                                          }
-                                        }
-                                      }
-                                    },
-                                    "enrichment": {
-                                      "type": "object",
-                                      "properties": {
-                                        "categorisation": {
-                                          "type": "object",
-                                          "properties": {
-                                            "categories": {
-                                              "type": "array",
-                                              "items": {
-                                                "type": "string"
-                                              }
-                                            }
-                                          }
-                                        },
-                                        "recurrence": {
-                                          "type": "string"
-                                        },
-                                        "transactionHash": {
-                                          "type": "object",
-                                          "properties": {
-                                            "hash": {
-                                              "type": "string"
-                                            }
-                                          }
-                                        },
-                                        "merchant": {
-                                          "type": "object",
-                                          "properties": {
-                                            "id": {
-                                              "type": "string"
-                                            },
-                                            "name": {
-                                              "type": "string"
-                                            }
-                                          }
-                                        },
-                                        "paymentProcessor": {
-                                          "type": "string"
-                                        }
-                                      }
-                                    },
-                                    "hash": {
-                                      "type": "string"
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "links": {
-                            "type": "object",
-                            "properties": {
-                              "first": {
-                                "type": "string"
-                              },
-                              "prev": {
-                                "type": "string"
-                              },
-                              "self": {
-                                "type": "string"
-                              },
-                              "next": {
-                                "type": "string"
-                              },
-                              "last": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        }
+                          "$ref": "#/components/schemas/ApiResponseOfGetCategorisedTransactionsRequest"
                       },
                       "examples": {
                         "Example 1": {
-                          "value": {
-                            "meta": {
-                              "tracingId": "string",
-                              "count": 1
-                            },
-                            "data": {
-                              "transactions": [
-                                {
-                                  "id": "string",
-                                  "date": "string",
-                                  "bookingDateTime": "2019-08-24T14:15:22Z",
-                                  "valueDateTime": "2019-08-24T14:15:22Z",
-                                  "status": "string",
-                                  "amount": 0,
-                                  "currency": "string",
-                                  "transactionAmount": {
-                                    "amount": 0,
-                                    "currency": "string"
-                                  },
-                                  "reference": "string",
-                                  "description": "string",
-                                  "transactionInformation": [
-                                    "string"
-                                  ],
-                                  "proprietaryBankTransactionCode": {
-                                    "code": "string",
-                                    "issuer": "string"
-                                  },
-                                  "isoBankTransactionCode": {
-                                    "domainCode": {
-                                      "code": "string",
-                                      "name": "string"
-                                    },
-                                    "familyCode": {
-                                      "code": "string",
-                                      "name": "string"
-                                    },
-                                    "subFamilyCode": {
-                                      "code": "string",
-                                      "name": "string"
-                                    }
-                                  },
-                                  "balance": {
-                                    "type": "string",
-                                    "balanceAmount": {
-                                      "amount": 0,
-                                      "currency": "string"
-                                    }
-                                  },
-                                  "enrichment": {
-                                    "categorisation": {
-                                      "categories": [
-                                        "string"
-                                      ]
-                                    },
-                                    "recurrence": "string",
-                                    "transactionHash": {
-                                      "hash": "string"
-                                    },
-                                    "merchant": {
-                                      "id": "string",
-                                      "name": "string"
-                                    },
-                                    "paymentProcessor": "string"
-                                  },
-                                  "hash": "string"
-                                }
-                              ]
-                            },
-                            "links": {
-                              "first": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=aaa",
-                              "prev": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=bbb",
-                              "self": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ccc",
-                              "next": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ddd",
-                              "last": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=zzz"
-                            }
-                          }
+                            "$ref": "#/components/examples/get-categorised-transactions-response"
                         }
                       }
                     }
                   }
                 },
                 "400": {
-                  "description": "There are validation errors",
+                  "description": "Validation Error",
                   "content": {
                     "application/json;charset=UTF-8": {
                       "schema": {
@@ -6239,7 +5920,7 @@
                   }
                 },
                 "404": {
-                  "description": "Webhook id not found",
+                  "description": "Categorisation ID not found",
                   "content": {
                     "application/json;charset=UTF-8": {
                       "schema": {
@@ -6254,7 +5935,7 @@
                   }
                 },
                 "500": {
-                  "description": "An unexpected error occurred.",
+                  "description": "Unexpected Error",
                   "content": {
                     "application/json;charset=UTF-8": {
                       "schema": {
@@ -6268,8 +5949,322 @@
                     }
                   }
                 }
+              }
+          }
+      },
+      "/transactions/categorisation": {
+          "parameters": [
+              {
+                  "$ref": "#/components/parameters/SubAppHeader"
+              }
+          ],
+          "post": {
+              "operationId": "post-transactions-categorisation",
+              "summary": "Enrichment",
+              "description": "Trigger enrichment for the provided set of transactions.",
+              "tags": [
+                  "Data Plus"
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "type": "object",
+                              "required": [
+                                  "categorisationType",
+                                  "countryCode",
+                                  "transactions"
+                              ],
+                              "properties": {
+                                  "countryCode": {
+                                      "type": "string",
+                                      "description": "__Mandatory__. Two-letter country code in ISO 3166-1 alpha-2 format (e.g. GB)"
+                                  },
+                                  "categorisationType": {
+                                      "enum": [
+                                          "consumer",
+                                          "business"
+                                      ],
+                                      "description": "__Mandatory__. Allowed values are `consumer` and `business`."
+                                  },
+                                  "transactions": {
+                                      "type": "array",
+                                      "items": {
+                                          "type": "object",
+                                          "required": [
+                                              "id",
+                                              "date",
+                                              "amount",
+                                              "description",
+                                              "countryCode"
+                                          ],
+                                          "properties": {
+                                              "id": {
+                                                  "type": "string",
+                                                  "description": "__Mandatory__. A globally unique transaction ID."
+                                              },
+                                              "date": {
+                                                  "type": "string",
+                                                  "description": "__Mandatory__. Transaction date in ISO 8601 format (eg. 2025-01-01T12:59:59.999Z)"
+                                              },
+                                              "amount": {
+                                                  "type": "object",
+                                                  "required": [
+                                                      "value",
+                                                      "currency"
+                                                  ],
+                                                  "properties": {
+                                                      "value": {
+                                                          "type": "integer",
+                                                          "description": "__Mandatory__. Transaction money amount in cents (or equivalent). Positive amount implies money in, negative amount implies money out."
+                                                      },
+                                                      "currency": {
+                                                          "type": "string",
+                                                          "description": "__Mandatory__. Transaction currency."
+                                                      }
+                                                  }
+                                              },
+                                              "merchant": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                      "mcc": {
+                                                          "type": "string",
+                                                          "description": "__Optional__. Merchant Category Code (MCC) according to ISO 18245"
+                                                      }
+                                                  }
+                                              },
+                                              "description": {
+                                                  "type": "string",
+                                                  "description": "__Mandatory__. Transaction-specific description."
+                                              },
+                                              "countryCode": {
+                                                  "type": "string",
+                                                  "description": "__Mandatory__. Transaction-specific two-letter country code in ISO 3166-1 alpha-2 format (e.g. GB)"
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
+                          },
+                          "examples": {
+                              "Example 1": {
+                                  "value": {
+                                      "countryCode": "GB",
+                                      "categorisationType": "consumer",
+                                      "transactions": [
+                                          {
+                                              "id": "06edf952-8d94-44ae-8d4e-a065b7e47300",
+                                              "date": "2025-03-01T14:15:16Z",
+                                              "amount": {
+                                                  "value": -9900,
+                                                  "currency": "GBP"
+                                              },
+                                              "description": "Shopping",
+                                              "countryCode": "GB"
+                                          },
+                                          {
+                                              "id": "6a241cae-7c43-4058-bdbd-ff9d64e6c9df",
+                                              "date": "2025-04-02T07:59:59Z",
+                                              "amount": {
+                                                  "value": 1000,
+                                                  "currency": "USD"
+                                              },
+                                              "description": "Refund",
+                                              "countryCode": "GB"
+                                          }
+                                      ]
+                                  }
+                              }
+                          }
+                      }
+                  }
               },
-              "operationId": "get-accounts-transactions-categorised"
+              "responses": {
+                  "201": {
+                      "description": "Created",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseOfCreateTransactionsCategorisationRequest"
+                              },
+                              "examples": {
+                                  "Example 1": {
+                                      "$ref": "#/components/examples/create-transactions-categorisation-response"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "400": {
+                      "description": "Validation Error",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                              },
+                              "examples": {
+                                  "Example-1": {
+                                      "$ref": "#/components/examples/400-error-response"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "401": {
+                      "description": "Authentication Error",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                              },
+                              "examples": {
+                                  "Example-1": {
+                                      "$ref": "#/components/examples/401-error-response"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "500": {
+                      "description": "Unexpected Error",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                              },
+                              "examples": {
+                                  "Example-1": {
+                                      "$ref": "#/components/examples/500-error-response"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/transactions/categorisation/{categorisationId}": {
+          "parameters": [
+              {
+                  "schema": {
+                      "type": "string"
+                  },
+                  "name": "categorisationId",
+                  "in": "path",
+                  "required": true,
+                  "description": "Unique identifier for transaction categorisation request"
+              },
+              {
+                  "$ref": "#/components/parameters/SubAppHeader"
+              },
+              {
+                  "description": "__Optional__. The maximum number of transaction records to be returned. Must be between 100 and 1000. If not specified will default to 100.",
+                  "in": "query",
+                  "name": "limit",
+                  "required": false,
+                  "schema": {
+                      "type": "integer",
+                      "format": "int32",
+                      "minimum": 100,
+                      "maximum": 1000
+                  }
+              },
+              {
+                  "description": "__Optional__. The page number to be returned. If not specified will default to 1.",
+                  "in": "query",
+                  "name": "page",
+                  "required": false,
+                  "schema": {
+                      "type": "integer",
+                      "format": "int32",
+                      "minimum": 1
+                  }
+              }
+          ],
+          "get": {
+              "operationId": "get-transactions-categorised",
+              "summary": "Get Enrichment Results",
+              "description": "Retrieve a set of enriched transactions using a Categorisation ID.",
+              "tags": [
+                  "Data Plus"
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseOfGetCategorisedTransactionsRequest"
+                              },
+                              "examples": {
+                                  "Example 1": {
+                                      "$ref": "#/components/examples/get-categorised-transactions-response"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "400": {
+                      "description": "Validation Error",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                              },
+                              "examples": {
+                                  "Example-1": {
+                                      "$ref": "#/components/examples/400-error-response"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "401": {
+                      "description": "Authentication Error",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                              },
+                              "examples": {
+                                  "Example-1": {
+                                      "$ref": "#/components/examples/401-error-response"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "404": {
+                      "description": "Categorisation ID not found",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                              },
+                              "examples": {
+                                  "Example-1": {
+                                      "$ref": "#/components/examples/404-error-response"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "500": {
+                      "description": "Unexpected Error",
+                      "content": {
+                          "application/json;charset=UTF-8": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                              },
+                              "examples": {
+                                  "Example-1": {
+                                      "$ref": "#/components/examples/500-error-response"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
           }
       },
       "/transactions/categorisation/categories/{accountType}": {
@@ -6288,12 +6283,17 @@
               }
           ],
           "get": {
-              "summary": "Get the list of all categories for a specific account type",
+              "operationId": "get-categorisation-accountType",
+              "summary": "Get Enirchment Labels",
+              "description": "Returns the list of categories that can be returned for a specific account type (consumer or business).",
+              "tags": [
+                  "Data Plus"
+              ],
               "responses": {
                 "200": {
                   "description": "OK",
                   "content": {
-                    "application/json": {
+                    "application/json;charset=UTF-8": {
                       "schema": {
                         "type": "object",
                         "properties": {
@@ -6344,7 +6344,7 @@
                   }
                 },
                 "400": {
-                  "description": "There are validation errors",
+                  "description": "Validation Error",
                   "content": {
                     "application/json;charset=UTF-8": {
                       "schema": {
@@ -6374,7 +6374,7 @@
                   }
                 },
                 "404": {
-                  "description": "Webhook id not found",
+                  "description": "Account type not found",
                   "content": {
                     "application/json;charset=UTF-8": {
                       "schema": {
@@ -6389,7 +6389,7 @@
                   }
                 },
                 "500": {
-                  "description": "An unexpected error occurred.",
+                  "description": "Unexpected Error",
                   "content": {
                     "application/json;charset=UTF-8": {
                       "schema": {
@@ -6403,12 +6403,7 @@
                     }
                   }
                 }
-              },
-              "operationId": "get-categorisation-accountType",
-              "description": "Returns the list of categories that can be returned for a specific account type (consumer or business)",
-              "tags": [
-                  "Enrichment"
-              ]
+              }
           }
       },
       "/hosted/consent-requests" : {
@@ -18347,7 +18342,241 @@
               "description": "description of the webhook event category"
             }
           }
-        }
+        },
+          "ApiResponseOfGetCategorisedTransactionsRequest": {
+              "type": "object",
+              "properties": {
+                  "meta": {
+                      "type": "object",
+                      "properties": {
+                          "tracingId": {
+                              "type": "string"
+                          },
+                          "count": {
+                              "type": "integer",
+                              "description": "Total number of categorised transactions available"
+                          },
+                          "pageCount": {
+                              "type": "integer",
+                              "description": "Total number of pages available, calculated based on the limit per page sent in the request."
+                          }
+                      }
+                  },
+                  "data": {
+                      "type": "object",
+                      "properties": {
+                          "transactions": {
+                              "type": "array",
+                              "items": {
+                                  "type": "object",
+                                  "properties": {
+                                      "id": {
+                                          "type": "string"
+                                      },
+                                      "date": {
+                                          "type": "string"
+                                      },
+                                      "bookingDateTime": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                      },
+                                      "valueDateTime": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                      },
+                                      "status": {
+                                          "type": "string"
+                                      },
+                                      "amount": {
+                                          "type": "integer"
+                                      },
+                                      "currency": {
+                                          "type": "string"
+                                      },
+                                      "transactionAmount": {
+                                          "type": "object",
+                                          "properties": {
+                                              "amount": {
+                                                  "type": "integer"
+                                              },
+                                              "currency": {
+                                                  "type": "string"
+                                              }
+                                          }
+                                      },
+                                      "reference": {
+                                          "type": "string"
+                                      },
+                                      "description": {
+                                          "type": "string"
+                                      },
+                                      "transactionInformation": {
+                                          "type": "array",
+                                          "items": {
+                                              "type": "string"
+                                          }
+                                      },
+                                      "proprietaryBankTransactionCode": {
+                                          "type": "object",
+                                          "properties": {
+                                              "code": {
+                                                  "type": "string"
+                                              },
+                                              "issuer": {
+                                                  "type": "string"
+                                              }
+                                          }
+                                      },
+                                      "isoBankTransactionCode": {
+                                          "type": "object",
+                                          "properties": {
+                                              "domainCode": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                      "code": {
+                                                          "type": "string"
+                                                      },
+                                                      "name": {
+                                                          "type": "string"
+                                                      }
+                                                  }
+                                              },
+                                              "familyCode": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                      "code": {
+                                                          "type": "string"
+                                                      },
+                                                      "name": {
+                                                          "type": "string"
+                                                      }
+                                                  }
+                                              },
+                                              "subFamilyCode": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                      "code": {
+                                                          "type": "string"
+                                                      },
+                                                      "name": {
+                                                          "type": "string"
+                                                      }
+                                                  }
+                                              }
+                                          }
+                                      },
+                                      "balance": {
+                                          "type": "object",
+                                          "properties": {
+                                              "type": {
+                                                  "type": "string"
+                                              },
+                                              "balanceAmount": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                      "amount": {
+                                                          "type": "integer"
+                                                      },
+                                                      "currency": {
+                                                          "type": "string"
+                                                      }
+                                                  }
+                                              }
+                                          }
+                                      },
+                                      "enrichment": {
+                                          "type": "object",
+                                          "properties": {
+                                              "categorisation": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                      "categories": {
+                                                          "type": "array",
+                                                          "items": {
+                                                              "type": "string"
+                                                          }
+                                                      }
+                                                  }
+                                              },
+                                              "recurrence": {
+                                                  "type": "string"
+                                              },
+                                              "transactionHash": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                      "hash": {
+                                                          "type": "string"
+                                                      }
+                                                  }
+                                              },
+                                              "merchant": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                      "id": {
+                                                          "type": "string"
+                                                      },
+                                                      "name": {
+                                                          "type": "string"
+                                                      }
+                                                  }
+                                              },
+                                              "paymentProcessor": {
+                                                  "type": "string"
+                                              }
+                                          }
+                                      },
+                                      "hash": {
+                                          "type": "string"
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "links": {
+                      "type": "object",
+                      "properties": {
+                          "first": {
+                              "type": "string"
+                          },
+                          "prev": {
+                              "type": "string"
+                          },
+                          "self": {
+                              "type": "string"
+                          },
+                          "next": {
+                              "type": "string"
+                          },
+                          "last": {
+                              "type": "string"
+                          }
+                      }
+                  }
+              }
+          },
+          "ApiResponseOfCreateTransactionsCategorisationRequest": {
+              "type": "object",
+              "properties": {
+                  "meta": {
+                      "type": "object",
+                      "properties": {
+                          "tracingId": {
+                              "type": "string"
+                          }
+                      }
+                  },
+                  "data": {
+                      "type": "object",
+                      "properties": {
+                          "categorisationId": {
+                              "type": "string",
+                              "format": "uuid"
+                          }
+                      }
+                  }
+              }
+          }
       },
       "securitySchemes": {
           "basicAuth": {
@@ -21634,6 +21863,95 @@
                               "name": "AcceptedSettlementCompleted"
                           }
                       }
+                  }
+              }
+          },
+          "get-categorised-transactions-response": {
+              "value": {
+                  "meta": {
+                      "tracingId": "string",
+                      "count": 1
+                  },
+                  "data": {
+                      "transactions": [
+                          {
+                              "id": "string",
+                              "date": "string",
+                              "bookingDateTime": "2019-08-24T14:15:22Z",
+                              "valueDateTime": "2019-08-24T14:15:22Z",
+                              "status": "string",
+                              "amount": 0,
+                              "currency": "string",
+                              "transactionAmount": {
+                                  "amount": 0,
+                                  "currency": "string"
+                              },
+                              "reference": "string",
+                              "description": "string",
+                              "transactionInformation": [
+                                  "string"
+                              ],
+                              "proprietaryBankTransactionCode": {
+                                  "code": "string",
+                                  "issuer": "string"
+                              },
+                              "isoBankTransactionCode": {
+                                  "domainCode": {
+                                      "code": "string",
+                                      "name": "string"
+                                  },
+                                  "familyCode": {
+                                      "code": "string",
+                                      "name": "string"
+                                  },
+                                  "subFamilyCode": {
+                                      "code": "string",
+                                      "name": "string"
+                                  }
+                              },
+                              "balance": {
+                                  "type": "string",
+                                  "balanceAmount": {
+                                      "amount": 0,
+                                      "currency": "string"
+                                  }
+                              },
+                              "enrichment": {
+                                  "categorisation": {
+                                      "categories": [
+                                          "string"
+                                      ]
+                                  },
+                                  "recurrence": "string",
+                                  "transactionHash": {
+                                      "hash": "string"
+                                  },
+                                  "merchant": {
+                                      "id": "string",
+                                      "name": "string"
+                                  },
+                                  "paymentProcessor": "string"
+                              },
+                              "hash": "string"
+                          }
+                      ]
+                  },
+                  "links": {
+                      "first": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=aaa",
+                      "prev": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=bbb",
+                      "self": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ccc",
+                      "next": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ddd",
+                      "last": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=zzz"
+                  }
+              }
+          },
+          "create-transactions-categorisation-response": {
+              "value": {
+                  "meta": {
+                      "tracingId": "string"
+                  },
+                  "data": {
+                      "categorisationId": "ed8ea63f-7a1e-05d4-3633-a8a9175b50da"
                   }
               }
           },
