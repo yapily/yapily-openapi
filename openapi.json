@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "10.1.0",
+      "version": "10.1.1",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -31,7 +31,7 @@
           "name": "Users"
       },
       {
-          "description": "An `Institution` object represents any Account Serving Payment Servicing Provider (ASPSP) that has been integrated and is accessible through the Yapily APIs (ASPSPs are entities that publish Read/Write APIs to permit, with customer consent, payments initiated by third party providers and/or make their customers� financial data available to third party providers via their API endpoints).<br><br>Any one of the following would be represented as Institution:<ul><li>Traditional banks e.g. Santander</li><li>Neo-banks e.g. Monzo</li><li>Building societies e.g. Cumberland Building Society</li></ul>",
+          "description": "An `Institution` object represents any Account Serving Payment Servicing Provider (ASPSP) that has been integrated and is accessible through the Yapily APIs (ASPSPs are entities that publish Read/Write APIs to permit, with customer consent, payments initiated by third party providers and/or make their customers financial data available to third party providers via their API endpoints).<br><br>Any one of the following would be represented as Institution:<ul><li>Traditional banks e.g. Santander</li><li>Neo-banks e.g. Monzo</li><li>Building societies e.g. Cumberland Building Society</li></ul>",
           "name": "Institutions"
       },
       {
@@ -5981,10 +5981,7 @@
                                       "description": "__Mandatory__. Two-letter country code in ISO 3166-1 alpha-2 format (e.g. GB)"
                                   },
                                   "categorisationType": {
-                                      "enum": [
-                                          "consumer",
-                                          "business"
-                                      ],
+                                      "type": "string",
                                       "description": "__Mandatory__. Allowed values are `consumer` and `business`."
                                   },
                                   "transactions": {
@@ -6284,7 +6281,7 @@
           ],
           "get": {
               "operationId": "get-categorisation-accountType",
-              "summary": "Get Enirchment Labels",
+              "summary": "Get Enrichment Labels",
               "description": "Returns the list of categories that can be returned for a specific account type (consumer or business).",
               "tags": [
                   "Data Plus"
@@ -9447,11 +9444,11 @@
                   },
                   "creditLineIncluded": {
                       "type": "boolean",
-                      "description": "_Optional_. Indicates whether any credit lines are included in the balance."
+                      "description": "__Optional__. Indicates whether any credit lines are included in the balance."
                   },
                   "creditLines": {
                       "type": "array",
-                      "description": "_Optional_. Specifies the type of balance.",
+                      "description": "__Optional__. Specifies the type of balance.",
                       "items": {
                           "$ref": "#/components/schemas/CreditLine"
                       }
@@ -10150,7 +10147,7 @@
               "properties": {
                   "code": {
                       "type": "integer",
-                      "description": "_Mandatory_. Numeric `HTTP` status code associated with the error.",
+                      "description": "__Mandatory__. Numeric `HTTP` status code associated with the error.",
                       "format": "int32"
                   },
                   "institutionError": {
@@ -10169,7 +10166,7 @@
                   },
                   "tracingId": {
                       "type": "string",
-                      "description": "_Optional_.  A unique identifier assigned by Yapily for the request that can be used for support purposes."
+                      "description": "__Optional__.  A unique identifier assigned by Yapily for the request that can be used for support purposes."
                   }
               }
           },
@@ -12369,7 +12366,7 @@
               "properties": {
                   "status": {
                       "type": "string",
-                      "description": "_Mandatory_. Specifies the current status of the multi-authorisation flow."
+                      "description": "__Mandatory__. Specifies the current status of the multi-authorisation flow."
                   },
                   "numberOfAuthorisationRequired": {
                       "type": "integer",
@@ -12378,7 +12375,7 @@
                   },
                   "numberOfAuthorisationReceived": {
                       "type": "integer",
-                      "description": "__Mandatory__. The total number of authorisations that have been recieved.",
+                      "description": "__Mandatory__. The total number of authorisations that have been received.",
                       "format": "int32"
                   },
                   "lastUpdatedDateTime": {
@@ -13769,7 +13766,7 @@
                   },
                   "state": {
                       "type": "string",
-                      "description": "Corellation ID used with the `Institution` during the authorisation process."
+                      "description": "Correlation ID used with the `Institution` during the authorisation process."
                   },
                   "authorizedAt": {
                       "type": "string",
@@ -13836,11 +13833,11 @@
               "properties": {
                   "code": {
                       "type": "string",
-                      "description": "__Mandatory__. Properietary code used to identify the underlying transaction."
+                      "description": "__Mandatory__. Proprietary code used to identify the underlying transaction."
                   },
                   "issuer": {
                       "type": "string",
-                      "description": "__Mandatory__. Issuer of the properitary code."
+                      "description": "__Mandatory__. Issuer of the proprietary code."
                   }
               }
           },
@@ -14801,7 +14798,7 @@
                   },
                   "parameter": {
                       "type": "string",
-                      "description": "Identfies the parameter / property within the request (headers, query parameters or body) that the issue relates to. For headers and query parameters, it refers to the parameter name. For the body, it refers to the JSONPath of the property"
+                      "description": "Identifies the parameter / property within the request (headers, query parameters or body) that the issue relates to. For headers and query parameters, it refers to the parameter name. For the body, it refers to the JSONPath of the property"
                   },
                   "message": {
                       "type": "string",
@@ -16260,7 +16257,7 @@
               "properties": {
                   "phaseName": {
                       "type": "string",
-                      "description": "The name of the hosted payment process phase. Allowed values are : <ul> <li>    INITIATED - Payment process initiated</li><li>    DECLINED - Payment process failed and will not proceed further</li><li>    INSTITUTION_SUBMITTED - Payment institution submitted</li><li>    EMBEDDED_CREDENTIAL_REQUESTED - For embedded banks, a UI element to collect user credentials was displayed</li><li>    CREDENTIALS_ERROR - embedded credentials refused by intittution</li><li>    AUTHORISATION_INITIATED - All details required for payment initiation have been collected</li><li>    VALIDATION_COMPLETED - The payment payload was validated successfully</li><li>    VALIDATION_FAILED - The payment data provided failed validation</li><li>    AUTHORISATION_CREATED - Payment authorisation request created with Institution</li><li>    EMBEDDED_CODE_REQUESTED - For embedded banks, a UI element to collect SCA for initiated consent was displayed</li><li>    EMBEDDED_TYPE_REQUESTED - For embedded banks, a UI element to allow the user to select their preferred SCA method for this consent authorisation was displayed</li><li>    DECOUPLED_AUTHORISATION - For embedded banks, decoupled authoirisation was initiated by the bank</li><li>    EMBEDDED_CODE_COLLECTED - For embedded banks, SCA code was collected for consent authorisation</li><li>    EMBEDDED_TYPE_SELECTED - For embedded banks, preferred SCA method was selected for consent authorisation</li><li>    PRE_AUTHORISED - pre authorisation was initiated by bank</li><li>    CONSENT_POLLING_STARTED - We start polling the bank for consent authorisation status</li><li>    CONSENT_POLLING_ENDED - We finish polling the bank for consent authorisation status</li><li>    AUTHORISED - Payment authorisation completed</li><li>    AUTHORISATION_FAILED - Payment authorisation failed and will not proceed further</li><li>    AUTHORISATION_REJECTED - Payment authorisation rejected and will not proceed further</li><li>    SUBMITTED - Payment execution created and submitted to Institution</li><li>    SUBMITTED_AUTO - Payment execution created and submitted to Institution</li><li>    ACCEPTED - Payment execution accepted by Institution and awaiting settlement</li><li>    REJECTED - Payment or Authorisation request rejected by Institution and will not proceed further</li><li>    SETTLEMENT_COMPLETED - Payment settlement completed</li><li>    STATUS_POLLING_STARTED - Payment status polling started</li><li>    STATUS_POLLING_ENDED - Payment status polling ended</li><li>    MERCHANT_ACKNOWLEDGED - Payment acknowledgement received from merchant</li><li>    FINISHED - Payment process completed</li></ul>"
+                      "description": "The name of the hosted payment process phase. Allowed values are : <ul> <li>    INITIATED - Payment process initiated</li><li>    DECLINED - Payment process failed and will not proceed further</li><li>    INSTITUTION_SUBMITTED - Payment institution submitted</li><li>    EMBEDDED_CREDENTIAL_REQUESTED - For embedded banks, a UI element to collect user credentials was displayed</li><li>    CREDENTIALS_ERROR - embedded credentials refused by institution</li><li>    AUTHORISATION_INITIATED - All details required for payment initiation have been collected</li><li>    VALIDATION_COMPLETED - The payment payload was validated successfully</li><li>    VALIDATION_FAILED - The payment data provided failed validation</li><li>    AUTHORISATION_CREATED - Payment authorisation request created with Institution</li><li>    EMBEDDED_CODE_REQUESTED - For embedded banks, a UI element to collect SCA for initiated consent was displayed</li><li>    EMBEDDED_TYPE_REQUESTED - For embedded banks, a UI element to allow the user to select their preferred SCA method for this consent authorisation was displayed</li><li>    DECOUPLED_AUTHORISATION - For embedded banks, decoupled authorisation was initiated by the bank</li><li>    EMBEDDED_CODE_COLLECTED - For embedded banks, SCA code was collected for consent authorisation</li><li>    EMBEDDED_TYPE_SELECTED - For embedded banks, preferred SCA method was selected for consent authorisation</li><li>    PRE_AUTHORISED - pre authorisation was initiated by bank</li><li>    CONSENT_POLLING_STARTED - We start polling the bank for consent authorisation status</li><li>    CONSENT_POLLING_ENDED - We finish polling the bank for consent authorisation status</li><li>    AUTHORISED - Payment authorisation completed</li><li>    AUTHORISATION_FAILED - Payment authorisation failed and will not proceed further</li><li>    AUTHORISATION_REJECTED - Payment authorisation rejected and will not proceed further</li><li>    SUBMITTED - Payment execution created and submitted to Institution</li><li>    SUBMITTED_AUTO - Payment execution created and submitted to Institution</li><li>    ACCEPTED - Payment execution accepted by Institution and awaiting settlement</li><li>    REJECTED - Payment or Authorisation request rejected by Institution and will not proceed further</li><li>    SETTLEMENT_COMPLETED - Payment settlement completed</li><li>    STATUS_POLLING_STARTED - Payment status polling started</li><li>    STATUS_POLLING_ENDED - Payment status polling ended</li><li>    MERCHANT_ACKNOWLEDGED - Payment acknowledgement received from merchant</li><li>    FINISHED - Payment process completed</li></ul>"
                   },
                   "phaseCreatedAt": {
                       "type": "string",
@@ -16680,7 +16677,7 @@
                   "applicationId": {
                       "type": "string",
                       "format": "uuid",
-                      "description": "Represens the Unique Identifier of the `Application` the user is associated with."
+                      "description": "Represents the Unique Identifier of the `Application` the user is associated with."
                   },
                   "institutionIdentifiers": {
                       "$ref": "#/components/schemas/InstitutionIdentifiers"
