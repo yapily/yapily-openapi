@@ -5,6 +5,10 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [10.3.0] - 2025-06-06
+### Changed
+Updated Bulk Payment Request OriginatorIdentificationNumber description to indicate it's mandatory for HSBC Corporate
+
 ## [10.2.0] - 2025-05-28
 ### Changed
 Updated Payment Pre Auth request to have Payee Address details.
