@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "10.3.0",
+      "version": "10.4.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -8769,14 +8769,12 @@
                   "properties": {
                     "applicationId": {
                       "type": "string",
-                      "description": "user application id",
                       "format": "uuid"
                     },
                     "categories": {
                       "type": "array",
                       "items": {
-                        "type": "string",
-                        "description": "webhook event category name"
+                        "type": "string"
                       }
                     },
                     "callbackUrl": {
@@ -8787,22 +8785,24 @@
                       "properties": {
                         "main": {
                           "type": "object",
-                          "description": "primary webhook url used to send events to",
+                          "description": "Primary URL where events will be sent. It must not contain any query parameters.",
                           "required": [
                             "url"
                           ],
                           "properties": {
                             "url": {
-                              "type": "string"
+                              "type": "string",
+                              "description": "A valid URL without query parameters."
                             }
                           }
                         },
                         "backup": {
                           "type": "object",
-                          "description": "backup webhook url used to send events to in case the main one is not responding",
+                          "description": "Secondary URL where events will be sent whenever the primary URL is not responding. It must not contain any query parameters.",
                           "properties": {
                             "url": {
-                              "type": "string"
+                              "type": "string",
+                              "description": "A valid URL without query parameters."
                             }
                           }
                         }
