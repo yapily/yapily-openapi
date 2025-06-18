@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "10.4.0",
+      "version": "10.5.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -8654,14 +8654,14 @@
           "operationId": "getWebhookEventsCategories",
           "responses": {
             "200": {
-              "description": "Successful response",
+              "description": "Event Categories",
               "content": {
                 "application/json;charset=UTF-8": {
                   "examples": {
                     "SuccessfulResponse": {
                       "value": {
                         "metadata": {
-                          "tracingId": "f2425b79-974d-43f8-a5a2-ec771b2d9297\n"
+                          "tracingId": "f2425b79-974d-43f8-a5a2-ec771b2d9297"
                         },
                         "data": {
                           "categories": [
@@ -8716,7 +8716,7 @@
               }
             },
             "400": {
-              "description": "There are validation errors",
+              "description": "Validation Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -8731,7 +8731,7 @@
               }
             },
             "500": {
-              "description": "An unexpected error occurred.",
+              "description": "Unexpected Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -8773,12 +8773,14 @@
                     },
                     "categories": {
                       "type": "array",
+                      "description": "One or more event categories for which the webhook will be triggered",
                       "items": {
                         "type": "string"
                       }
                     },
                     "callbackUrl": {
                       "type": "object",
+                      "description": "Callback URLs where events will be sent. These must not contain any query parameters.",
                       "required": [
                         "main"
                       ],
@@ -8809,7 +8811,7 @@
                       }
                     },
                     "metadata": {
-                      "$ref": "#/components/schemas/UserMetadata"
+                      "$ref": "#/components/schemas/WebhookMetadata"
                     }
                   }
                 }
@@ -8836,7 +8838,7 @@
               }
             },
             "400": {
-              "description": "There are validation errors",
+              "description": "Validation Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -8866,7 +8868,7 @@
               }
             },
             "500": {
-              "description": "An unexpected error occurred.",
+              "description": "Unexpected Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -8896,7 +8898,7 @@
           "operationId": "getRegisteredWebhooks",
           "responses": {
             "200": {
-              "description": "retrieve all registered webhook",
+              "description": "Registered Webhooks",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -8937,7 +8939,7 @@
               }
             },
             "400": {
-              "description": "There are validation errors",
+              "description": "Validation Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -8952,7 +8954,7 @@
               }
             },
             "500": {
-              "description": "An unexpected error occurred.",
+              "description": "Unexpected Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -8992,7 +8994,7 @@
           ],
           "responses": {
             "200": {
-              "description": "delete webhook succeeded",
+              "description": "Deleted",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -9025,7 +9027,7 @@
               }
             },
             "400": {
-              "description": "There are validation errors",
+              "description": "Validation Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -9040,7 +9042,7 @@
               }
             },
             "404": {
-              "description": "Webhook id not found",
+              "description": "Webhook ID not found",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -9055,7 +9057,7 @@
               }
             },
             "500": {
-              "description": "An unexpected error occurred.",
+              "description": "Unexpected Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -9126,7 +9128,7 @@
               }
             },
             "400": {
-              "description": "There are validation errors",
+              "description": "Validation Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -9141,7 +9143,7 @@
               }
             },
             "404": {
-              "description": "Webhook id not found",
+              "description": "Webhook ID not found",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -9156,7 +9158,7 @@
               }
             },
             "500": {
-              "description": "An unexpected error occurred.",
+              "description": "Unexpected Error",
               "content": {
                 "application/json;charset=UTF-8": {
                   "schema": {
@@ -9227,7 +9229,7 @@
           "WebhookIdParameter": {
             "name": "webhook_id",
             "in": "path",
-            "description": "Registered webhook id",
+            "description": "Registered webhook ID",
             "required": true,
             "allowEmptyValue": false,
             "schema": {
@@ -18221,8 +18223,9 @@
                   "CALENDAR"
               ]
           },
-          "UserMetadata": {
+          "WebhookMetadata": {
             "type": "object",
+            "description": "Any data (under 10kB total) that should be associated with the Webhook. A copy of this data will be returned on every Webhook trigger.",
             "additionalProperties": {
               "type": "string"
             }
@@ -18288,27 +18291,27 @@
           "properties": {
             "id": {
               "type": "string",
-              "description": "the UUID of the registered webhook, used to update or remove the webhook",
+              "description": "This webhook's ID, used to update or remove the webhook",
               "format": "uuid"
             },
             "applicationId": {
               "type": "string",
-              "description": "user applicaiton id",
               "format": "uuid"
             },
             "categories": {
               "type": "array",
               "items": {
                 "type": "string",
-                "description": "webhook event category name"
+                "description": "One or more event categories for which the webhook will be triggered"
               }
             },
             "callbackUrl": {
               "type": "object",
+              "description": "Callback URLs where events will be sent",
               "properties": {
                 "main": {
                   "type": "object",
-                  "description": "primary webhook url used to send events to",
+                  "description": "Primary URL where events will be sent",
                   "properties": {
                     "url": {
                       "type": "string"
@@ -18317,7 +18320,7 @@
                 },
                 "backup": {
                   "type": "object",
-                  "description": "backup webhook url used to send events to in case the main one is not responding",
+                  "description": "Secondary URL where events will be sent whenever the primary URL is not responding",
                   "properties": {
                     "url": {
                       "type": "string"
@@ -18327,7 +18330,7 @@
               }
             },
             "metadata": {
-              "$ref": "#/components/schemas/UserMetadata"
+              "$ref": "#/components/schemas/WebhookMetadata"
             }
           }
         },
@@ -18335,12 +18338,10 @@
           "type": "object",
           "properties": {
             "name": {
-              "type": "string",
-              "description": "webhook event category name"
+              "type": "string"
             },
             "description": {
-              "type": "string",
-              "description": "description of the webhook event category"
+              "type": "string"
             }
           }
         },
@@ -22142,7 +22143,7 @@
       },
       "responses": {
           "WebhookDetailsWithSecret": {
-            "description": "webhook details including the secret",
+            "description": "Webhook data plus the secret",
             "content": {
               "application/json;charset=UTF-8": {
                 "schema": {
