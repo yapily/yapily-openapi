@@ -5,6 +5,23 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [10.9.0] - 2025-07-01
+### Changed
+Decouple create Bulk Payment response from create Payment response
+Change ISO status code in Bulk Payment response to be a plain string
+
+## [10.8.0] - 2025-06-30
+### Changed
+Fix mistake on the pr naming issue
+
+## [10.8.0] - 2025-06-30
+### Changed
+Modified descriptions for GetConsents and GetUsers endpoints. 
+
+## [10.7.0] - 2025-06-26
+### Changed
+Add new fields `data.institutionInteractionId` and `data.paymentScheme` to Bulk Payment create response
+
 ## [10.6.0] - 2025-06-24
 ### Changed
 Update types in Bulk Payment status response from plain strings to datetime

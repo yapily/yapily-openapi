@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "10.6.0",
+      "version": "10.9.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -1555,7 +1555,7 @@
                                   }
                               },
                               "schema": {
-                                  "$ref": "#/components/schemas/ApiResponseOfPaymentResponse"
+                                  "$ref": "#/components/schemas/ApiResponseOfCreateBulkPaymentRequest"
                               }
                           }
                       },
@@ -1849,11 +1849,11 @@
       },
       "/consents": {
           "get": {
-              "description": "Used to retrieve all the consents created for each user within an application",
+              "description": "Used to retrieve all the consents created for each user within an application. At least one of the following filters needs to be applied: filter[applicationUserId], filter[userUuid]=, limit=. ",
               "operationId": "getConsents",
               "parameters": [
                   {
-                      "description": "__Optional__. Filter records based on the list of `applicationUserId` users provided.",
+                      "description": "__Optional__. Filter records based on the list of `applicationUserId` users provided. At least one of these filters filter[applicationUserId], filter[userUuid]=, limit= must be provided.",
                       "in": "query",
                       "name": "filter[applicationUserId]",
                       "required": false,
@@ -1866,7 +1866,7 @@
                       }
                   },
                   {
-                      "description": "__Optional__. Filter records based on the list of `userUuid` users provided.",
+                      "description": "__Optional__. Filter records based on the list of `userUuid` users provided. At least one of these filters filter[applicationUserId], filter[userUuid]=, limit= must be provided.",
                       "in": "query",
                       "name": "filter[userUuid]",
                       "required": false,
@@ -1924,7 +1924,7 @@
                       }
                   },
                   {
-                      "description": "__Optional__. The maximum number of transaction records to be returned. Must be between 1 and 1000.",
+                      "description": "__Optional__. The maximum number of transaction records to be returned. Must be between 1 and 1000. At least one of these filters filter[applicationUserId], filter[userUuid]=, limit= must be provided.",
                       "in": "query",
                       "name": "limit",
                       "required": false,
@@ -3547,7 +3547,7 @@
       },
       "/users": {
           "get": {
-              "description": "Get all the users configured in your application",
+              "description": "Retrieves all users created in your application for a specified applicationUserId using the filter[applicationUserId] query parameter. If filter[applicationUserId] is not provided, the response will include up to 50,000 users.",
               "operationId": "getUsers",
               "parameters": [
                   {
@@ -13656,6 +13656,212 @@
               },
               "description": "__Conditional__. Used to specify properties to define a periodic payment. <br><br>Must be specified when the payment `type` is one of the following:<ul>     <li><code>DOMESTIC_PERIODIC_PAYMENT</code></li>     <li><code>INTERNATIONAL_PERIODIC_PAYMENT</code></li></ul>"
           },
+          "BulkPaymentResponse": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "string",
+                      "description": "The unique ID for this Bulk Payment."
+                  },
+                  "institutionConsentId": {
+                      "type": "string",
+                      "description": "The Institution's Consent ID used for this Bulk Payment."
+                  },
+                  "institutionInteractionId": {
+                      "type": "string",
+                      "description": "The Financial API (FAPI) Interaction ID for this Bulk Payment."
+                  },
+                  "paymentIdempotencyId": {
+                      "type": "string",
+                      "description": "The unique ID provided by you to identify this Bulk Payment."
+                  },
+                  "paymentLifecycleId": {
+                      "type": "string"
+                  },
+                  "paymentScheme": {
+                      "type": "string",
+                      "description": "The payment scheme (ie. payment rail, local instrument) used to carry out this Bulk Payment."
+                  },
+                  "status": {
+                      "$ref": "#/components/schemas/PaymentStatus"
+                  },
+                  "statusDetails": {
+                      "$ref": "#/components/schemas/BulkPaymentStatusDetails"
+                  },
+                  "payer": {
+                      "$ref": "#/components/schemas/Payer"
+                  },
+                  "payeeDetails": {
+                      "$ref": "#/components/schemas/Payee"
+                  },
+                  "reference": {
+                      "type": "string",
+                      "description": "The reference or description for this Bulk Payment."
+                  },
+                  "amount": {
+                      "type": "number",
+                      "description": "The total monetary amount of this Bulk Payment."
+                  },
+                  "currency": {
+                      "type": "string",
+                      "description": "The currency of the amount, specified as a 3-letter ISO 4217 code."
+                  },
+                  "amountDetails": {
+                      "$ref": "#/components/schemas/Amount"
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "Date and time of when the payment request was created.",
+                      "format": "date-time"
+                  },
+                  "firstPaymentAmount": {
+                      "$ref": "#/components/schemas/Amount"
+                  },
+                  "firstPaymentDateTime": {
+                      "type": "string",
+                      "description": "Date and time of when the first payment request is to be made.",
+                      "format": "date-time"
+                  },
+                  "nextPaymentAmount": {
+                      "$ref": "#/components/schemas/Amount"
+                  },
+                  "nextPaymentDateTime": {
+                      "type": "string",
+                      "description": "__Conditional__. Defines when the recurring payment is to be made.",
+                      "format": "date-time"
+                  },
+                  "finalPaymentAmount": {
+                      "$ref": "#/components/schemas/Amount"
+                  },
+                  "finalPaymentDateTime": {
+                      "type": "string",
+                      "description": "Date and time of when the final payment is to be made.",
+                      "format": "date-time"
+                  },
+                  "numberOfPayments": {
+                      "type": "integer",
+                      "description": "Number of recurring payment requests to be made as part of the instructed payment schedule.",
+                      "format": "int32"
+                  },
+                  "previousPaymentAmount": {
+                      "$ref": "#/components/schemas/Amount"
+                  },
+                  "previousPaymentDateTime": {
+                      "type": "string",
+                      "description": "Date and time of when the previous payment request was posted.",
+                      "format": "date-time"
+                  },
+                  "chargeDetails": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/PaymentChargeDetails"
+                      }
+                  },
+                  "scheduledPaymentType": {
+                      "type": "string",
+                      "description": "Details the execution type and the payment date between the payer and the payee."
+                  },
+                  "scheduledPaymentDateTime": {
+                      "type": "string",
+                      "description": "Date and time of when the scheduled payment request will be made.",
+                      "format": "date-time"
+                  },
+                  "frequency": {
+                      "$ref": "#/components/schemas/FrequencyResponse"
+                  },
+                  "currencyOfTransfer": {
+                      "type": "string",
+                      "description": "__Mandatory__. The currency to be transferred to the payee. This may differ from the currency the payment is denoted in and the currency of the payer's account. Specified as a 3-letter code (ISO 4217)."
+                  },
+                  "purpose": {
+                      "type": "string",
+                      "description": "Specifies the external purpose code for the `Institution` - IS0 20022."
+                  },
+                  "priority": {
+                      "$ref": "#/components/schemas/PriorityCodeEnum"
+                  },
+                  "exchangeRate": {
+                      "$ref": "#/components/schemas/ExchangeRateInformationResponse"
+                  },
+                  "refundAccount": {
+                      "$ref": "#/components/schemas/RefundAccount"
+                  },
+                  "bulkAmountSum": {
+                      "type": "number"
+                  }
+              }
+          },
+          "BulkPaymentStatusDetails": {
+              "type": "object",
+              "properties": {
+                  "status": {
+                      "$ref": "#/components/schemas/PaymentStatus"
+                  },
+                  "statusReason": {
+                      "type": "string"
+                  },
+                  "statusReasonDescription": {
+                      "type": "string"
+                  },
+                  "statusUpdateDate": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "multiAuthorisationStatus": {
+                      "$ref": "#/components/schemas/MultiAuthorisation"
+                  },
+                  "isoStatus": {
+                      "type": "object",
+                      "description": "The Institution's status for this Bulk Payment.",
+                      "properties": {
+                          "code": {
+                              "type": "string",
+                              "description": "The Institution's status code for this Bulk Payment. It will often be a 3-letter ISO 20022 status code, but it may also contain other values.",
+                              "example": "ACSP"
+                          },
+                          "name": {
+                              "type": "string",
+                              "description": "The full name for the status code, provided only when it is a valid ISO 20022 status code.",
+                              "example": "AcceptedSettlementInProcess"
+                          }
+                      }
+                  }
+              }
+          },
+          "ApiResponseOfCreateBulkPaymentRequest": {
+              "type": "object",
+              "properties": {
+                  "meta": {
+                      "$ref": "#/components/schemas/ResponseMeta"
+                  },
+                  "data": {
+                      "$ref": "#/components/schemas/BulkPaymentResponse"
+                  },
+                  "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                          "type": "string"
+                      }
+                  },
+                  "forwardedData": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/ResponseForwardedData"
+                      }
+                  },
+                  "raw": {
+                      "deprecated":true,
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/RawResponse"
+                      }
+                  },
+                  "tracingId": {
+                      "type": "string",
+                      "writeOnly": true
+                  }
+              }
+          },
           "PreAuthorisationRequest": {
               "required": [
                   "institutionId",
@@ -20160,6 +20366,9 @@
                   "data": {
                       "id": "pv3-a1e2ecb0-270c-42e2-8ba5-005261b629d2",
                       "institutionConsentId": "sdp-6-b06f9a82-c641-4aba-b76d-43e6bc052f75",
+                      "institutionInteractionId": "2bb95cee-4118-7844-ae5b-b48c8c9a1b87",
+                      "paymentIdempotencyId": "d06e26d3-8cd6-bc74-86eb-8f0f4fe355b2",
+                      "paymentScheme": "UK.OBIE.SWIFT",
                       "status": "COMPLETED",
                       "statusDetails": {
                           "status": "COMPLETED",
