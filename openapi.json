@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "10.9.0",
+      "version": "10.10.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -43,11 +43,11 @@
           "name": "Authorisations"
       },
       {
-          "description": "In order to access a user's Financial Data, you are required to request an [Authorisation](#yapily-api-authorisations) from the user to share the account information the bank has. Once a `consent-token` is obtained, you can call the necessary Financial Data endpoint(s) to retrieve the user's data.",
+          "description": "In order to access a user's Financial Data, you are required to request an [Authorisation](#tag/Authorisations) from the user to share the account information the bank has. Once a `consent-token` is obtained, you can call the necessary Financial Data endpoint(s) to retrieve the user's data.",
           "name": "Financial Data"
       },
       {
-          "description": "In order to make a Payment on behalf of a user, you are required to request an [Authorisation](#yapily-api-authorisations) from the user to authorise the user's account to make the payment from. Once a `consent-token` is obtained, you can call the necessary Payments endpoint(s) to execute a payment.",
+          "description": "In order to make a Payment on behalf of a user, you are required to request an [Authorisation](#tag/Authorisations) from the user to authorise the user's account to make the payment from. Once a `consent-token` is obtained, you can call the necessary Payments endpoint(s) to execute a payment.",
           "name": "Payments"
       },
       {
@@ -55,7 +55,7 @@
           "name": "Notifications"
       },
       {
-          "description": "Variable Recurring Payments enables transfer of money between accounts held by the same person or transfer of money for business payments. <br><br>In order to make Sweeping Variable Recurring Payments on behalf of a user, you are required to request an [Consent](#yapily-api-authorisations) from the user by calling the Sweeping Consent endpoint to authorise the user's account to make the payment. Once a `consent-token` is obtained, you can call the Payments endpoint to execute the Sweeping Variable Recurring Payments transaction. Before executing the payment, you have the option to confirm availability of funds in the user's account by calling the Funds Confirmation endpoint. <br><br>See [VRP Payments](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/variable-recurring-payments/) for more information. ",
+          "description": "Variable Recurring Payments enables transfer of money between accounts held by the same person or transfer of money for business payments. <br><br>In order to make Sweeping Variable Recurring Payments on behalf of a user, you are required to request an [Consent](#tag/Authorisations) from the user by calling the Sweeping Consent endpoint to authorise the user's account to make the payment. Once a `consent-token` is obtained, you can call the Payments endpoint to execute the Sweeping Variable Recurring Payments transaction. Before executing the payment, you have the option to confirm availability of funds in the user's account by calling the Funds Confirmation endpoint. <br><br>See [VRP Payments](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/variable-recurring-payments/) for more information. ",
           "name": "Variable Recurring Payments"
       },
       {
