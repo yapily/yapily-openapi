@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "10.10.0",
+      "version": "10.11.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -6410,6 +6410,11 @@
           "description": "Used to initiate a consent request using Yapily Hosted Pages.",
           "x-beta": true,
           "operationId": "createHostedConsentRequest",
+          "parameters": [
+              {
+                "$ref":"#/components/parameters/SubAppHeader"
+              }
+            ],
           "requestBody": {
             "content": {
               "application/json;charset=UTF-8": {
@@ -6522,6 +6527,9 @@
               "schema": {
                 "type": "string"
               }
+            },
+            {
+              "$ref":"#/components/parameters/SubAppHeader"
             }
           ],
           "responses": {
@@ -6615,6 +6623,11 @@
               "description": "Used to initiate a payment request using Yapily Hosted Pages.",
               "x-beta": true,
               "operationId": "createHostedPaymentRequest",
+              "parameters": [
+                  {
+                    "$ref": "#/components/parameters/SubAppHeader"
+                  }
+                ],
               "requestBody": {
                   "content": {
                       "application/json;charset=UTF-8": {
@@ -6830,6 +6843,9 @@
                       "schema": {
                           "type": "string"
                       }
+                  },
+                  {
+                    "$ref":"#/components/parameters/SubAppHeader"
                   }
               ],
               "responses": {
