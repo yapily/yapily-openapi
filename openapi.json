@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "11.2.0",
+      "version": "11.2.1",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -10588,7 +10588,7 @@
           },
           "ChargeBearerType": {
               "type": "string",
-              "description": "__Optional__. Specifies which party/parties will bear the charges associated with the processing of the payment transaction. Valid values are:<ul><li>`DEBT` - All transaction charges are to be borne by the debtor.</li><li>`CRED` - All transaction charges are to be borne by the creditor.</li><li>`SHAR` - In a credit transfer context, means that transaction charges on the sender side are to be borne by the debtor, transaction charges on the receiver side are to be borne by the creditor</li><li>`SLEV` - Charges are to be applied following the rules agreed in the service level and/or scheme.</li></ul>",
+              "description": "__Conditional__. Depending on the bank and payment type for international Euro payments. The field ChargeBearer specifies which party/parties will bear the charges associated with the processing of the payment transaction. Valid values are:<ul><li>`DEBT` - All transaction charges are to be borne by the debtor.</li><li>`CRED` - All transaction charges are to be borne by the creditor.</li><li>`SHAR` - In a credit transfer context, means that transaction charges on the sender side are to be borne by the debtor, transaction charges on the receiver side are to be borne by the creditor</li><li>`SLEV` - Charges are to be applied following the rules agreed in the service level and/or scheme.</li></ul>",
               "enum": [
                   "DEBT",
                   "CRED",
