@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "11.4.0",
+      "version": "11.4.1",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -92,6 +92,8 @@
           "name": "Endpoints",
           "tags": [
               "Application",
+              "Application Management",
+              "Application Beneficiaries",
               "Users",
               "Institutions",
               "Consents",
@@ -103,7 +105,6 @@
               "Hosted Payment Pages",
               "Hosted Consent Pages",
               "Constraints",
-              "Application Management",
               "Data Plus",
               "Webhooks"
           ]
