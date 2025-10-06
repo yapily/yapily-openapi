@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "11.4.1",
+      "version": "11.4.3",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -85,6 +85,10 @@
       {
           "description": "Application Beneficiaries Endpoints",
           "name": "Application Beneficiaries"
+      },
+      {
+          "description": "User Beneficiaries Endpoints",
+          "name": "User Beneficiaries"
       }
   ],
   "x-tagGroups": [
@@ -95,6 +99,7 @@
               "Application Management",
               "Application Beneficiaries",
               "Users",
+              "User Beneficiaries",
               "Institutions",
               "Consents",
               "Authorisations",
@@ -9435,12 +9440,7 @@
                                   ],
                                   "properties": {
                                       "op": {
-                                          "type": "string",
-                                          "description": "The operation to be performed",
-                                          "enum": [
-                                              "add",
-                                              "replace"
-                                          ]
+                                         "$ref": "#/components/schemas/PatchOperation"
                                       },
                                       "path": {
                                           "type": "string",
@@ -10161,12 +10161,7 @@
                       "description": "id of the beneficiary"
                   },
                   "status": {
-                      "type": "string",
-                      "enum": [
-                          "PENDING",
-                          "VERIFIED",
-                          "REJECTED"
-                      ]
+                      "$ref" : "#/components/schemas/BeneficiaryStatus"
                   },
                   "details": {
                       "description": "Beneficiary response with the details of the VoP result.",
@@ -10190,7 +10185,16 @@
                   }
               }
           },
-          "UserBeneficiaryValidationRequest": {
+        "BeneficiaryStatus": {
+          "description": "Status of the beneficiary check.",
+          "type": "string",
+          "enum": [
+            "PENDING",
+            "VERIFIED",
+            "REJECTED"
+          ]
+        },
+        "UserBeneficiaryValidationRequest": {
               "type": "object",
               "description": "Beneficiary request with the details of the VoP result.",
               "required": [
@@ -10258,10 +10262,7 @@
               ],
               "properties": {
                   "type": {
-                      "type": "string",
-                      "enum": [
-                          "IBAN"
-                      ]
+                    "$ref": "#/components/schemas/AccountIdentifierType"
                   },
                   "identification": {
                       "type": "string",
@@ -10270,19 +10271,18 @@
                   }
               }
           },
+        "AccountIdentifierType": {
+          "type": "string",
+          "enum": [
+            "IBAN"
+          ]
+        },
           "UserBeneficiaryMatch": {
               "type": "object",
               "description": "Details of the match given by the institution.",
               "properties": {
                   "status": {
-                      "type": "string",
-                      "enum": [
-                          "FULL_MATCH",
-                          "CLOSE_MATCH",
-                          "NO_MATCH",
-                          "EXEMPTED",
-                          "VERIFICATION_CHECK_NOT_POSSIBLE"
-                      ]
+                    "$ref": "#/components/schemas/BeneficiaryMatchStatus"
                   },
                   "closeMatchName": {
                       "type": "string",
@@ -10291,6 +10291,16 @@
                   }
               }
           },
+        "BeneficiaryMatchStatus": {
+          "type": "string",
+          "enum": [
+            "FULL_MATCH",
+            "CLOSE_MATCH",
+            "NO_MATCH",
+            "EXEMPTED",
+            "VERIFICATION_CHECK_NOT_POSSIBLE"
+          ]
+        },
           "BeneficiaryId": {
               "type": "string",
               "format": "uuid",
@@ -19592,11 +19602,7 @@
               ],
               "properties": {
                   "op": {
-                      "description": "The patch operation to be performed.",
-                      "type": "string",
-                      "enum": [
-                          "replace"
-                      ]
+                      "$ref": "#/components/schemas/PatchOperation"
                   },
                   "path": {
                       "description": "The path to the target location.",
@@ -19607,7 +19613,15 @@
                       "type": "string"
                   }
               }
-          }
+          },
+        "PatchOperation": {
+          "type": "string",
+          "description": "The operation to be performed",
+          "enum": [
+            "add",
+            "replace"
+          ]
+        }
       },
       "securitySchemes": {
           "basicAuth": {
