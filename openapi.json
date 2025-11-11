@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "11.4.3",
+      "version": "11.4.4",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -4091,7 +4091,7 @@
                                           },
                                           "data": {
                                               "id": "a2a9ec77-a479-4996-9896-4568e1968e7a",
-                                              "userId": "5350782b-60f3-489e-aae5-a24d8d679a07",
+                                              "userUuid": "5350782b-60f3-489e-aae5-a24d8d679a07",
                                               "applicationUserId": "string",
                                               "institutionId": "modelo-sandbox",
                                               "status": "AWAITING_AUTHORIZATION",
@@ -4501,7 +4501,7 @@
                                           },
                                           "data": {
                                               "id": "56a42244-414a-4b52-8c4f-4ad2a50e82fe",
-                                              "userId": "ca412fdf-5a30-43a2-88b7-5964a24a8e55",
+                                              "userUuid": "ca412fdf-5a30-43a2-88b7-5964a24a8e55",
                                               "applicationUserId": "string",
                                               "institutionId": "modelo-sandbox",
                                               "status": "AUTHORIZED",
@@ -16152,14 +16152,14 @@
               ],
               "type": "object",
               "properties": {
-                  "userId": {
+                  "userUuid": {
                       "type": "string",
                       "format": "uuid",
                       "description": "This is the Yapily user identifier for the user returned by the create user step POST ../users"
                   },
                   "applicationUserId": {
                       "type": "string",
-                      "description": "A client's own user reference. If the client wants to work with their own unique references for individual PSUs then they can use the applicationUserId property to provide that value. Where Yapily does not already have a Yapily userId that matches the supplied applicationUserId, then a new Yapily userId is created automatically and linked to the applicationUserId value.  Clients can then use either their own applicationUserId or the Yapily userId to reference the same user in future calls."
+                      "description": "A client's own user reference. If the client wants to work with their own unique references for individual PSUs then they can use the applicationUserId property to provide that value. Where Yapily does not already have a Yapily userUuid that matches the supplied applicationUserId, then a new Yapily userUuid is created automatically and linked to the applicationUserId value.  Clients can then use either their own applicationUserId or the Yapily userId to reference the same user in future calls."
                   },
                   "forwardParameters": {
                       "type": "array",
@@ -16204,14 +16204,14 @@
                       "type": "string",
                       "format": "uuid"
                   },
-                  "userId": {
+                  "userUuid": {
                       "type": "string",
                       "format": "uuid",
                       "description": "This is the Yapily user identifier for the user returned by the create user step POST ../users"
                   },
                   "applicationUserId": {
                       "type": "string",
-                      "description": "A client's own user reference. If the client wants to work with their own unique references for individual PSUs then they can use the applicationUserId property to provide that value. Where Yapily does not already have a Yapily userId that matches the supplied applicationUserId, then a new Yapily userId is created automatically and linked to the applicationUserId value.  Clients can then use either their own applicationUserId or the Yapily userId to reference the same user in future calls."
+                      "description": "A client's own user reference. If the client wants to work with their own unique references for individual PSUs then they can use the applicationUserId property to provide that value. Where Yapily does not already have a Yapily userUuid that matches the supplied applicationUserId, then a new Yapily userId is created automatically and linked to the applicationUserId value.  Clients can then use either their own applicationUserId or the Yapily userId to reference the same user in future calls."
                   },
                   "institutionId": {
                       "type": "string",
