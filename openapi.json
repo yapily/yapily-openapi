@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "11.4.4",
+      "version": "11.4.5",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -4000,7 +4000,6 @@
           "post": {
               "description": "Used to initiate the authorisation process and direct users to the login screen of their financial Institution in order to give their consent for Sweeping Variable Recurring Payments. The request would return an Authorization URL and an Identifier for the consent created at the Institution. First make sure that the payment feature you wish to execute is supported by the bank by checking the features array in [GET Institution](https://docs.yapily.com/api/#get-institution). <br><br>See [Redirect Payment Flows](https://docs.yapily.com/guides/payments/payment-authorisation-flows/redirect/) for more information about this flow.<br><br>Features:<ul><li>`INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`</li></ul>",
               "operationId": "createSweepingAuthorisation",
-              "x-beta": true,
               "requestBody": {
                   "content": {
                       "application/json;charset=UTF-8": {
@@ -4255,7 +4254,6 @@
           "post": {
               "description": "Creates a Variable Recurring Payment transaction after obtaining the user's authorisation.<br><br>Features:<ul><li>`CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`</li></ul>",
               "operationId": "createVrpPayment",
-              "x-beta": true,
               "parameters": [
                   {
                       "description": "__Mandatory__. The `consent-token` containing the user's authorisation to make the request.",
@@ -4475,7 +4473,6 @@
           "get": {
               "description": "Get Sweeping Variable Recurring Payments consent details using the consent Id",
               "operationId": "getSweepingVrpConsentById",
-              "x-beta": true,
               "parameters": [
                   {
                       "description": "__Mandatory__. The consent Id of the `Variable Recurring Payments Consent` to retrieve.",
@@ -4665,7 +4662,6 @@
           "post": {
               "description": "Confirms whether there are available funds on the Payer account to execute a Variable Recurring Payment after obtaining the user's authorisation. <br><br>Features:<ul><li>`VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION`</li></ul>",
               "operationId": "createVrpFundsConfirmation",
-              "x-beta": true,
               "parameters": [
                   {
                       "description": "__Mandatory__. The `consent-token` containing the user's authorisation to make the request.",
@@ -4806,7 +4802,6 @@
           "get": {
               "description": "Get Variable Recurring Payment details using the Payment Id",
               "operationId": "getVrpPaymentDetails",
-              "x-beta": true,
               "parameters": [
                   {
                       "description": "__Mandatory__. The Payment Id of the `Variable Recurring Payments` to retrieve.",
