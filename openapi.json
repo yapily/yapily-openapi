@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "11.4.6",
+      "version": "11.4.7",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -19510,11 +19510,7 @@
                       },
                       "status": {
                         "type": "string",
-                        "enum": [
-                          "BOOKED",
-                          "PENDING"
-                        ],
-                        "description": "__Conditional.__ The status of the transaction<br>This may be present when using [Transactions and Categorisation endpoint](https://docs.yapily.com/api/reference/#operation/post-accounts-accountId-transactions-categorisation)"
+                        "description": "__Conditional.__ The status of the transaction. Enum: <code>BOOKED</code>, <code>PENDING</code><br>This may be present when using [Transactions and Categorisation endpoint](https://docs.yapily.com/api/reference/#operation/post-accounts-accountId-transactions-categorisation)"
                       },
                       "amount": {
                         "type": "number",
@@ -19601,24 +19597,7 @@
                         "properties": {
                           "type": {
                             "type": "string",
-                            "enum": [
-                              "CLOSING_AVAILABLE",
-                              "CLOSING_BOOKED",
-                              "CLOSING_CLEARED",
-                              "EXPECTED",
-                              "FORWARD_AVAILABLE",
-                              "INFORMATION",
-                              "INTERIM_AVAILABLE",
-                              "INTERIM_BOOKED",
-                              "INTERIM_CLEARED",
-                              "OPENING_AVAILABLE",
-                              "OPENING_BOOKED",
-                              "OPENING_CLEARED",
-                              "PREVIOUSLY_CLOSED_BOOKED",
-                              "AUTHORISED",
-                              "OTHER",
-                              "UNKNOWN"
-                            ]
+                            "description": "Enum: <code>CLOSING_AVAILABLE</code>, <code>CLOSING_BOOKED</code>, <code>CLOSING_CLEARED</code>, <code>EXPECTED</code>, <code>FORWARD_AVAILABLE</code>, <code>INFORMATION</code>, <code>INTERIM_AVAILABLE</code>, <code>INTERIM_BOOKED</code>, <code>INTERIM_CLEARED</code>, <code>OPENING_AVAILABLE</code>, <code>OPENING_BOOKED</code>, <code>OPENING_CLEARED</code>, <code>PREVIOUSLY_CLOSED_BOOKED</code>, <code>AUTHORISED</code>, <code>OTHER</code>, <code>UNKNOWN</code>"
                           },
                           "balanceAmount": {
                             "type": "object",
