@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "11.4.7",
+      "version": "11.5.1",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -12409,7 +12409,7 @@
                       "type": "string",
                       "description": "Two character ISO 3166 country code."
                   },
-                  "BIC": {
+                  "bic": {
                     "type": "string",
                     "description": "Bank Identifier Code."
                   }
@@ -21750,12 +21750,12 @@
                               {
                                   "displayName": "Italy",
                                   "countryCode2": "IT",
-                                  "BIC": "MODEIT21XXX"
+                                  "bic": "MODEIT21XXX"
                               },
                               {
-                                "displayName": "United Kingdom",
-                                "countryCode2": "GB",
-                                "BIC": "MODEGB21XXX"
+                                  "displayName": "United Kingdom",
+                                  "countryCode2": "GB",
+                                  "bic": "MODEGB21XXX"
                               }
                           ],
                           "environmentType": "SANDBOX",
@@ -21814,15 +21814,15 @@
                   "fullName": "Modelo Sandbox",
                   "countries": [
                     {
-                          "displayName": "Italy",
-                          "countryCode2": "IT",
-                          "BIC": "MODEIT21XXX"
+                        "displayName": "Italy",
+                        "countryCode2": "IT",
+                        "bic": "MODEIT21XXX"
                     },
                     {
-                          "displayName": "United Kingdom",
-                          "countryCode2": "GB",
-                          "BIC": "MODEGB21XXX"
-                      }
+                        "displayName": "United Kingdom",
+                        "countryCode2": "GB",
+                        "bic": "MODEGB21XXX"
+                    }
                   ],
                   "environmentType": "SANDBOX",
                   "credentialsType": "OPEN_BANKING_UK_AUTO",
