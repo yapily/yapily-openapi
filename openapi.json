@@ -12408,6 +12408,10 @@
                   "countryCode2": {
                       "type": "string",
                       "description": "Two character ISO 3166 country code."
+                  },
+                  "BIC": {
+                    "type": "string",
+                    "description": "Bank Identifier Code."
                   }
               },
               "description": "An array of `Country` denoting which regions the `Institution` provides coverage for"
@@ -21744,8 +21748,14 @@
                           "fullName": "Modelo Sandbox",
                           "countries": [
                               {
-                                  "displayName": "United Kingdom",
-                                  "countryCode2": "GB"
+                                  "displayName": "Italy",
+                                  "countryCode2": "IT",
+                                  "BIC": "MODEIT21XXX"
+                              },
+                              {
+                                "displayName": "United Kingdom",
+                                "countryCode2": "GB",
+                                "BIC": "MODEGB21XXX"
                               }
                           ],
                           "environmentType": "SANDBOX",
@@ -21803,9 +21813,15 @@
                   "name": "Modelo Sandbox",
                   "fullName": "Modelo Sandbox",
                   "countries": [
-                      {
+                    {
+                          "displayName": "Italy",
+                          "countryCode2": "IT",
+                          "BIC": "MODEIT21XXX"
+                    },
+                    {
                           "displayName": "United Kingdom",
-                          "countryCode2": "GB"
+                          "countryCode2": "GB",
+                          "BIC": "MODEGB21XXX"
                       }
                   ],
                   "environmentType": "SANDBOX",
