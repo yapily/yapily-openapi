@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "11.5.1",
+      "version": "11.5.2",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -5281,7 +5281,7 @@
           "post": {
               "operationId": "post-accounts-accountId-transactions-categorisation",
               "summary": "Transactions and Enrichment",
-              "description": "Trigger enrichment for the specified selection of transactions.",
+              "description": "Trigger categorisation for transactions from [AIS (see Get Transactions endpoint)](https://docs.yapily.com/api/reference/#operation/getTransactions) in the specified time range.",
               "tags": [
                   "Data Plus"
               ],
@@ -5452,8 +5452,8 @@
           "get": {
               "deprecated": true,
               "operationId": "get-accounts-transactions-categorised",
-              "summary": "Get Categorised Transactions",
-              "description": "__Deprecated__. Retrieve a set of categorised transactions using a Categorisation ID.\n\nUse the [`/transactions/categorisation/{categorisationId}`](#/Enrichment/get-transactions-categorised) endpoint.",
+              "summary": "Get Categorised Transactions (Deprecated)",
+            "description": "__Deprecated__. Retrieve categorised transactions by Categorisation ID.<br><br>Use the [other endpoint (`/transactions/categorisation/{categorisationId}`)](#operation/get-transactions-categorised) instead.",
               "tags": [
                   "Data Plus"
               ],
@@ -5545,7 +5545,7 @@
           "post": {
               "operationId": "post-transactions-categorisation",
               "summary": "Enrichment",
-              "description": "Trigger enrichment for the provided set of transactions.",
+              "description": "Trigger categorisation for transactions provided in the request.",
               "tags": [
                   "Data Plus"
               ],
@@ -5765,7 +5765,7 @@
           "get": {
               "operationId": "get-transactions-categorised",
               "summary": "Get Enrichment Results",
-              "description": "Retrieve a set of enriched transactions using a Categorisation ID.<br><br>Note that when using the [Transactions and Categorisation endpoint](https://docs.yapily.com/api/reference/#operation/post-accounts-accountId-transactions-categorisation) this endpoint may also return any data specified by the [Get Account Transactions endpoint](https://docs.yapily.com/api/reference/#operation/getTransactions); this endpoint's docs mentions a non-exhaustive subset of such data.",
+              "description": "Retrieve categorised transactions by Categorisation ID.<br><br>Please [use webhooks](https://docs.yapily.com/pages/data/data-plus/tutorial-categorisation/) to be notified when your transactions have been categorised and are ready for retrieval.<br><br>Note that when using the [Transactions and Categorisation endpoint](https://docs.yapily.com/api/reference/#operation/post-accounts-accountId-transactions-categorisation) this endpoint may also return any data specified by the [Get Account Transactions endpoint](https://docs.yapily.com/api/reference/#operation/getTransactions); this endpoint's docs mentions a non-exhaustive subset of such data.",
               "tags": [
                   "Data Plus"
               ],
@@ -22999,83 +22999,78 @@
               }
           },
           "get-categorised-transactions-response": {
-              "value": {
-                  "meta": {
-                      "tracingId": "string",
-                      "count": 1
-                  },
-                  "data": {
-                      "transactions": [
-                          {
-                              "id": "string",
-                              "date": "string",
-                              "bookingDateTime": "2019-08-24T14:15:22Z",
-                              "valueDateTime": "2019-08-24T14:15:22Z",
-                              "status": "string",
-                              "amount": 0,
-                              "currency": "string",
-                              "transactionAmount": {
-                                  "amount": 0,
-                                  "currency": "string"
-                              },
-                              "reference": "string",
-                              "description": "string",
-                              "transactionInformation": [
-                                  "string"
-                              ],
-                              "proprietaryBankTransactionCode": {
-                                  "code": "string",
-                                  "issuer": "string"
-                              },
-                              "isoBankTransactionCode": {
-                                  "domainCode": {
-                                      "code": "string",
-                                      "name": "string"
-                                  },
-                                  "familyCode": {
-                                      "code": "string",
-                                      "name": "string"
-                                  },
-                                  "subFamilyCode": {
-                                      "code": "string",
-                                      "name": "string"
-                                  }
-                              },
-                              "balance": {
-                                  "type": "string",
-                                  "balanceAmount": {
-                                      "amount": 0,
-                                      "currency": "string"
-                                  }
-                              },
-                              "enrichment": {
-                                  "categorisation": {
-                                      "categories": [
-                                          "string"
-                                      ]
-                                  },
-                                  "recurrence": "string",
-                                  "transactionHash": {
-                                      "hash": "string"
-                                  },
-                                  "merchant": {
-                                      "id": "string",
-                                      "name": "string"
-                                  },
-                                  "paymentProcessor": "string"
-                              },
-                              "hash": "string"
-                          }
-                      ]
-                  },
-                  "links": {
-                      "first": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=aaa",
-                      "prev": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=bbb",
-                      "self": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ccc",
-                      "next": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ddd",
-                      "last": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=zzz"
+            "value": {
+              "meta": {
+                "tracingId": "string",
+                "count": 1,
+                "pageCount": 1
+              },
+              "data": {
+                "transactions": [
+                  {
+                    "enrichment": {
+                      "transactionHash": {
+                        "hash": "6f465bde795b33e497d36333c9a32877.1"
+                      },
+                      "categorisation": {
+                        "categories": [
+                          "refund"
+                        ]
+                      },
+                      "merchant": {
+                        "id": "dd0f0493-da4c-1334-50cb-b22ad7327b39",
+                        "name": "Uber",
+                        "logo": "https://example.org/logo.png"
+                      }
+                    },
+                    "recurrence": "one-off",
+                    "paymentProcessor": "PayPal",
+                    "location": "1725 Third Street, San Francisco 94158, United States",
+                    "merchant": {
+                      "merchantCategoryCode": "4121",
+                      "name": "Uber"
+                    },
+                    "id": "236d3792-7014-8f74-53a3-2d600d07840e",
+                    "date": "2026-01-20T09:13:02.752Z",
+                    "bookingDateTime": "2026-01-20T09:13:02.752Z",
+                    "description": "...",
+                    "transactionAmount": {
+                      "amount": 23.87,
+                      "currency": "GBP"
+                    },
+                    "amount": 23.87,
+                    "currency": "GBP",
+                    "status": "BOOKED",
+                    "reference": "...",
+                    "proprietaryBankTransactionCode": {
+                      "code": "REFUND",
+                      "issuer": "bank_id"
+                    },
+                    "isoBankTransactionCode": {
+                      "domainCode": {
+                        "code": "PMNT",
+                        "name": "Payments"
+                      },
+                      "familyCode": {
+                        "code": "RCDT",
+                        "name": "Received Credit Transfers"
+                      },
+                      "subFamilyCode": {
+                        "code": "DMCT",
+                        "name": "Domestic Credit Transfer"
+                      }
+                    }
                   }
+                ]
+              },
+              "links": {
+                "first": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=aaa",
+                "prev": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=bbb",
+                "self": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ccc",
+                "next": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=ddd",
+                "last": "https://api.yapily.com/accounts/700004000000000000000002/transactions?cursor=zzz"
               }
+            }
           },
           "create-transactions-categorisation-response": {
               "value": {
