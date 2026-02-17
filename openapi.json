@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "11.5.2",
+      "version": "11.5.3",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -12783,6 +12783,8 @@
                   "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
                   "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
                   "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+                  "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL",
+                  "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL",
                   "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
                   "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
                   "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
