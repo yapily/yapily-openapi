@@ -5,6 +5,10 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [12.1.0] - 2026-04-08
+### Added
+Add new endpoint, Bulk Payment Details `GET /bulk-payments/{bulkPaymentId}/details`, to retrieve details of each payment submitted in a bulk transaction 
+
 ## [12.0.0] - 2026-03-03
 ### Changed
 Add Commercial VRP models

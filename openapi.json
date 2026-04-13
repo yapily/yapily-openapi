@@ -3,7 +3,7 @@
   "info": {
       "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/pages/home/getting-started/) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/pages/key-concepts/sandbox-credentials/) maybe useful.",
       "title": "Yapily API",
-      "version": "12.0.0",
+      "version": "12.3.0",
       "contact": {
           "name": "Yapily Support",
           "url": "https://docs.yapily.com/pages/resources/support/",
@@ -1752,6 +1752,116 @@
                   }
               }
           }
+      },
+      "/bulk-payments/{bulkPaymentId}/details": {
+        "x-yapily-features": [
+          "EXISTING_BULK_PAYMENT_DETAILS"
+        ],
+        "get": {
+          "description": "Retrieve details of each payment submitted for a given bulkPaymentId. <br><br>Feature: `EXISTING_BULK_PAYMENT_DETAILS`",
+          "operationId": "getBulkPaymentDetailsById",
+          "summary": "Get individual payment details of the Bulk Payment transaction",
+          "tags": [
+            "Payments"
+          ],
+          "parameters": [
+            {
+              "schema": {
+                "type": "string"
+              },
+              "in": "header",
+              "name": "consent",
+              "description": "__Mandatory__. The `consent token` containing the user's authorisation to make the request.",
+              "required": true
+            },
+            {
+              "schema": {
+                "type": "string"
+              },
+              "in": "path",
+              "name": "bulkPaymentId",
+              "description": "__Mandatory__. Bulk payment id returned when bulk payment request was submitted",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BulkPaymentDetailsResponse"
+                  },
+                  "examples": {
+                    "Successful 200 OK": {
+                      "$ref": "#/components/examples/bulk-payment-details-by-id-response"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Required parameter missing or invalid",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/400-error-response"
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Authentication Error",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/401-error-response"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Bulk payment not found for provided id",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/404-error-response"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "An unexpected error occurred.",
+              "content": {
+                "application/json;charset=UTF-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ApiErrorResponseV2"
+                  },
+                  "examples": {
+                    "Example-1": {
+                      "$ref": "#/components/examples/500-error-response"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "/consent-auth-code": {
           "post": {
@@ -11414,46 +11524,67 @@
                   }
               }
           },
-          "BulkPaymentDetailsByIdResponse": {
-              "type": "object",
-              "properties": {
-                  "meta": {
-                      "type": "object",
-                      "properties": {
-                          "tracingId": {
-                              "type": "string"
-                          }
-                      }
+          "BulkPaymentDetailsResponse": {
+            "type": "object",
+            "properties": {
+              "meta": {
+                "$ref": "#/components/schemas/ResponseMeta"
+              },
+              "data": {
+                "type": "object",
+                "title": "BulkPaymentDetailsData",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "__Mandatory__. Unique identifier for the bulk payment transaction."
                   },
-                  "data": {
-                      "type": "object",
-                      "properties": {
-                          "id": {
-                              "type": "string"
-                          },
-                          "consentId": {
-                              "type": "string"
-                          },
-                          "createdAt": {
-                              "type": "string"
-                          },
-                          "payments": {
-                              "type": "array",
-                              "items": {
-                                  "type": "object",
-                                  "properties": {
-                                      "reference": {
-                                          "type": "string"
-                                      },
-                                      "status": {
-                                          "type": "string"
-                                      }
-                                  }
-                              }
-                          }
-                      }
+                  "consentId": {
+                    "type": "string",
+                    "description": "__Mandatory__. Unique identifier of the consent related to bulk payment transaction."
+                  },
+                  "payments": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BulkPaymentIndividualStatus"
+                    }
                   }
+                }
               }
+            }
+          },
+          "BulkPaymentIndividualStatus": {
+            "type": "object",
+            "required": [
+              "id",
+              "status"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "__Mandatory__. Unique identifier of the individual payment."
+              },
+              "status": {
+                "$ref": "#/components/schemas/PaymentStatus"
+              },
+              "statusDetails": {
+                "type": "object",
+                "title": "BulkPaymentIndividualStatusDetails",
+                "description": "__Conditional__. Details regarding the status of an individual payment within a bulk request. This object is conditionally returned, typically when the status is not `COMPLETED`.",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "__Conditional__. The unique 4-digit error code identifying the specific issue. Refer to the official documentation for a comprehensive list of error codes"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "description": "__Optional__. A human-readable description providing additional context or the specific error message encountered."
+                  }
+                },
+                "required": [
+                  "code"
+                ]
+              }
+            }
           },
           "EmbeddedAccountAuthorisationResponse": {
               "type": "object",
@@ -12776,6 +12907,7 @@
                   "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
                   "INITIATE_BULK_PAYMENT",
                   "CREATE_BULK_PAYMENT",
+                  "EXISTING_BULK_PAYMENT_DETAILS",
                   "TRANSFER",
                   "OPEN_DATA_PERSONAL_CURRENT_ACCOUNTS",
                   "OPEN_DATA_ATMS",
@@ -19893,22 +20025,33 @@
       },
       "examples": {
           "bulk-payment-details-by-id-response": {
-              "value": {
-                  "meta": {
-                      "tracingId": "27b47dca-fb0f-4448-b470-1cd2d5516d0f"
+            "value": {
+              "meta": {
+                "tracingId": "27b47dca-fb0f-4448-b470-1cd2d5516d0f"
+              },
+              "data": {
+                "id": "e75d2c85-08e9-4a48-8d14-f789186f2a19",
+                "consentId": "5daeb980-5ff5-49db-b7a0-e93dd9c93533",
+                "payments": [
+                  {
+                    "id": "payment-w1",
+                    "status": "COMPLETED"
                   },
-                  "data": {
-                      "id": "e75d2c85-08e9-4a48-8d14-f789186f2a19",
-                      "consentId": "5daeb980-5ff5-49db-b7a0-e93dd9c93533",
-                      "createdAt": "2024-07-25T18:14:52.672Z",
-                      "Payments": [
-                          {
-                              "reference": "Test 1",
-                              "status": "Accepted Settlement In Process"
-                          }
-                      ]
+                  {
+                    "id": "payment-w2",
+                    "status": "FAILED",
+                    "statusDetails": {
+                      "code": "B001",
+                      "reason": "Payment has been rejected"
+                    }
+                  },
+                  {
+                    "id": "payment-w3",
+                    "status": "COMPLETED"
                   }
+                ]
               }
+            }
           },
           "berlin-group-example-acc-auth-request": {
               "description": "Berlin Group Example Request",
