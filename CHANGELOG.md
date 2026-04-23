@@ -5,6 +5,10 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [12.3.2] - 2026-04-23
+### Changed
+Refactor OAS file format, proper Json indentation, remove HTML tags and refine links
+
 ## [12.3.1] - 2026-04-15
 ### Changed
 Update `executionDateTime` field descriptions on `BulkPaymentRequest` and `SubmitBulkPaymentRequest` to clarify same-calendar-day validation requirement between authorisation and submission phases
