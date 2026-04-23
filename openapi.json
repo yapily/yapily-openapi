@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.3.2",
+    "version": "12.3.3",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -4099,7 +4099,7 @@
         "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING"
       ],
       "post": {
-        "description": "Used to initiate the authorisation process and direct users to the login screen of their financial Institution in order to give their consent for Sweeping Variable Recurring Payments. The request would return an Authorization URL and an Identifier for the consent created at the Institution. First make sure that the payment feature you wish to execute is supported by the bank by checking the features array in GET Institution.\n\nFeatures:\n\n- `INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`",
+        "description": "Initiate authorisation for a Sweeping [VRP](/payments/vrps/introduction) consent.\n\nThe response will contain an Authorisation URL and the associated Consent ID. The user will have to complete authorisation of the consent at their institution via [Redirect Flows](/getting-started/glossary#redirect-flow), after which you will be able to use the authorised consent to create payments.\n\nFeature:\n\n- `INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`",
         "operationId": "createSweepingAuthorisation",
         "x-mint": {
           "content": "<Info>Learn more: [Variable Recurring Payments](/payments/vrps/introduction)</Info>"
@@ -4108,35 +4108,35 @@
           "content": {
             "application/json;charset=UTF-8": {
               "examples": {
-                "UK Domestic Sweeping VRP Authorisation Example Request": {
-                  "description": "UK Domestic Sweeping VRP Authorisation Example Request",
+                "UK Sweeping VRP Authorisation Request": {
+                  "description": "UK Sweeping VRP Authorisation Request",
                   "value": {
-                    "applicationUserId": "string",
+                    "userUuid": "5350782b-60f3-489e-aae5-a24d8d679a07",
                     "institutionId": "modelo-sandbox",
                     "callback": "https://display-parameters.com/",
                     "controlParameters": {
                       "psuAuthenticationMethods": [
                         "SCA_NOT_REQUIRED"
                       ],
-                      "periodicLimits": [
-                        {
-                          "totalMaxAmount": {
-                            "amount": 100,
-                            "currency": "GBP"
-                          },
-                          "frequency": "DAILY",
-                          "alignment": "CONSENT"
-                        }
-                      ],
                       "maxAmountPerPayment": {
                         "amount": 10,
                         "currency": "GBP"
-                      }
+                      },
+                      "periodicLimits": [
+                        {
+                          "totalMaxAmount": {
+                            "amount": 50,
+                            "currency": "GBP"
+                          },
+                          "frequency": "MONTHLY",
+                          "alignment": "CONSENT"
+                        }
+                      ]
                     },
                     "initiationDetails": {
-                      "reference": "Own Account Sweeping",
+                      "reference": "My Sweeping VRP",
                       "payer": {
-                        "name": "John Doe",
+                        "name": "Jane Doe",
                         "accountIdentifications": [
                           {
                             "type": "ACCOUNT_NUMBER",
@@ -4144,7 +4144,7 @@
                           },
                           {
                             "type": "SORT_CODE",
-                            "identification": "654321"
+                            "identification": "332211"
                           }
                         ]
                       },
@@ -4157,25 +4157,16 @@
                           },
                           {
                             "type": "SORT_CODE",
-                            "identification": "123456"
+                            "identification": "112233"
                           }
                         ]
-                      }
-                    },
-                    "complianceData": {
-                      "payer": {
-                        "type": "INDIVIDUAL",
-                        "individual": {
-                          "name": "John Doe",
-                          "birthDate": "2000-08-12"
-                        }
                       }
                     }
                   }
                 }
               },
               "schema": {
-                "$ref": "#/components/schemas/SweepingAuthorisationRequest"
+                "$ref": "#/components/schemas/VrpSweepingAuthorisationRequest"
               }
             }
           },
@@ -4183,11 +4174,12 @@
         },
         "responses": {
           "201": {
+            "description": "Created",
             "content": {
               "application/json;charset=UTF-8": {
                 "examples": {
-                  "UK Domestic Sweeping VRP Authorisation Example Response": {
-                    "description": "UK Domestic Sweeping VRP Authorisation Example Response",
+                  "UK Domestic Sweeping VRP Authorisation Response": {
+                    "description": "UK Domestic Sweeping VRP Authorisation Response",
                     "value": {
                       "meta": {
                         "tracingId": "96169af01d394ad39658f17d53b49a5d"
@@ -4195,10 +4187,10 @@
                       "data": {
                         "id": "a2a9ec77-a479-4996-9896-4568e1968e7a",
                         "userUuid": "5350782b-60f3-489e-aae5-a24d8d679a07",
-                        "applicationUserId": "string",
+                        "applicationUserId": "user000",
                         "institutionId": "modelo-sandbox",
                         "status": "AWAITING_AUTHORIZATION",
-                        "createdAt": "2021-06-09T13:48:25.138Z",
+                        "createdAt": "2026-01-01T10:25:13Z",
                         "featureScope": [
                           "EXISTING_PAYMENTS_DETAILS",
                           "EXISTING_PAYMENT_INITIATION_DETAILS",
@@ -4214,36 +4206,23 @@
                           "psuAuthenticationMethods": [
                             "SCA_NOT_REQUIRED"
                           ],
-                          "periodicLimits": [
-                            {
-                              "totalMaxAmount": {
-                                "amount": 100,
-                                "currency": "GBP"
-                              },
-                              "frequency": "DAILY",
-                              "alignment": "CONSENT"
-                            }
-                          ],
                           "maxAmountPerPayment": {
                             "amount": 10,
                             "currency": "GBP"
-                          }
-                        },
-                        "payer": {
-                          "name": "John Doe",
-                          "accountIdentifications": [
+                          },
+                          "periodicLimits": [
                             {
-                              "type": "ACCOUNT_NUMBER",
-                              "identification": "87654321"
-                            },
-                            {
-                              "type": "SORT_CODE",
-                              "identification": "654321"
+                              "totalMaxAmount": {
+                                "amount": 50,
+                                "currency": "GBP"
+                              },
+                              "frequency": "MONTHLY",
+                              "alignment": "CONSENT"
                             }
                           ]
                         },
                         "initiationDetails": {
-                          "reference": "Own Account Sweeping",
+                          "reference": "My Sweeping VRP",
                           "payer": {
                             "name": "John Doe",
                             "accountIdentifications": [
@@ -4253,7 +4232,7 @@
                               },
                               {
                                 "type": "SORT_CODE",
-                                "identification": "654321"
+                                "identification": "332211"
                               }
                             ]
                           },
@@ -4266,7 +4245,7 @@
                               },
                               {
                                 "type": "SORT_CODE",
-                                "identification": "123456"
+                                "identification": "112233"
                               }
                             ]
                           }
@@ -4276,11 +4255,10 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfSweepingAuthorisationResponse"
+                  "$ref": "#/components/schemas/ApiResponseOfVrpSweepingAuthorisationResponse"
                 }
               }
-            },
-            "description": "Created"
+            }
           },
           "401": {
             "content": {
@@ -4345,244 +4323,19 @@
             "description": "Error Response"
           }
         },
-        "summary": "Create Sweeping Variable Recurring Payment Authorisation",
+        "summary": "Create Sweeping VRP Authorisation",
         "tags": [
           "Variable Recurring Payments"
         ]
       }
     },
-    "/variable-recurring-payments/payments": {
-      "x-yapily-features": [
-        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING"
-      ],
-      "post": {
-        "description": "Creates a Variable Recurring Payment transaction after obtaining the user's authorisation.\n\nFeatures:\n\n- `CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`",
-        "operationId": "createVrpPayment",
-        "parameters": [
-          {
-            "description": "__Mandatory__. The `consent-token` containing the user's authorisation to make the request.",
-            "example": "{consentToken}",
-            "in": "header",
-            "name": "consent",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json;charset=UTF-8": {
-              "examples": {
-                "UK Domestic VRP Payment Example Request": {
-                  "description": "UK Domestic VRP Payment Example Request",
-                  "value": {
-                    "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
-                    "psuAuthenticationMethod": "SCA_NOT_REQUIRED",
-                    "paymentAmount": {
-                      "amount": 10,
-                      "currency": "GBP"
-                    }
-                  }
-                }
-              },
-              "schema": {
-                "$ref": "#/components/schemas/SubmissionRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "UK Domestic VRP Payment Example Response": {
-                    "description": "UK Domestic VRP Payment Example Response",
-                    "value": {
-                      "meta": {
-                        "tracingId": "0f14e900011b445fa6b6c2c4272d7321"
-                      },
-                      "data": {
-                        "id": "a9582f8e-08be-4cca-9f01-1ad3be96532d",
-                        "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
-                        "institutionConsentId": "PF23232222DD",
-                        "status": "COMPLETED",
-                        "statusDetails": {
-                          "status": "COMPLETED",
-                          "isoStatus": {
-                            "code": "ACCP",
-                            "name": "AcceptedCustomerProfile"
-                          }
-                        },
-                        "initiationDetails": {
-                          "reference": "Own Account Sweeping",
-                          "payer": {
-                            "name": "John Doe",
-                            "accountIdentifications": [
-                              {
-                                "type": "ACCOUNT_NUMBER",
-                                "identification": "87654321"
-                              },
-                              {
-                                "type": "SORT_CODE",
-                                "identification": "654321"
-                              }
-                            ]
-                          },
-                          "payee": {
-                            "name": "John Doe",
-                            "accountIdentifications": [
-                              {
-                                "type": "ACCOUNT_NUMBER",
-                                "identification": "12345678"
-                              },
-                              {
-                                "type": "SORT_CODE",
-                                "identification": "123456"
-                              }
-                            ]
-                          }
-                        },
-                        "submissionDetails": {
-                          "reference": "Own Account Sweeping",
-                          "payee": {
-                            "name": "John Doe",
-                            "accountIdentifications": [
-                              {
-                                "type": "ACCOUNT_NUMBER",
-                                "identification": "12345678"
-                              },
-                              {
-                                "type": "SORT_CODE",
-                                "identification": "123456"
-                              }
-                            ]
-                          },
-                          "paymentAmount": {
-                            "amount": 10,
-                            "currency": "GBP"
-                          }
-                        },
-                        "payer": {
-                          "name": "John Doe",
-                          "accountIdentifications": [
-                            {
-                              "type": "ACCOUNT_NUMBER",
-                              "identification": "87654321"
-                            },
-                            {
-                              "type": "SORT_CODE",
-                              "identification": "654321"
-                            }
-                          ]
-                        },
-                        "refundAccount": {
-                          "accountIdentifications": [
-                            {
-                              "identification": "400400",
-                              "type": "SORT_CODE"
-                            },
-                            {
-                              "identification": "99999999",
-                              "type": "ACCOUNT_NUMBER"
-                            }
-                          ],
-                          "name": "Refund Account"
-                        },
-                        "expectedSettlementTime": "2022-03-02T12:00:00.000Z",
-                        "expectedExecutionTime": "2022-03-02T12:00:00.000Z"
-                      }
-                    }
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfSubmissionResponse"
-                }
-              }
-            },
-            "description": "Created"
-          },
-          "401": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "Error Response": {
-                    "description": "Error Response",
-                    "value": {
-                      "error": {
-                        "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                        "code": 401,
-                        "status": "UNAUTHORIZED",
-                        "supportUrl": "https://support.yapily.com/",
-                        "source": "YAPILY",
-                        "issues": [
-                          {
-                            "type": "CREDENTIALS",
-                            "code": "CREDENTIALS_MISSING",
-                            "message": "Authentication header not present"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            },
-            "description": "Error Response"
-          },
-          "default": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "Error Response": {
-                    "description": "Error Response",
-                    "value": {
-                      "error": {
-                        "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
-                        "code": 400,
-                        "status": "BAD_REQUEST",
-                        "supportUrl": "https://support.yapily.com/",
-                        "source": "YAPILY",
-                        "issues": [
-                          {
-                            "type": "BAD_REQUEST",
-                            "code": "BAD_REQUEST",
-                            "message": "The server could not understand the request due to invalid syntax"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
-                }
-              }
-            },
-            "description": "Error Response"
-          }
-        },
-        "summary": "Create Variable Recurring Payment",
-        "tags": [
-          "Variable Recurring Payments"
-        ],
-        "x-mint": {
-          "content": "<Info>Learn more: [Execute VRP Payments](/payments/vrps/get-started#execute-a-payment)</Info>"
-        }
-      }
-    },
     "/variable-recurring-payments/sweeping/consents/{consentId}": {
       "get": {
-        "description": "Get Sweeping Variable Recurring Payments consent details using the consent Id",
+        "description": "Get Sweeping [VRP](/payments/vrps/introduction) consent details from the Consent ID.\n\nFeature: `CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING`",
         "operationId": "getSweepingVrpConsentById",
         "parameters": [
           {
-            "description": "__Mandatory__. The consent Id of the `Variable Recurring Payments Consent` to retrieve.",
+            "description": "The Consent ID to retrieve.",
             "in": "path",
             "name": "consentId",
             "required": true,
@@ -4594,10 +4347,11 @@
         ],
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json;charset=UTF-8": {
                 "examples": {
-                  "Get Sweeping Variable Recurring Payments Consent Example Response": {
+                  "UK Sweeping VRP Consent Details Response": {
                     "description": "Get Sweeping Variable Recurring Payments Consent Example Response",
                     "value": {
                       "meta": {
@@ -4687,11 +4441,10 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfSweepingAuthorisationResponse"
+                  "$ref": "#/components/schemas/ApiResponseOfVrpSweepingAuthorisationResponse"
                 }
               }
-            },
-            "description": "Ok"
+            }
           },
           "401": {
             "content": {
@@ -4756,10 +4509,13 @@
             "description": "Error Response"
           }
         },
-        "summary": "Get Sweeping Variable Recurring Payment Consent Details",
+        "summary": "Get Sweeping VRP Consent Details",
         "tags": [
           "Variable Recurring Payments"
-        ]
+        ],
+        "x-mint": {
+          "content": "<Info>Learn more: [VRP Consent Details](/payments/vrps/get-started#get-consent-details)</Info>"
+        }
       }
     },
     "/variable-recurring-payments/funds-confirmation": {
@@ -4767,11 +4523,11 @@
         "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION"
       ],
       "post": {
-        "description": "Confirms whether there are available funds on the Payer account to execute a Variable Recurring Payment after obtaining the user's authorisation. \n\nFeatures:\n\n- `VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION`",
+        "description": "Check whether the requested funds amount is available on the [VRP](/payments/vrps/introduction) consent.\n\nNote that you should not call this before each VRP payment submission because we do it for you.\n\nRequired feature: `VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION`",
         "operationId": "createVrpFundsConfirmation",
         "parameters": [
           {
-            "description": "__Mandatory__. The `consent-token` containing the user's authorisation to make the request.",
+            "description": "The user's VRP [Consent Token](/getting-started/glossary#consent-token)",
             "example": "{consentToken}",
             "in": "header",
             "name": "consent",
@@ -4785,8 +4541,8 @@
           "content": {
             "application/json;charset=UTF-8": {
               "examples": {
-                "UK Domestic VRP Funds Confirmation Example Request": {
-                  "description": "UK Domestic VRP Funds Confirmation Example Request",
+                "UK VRP Funds Confirmation Request": {
+                  "description": "UK VRP Funds Confirmation Request",
                   "value": {
                     "reference": "Own Account Sweeping",
                     "paymentAmount": {
@@ -4797,7 +4553,7 @@
                 }
               },
               "schema": {
-                "$ref": "#/components/schemas/FundsConfirmationRequest"
+                "$ref": "#/components/schemas/VrpFundsConfirmationRequest"
               }
             }
           },
@@ -4805,11 +4561,12 @@
         },
         "responses": {
           "201": {
+            "description": "Created",
             "content": {
               "application/json;charset=UTF-8": {
                 "examples": {
-                  "UK Domestic VRP Funds Confirmation Example Response": {
-                    "description": "UK Domestic VRP Funds Confirmation Example Response",
+                  "UK VRP Funds Confirmation Response": {
+                    "description": "UK VRP Funds Confirmation Response",
                     "value": {
                       "meta": {
                         "tracingId": "0f14e900011b445fa6b6c2c4272d7321"
@@ -4830,11 +4587,10 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfFundsConfirmationResponse"
+                  "$ref": "#/components/schemas/ApiResponseOfVrpFundsConfirmationResponse"
                 }
               }
-            },
-            "description": "Created"
+            }
           },
           "401": {
             "content": {
@@ -4899,7 +4655,7 @@
             "description": "Error Response"
           }
         },
-        "summary": "Confirm Funds for Variable Recurring Payment",
+        "summary": "Confirm Funds for VRP Payment",
         "tags": [
           "Variable Recurring Payments"
         ],
@@ -4908,9 +4664,234 @@
         }
       }
     },
+    "/variable-recurring-payments/payments": {
+      "x-yapily-features": [
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING"
+      ],
+      "post": {
+        "description": "Submit payment on the [VRP](/payments/vrps/introduction) consent.\n\nRequired feature: `CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING` or `CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL`",
+        "operationId": "createVrpPayment",
+        "parameters": [
+          {
+            "description": "The user's VRP [Consent Token](/getting-started/glossary#consent-token)",
+            "example": "{consentToken}",
+            "in": "header",
+            "name": "consent",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8": {
+              "examples": {
+                "UK VRP Payment Request": {
+                  "description": "UK VRP Payment Request",
+                  "value": {
+                    "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
+                    "psuAuthenticationMethod": "SCA_NOT_REQUIRED",
+                    "paymentAmount": {
+                      "amount": 10,
+                      "currency": "GBP"
+                    }
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/VrpSubmissionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "UK VRP Payment Response": {
+                    "description": "UK VRP Payment Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "0f14e900011b445fa6b6c2c4272d7321"
+                      },
+                      "data": {
+                        "id": "a9582f8e-08be-4cca-9f01-1ad3be96532d",
+                        "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
+                        "institutionConsentId": "PF23232222DD",
+                        "status": "COMPLETED",
+                        "statusDetails": {
+                          "status": "COMPLETED",
+                          "isoStatus": {
+                            "code": "ACCP",
+                            "name": "AcceptedCustomerProfile"
+                          }
+                        },
+                        "initiationDetails": {
+                          "reference": "Own Account Sweeping",
+                          "payer": {
+                            "name": "John Doe",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "87654321"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "654321"
+                              }
+                            ]
+                          },
+                          "payee": {
+                            "name": "John Doe",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "12345678"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "123456"
+                              }
+                            ]
+                          }
+                        },
+                        "submissionDetails": {
+                          "reference": "Own Account Sweeping",
+                          "payee": {
+                            "name": "John Doe",
+                            "accountIdentifications": [
+                              {
+                                "type": "ACCOUNT_NUMBER",
+                                "identification": "12345678"
+                              },
+                              {
+                                "type": "SORT_CODE",
+                                "identification": "123456"
+                              }
+                            ]
+                          },
+                          "paymentAmount": {
+                            "amount": 10,
+                            "currency": "GBP"
+                          }
+                        },
+                        "payer": {
+                          "name": "John Doe",
+                          "accountIdentifications": [
+                            {
+                              "type": "ACCOUNT_NUMBER",
+                              "identification": "87654321"
+                            },
+                            {
+                              "type": "SORT_CODE",
+                              "identification": "654321"
+                            }
+                          ]
+                        },
+                        "refundAccount": {
+                          "accountIdentifications": [
+                            {
+                              "identification": "400400",
+                              "type": "SORT_CODE"
+                            },
+                            {
+                              "identification": "99999999",
+                              "type": "ACCOUNT_NUMBER"
+                            }
+                          ],
+                          "name": "Refund Account"
+                        },
+                        "expectedSettlementTime": "2022-03-02T12:00:00.000Z",
+                        "expectedExecutionTime": "2022-03-02T12:00:00.000Z"
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfVrpSubmissionResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "description": "Error Response",
+                    "value": {
+                      "error": {
+                        "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+                        "code": 401,
+                        "status": "UNAUTHORIZED",
+                        "supportUrl": "https://support.yapily.com/",
+                        "source": "YAPILY",
+                        "issues": [
+                          {
+                            "type": "CREDENTIALS",
+                            "code": "CREDENTIALS_MISSING",
+                            "message": "Authentication header not present"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Error Response"
+          },
+          "default": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "description": "Error Response",
+                    "value": {
+                      "error": {
+                        "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+                        "code": 400,
+                        "status": "BAD_REQUEST",
+                        "supportUrl": "https://support.yapily.com/",
+                        "source": "YAPILY",
+                        "issues": [
+                          {
+                            "type": "BAD_REQUEST",
+                            "code": "BAD_REQUEST",
+                            "message": "The server could not understand the request due to invalid syntax"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Error Response"
+          }
+        },
+        "summary": "Create VRP Payment",
+        "tags": [
+          "Variable Recurring Payments"
+        ],
+        "x-mint": {
+          "content": "<Info>Learn more: [Execute VRP Payments](/payments/vrps/get-started#execute-a-payment)</Info>"
+        }
+      }
+    },
     "/variable-recurring-payments/payments/{paymentId}/details": {
       "get": {
-        "description": "Get Variable Recurring Payment details using the Payment Id",
+        "description": "Get [VRP](/payments/vrps/introduction) payment details from the Payment ID.\n\nFeatures: `CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING` or `CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL`",
         "operationId": "getVrpPaymentDetails",
         "parameters": [
           {
@@ -4923,7 +4904,7 @@
             }
           },
           {
-            "description": "__Mandatory__. The consent token containing the user's authorisation to make the `Variable Recurring Payments` request.",
+            "description": "__Mandatory__. The [Consent Token](/getting-started/glossary#consent-token) containing the user's authorisation to make the `Variable Recurring Payments` request.",
             "in": "header",
             "name": "consent",
             "required": true,
@@ -4934,11 +4915,12 @@
         ],
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json;charset=UTF-8": {
                 "examples": {
-                  "Get Variable Recurring Payment Details Example Response": {
-                    "description": "Get Variable Recurring Payment Details Example Response",
+                  "UK VRP Payment Details Response": {
+                    "description": "UK VRP Payment Details Response",
                     "value": {
                       "meta": {
                         "tracingId": "679e7bb6cd45416a9a9a8d004c5315da"
@@ -5037,11 +5019,10 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfSubmissionResponse"
+                  "$ref": "#/components/schemas/ApiResponseOfVrpSubmissionResponse"
                 }
               }
-            },
-            "description": "Ok"
+            }
           },
           "401": {
             "content": {
@@ -5106,12 +5087,12 @@
             "description": "Error Response"
           }
         },
-        "summary": "Get Variable Recurring Payment Details",
+        "summary": "Get VRP Payment Details",
         "tags": [
           "Variable Recurring Payments"
         ],
         "x-mint": {
-          "content": "<Info>Learn more: [VRP Getting Started](/payments/vrps/get-started)</Info>"
+          "content": "<Info>Learn more: [VRP Paymenent Details](/payments/vrps/get-started#get-vrp-payment-details)</Info>"
         }
       }
     },
@@ -7260,7 +7241,7 @@
                 }
               },
               "schema": {
-                "$ref": "#/components/schemas/FundsConfirmationRequest"
+                "$ref": "#/components/schemas/VrpFundsConfirmationRequest"
               }
             }
           },
@@ -7271,7 +7252,7 @@
             "content": {
               "application/json;charset=UTF-8": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfFundsConfirmationResponse"
+                  "$ref": "#/components/schemas/ApiResponseOfVrpFundsConfirmationResponse"
                 },
                 "examples": {
                   "Hosted VRP Payment Response": {
@@ -12937,6 +12918,8 @@
           "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
           "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
           "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+          "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL",
+          "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL",
           "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
           "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
           "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
@@ -16297,7 +16280,7 @@
           }
         }
       },
-      "SweepingAuthorisationRequest": {
+      "VrpSweepingAuthorisationRequest": {
         "required": [
           "institutionId",
           "controlParameters",
@@ -16308,86 +16291,85 @@
           "userUuid": {
             "type": "string",
             "format": "uuid",
-            "description": "This is the Yapily user identifier for the user returned by the create user step POST ../users"
+            "description": "__Conditional.__ The Yapily User UUID. One of `userUuid` or `applicationUserId` must be present in the request."
           },
           "applicationUserId": {
             "type": "string",
-            "description": "A client's own user reference. If the client wants to work with their own unique references for individual PSUs then they can use the applicationUserId property to provide that value. Where Yapily does not already have a Yapily userUuid that matches the supplied applicationUserId, then a new Yapily userUuid is created automatically and linked to the applicationUserId value.  Clients can then use either their own applicationUserId or the Yapily userId to reference the same user in future calls."
-          },
-          "forwardParameters": {
-            "type": "array",
-            "description": "Extra parameters the TPP may want to get forwarded in the callback request after the PSU redirect.",
-            "items": {
-              "type": "string"
-            }
+            "description": "__Conditional.__ The Application User ID. One of `userUuid` or `applicationUserId` must be present in the request."
           },
           "institutionId": {
             "type": "string",
-            "description": "__Mandatory__. The reference to the `Institution` which identifies which institution the authorisation request is sent to.",
-            "example": "yapily-mock"
+            "description": "The Institution ID which will carry out authorisation."
           },
           "callback": {
             "type": "string",
-            "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. \n\nSee [Using a callback (Optional)](/open-banking-flow/handling-redirects/callback-url) for more information.",
-            "example": "https://display-parameters.com"
+            "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`.\n\nSee [Using a callback (Optional)](/open-banking-flow/handling-redirects/callback-url#callback-url) for more information."
           },
           "redirect": {
             "$ref": "#/components/schemas/RedirectRequest"
           },
+          "forwardParameters": {
+            "type": "array",
+            "description": "Any parameters that you may want to get forwarded in the callback request after the PSU is redirected.",
+            "items": {
+              "type": "string"
+            }
+          },
           "oneTimeToken": {
             "type": "boolean",
-            "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. \n\nSee [Using a callback with an OTT (Optional)](/open-banking-flow/handling-redirects/callback-url) for more information.",
-            "example": false
+            "description": "__Conditional__. Set to `true` to receive a `oneTimeToken` instead of `consentToken` at the `callback`. This is used for additional security and can only be used when the `callback` is set.\n\nSee [Using a One-Time Token](/open-banking-flow/handling-redirects/callback-url#using-a-ott) for more information."
           },
           "controlParameters": {
-            "$ref": "#/components/schemas/SweepingControlParameters"
+            "$ref": "#/components/schemas/VrpControlParameters"
           },
           "initiationDetails": {
-            "$ref": "#/components/schemas/InitiationDetails"
+            "$ref": "#/components/schemas/VrpInitiationDetails"
           },
           "complianceData": {
-            "$ref": "#/components/schemas/ComplianceData"
+            "$ref": "#/components/schemas/VrpComplianceData"
           }
         }
       },
-      "SweepingAuthorisationResponse": {
+      "VrpSweepingAuthorisationResponse": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The Consent ID."
           },
           "userUuid": {
             "type": "string",
             "format": "uuid",
-            "description": "This is the Yapily user identifier for the user returned by the create user step POST ../users"
+            "description": "The Yapily User UUID (when provided in the request)."
           },
           "applicationUserId": {
             "type": "string",
-            "description": "A client's own user reference. If the client wants to work with their own unique references for individual PSUs then they can use the applicationUserId property to provide that value. Where Yapily does not already have a Yapily userUuid that matches the supplied applicationUserId, then a new Yapily userId is created automatically and linked to the applicationUserId value.  Clients can then use either their own applicationUserId or the Yapily userId to reference the same user in future calls."
+            "description": "The Application User ID (when provided in the request)."
           },
           "institutionId": {
             "type": "string",
-            "description": "The reference to the Institution which identifies which institution the authorisation request is sent to."
+            "description": "The Institution ID which carried out authorisation."
           },
           "status": {
             "$ref": "#/components/schemas/AuthorisationStatus"
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The datetime when this consent was created."
           },
           "featureScope": {
             "uniqueItems": true,
             "type": "array",
-            "description": "__Optional__. Used to granularly specify the set of features that the user will give their consent for when requesting access to their account information. Depending on the `Institution`, this may also populate a consent screen which list these scopes before the user authorises.\n\nThis endpoint accepts allow all [Financial Data Features](/guides/financial-data/features/#feature-list) that the `Institution` supports.To find out which scopes an `Institution` supports, check [GET Institution](./#get-institution).",
+            "description": "The set of features associated with this consent.",
             "items": {
               "$ref": "#/components/schemas/FeatureEnum"
             }
           },
           "consentToken": {
             "type": "string",
-            "description": "The `consent-token` containing the user's authorisation to make the payment request."
+            "description": "The [Consent Token](/getting-started/glossary#consent-token) containing the user's authorisation to make the payment request."
           },
           "state": {
             "type": "string"
@@ -16398,33 +16380,163 @@
           },
           "institutionConsentId": {
             "type": "string",
-            "description": "Identification of the consent at the Institution."
+            "description": "The Institution's Consent ID. Note that this cannot be used to interact with Yapily API."
           },
           "authorisationUrl": {
-            "type": "string"
+            "type": "string",
+            "description": "The Institution's URL to complete authorisation."
           },
           "qrCodeUrl": {
-            "type": "string"
+            "type": "string",
+            "description": "The QR code associated with the `authorisationUrl`. This provides a way for the user to access the URL via their mobile device."
           },
           "controlParameters": {
-            "$ref": "#/components/schemas/SweepingControlParameters"
+            "$ref": "#/components/schemas/VrpControlParameters"
           },
           "payer": {
             "$ref": "#/components/schemas/Payer"
           },
           "initiationDetails": {
-            "$ref": "#/components/schemas/InitiationDetails"
+            "$ref": "#/components/schemas/VrpInitiationDetails"
+          },
+          "riskDetails": {
+            "$ref": "#/components/schemas/VrpSweepingRiskDetails"
           }
         }
       },
-      "ApiResponseOfSweepingAuthorisationResponse": {
+      "VrpCommercialAuthorisationRequest": {
+        "required": [
+          "institutionId",
+          "controlParameters",
+          "initiationDetails",
+          "riskDetails"
+        ],
+        "type": "object",
+        "properties": {
+          "userUuid": {
+            "type": "string",
+            "format": "uuid",
+            "description": "__Conditional.__ The Yapily User UUID. One of `userUuid` or `applicationUserId` must be present in the request."
+          },
+          "applicationUserId": {
+            "type": "string",
+            "description": "__Conditional.__ The Application User ID. One of `userUuid` or `applicationUserId` must be present in the request."
+          },
+          "institutionId": {
+            "type": "string",
+            "description": "The Institution ID which will carry out authorisation."
+          },
+          "callback": {
+            "type": "string",
+            "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`.\n\nSee [Using a callback (Optional)](/open-banking-flow/handling-redirects/callback-url#callback-url) for more information."
+          },
+          "redirect": {
+            "$ref": "#/components/schemas/RedirectRequest"
+          },
+          "forwardParameters": {
+            "type": "array",
+            "description": "Extra parameters the TPP may want to get forwarded in the callback request after the PSU redirect.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "oneTimeToken": {
+            "type": "boolean",
+            "description": "__Conditional__. Set to `true` to receive a `oneTimeToken` instead of `consentToken` at the `callback`. This is used for additional security and can only be used when the `callback` is set.\n\nSee [Using a One-Time Token](/open-banking-flow/handling-redirects/callback-url#using-a-ott) for more information."
+          },
+          "controlParameters": {
+            "$ref": "#/components/schemas/VrpControlParameters"
+          },
+          "initiationDetails": {
+            "$ref": "#/components/schemas/VrpInitiationDetails"
+          },
+          "riskDetails": {
+            "$ref": "#/components/schemas/VrpCommercialRiskDetails"
+          },
+          "complianceData": {
+            "$ref": "#/components/schemas/VrpComplianceData"
+          }
+        }
+      },
+      "VrpCommercialAuthorisationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The Consent ID."
+          },
+          "userUuid": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The Yapily User UUID (when provided in the request)."
+          },
+          "applicationUserId": {
+            "type": "string",
+            "description": "The Application User ID (when provided in the request)."
+          },
+          "institutionId": {
+            "type": "string",
+            "description": "The Institution ID which carried out authorisation."
+          },
+          "status": {
+            "$ref": "#/components/schemas/AuthorisationStatus"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The datetime when this consent was created."
+          },
+          "featureScope": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "The set of features associated with this consent.",
+            "items": {
+              "$ref": "#/components/schemas/FeatureEnum"
+            }
+          },
+          "consentToken": {
+            "type": "string",
+            "description": "The [Consent Token](/getting-started/glossary#consent-token)."
+          },
+          "state": {
+            "type": "string"
+          },
+          "authorizedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "institutionConsentId": {
+            "type": "string",
+            "description": "The Institution's Consent ID. Note that this cannot be used to interact with Yapily API."
+          },
+          "authorisationUrl": {
+            "type": "string",
+            "description": "The Institution's URL to complete authorisation."
+          },
+          "qrCodeUrl": {
+            "type": "string",
+            "description": "The QR code associated with the `authorisationUrl`. This provides a way for the user to access the URL via their mobile device."
+          },
+          "controlParameters": {
+            "$ref": "#/components/schemas/VrpControlParameters"
+          },
+          "initiationDetails": {
+            "$ref": "#/components/schemas/VrpInitiationDetails"
+          },
+          "riskDetails": {
+            "$ref": "#/components/schemas/VrpCommercialRiskDetails"
+          }
+        }
+      },
+      "ApiResponseOfVrpSweepingAuthorisationResponse": {
         "type": "object",
         "properties": {
           "meta": {
             "$ref": "#/components/schemas/ResponseMeta"
           },
           "data": {
-            "$ref": "#/components/schemas/SweepingAuthorisationResponse"
+            "$ref": "#/components/schemas/VrpSweepingAuthorisationResponse"
           },
           "links": {
             "type": "object",
@@ -16451,27 +16563,71 @@
           }
         }
       },
-      "SweepingControlParameters": {
+      "ApiResponseOfVrpCommercialAuthorisationResponse": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          },
+          "data": {
+            "$ref": "#/components/schemas/VrpCommercialAuthorisationResponse"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "forwardedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseForwardedData"
+            }
+          },
+          "tracingId": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "raw": {
+            "deprecated": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RawResponse"
+            }
+          }
+        }
+      },
+      "VrpInitiationDetails": {
+        "type": "object",
+        "description": "The definition of the payer and payee.",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "description": "The reference/description of the payments that will be carried out on this VRP consent."
+          },
+          "payer": {
+            "$ref": "#/components/schemas/Payer"
+          },
+          "payee": {
+            "$ref": "#/components/schemas/Payee"
+          }
+        }
+      },
+      "VrpControlParameters": {
+        "type": "object",
+        "description": "The definition of VRP parameters.",
         "required": [
           "psuAuthenticationMethods",
           "maxAmountPerPayment",
           "periodicLimits"
         ],
-        "type": "object",
-        "description": "Define the restrictions and limits for payment orders as part of Sweeping VRP consent",
         "properties": {
           "psuAuthenticationMethods": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "__Mandatory__. Defines the authentication method(s) allowed in payment submission step. Allowed values are [SCA_REQUIRED, SCA_NOT_REQUIRED]."
-          },
-          "periodicLimits": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SweepingPeriodicLimits"
-            }
+            "description": "__Mandatory__. Defines the authentication method(s) allowed in payment submission step.\nAllowed values are [`SCA_REQUIRED`, `SCA_NOT_REQUIRED`]."
           },
           "maxAmountPerPayment": {
             "allOf": [
@@ -16479,21 +16635,28 @@
                 "$ref": "#/components/schemas/Amount"
               }
             ],
-            "description": "__Mandatory__. Max amount that can be submitted per payment."
+            "description": "__Mandatory__. The maximum amount that will be allowed per VRP payment."
+          },
+          "periodicLimits": {
+            "type": "array",
+            "description": "The maximum amount over all VRP payments within the specified periods. For instance, a `MONTHLY` limit of `20 GBP`.\n\nSee [VRP Mandate Details](/payments/vrps/mandate-details).",
+            "items": {
+              "$ref": "#/components/schemas/VrpPeriodicLimits"
+            }
           },
           "validFrom": {
             "type": "string",
             "format": "date-time",
-            "description": "__Optional__. Start date when the consent becomes valid."
+            "description": "__Optional__. The start date when the consent becomes valid."
           },
           "validTo": {
             "type": "string",
             "format": "date-time",
-            "description": "__Optional__. End date when the consent expires and becomes invalid."
+            "description": "__Optional__. The end date when the consent expires and becomes invalid."
           }
         }
       },
-      "FundsAvailable": {
+      "VrpFundsAvailable": {
         "required": [
           "fundsAvailable",
           "fundsAvailableAt"
@@ -16502,33 +16665,31 @@
         "properties": {
           "fundsAvailable": {
             "type": "boolean",
-            "description": "__Mandatory__. Indicates whether funds are available or not."
+            "description": "__Mandatory__. The flag indicating whether the funds are available."
           },
           "fundsAvailableAt": {
             "type": "string",
             "format": "date-time",
-            "description": "__Mandatory__. Date and Time when the funds availability is checked."
+            "description": "__Mandatory__. The datetime when the funds were checked."
           }
         }
       },
-      "FundsConfirmationRequest": {
+      "VrpFundsConfirmationRequest": {
+        "type": "object",
         "required": [
           "paymentAmount"
         ],
-        "type": "object",
         "properties": {
-          "reference": {
-            "type": "string",
-            "description": "__Optional__. The payment reference or description. Limited to a maximum of 18 characters long.",
-            "example": "Own Account Sweeping"
-          },
           "paymentAmount": {
             "$ref": "#/components/schemas/Amount"
+          },
+          "reference": {
+            "type": "string",
+            "description": "__Optional__. The reference/description associated with the VRP consent. Limited to a maximum of 18 characters long."
           }
-        },
-        "description": "The fund confirmation object defining the details of the account and funds to be checked under the Variable Recurring Payment consent."
+        }
       },
-      "FundsConfirmationResponse": {
+      "VrpFundsConfirmationResponse": {
         "required": [
           "paymentAmount",
           "fundsAvailable"
@@ -16547,18 +16708,18 @@
             "$ref": "#/components/schemas/Amount"
           },
           "fundsAvailable": {
-            "$ref": "#/components/schemas/FundsAvailable"
+            "$ref": "#/components/schemas/VrpFundsAvailable"
           }
         }
       },
-      "ApiResponseOfFundsConfirmationResponse": {
+      "ApiResponseOfVrpFundsConfirmationResponse": {
         "type": "object",
         "properties": {
           "meta": {
             "$ref": "#/components/schemas/ResponseMeta"
           },
           "data": {
-            "$ref": "#/components/schemas/FundsConfirmationResponse"
+            "$ref": "#/components/schemas/VrpFundsConfirmationResponse"
           },
           "links": {
             "type": "object",
@@ -16585,33 +16746,63 @@
           }
         }
       },
-      "InitiationDetails": {
+      "VrpSweepingRiskDetails": {
         "type": "object",
+        "description": "The details required by the institutions to detect and prevent fraud.",
         "properties": {
-          "reference": {
-            "type": "string",
-            "description": "__Optional__. The payment reference or description. Limited to a maximum of 18 characters long.",
-            "example": "Own Account Sweeping"
-          },
-          "payer": {
-            "$ref": "#/components/schemas/Payer"
-          },
-          "payee": {
-            "$ref": "#/components/schemas/Payee"
+          "paymentContextCode": {
+            "type": "string"
           }
-        },
-        "description": "__Mandatory__. The payment initiation object defining the details of the payment under the Variable Recurring Payment consent."
+        }
       },
-      "ComplianceData": {
+      "VrpCommercialRiskDetails": {
+        "type": "object",
+        "description": "The details required by the institutions to detect and prevent fraud.",
+        "required": [
+          "paymentContextCode",
+          "paymentPurposeCode",
+          "categoryPurposeCode",
+          "merchantCustomerId",
+          "isContractPresent",
+          "isBeneficiaryPrepopulated"
+        ],
+        "properties": {
+          "paymentContextCode": {
+            "type": "string"
+          },
+          "paymentPurposeCode": {
+            "type": "string"
+          },
+          "categoryPurposeCode": {
+            "type": "string"
+          },
+          "merchantCustomerId": {
+            "type": "string",
+            "description": "The merchant's identifier for the customer associated with the payment."
+          },
+          "isContractPresent": {
+            "type": "boolean",
+            "description": "Set to `true` when you have a contractual relationship with Yapily. This is overridden according to the value in your application configuration."
+          },
+          "isBeneficiaryPrepopulated": {
+            "type": "boolean",
+            "description": "Set to `true` when the `payee` details were populated automatically (as opposed to being manually provided by the payee)."
+          },
+          "beneficiaryAccountType": {
+            "type": "string"
+          }
+        }
+      },
+      "VrpComplianceData": {
         "type": "object",
         "properties": {
           "payer": {
-            "$ref": "#/components/schemas/ComplianceDataPayer"
+            "$ref": "#/components/schemas/VrpComplianceDataPayer"
           }
         },
         "description": "__Conditional__. Information needed to complete compliance checks. Mandatory for Yapily Connect customers."
       },
-      "ComplianceDataPayer": {
+      "VrpComplianceDataPayer": {
         "type": "object",
         "required": [
           "type"
@@ -16623,15 +16814,15 @@
             "description": "The payer type. Allowed values: INDIVIDUAL, BUSINESS. The corresponding object must be included."
           },
           "individual": {
-            "$ref": "#/components/schemas/ComplianceDataIndividual"
+            "$ref": "#/components/schemas/VrpComplianceDataIndividual"
           },
           "business": {
-            "$ref": "#/components/schemas/ComplianceDataBusiness"
+            "$ref": "#/components/schemas/VrpComplianceDataBusiness"
           }
         },
         "description": "__Conditional__. Payer details required for compliance checks."
       },
-      "ComplianceDataIndividual": {
+      "VrpComplianceDataIndividual": {
         "type": "object",
         "required": [
           "name",
@@ -16652,7 +16843,7 @@
         },
         "description": "__Conditional__. Mandatory if the type is INDIVIDUAL."
       },
-      "ComplianceDataBusiness": {
+      "VrpComplianceDataBusiness": {
         "type": "object",
         "required": [
           "name",
@@ -16671,15 +16862,15 @@
             "description": "This is the registered company number of the business."
           },
           "registeredAddress": {
-            "$ref": "#/components/schemas/ComplianceDataAddress"
+            "$ref": "#/components/schemas/VrpComplianceDataAddress"
           },
           "tradingAddress": {
-            "$ref": "#/components/schemas/ComplianceDataAddress"
+            "$ref": "#/components/schemas/VrpComplianceDataAddress"
           }
         },
         "description": "__Conditional__. Mandatory if the type is BUSINESS."
       },
-      "ComplianceDataAddress": {
+      "VrpComplianceDataAddress": {
         "type": "object",
         "required": [
           "addressLine1",
@@ -16716,16 +16907,17 @@
         },
         "description": "This is the registered company or trading address of your end user."
       },
-      "SubmissionDetails": {
+      "VrpSubmissionDetails": {
+        "type": "object",
+        "description": "__Mandatory__. The payment submission object defining the details of the payment instruction to be executed under the Variable Recurring Payment.",
         "required": [
           "payee",
           "paymentAmount"
         ],
-        "type": "object",
         "properties": {
           "reference": {
             "type": "string",
-            "description": "__Optional__. The payment reference or description. Limited to a maximum of 18 characters long.",
+            "description": "__Optional__. The reference/description associated with the VRP consent. Limited to a maximum of 18 characters long.",
             "example": "Own Account Sweeping"
           },
           "payee": {
@@ -16734,25 +16926,23 @@
           "paymentAmount": {
             "$ref": "#/components/schemas/Amount"
           }
-        },
-        "description": "__Mandatory__. The payment submission object defining the details of the payment instruction to be executed under the Variable Recurring Payment."
+        }
       },
-      "SubmissionRequest": {
+      "VrpSubmissionRequest": {
+        "type": "object",
         "required": [
           "paymentIdempotencyId",
           "psuAuthenticationMethod",
           "paymentAmount"
         ],
-        "type": "object",
         "properties": {
           "paymentIdempotencyId": {
             "type": "string",
-            "description": "__Mandatory__. A unique identifier that you must provide to identify the payment. This can be any alpha-numeric string but is limited to a maximum of 35 characters.",
-            "example": "04ab4536gaerfc0e1f93c4f4"
+            "description": "__Mandatory__. A unique identifier for the payment.\n\nThis can be any alpha-numeric string but is limited to a maximum of 35 characters."
           },
           "psuAuthenticationMethod": {
             "type": "string",
-            "description": "__Mandatory__. Chosen authentication method for submission step. Allowed values are [SCA_REQUIRED, SCA_NOT_REQUIRED]."
+            "description": "__Mandatory__. Defines the authentication method(s) allowed in payment submission step.\nAllowed values are [`SCA_REQUIRED`, `SCA_NOT_REQUIRED`].\n\nSee [SCA](/getting-started/glossary#strong-customer-authentication-sca)."
           },
           "paymentAmount": {
             "$ref": "#/components/schemas/Amount"
@@ -16760,24 +16950,27 @@
         },
         "description": "__Mandatory__. The payment request object defining the details of the payment for execution under the Variable Recurring Payment consent."
       },
-      "SubmissionResponse": {
+      "VrpSubmissionResponse": {
+        "type": "object",
         "required": [
           "initiationDetails",
           "submissionDetails"
         ],
-        "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "The Payment ID."
           },
           "paymentIdempotencyId": {
-            "type": "string"
+            "type": "string",
+            "description": "The Payment Idempotency ID (as provided in the request)."
           },
           "paymentLifecycleId": {
             "type": "string"
           },
           "institutionConsentId": {
-            "type": "string"
+            "type": "string",
+            "description": "The Institution's Consent ID on which the payment was submitted. Note that this cannot be used to interact with Yapily API."
           },
           "status": {
             "$ref": "#/components/schemas/PaymentStatus"
@@ -16786,10 +16979,10 @@
             "$ref": "#/components/schemas/PaymentStatusDetails"
           },
           "initiationDetails": {
-            "$ref": "#/components/schemas/InitiationDetails"
+            "$ref": "#/components/schemas/VrpInitiationDetails"
           },
           "submissionDetails": {
-            "$ref": "#/components/schemas/SubmissionDetails"
+            "$ref": "#/components/schemas/VrpSubmissionDetails"
           },
           "payer": {
             "$ref": "#/components/schemas/Payer"
@@ -16804,17 +16997,21 @@
           "expectedSettlementTime": {
             "type": "string",
             "format": "date-time"
+          },
+          "riskDetails": {
+            "$comment": "NOTE: This model is shared between Sweeping and Commercial, but we use VrpSweepingRiskDetails because it is minimal and sufficient!",
+            "$ref": "#/components/schemas/VrpSweepingRiskDetails"
           }
         }
       },
-      "ApiResponseOfSubmissionResponse": {
+      "ApiResponseOfVrpSubmissionResponse": {
         "type": "object",
         "properties": {
           "meta": {
             "$ref": "#/components/schemas/ResponseMeta"
           },
           "data": {
-            "$ref": "#/components/schemas/SubmissionResponse"
+            "$ref": "#/components/schemas/VrpSubmissionResponse"
           },
           "links": {
             "type": "object",
@@ -16841,29 +17038,29 @@
           }
         }
       },
-      "SweepingPeriodicLimits": {
+      "VrpPeriodicLimits": {
         "required": [
-          "totalMaxAmount",
           "frequency",
+          "totalMaxAmount",
           "alignment"
         ],
         "type": "object",
         "properties": {
+          "frequency": {
+            "type": "string",
+            "description": "__Mandatory__. The frequency/period over which the limit is enforced.\nAllowed values are [`DAILY`, `WEEKLY`, `EVERY_TWO_WEEKS`, `MONTHLY`, `YEARLY`]."
+          },
           "totalMaxAmount": {
             "allOf": [
               {
                 "$ref": "#/components/schemas/Amount"
               }
             ],
-            "description": "__Mandatory__. Maximum amount that can be specified in all payment instructions in a given period under this VRP consent. If the Alignment is Calendar, the limit is pro-rated in the first period to the remaining number of days."
-          },
-          "frequency": {
-            "type": "string",
-            "description": "__Mandatory__. Frequency for which the payment limits are enforced. Allowed values are [DAILY, WEEKLY, EVERY_TWO_WEEKS, MONTHLY, YEARLY]."
+            "description": "__Mandatory__. The maximum amount that will be allowed over the specified frequency/period.\n\nIf the `alignment` is set to `CALENDAR`, then the limit will be [pro-rated](/payments/vrps/mandate-details#pro-rata-calculation) in the first period to the remaining number of days."
           },
           "alignment": {
             "type": "string",
-            "description": "__Mandatory__. Period alignment for which the payment limits are enforced. Allowed values are [CONSENT, CALENDAR]. If CONSENT, then period starts on consent creation date. If CALENDAR, then period lines up with the frequency e.g. WEEKLY period will begin at start of the week in question."
+            "description": "__Mandatory__. The alignment of the frequency/period for which the limit is enforced. Allowed values are [`CONSENT`, `CALENDAR`].\n\nSee [VRP Mandate Details](/payments/vrps/mandate-details)."
           }
         }
       },
