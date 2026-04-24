@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.3.3",
+    "version": "12.3.4",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -1800,6 +1800,116 @@
         },
         "x-mint": {
           "content": "<Info>Learn more: [Bulk Payment Status Monitoring](/payments/bulk-payments/additional-information#bulk-payment-status-and-monitoring)</Info>"
+        }
+      }
+    },
+    "/bulk-payments/{bulkPaymentId}/details": {
+      "x-yapily-features": [
+        "EXISTING_BULK_PAYMENT_DETAILS"
+      ],
+      "get": {
+        "description": "Retrieve details of each payment submitted for a given bulkPaymentId. \n\nFeature: `EXISTING_BULK_PAYMENT_DETAILS`",
+        "operationId": "getBulkPaymentDetailsById",
+        "summary": "Get Bulk Payment Status Details",
+        "tags": [
+          "Payments"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "consent",
+            "description": "__Mandatory__. The `consent token` containing the user's authorisation to make the request.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "bulkPaymentId",
+            "description": "__Mandatory__. Bulk payment id returned when bulk payment request was submitted",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkPaymentDetailsResponse"
+                },
+                "examples": {
+                  "Successful 200 OK": {
+                    "$ref": "#/components/examples/bulk-payment-details-by-id-response"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Required parameter missing or invalid",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/400-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bulk payment not found for provided id",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/404-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred.",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -11571,44 +11681,65 @@
           }
         }
       },
-      "BulkPaymentDetailsByIdResponse": {
+      "BulkPaymentDetailsResponse": {
         "type": "object",
         "properties": {
           "meta": {
-            "type": "object",
-            "properties": {
-              "tracingId": {
-                "type": "string"
-              }
-            }
+            "$ref": "#/components/schemas/ResponseMeta"
           },
           "data": {
             "type": "object",
+            "title": "BulkPaymentDetailsData",
             "properties": {
               "id": {
-                "type": "string"
+                "type": "string",
+                "description": "__Mandatory__. Unique identifier for the bulk payment transaction."
               },
               "consentId": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
+                "type": "string",
+                "description": "__Mandatory__. Unique identifier of the consent related to bulk payment transaction."
               },
               "payments": {
                 "type": "array",
                 "items": {
-                  "type": "object",
-                  "properties": {
-                    "reference": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/BulkPaymentIndividualStatus"
                 }
               }
             }
+          }
+        }
+      },
+      "BulkPaymentIndividualStatus": {
+        "type": "object",
+        "required": [
+          "id",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "__Mandatory__. Unique identifier of the individual payment."
+          },
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatus"
+          },
+          "statusDetails": {
+            "type": "object",
+            "title": "BulkPaymentIndividualStatusDetails",
+            "description": "__Conditional__. Details regarding the status of an individual payment within a bulk request. This object is conditionally returned, typically when the status is not `COMPLETED`.",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "__Conditional__. The unique 4-digit error code identifying the specific issue. Refer to the official documentation for a comprehensive list of error codes"
+              },
+              "reason": {
+                "type": "string",
+                "description": "__Optional__. A human-readable description providing additional context or the specific error message encountered."
+              }
+            },
+            "required": [
+              "code"
+            ]
           }
         }
       },
@@ -12173,7 +12304,7 @@
           },
           "executionDateTime": {
             "type": "string",
-            "description": "__Optional__. Used to schedule the bulk payment to be executed at a future date if supported by the `Institution`.",
+            "description": "__Optional__. Used to schedule the bulk payment to be executed at a future date if supported by the `Institution`. This value establishes the requirement for the subsequent payment submission. The final payment request must occur on the same calendar day as this timestamp to pass validation.",
             "format": "date-time"
           }
         },
@@ -12206,7 +12337,7 @@
           },
           "executionDateTime": {
             "type": "string",
-            "description": "__Optional__. Used to schedule the bulk payment to be executed at a future date if supported by the `Institution`.",
+            "description": "__Optional__. Used to schedule the bulk payment to be executed at a future date if supported by the `Institution`. This value must fall on the same calendar day as the `executionDateTime` provided in the consent/authorisation phase. If the dates do not match, the bulk file payment will fail.",
             "format": "date-time"
           }
         },
@@ -12933,6 +13064,7 @@
           "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
           "INITIATE_BULK_PAYMENT",
           "CREATE_BULK_PAYMENT",
+          "EXISTING_BULK_PAYMENT_DETAILS",
           "TRANSFER",
           "OPEN_DATA_PERSONAL_CURRENT_ACCOUNTS",
           "OPEN_DATA_ATMS",
@@ -20059,11 +20191,22 @@
           "data": {
             "id": "e75d2c85-08e9-4a48-8d14-f789186f2a19",
             "consentId": "5daeb980-5ff5-49db-b7a0-e93dd9c93533",
-            "createdAt": "2024-07-25T18:14:52.672Z",
-            "Payments": [
+            "payments": [
               {
-                "reference": "Test 1",
-                "status": "Accepted Settlement In Process"
+                "id": "payment-w1",
+                "status": "COMPLETED"
+              },
+              {
+                "id": "payment-w2",
+                "status": "FAILED",
+                "statusDetails": {
+                  "code": "B001",
+                  "reason": "Payment has been rejected"
+                }
+              },
+              {
+                "id": "payment-w3",
+                "status": "COMPLETED"
               }
             ]
           }
