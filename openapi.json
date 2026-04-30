@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.3.4",
+    "version": "12.4.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -16740,8 +16740,14 @@
           "payer": {
             "$ref": "#/components/schemas/Payer"
           },
+          "ultimatePayer": {
+            "$ref": "#/components/schemas/VrpUltimatePayer"
+          },
           "payee": {
             "$ref": "#/components/schemas/Payee"
+          },
+          "ultimatePayee": {
+            "$ref": "#/components/schemas/VrpUltimatePayee"
           }
         }
       },
@@ -16896,7 +16902,7 @@
           "categoryPurposeCode",
           "merchantCustomerId",
           "isContractPresent",
-          "isBeneficiaryPrepopulated"
+          "isPayeePrepopulated"
         ],
         "properties": {
           "paymentContextCode": {
@@ -16916,12 +16922,63 @@
             "type": "boolean",
             "description": "Set to `true` when you have a contractual relationship with Yapily. This is overridden according to the value in your application configuration."
           },
-          "isBeneficiaryPrepopulated": {
+          "isPayeePrepopulated": {
             "type": "boolean",
             "description": "Set to `true` when the `payee` details were populated automatically (as opposed to being manually provided by the payee)."
           },
-          "beneficiaryAccountType": {
+          "payeeAccountType": {
             "type": "string"
+          }
+        }
+      },
+      "VrpUltimatePayee": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "accountIdentifications": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountIdentification"
+            }
+          },
+          "legalEntityIdentification": {
+            "type": "string"
+          },
+          "accountType": {
+            "$ref": "#/components/schemas/PayeeAccountType"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "merchantId": {
+            "type": "string"
+          },
+          "merchantCategoryCode": {
+            "type": "string"
+          }
+        }
+      },
+      "VrpUltimatePayer": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "accountIdentifications": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountIdentification"
+            }
+          },
+          "legalEntityIdentification": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
           }
         }
       },
