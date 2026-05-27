@@ -8,7 +8,7 @@
     "start-pis": "node index.js PIS"
   },
   "dependencies": {
-    "@openapitools/openapi-generator-cli": "^2.4.26",
+    "@openapitools/openapi-generator-cli": "^2.34.0",
     "@babel/cli": "^7.0.0",
     "superagent": "^5.3.0"
   },
