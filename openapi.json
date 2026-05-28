@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.4.0",
+    "version": "12.5.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -64,6 +64,10 @@
     {
       "description": "Hosted Consent Pages endpoints for data products",
       "name": "Hosted Consent Pages"
+    },
+    {
+      "description": "Hosted Variable Recurring Payment Pages endpoints for payments products",
+      "name": "Hosted VRP Pages"
     },
     {
       "description": "The constraints endpoints can be used to retrieve institution specific data requirements and rules that will apply when performing other operations.",
@@ -6735,69 +6739,341 @@
         ]
       }
     },
-    "/hosted/vrp/consent-requests": {
+    "/hosted/vrp-requests/commercial": {
       "post": {
-        "description": "Used to initiate a VRP consent / mandate request through Yapily Hosted Pages",
-        "operationId": "createHostedVRPConsentRequest",
-        "x-beta": true,
-        "parameters": [
-          {
-            "description": "__Mandatory__. The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
-            "in": "header",
-            "name": "sub-application",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
+        "operationId": "postHostedCommercialVrpRequest",
+        "summary": "Create Hosted Commercial VRP request",
+        "description": "Used to initiate a Commercial VRP request using Yapily Hosted Pages.",
+        "tags": [
+          "Hosted VRP Pages"
         ],
         "requestBody": {
+          "required": true,
           "content": {
-            "application/json;charset=UTF-8": {
+            "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateHostedVRPConsentRequest"
+                "type": "object",
+                "required": [
+                  "applicationId",
+                  "applicationUserId",
+                  "institutionIdentifiers",
+                  "controlParameters",
+                  "redirectUrl",
+                  "riskDetails"
+                ],
+                "properties": {
+                  "applicationId": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "userId": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "applicationUserId": {
+                    "type": "string"
+                  },
+                  "userSettings": {
+                    "type": "object",
+                    "properties": {
+                      "language": {
+                        "type": "string"
+                      },
+                      "location": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "institutionIdentifiers": {
+                    "type": "object",
+                    "properties": {
+                      "institutionId": {
+                        "type": "string"
+                      },
+                      "institutionCountryCode": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "controlParameters": {
+                    "description": "__Mandatory__. The parameters for the VRP mandate.",
+                    "type": "object",
+                    "required": [
+                      "maxAmountPerPayment",
+                      "periodicLimit"
+                    ],
+                    "properties": {
+                      "maxAmountPerPayment": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Amount"
+                          }
+                        ],
+                        "description": "__Mandatory__. The maximum amount that will be allowed per VRP payment."
+                      },
+                      "periodicLimit": {
+                        "type": "object",
+                        "required": [
+                          "frequency",
+                          "totalMaxAmount"
+                        ],
+                        "properties": {
+                          "frequency": {
+                            "type": "string",
+                            "description": "__Mandatory__. The frequency/period over which the limit is enforced.\nAllowed values are [`DAILY`, `WEEKLY`, `EVERY_TWO_WEEKS`, `MONTHLY`, `YEARLY`]."
+                          },
+                          "totalMaxAmount": {
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/Amount"
+                              }
+                            ],
+                            "description": "__Mandatory__. The maximum amount that will be allowed over the specified frequency/period.\n\nIf the `alignment` is set to `CALENDAR`, then the limit will be [pro-rated](/payments/vrps/mandate-details#pro-rata-calculation) in the first period to the remaining number of days."
+                          }
+                        }
+                      },
+                      "validFrom": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "__Optional__. The start date when the consent becomes valid."
+                      },
+                      "validTo": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "__Optional__. The end date when the consent expires and becomes invalid."
+                      }
+                    }
+                  },
+                  "initiationDetails": {
+                    "description": "__Optional__. The details of the participating parties.",
+                    "type": "object",
+                    "properties": {
+                      "reference": {
+                        "type": "string",
+                        "description": "The reference/description of the payments that will be carried out on this VRP consent."
+                      },
+                      "payer": {
+                        "$ref": "#/components/schemas/Payer"
+                      },
+                      "ultimatePayer": {
+                        "$ref": "#/components/schemas/VrpUltimatePayer"
+                      },
+                      "payee": {
+                        "$ref": "#/components/schemas/Payee"
+                      },
+                      "ultimatePayee": {
+                        "$ref": "#/components/schemas/VrpUltimatePayee"
+                      }
+                    }
+                  },
+                  "redirectUrl": {
+                    "description": "__Mandatory__. The URL to redirect to once the Hosted VRP flow finishes.",
+                    "type": "string"
+                  },
+                  "oneTimeToken": {
+                    "description": "__Optional__. Set to `true` in order for the redirect to return the consent token secured with a one-time token (instead of a plain consent token).",
+                    "type": "boolean"
+                  },
+                  "riskDetails": {
+                    "type": "object",
+                    "description": "__Mandatory__. The details required by the institutions to detect and prevent fraud.",
+                    "required": [
+                      "paymentContextCode",
+                      "paymentPurposeCode",
+                      "categoryPurposeCode",
+                      "merchantCustomerId",
+                      "isPayeePrepopulated"
+                    ],
+                    "properties": {
+                      "paymentContextCode": {
+                        "type": "string",
+                        "description": "__Mandatory__. One of `BillingGoodsAndServicesInAdvance`, `BillingGoodsAndServicesInArrears`, `EcommerceMerchantInitiatedPayment`, `FaceToFacePointOfSale`, `TransferToSelf`, or `TransferToThirdParty`."
+                      },
+                      "paymentPurposeCode": {
+                        "type": "string",
+                        "description": "__Mandatory__. One of `ExternalPurpose1Code` from [ISO 20022 external code sets](https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets)."
+                      },
+                      "categoryPurposeCode": {
+                        "type": "string",
+                        "description": "__Mandatory__. One of `ExternalCategoryPurpose1Code` from [ISO 20022 external code sets](https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets)."
+                      },
+                      "merchantCustomerId": {
+                        "type": "string",
+                        "description": "__Mandatory__. The merchant's identifier for the customer associated with the payment (ie. a custom Payer ID)."
+                      },
+                      "isPayeePrepopulated": {
+                        "type": "boolean",
+                        "description": "__Mandatory__. Set to `true` when the `payee` details were populated automatically (as opposed to being manually provided by the payee)."
+                      },
+                      "payeeAccountType": {
+                        "type": "string",
+                        "description": "__Optional__. One of `Personal`, `JointPersonal`, `PersonalSavingsAccount`, `Business`, `BusinessSavingsAccount`, `Charity`, `Collection`, `Corporate`, `Government`, `Ewallet`, `Investment`, `ISA`, `Premier`, `Wealth`, or `Pension `."
+                      }
+                    }
+                  }
+                }
               },
-              "examples": {
-                "Create Hosted VRP Consent Request": {
-                  "$ref": "#/components/examples/create-hosted-vrp-consent-request"
+              "example": {
+                "applicationId": "00000000-0000-0000-0000-000000000000",
+                "userId": "00000000-0000-0000-0000-000000000000",
+                "applicationUserId": "any",
+                "userSettings": {
+                  "language": "EN",
+                  "location": "GB"
+                },
+                "institutionIdentifiers": {
+                  "institutionId": "mock-sandbox",
+                  "institutionCountryCode": "GB"
+                },
+                "controlParameters": {
+                  "maxAmountPerPayment": {
+                    "amount": 1.23,
+                    "currency": "GBP"
+                  },
+                  "periodicLimit": {
+                    "frequency": "MONTHLY",
+                    "maxAmount": {
+                      "amount": 2.46,
+                      "currency": "GBP"
+                    }
+                  },
+                  "validFrom": "2026-01-01T00:00:00Z",
+                  "validTo": "2027-02-02T11:59:59Z"
+                },
+                "initiationDetails": {
+                  "reference": "Test",
+                  "payee": {
+                    "name": "Mr. Beneficiary",
+                    "accountIdentifications": [
+                      {
+                        "type": "SORT_CODE",
+                        "identification": "112233"
+                      },
+                      {
+                        "type": "ACCOUNT_NUMBER",
+                        "identification": "12345678"
+                      }
+                    ]
+                  }
+                },
+                "redirectUrl": "https://parameter-viewer.yapily.com/",
+                "oneTimeToken": true,
+                "riskDetails": {
+                  "paymentContextCode": "TransferToThirdParty",
+                  "paymentPurposeCode": "OTHR",
+                  "categoryPurposeCode": "OTHR",
+                  "merchantCustomerId": "00000000-0000-0000-0000-000000000000",
+                  "isPayeePrepopulated": false,
+                  "payeeAccountType": "Personal"
                 }
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "201": {
+            "description": "OK",
             "content": {
-              "application/json;charset=UTF-8": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfCreateHostedVRPConsentRequest"
+                  "type": "object",
+                  "required": [
+                    "meta",
+                    "data"
+                  ],
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "required": [
+                        "tracingId"
+                      ],
+                      "properties": {
+                        "tracingId": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "requestId",
+                        "hostedUrl",
+                        "institutionIdentifiers",
+                        "createdAt",
+                        "authorisationExpiresAt"
+                      ],
+                      "properties": {
+                        "requestId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "hostedUrl": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "institutionIdentifiers": {
+                          "type": "object",
+                          "properties": {
+                            "institutionId": {
+                              "type": "string"
+                            },
+                            "institutionCountryCode": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "userSettings": {
+                          "type": "object",
+                          "properties": {
+                            "language": {
+                              "type": "string"
+                            },
+                            "location": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "authorisationExpiresAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
                 },
                 "examples": {
-                  "Create Hosted VRP Consent Response": {
-                    "$ref": "#/components/examples/create-hosted-vrp-consent-response"
+                  "Create Hosted Commercial VRP Response": {
+                    "description": "Create Hosted VRP Response",
+                    "value": {
+                      "meta": {
+                        "tracingId": "12345678901234567890123456789012"
+                      },
+                      "data": {
+                        "requestId": "00000000-0000-0000-0000-000000000000",
+                        "institutionIdentifiers": {
+                          "institutionId": "mock-sandbox",
+                          "institutionCountryCode": "GB"
+                        },
+                        "userSettings": {
+                          "language": "EN",
+                          "location": "GB"
+                        },
+                        "hostedUrl": "https://...",
+                        "createdAt": "2026-01-01T00:00:00.000Z",
+                        "authorisationExpiresAt": "2027-02-02T11:59:59.000Z"
+                      }
+                    }
                   }
                 }
               }
-            },
-            "description": "Created"
-          },
-          "400": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "400 Error Response": {
-                    "$ref": "#/components/examples/400-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Bad Request"
+            }
           },
           "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json;charset=UTF-8": {
                 "examples": {
@@ -6809,10 +7085,10 @@
                   "$ref": "#/components/schemas/ApiResponseError"
                 }
               }
-            },
-            "description": "Unauthorized. Credentials are missing or invalid"
+            }
           },
           "500": {
+            "description": "Unexpected Error",
             "content": {
               "application/json;charset=UTF-8": {
                 "examples": {
@@ -6824,590 +7100,9 @@
                   "$ref": "#/components/schemas/ApiResponseError"
                 }
               }
-            },
-            "description": "Unexpected Error"
-          }
-        },
-        "summary": "Create VRP Consent",
-        "tags": [
-          "Hosted Payment Pages"
-        ]
-      },
-      "get": {
-        "description": "Used to get all VRP consent requests initiated through Yapily Hosted Pages",
-        "operationId": "getHostedVRPConsentRequests",
-        "x-beta": true,
-        "parameters": [
-          {
-            "description": "__Mandatory__. The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
-            "in": "header",
-            "name": "sub-application",
-            "required": true,
-            "schema": {
-              "type": "string"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfGetHostedVRPConsentsRequest"
-                },
-                "examples": {
-                  "Get Hosted VRP Consents Response": {
-                    "$ref": "#/components/examples/get-hosted-vrp-consents-response"
-                  }
-                }
-              }
-            },
-            "description": "Ok"
-          },
-          "400": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "400 Error Response": {
-                    "$ref": "#/components/examples/400-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Bad Request"
-          },
-          "401": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "401 Error Response": {
-                    "$ref": "#/components/examples/401-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Unauthorized. Credentials are missing or invalid"
-          },
-          "500": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "500 Error Response": {
-                    "$ref": "#/components/examples/500-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Unexpected Error"
-          }
-        },
-        "summary": "Get Hosted VRP Consent Requests",
-        "tags": [
-          "Hosted Payment Pages"
-        ]
-      }
-    },
-    "/hosted/vrp/consent-requests/{consentRequestId}": {
-      "get": {
-        "description": "Used to get details of a VRP Consent Request",
-        "operationId": "getHostedVrpConsentRequest",
-        "x-beta": true,
-        "parameters": [
-          {
-            "description": "The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
-            "in": "header",
-            "name": "sub-application",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Unique Identifier of the Consent Request",
-            "in": "path",
-            "name": "consentRequestId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfGetHostedVRPConsentRequest"
-                },
-                "examples": {
-                  "Get Hosted VRP Consent Response": {
-                    "$ref": "#/components/examples/get-hosted-vrp-consent-response"
-                  }
-                }
-              }
-            },
-            "description": "Ok"
-          },
-          "401": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "401 Error Response": {
-                    "$ref": "#/components/examples/401-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Unauthorized"
-          },
-          "404": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "404 Error Response": {
-                    "$ref": "#/components/examples/404-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Not Found"
-          },
-          "500": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "500 Error Response": {
-                    "$ref": "#/components/examples/500-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Unexpected Error"
-          }
-        },
-        "summary": "Get Hosted VRP Consent Request",
-        "tags": [
-          "Hosted Payment Pages"
-        ]
-      }
-    },
-    "/hosted/vrp/consent-requests/{consentRequestId}/revoke": {
-      "post": {
-        "description": "Revoke Hosted VRP Consent Request",
-        "operationId": "revokeHostedConsentRequest",
-        "x-beta": true,
-        "parameters": [
-          {
-            "description": "The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
-            "in": "header",
-            "name": "sub-application",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Unique Identifier of the Consent Request",
-            "in": "path",
-            "name": "consentRequestId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfRevokeHostedVRPConsentRequest"
-                },
-                "examples": {
-                  "Revoke Hosted VRP Consent Response": {
-                    "$ref": "#/components/examples/revoke-hosted-vrp-consent-response"
-                  }
-                }
-              }
-            },
-            "description": "Ok"
-          },
-          "401": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "401 Error Response": {
-                    "$ref": "#/components/examples/401-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Unauthorized"
-          },
-          "404": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "404 Error Response": {
-                    "$ref": "#/components/examples/404-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Not Found"
-          },
-          "500": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "500 Error Response": {
-                    "$ref": "#/components/examples/500-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Unexpected Error"
-          }
-        },
-        "summary": "Revoke Hosted VRP Consent Request",
-        "tags": [
-          "Hosted Payment Pages"
-        ]
-      }
-    },
-    "/hosted/vrp/consent-requests/{consentRequestId}/payments": {
-      "post": {
-        "description": "Creates a Variable Recurring Payment",
-        "operationId": "createHostedVrpPayment",
-        "x-beta": true,
-        "parameters": [
-          {
-            "description": "Unique Identifier of the Consent Request",
-            "in": "path",
-            "name": "consentRequestId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "description": "__Mandatory__. The `consent-token` containing the user's authorisation to make the request.",
-            "example": "{consentToken}",
-            "in": "header",
-            "name": "consent-token",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
-            "in": "header",
-            "name": "sub-application",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json;charset=UTF-8": {
-              "examples": {
-                "Hosted VRP Payment Request": {
-                  "$ref": "#/components/examples/create-hosted-vrp-payment-request"
-                }
-              },
-              "schema": {
-                "$ref": "#/components/schemas/CreateHostedVRPPaymentRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfCreateHostedVRPPaymentRequest"
-                },
-                "examples": {
-                  "Hosted VRP Payment Response": {
-                    "$ref": "#/components/examples/create-hosted-vrp-payment-response"
-                  }
-                }
-              }
-            },
-            "description": "Created"
-          },
-          "401": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "401 Error Response": {
-                    "$ref": "#/components/examples/401-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Error Response"
-          },
-          "default": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "400 Error Response": {
-                    "$ref": "#/components/examples/400-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Error Response"
-          }
-        },
-        "summary": "Create VRP Payment",
-        "tags": [
-          "Hosted Payment Pages"
-        ]
-      }
-    },
-    "/hosted/vrp/consent-requests/{consentRequestId}/payments/{paymentId}": {
-      "get": {
-        "description": "Used to get details of a VRP Payment",
-        "operationId": "getHostedVRPPaymentRequest",
-        "x-beta": true,
-        "parameters": [
-          {
-            "description": "Unique Identifier of the Consent Request",
-            "in": "path",
-            "name": "consentRequestId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "description": "Unique Identifier of the Consent Request",
-            "in": "path",
-            "name": "paymentId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
-            "in": "header",
-            "name": "sub-application",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfGetHostedVRPPaymentRequest"
-                },
-                "examples": {
-                  "UK Domestic VRP Payment Example Response": {
-                    "$ref": "#/components/examples/get-hosted-vrp-payment-response"
-                  }
-                }
-              }
-            },
-            "description": "Ok"
-          },
-          "401": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "401 Error Response": {
-                    "$ref": "#/components/examples/401-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Unauthorized"
-          },
-          "404": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "404 Error Response": {
-                    "$ref": "#/components/examples/404-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Not Found"
-          },
-          "500": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "500 Error Response": {
-                    "$ref": "#/components/examples/500-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Unexpected Error"
-          }
-        },
-        "summary": "Get VRP payment",
-        "tags": [
-          "Hosted Payment Pages"
-        ]
-      }
-    },
-    "/hosted/vrp/consent-requests/{consentRequestId}/funds-confirmation": {
-      "post": {
-        "description": "Confirms whether there are available funds on the Payer account to execute a Variable Recurring Payment after obtaining the user's authorisation. \n\nFeatures:\n\n- `VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION`",
-        "operationId": "createHostedVrpFundsConfirmation",
-        "x-beta": true,
-        "parameters": [
-          {
-            "description": "Unique Identifier of the Consent Request",
-            "in": "path",
-            "name": "consentRequestId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "description": "__Mandatory__. The `consent-token` containing the user's authorisation to make the request.",
-            "example": "{consentToken}",
-            "in": "header",
-            "name": "consent-token",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "The unique identifier of the sub application the request is being submitted on behalf of (e.g. an underlying merchant)",
-            "in": "header",
-            "name": "sub-application",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json;charset=UTF-8": {
-              "examples": {
-                "Hosted VRP Payment Request": {
-                  "$ref": "#/components/examples/create-hosted-vrp-fund-confirmation"
-                }
-              },
-              "schema": {
-                "$ref": "#/components/schemas/VrpFundsConfirmationRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseOfVrpFundsConfirmationResponse"
-                },
-                "examples": {
-                  "Hosted VRP Payment Response": {
-                    "$ref": "#/components/examples/create-hosted-vrp-fund-confirmation-response"
-                  }
-                }
-              }
-            },
-            "description": "Created"
-          },
-          "401": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "401 Error Response": {
-                    "$ref": "#/components/examples/401-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Error Response"
-          },
-          "default": {
-            "content": {
-              "application/json;charset=UTF-8": {
-                "examples": {
-                  "400 Error Response": {
-                    "$ref": "#/components/examples/400-error-response"
-                  }
-                },
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
-                }
-              }
-            },
-            "description": "Error Response"
-          }
-        },
-        "summary": "Check Funds Availability",
-        "tags": [
-          "Hosted Payment Pages"
-        ]
+        }
       }
     },
     "/institutions/constraints/payments": {
