@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.5.0",
+    "version": "12.6.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -4219,72 +4219,19 @@
           "content": "<Info>Learn more: [Variable Recurring Payments](/payments/vrps/introduction)</Info>"
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json;charset=UTF-8": {
               "examples": {
                 "UK Sweeping VRP Authorisation Request": {
-                  "description": "UK Sweeping VRP Authorisation Request",
-                  "value": {
-                    "userUuid": "5350782b-60f3-489e-aae5-a24d8d679a07",
-                    "institutionId": "modelo-sandbox",
-                    "callback": "https://display-parameters.com/",
-                    "controlParameters": {
-                      "psuAuthenticationMethods": [
-                        "SCA_NOT_REQUIRED"
-                      ],
-                      "maxAmountPerPayment": {
-                        "amount": 10,
-                        "currency": "GBP"
-                      },
-                      "periodicLimits": [
-                        {
-                          "totalMaxAmount": {
-                            "amount": 50,
-                            "currency": "GBP"
-                          },
-                          "frequency": "MONTHLY",
-                          "alignment": "CONSENT"
-                        }
-                      ]
-                    },
-                    "initiationDetails": {
-                      "reference": "My Sweeping VRP",
-                      "payer": {
-                        "name": "Jane Doe",
-                        "accountIdentifications": [
-                          {
-                            "type": "ACCOUNT_NUMBER",
-                            "identification": "87654321"
-                          },
-                          {
-                            "type": "SORT_CODE",
-                            "identification": "332211"
-                          }
-                        ]
-                      },
-                      "payee": {
-                        "name": "John Doe",
-                        "accountIdentifications": [
-                          {
-                            "type": "ACCOUNT_NUMBER",
-                            "identification": "12345678"
-                          },
-                          {
-                            "type": "SORT_CODE",
-                            "identification": "112233"
-                          }
-                        ]
-                      }
-                    }
-                  }
+                  "$ref": "#/components/examples/vrp-sweeping-authorisation-request"
                 }
               },
               "schema": {
                 "$ref": "#/components/schemas/VrpSweepingAuthorisationRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "201": {
@@ -4293,79 +4240,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "UK Domestic Sweeping VRP Authorisation Response": {
-                    "description": "UK Domestic Sweeping VRP Authorisation Response",
-                    "value": {
-                      "meta": {
-                        "tracingId": "96169af01d394ad39658f17d53b49a5d"
-                      },
-                      "data": {
-                        "id": "a2a9ec77-a479-4996-9896-4568e1968e7a",
-                        "userUuid": "5350782b-60f3-489e-aae5-a24d8d679a07",
-                        "applicationUserId": "user000",
-                        "institutionId": "modelo-sandbox",
-                        "status": "AWAITING_AUTHORIZATION",
-                        "createdAt": "2026-01-01T10:25:13Z",
-                        "featureScope": [
-                          "EXISTING_PAYMENTS_DETAILS",
-                          "EXISTING_PAYMENT_INITIATION_DETAILS",
-                          "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
-                          "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION",
-                          "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING"
-                        ],
-                        "state": "80052c03007f41d589f64377eef4d620",
-                        "institutionConsentId": "sdp-6-25ff5bd8-d01c-422d-aa9e-8e68808bc899",
-                        "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=80052c03007f41d589f64377eef4d620&nonce=80052c03007f41d589f64377eef4d620&scope=openid+payments&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgcGF5bWVudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiODAwNTJjMDMwMDdmNDFkNTg5ZjY0Mzc3ZWVmNGQ2MjAiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoic2RwLTYtMjVmZjViZDgtZDAxYy00MjJkLWFhOWUtOGU2ODgwOGJjODk5IiwiZXNzZW50aWFsIjp0cnVlfX0sInVzZXJpbmZvIjp7Im9wZW5iYW5raW5nX2ludGVudF9pZCI6eyJ2YWx1ZSI6InNkcC02LTI1ZmY1YmQ4LWQwMWMtNDIyZC1hYTllLThlNjg4MDhiYzg5OSIsImVzc2VudGlhbCI6dHJ1ZX19fSwibm9uY2UiOiI4MDA1MmMwMzAwN2Y0MWQ1ODlmNjQzNzdlZWY0ZDYyMCIsImp0aSI6ImUxYjZmMWM4LTQ1ZTktNGM0NS05NGE0LWExMTY1Nzk2NjZiNiIsImlhdCI6MTYyMzI0NjUwNSwiZXhwIjoxNjIzMjQ4MzA1fQ.C5YkClHiDOWl1CKnmEY0gM_JizUuELp2-k7sDjsWV5T-mgTWviO-jM7iVfCf4MsU6batLSBmeUFLco1b3S8PTQkAzwM3laHIgbfDAb_6bYkSBTbPriyzKcC8xAwhX3VdvWtb9qqdrn9zXSmIIITBhJdMzk1cgIjyETD7WNPln839eGP1-w8iB8yDOJOkYGRHJ850mQY-lk61GegmKs5kaxtYPIhrG2gygIi3JsN-uQJ6YOl2-5pylTEcJbuwhFiyeePdqHZdabqW2BSA6lDKQbMV_Zow_zhSWoFFv6RZdXCQpt4TBRj1W7tzZQKin-MC-TpzaF1q07RpSy0NtlN85w",
-                        "qrCodeUrl": "https://images.yapily.com/image/2bbb79b8-2c4a-4c8e-9132-0636879437da/1623246505?size=0",
-                        "controlParameters": {
-                          "psuAuthenticationMethods": [
-                            "SCA_NOT_REQUIRED"
-                          ],
-                          "maxAmountPerPayment": {
-                            "amount": 10,
-                            "currency": "GBP"
-                          },
-                          "periodicLimits": [
-                            {
-                              "totalMaxAmount": {
-                                "amount": 50,
-                                "currency": "GBP"
-                              },
-                              "frequency": "MONTHLY",
-                              "alignment": "CONSENT"
-                            }
-                          ]
-                        },
-                        "initiationDetails": {
-                          "reference": "My Sweeping VRP",
-                          "payer": {
-                            "name": "John Doe",
-                            "accountIdentifications": [
-                              {
-                                "type": "ACCOUNT_NUMBER",
-                                "identification": "87654321"
-                              },
-                              {
-                                "type": "SORT_CODE",
-                                "identification": "332211"
-                              }
-                            ]
-                          },
-                          "payee": {
-                            "name": "John Doe",
-                            "accountIdentifications": [
-                              {
-                                "type": "ACCOUNT_NUMBER",
-                                "identification": "12345678"
-                              },
-                              {
-                                "type": "SORT_CODE",
-                                "identification": "112233"
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
+                    "$ref": "#/components/examples/vrp-sweeping-consent-response"
                   }
                 },
                 "schema": {
@@ -4466,92 +4341,7 @@
               "application/json;charset=UTF-8": {
                 "examples": {
                   "UK Sweeping VRP Consent Details Response": {
-                    "description": "Get Sweeping Variable Recurring Payments Consent Example Response",
-                    "value": {
-                      "meta": {
-                        "tracingId": "679e7bb6cd45416a9a9a8d004c5315da"
-                      },
-                      "data": {
-                        "id": "56a42244-414a-4b52-8c4f-4ad2a50e82fe",
-                        "userUuid": "ca412fdf-5a30-43a2-88b7-5964a24a8e55",
-                        "applicationUserId": "string",
-                        "institutionId": "modelo-sandbox",
-                        "status": "AUTHORIZED",
-                        "createdAt": "2021-06-08T10:59:35.138Z",
-                        "featureScope": [
-                          "EXISTING_PAYMENTS_DETAILS",
-                          "EXISTING_PAYMENT_INITIATION_DETAILS",
-                          "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
-                          "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION",
-                          "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING"
-                        ],
-                        "consentToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6Im1vZGVsby1zYW5kYm94IiwiQ09OU0VOVCI6IjU2YTQyMjQ0LTQxNGEtNGI1Mi04YzRmLTRhZDJhNTBlODJmZSIsIkFQUExJQ0FUSU9OX1VTRVJfSUQiOiJtb2ZlLTIiLCJVU0VSIjoiY2E0MTJmZGYtNWEzMC00M2EyLTg4YjctNTk2NGEyNGE4ZTU1In0.gorwpnUjSr5dzQJLR32M2geWOj7yK9xMsZmq27ssY9xP_xGmWfUL_aqVHYyQ4r5KWw6Xb6RjvO839st8chJLtg",
-                        "state": "a09f8ff9c1284444aa635267e05f76e1",
-                        "authorizedAt": "2021-06-08T10:59:53.288Z",
-                        "institutionConsentId": "aac-605d48f2-2a0e-4594-81a9-996524fa3b2a",
-                        "controlParameters": {
-                          "psuAuthenticationMethods": [
-                            "SCA_NOT_REQUIRED"
-                          ],
-                          "periodicLimits": [
-                            {
-                              "totalMaxAmount": {
-                                "amount": 100,
-                                "currency": "GBP"
-                              },
-                              "frequency": "DAILY",
-                              "alignment": "CONSENT"
-                            }
-                          ],
-                          "maxAmountPerPayment": {
-                            "amount": 10,
-                            "currency": "GBP"
-                          }
-                        },
-                        "payer": {
-                          "name": "John Doe",
-                          "accountIdentifications": [
-                            {
-                              "type": "ACCOUNT_NUMBER",
-                              "identification": "87654321"
-                            },
-                            {
-                              "type": "SORT_CODE",
-                              "identification": "654321"
-                            }
-                          ]
-                        },
-                        "initiationDetails": {
-                          "reference": "Own Account Sweeping",
-                          "payer": {
-                            "name": "John Doe",
-                            "accountIdentifications": [
-                              {
-                                "type": "ACCOUNT_NUMBER",
-                                "identification": "87654321"
-                              },
-                              {
-                                "type": "SORT_CODE",
-                                "identification": "654321"
-                              }
-                            ]
-                          },
-                          "payee": {
-                            "name": "John Doe",
-                            "accountIdentifications": [
-                              {
-                                "type": "ACCOUNT_NUMBER",
-                                "identification": "12345678"
-                              },
-                              {
-                                "type": "SORT_CODE",
-                                "identification": "123456"
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
+                    "$ref": "#/components/examples/vrp-sweeping-consent-response"
                   }
                 },
                 "schema": {
@@ -4632,6 +4422,110 @@
         }
       }
     },
+    "/variable-recurring-payments/commercial/consents/{consentId}": {
+      "get": {
+        "description": "Get Commercial [VRP](/payments/vrps/introduction) consent details from the Consent ID.\n\nFeature: `CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL`\n\nNote that Commercial VRP authorisation/initiation is currently only available through a Hosted VRP flow (specifically, `POST /hosted/vrp-requests`).",
+        "operationId": "getCommercialVrpConsentById",
+        "parameters": [
+          {
+            "description": "The Consent ID to retrieve.",
+            "in": "path",
+            "name": "consentId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "UK Commercial VRP Consent Details Response": {
+                    "$ref": "#/components/examples/vrp-commercial-consent-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfVrpCommercialAuthorisationResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "description": "Error Response",
+                    "value": {
+                      "error": {
+                        "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+                        "code": 401,
+                        "status": "UNAUTHORIZED",
+                        "supportUrl": "https://support.yapily.com/",
+                        "source": "YAPILY",
+                        "issues": [
+                          {
+                            "type": "CREDENTIALS",
+                            "code": "CREDENTIALS_MISSING",
+                            "message": "Authentication header not present"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Error Response"
+          },
+          "default": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "Error Response": {
+                    "description": "Error Response",
+                    "value": {
+                      "error": {
+                        "tracingId": "0c2d0973bdd24224a65e5d0f7d1b6154",
+                        "code": 400,
+                        "status": "BAD_REQUEST",
+                        "supportUrl": "https://support.yapily.com/",
+                        "source": "YAPILY",
+                        "issues": [
+                          {
+                            "type": "BAD_REQUEST",
+                            "code": "BAD_REQUEST",
+                            "message": "The server could not understand the request due to invalid syntax"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Error Response"
+          }
+        },
+        "summary": "Get Commercial VRP Consent Details",
+        "tags": [
+          "Variable Recurring Payments"
+        ],
+        "x-mint": {
+          "content": "<Info>Learn more: [VRP Consent Details](/payments/vrps/get-started#get-consent-details)</Info>"
+        }
+      }
+    },
     "/variable-recurring-payments/funds-confirmation": {
       "x-yapily-features": [
         "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION"
@@ -4658,7 +4552,7 @@
                 "UK VRP Funds Confirmation Request": {
                   "description": "UK VRP Funds Confirmation Request",
                   "value": {
-                    "reference": "Own Account Sweeping",
+                    "reference": "Own Account Commercial",
                     "paymentAmount": {
                       "amount": 10,
                       "currency": "GBP"
@@ -4691,7 +4585,7 @@
                           "fundsAvailable": true,
                           "fundsAvailableAt": "2021-06-08T10:59:35.138Z"
                         },
-                        "reference": "Own Account Sweeping",
+                        "reference": "Own Account Commercial",
                         "paymentAmount": {
                           "amount": 10,
                           "currency": "GBP"
@@ -4780,7 +4674,8 @@
     },
     "/variable-recurring-payments/payments": {
       "x-yapily-features": [
-        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING"
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL"
       ],
       "post": {
         "description": "Submit payment on the [VRP](/payments/vrps/introduction) consent.\n\nRequired feature: `CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING` or `CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL`",
@@ -23237,6 +23132,285 @@
                 "code": "ACSC",
                 "name": "AcceptedSettlementCompleted"
               }
+            }
+          }
+        }
+      },
+      "vrp-sweeping-authorisation-request": {
+        "value": {
+          "userUuid": "00000000-0000-0000-0000-000000000000",
+          "institutionId": "mock-sandbox",
+          "callback": "https://parameter-viewer.yapily.com/",
+          "controlParameters": {
+            "psuAuthenticationMethods": [
+              "SCA_NOT_REQUIRED"
+            ],
+            "maxAmountPerPayment": {
+              "amount": 10.0,
+              "currency": "GBP"
+            },
+            "periodicLimits": [
+              {
+                "frequency": "MONTHLY",
+                "alignment": "CONSENT",
+                "totalMaxAmount": {
+                  "amount": 50.0,
+                  "currency": "GBP"
+                }
+              }
+            ]
+          },
+          "initiationDetails": {
+            "reference": "My Sweeping VRP",
+            "payee": {
+              "name": "Payee",
+              "accountIdentifications": [
+                {
+                  "type": "ACCOUNT_NUMBER",
+                  "identification": "12345678"
+                },
+                {
+                  "type": "SORT_CODE",
+                  "identification": "112233"
+                }
+              ]
+            },
+            "payer": {
+              "name": "Payer",
+              "accountIdentifications": [
+                {
+                  "type": "ACCOUNT_NUMBER",
+                  "identification": "87654321"
+                },
+                {
+                  "type": "SORT_CODE",
+                  "identification": "332211"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "vrp-sweeping-consent-response": {
+        "value": {
+          "meta": {
+            "tracingId": "12345678901234567890123456789012"
+          },
+          "data": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "userUuid": "00000000-0000-0000-0000-000000000000",
+            "institutionId": "mock-sandbox",
+            "status": "AUTHORIZED",
+            "createdAt": "2026-01-01T00:00:00Z",
+            "authorizedAt": "2026-01-01T00:00:00.000Z",
+            "featureScope": [
+              "EXISTING_PAYMENTS_DETAILS",
+              "EXISTING_PAYMENT_INITIATION_DETAILS",
+              "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+              "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION",
+              "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING"
+            ],
+            "consentToken": "...",
+            "state": "...",
+            "institutionConsentId": "...",
+            "controlParameters": {
+              "psuAuthenticationMethods": [
+                "SCA_NOT_REQUIRED"
+              ],
+              "maxAmountPerPayment": {
+                "amount": 10.0,
+                "currency": "GBP"
+              },
+              "periodicLimits": [
+                {
+                  "frequency": "MONTHLY",
+                  "alignment": "CONSENT",
+                  "totalMaxAmount": {
+                    "amount": 50.0,
+                    "currency": "GBP"
+                  }
+                }
+              ]
+            },
+            "initiationDetails": {
+              "reference": "Own Account Sweeping",
+              "payee": {
+                "name": "Payee",
+                "accountIdentifications": [
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "12345678"
+                  },
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "112233"
+                  }
+                ]
+              },
+              "payer": {
+                "name": "Payer",
+                "accountIdentifications": [
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "87654321"
+                  },
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "332211"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "vrp-commercial-authorisation-request": {
+        "value": {
+          "userUuid": "00000000-0000-0000-0000-000000000000",
+          "institutionId": "mock-sandbox",
+          "callback": "https://parameter-viewer.yapily.com/",
+          "controlParameters": {
+            "psuAuthenticationMethods": [
+              "SCA_NOT_REQUIRED"
+            ],
+            "maxAmountPerPayment": {
+              "amount": 10.0,
+              "currency": "GBP"
+            },
+            "periodicLimits": [
+              {
+                "frequency": "MONTHLY",
+                "alignment": "CONSENT",
+                "totalMaxAmount": {
+                  "amount": 50.0,
+                  "currency": "GBP"
+                }
+              }
+            ],
+            "validFrom": "2026-01-01T00:00:00.000Z",
+            "validTo": "2027-02-02T11:59:59.000Z"
+          },
+          "initiationDetails": {
+            "reference": "My Commercial VRP",
+            "payee": {
+              "name": "Payee",
+              "accountIdentifications": [
+                {
+                  "type": "ACCOUNT_NUMBER",
+                  "identification": "12345678"
+                },
+                {
+                  "type": "SORT_CODE",
+                  "identification": "112233"
+                }
+              ],
+              "merchantCategoryCode": "0000"
+            },
+            "payer": {
+              "name": "Payer",
+              "accountIdentifications": [
+                {
+                  "type": "ACCOUNT_NUMBER",
+                  "identification": "87654321"
+                },
+                {
+                  "type": "SORT_CODE",
+                  "identification": "332211"
+                }
+              ]
+            }
+          },
+          "riskDetails": {
+            "paymentContextCode": "TransferToThirdParty",
+            "paymentPurposeCode": "OTHR",
+            "categoryPurposeCode": "OTHR",
+            "merchantCustomerId": "00000000-0000-0000-0000-000000000000",
+            "isContractPresent": false,
+            "isPayeePrepopulated": false,
+            "payeeAccountType": "Personal"
+          }
+        }
+      },
+      "vrp-commercial-consent-response": {
+        "value": {
+          "meta": {
+            "tracingId": "12345678901234567890123456789012"
+          },
+          "data": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "userUuid": "00000000-0000-0000-0000-000000000000",
+            "institutionId": "mock-sandbox",
+            "status": "AUTHORIZED",
+            "createdAt": "2026-01-01T00:00:00Z",
+            "authorizedAt": "2026-01-01T00:00:00.000Z",
+            "featureScope": [
+              "EXISTING_PAYMENTS_DETAILS",
+              "EXISTING_PAYMENT_INITIATION_DETAILS",
+              "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL",
+              "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION",
+              "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_COMMERCIAL"
+            ],
+            "consentToken": "...",
+            "state": "...",
+            "institutionConsentId": "...",
+            "controlParameters": {
+              "psuAuthenticationMethods": [
+                "SCA_NOT_REQUIRED"
+              ],
+              "maxAmountPerPayment": {
+                "amount": 10.0,
+                "currency": "GBP"
+              },
+              "periodicLimits": [
+                {
+                  "frequency": "MONTHLY",
+                  "alignment": "CONSENT",
+                  "totalMaxAmount": {
+                    "amount": 50.0,
+                    "currency": "GBP"
+                  }
+                }
+              ],
+              "validFrom": "2026-01-01T00:00:00.000Z",
+              "validTo": "2027-02-02T11:59:59.000Z"
+            },
+            "initiationDetails": {
+              "reference": "Own Account Commercial",
+              "payee": {
+                "name": "Payee",
+                "accountIdentifications": [
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "12345678"
+                  },
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "112233"
+                  }
+                ]
+              },
+              "payer": {
+                "name": "Payer",
+                "accountIdentifications": [
+                  {
+                    "type": "ACCOUNT_NUMBER",
+                    "identification": "87654321"
+                  },
+                  {
+                    "type": "SORT_CODE",
+                    "identification": "332211"
+                  }
+                ]
+              }
+            },
+            "riskDetails": {
+              "paymentContextCode": "TransferToThirdParty",
+              "paymentPurposeCode": "OTHR",
+              "categoryPurposeCode": "OTHR",
+              "merchantCustomerId": "00000000-0000-0000-0000-000000000000",
+              "isContractPresent": false,
+              "isPayeePrepopulated": false,
+              "payeeAccountType": "Personal"
             }
           }
         }
