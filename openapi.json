@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.6.0",
+    "version": "12.7.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -6691,75 +6691,10 @@
                     }
                   },
                   "controlParameters": {
-                    "description": "__Mandatory__. The parameters for the VRP mandate.",
-                    "type": "object",
-                    "required": [
-                      "maxAmountPerPayment",
-                      "periodicLimit"
-                    ],
-                    "properties": {
-                      "maxAmountPerPayment": {
-                        "allOf": [
-                          {
-                            "$ref": "#/components/schemas/Amount"
-                          }
-                        ],
-                        "description": "__Mandatory__. The maximum amount that will be allowed per VRP payment."
-                      },
-                      "periodicLimit": {
-                        "type": "object",
-                        "required": [
-                          "frequency",
-                          "totalMaxAmount"
-                        ],
-                        "properties": {
-                          "frequency": {
-                            "type": "string",
-                            "description": "__Mandatory__. The frequency/period over which the limit is enforced.\nAllowed values are [`DAILY`, `WEEKLY`, `EVERY_TWO_WEEKS`, `MONTHLY`, `YEARLY`]."
-                          },
-                          "totalMaxAmount": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/Amount"
-                              }
-                            ],
-                            "description": "__Mandatory__. The maximum amount that will be allowed over the specified frequency/period.\n\nIf the `alignment` is set to `CALENDAR`, then the limit will be [pro-rated](/payments/vrps/mandate-details#pro-rata-calculation) in the first period to the remaining number of days."
-                          }
-                        }
-                      },
-                      "validFrom": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "__Optional__. The start date when the consent becomes valid."
-                      },
-                      "validTo": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "__Optional__. The end date when the consent expires and becomes invalid."
-                      }
-                    }
+                    "$ref": "#/components/schemas/HostedVrpControlParameters"
                   },
                   "initiationDetails": {
-                    "description": "__Optional__. The details of the participating parties.",
-                    "type": "object",
-                    "properties": {
-                      "reference": {
-                        "type": "string",
-                        "description": "The reference/description of the payments that will be carried out on this VRP consent."
-                      },
-                      "payer": {
-                        "$ref": "#/components/schemas/Payer"
-                      },
-                      "ultimatePayer": {
-                        "$ref": "#/components/schemas/VrpUltimatePayer"
-                      },
-                      "payee": {
-                        "$ref": "#/components/schemas/Payee"
-                      },
-                      "ultimatePayee": {
-                        "$ref": "#/components/schemas/VrpUltimatePayee"
-                      }
-                    }
+                    "$ref": "#/components/schemas/HostedVrpInitiationDetails"
                   },
                   "redirectUrl": {
                     "description": "__Mandatory__. The URL to redirect to once the Hosted VRP flow finishes.",
@@ -6770,41 +6705,7 @@
                     "type": "boolean"
                   },
                   "riskDetails": {
-                    "type": "object",
-                    "description": "__Mandatory__. The details required by the institutions to detect and prevent fraud.",
-                    "required": [
-                      "paymentContextCode",
-                      "paymentPurposeCode",
-                      "categoryPurposeCode",
-                      "merchantCustomerId",
-                      "isPayeePrepopulated"
-                    ],
-                    "properties": {
-                      "paymentContextCode": {
-                        "type": "string",
-                        "description": "__Mandatory__. One of `BillingGoodsAndServicesInAdvance`, `BillingGoodsAndServicesInArrears`, `EcommerceMerchantInitiatedPayment`, `FaceToFacePointOfSale`, `TransferToSelf`, or `TransferToThirdParty`."
-                      },
-                      "paymentPurposeCode": {
-                        "type": "string",
-                        "description": "__Mandatory__. One of `ExternalPurpose1Code` from [ISO 20022 external code sets](https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets)."
-                      },
-                      "categoryPurposeCode": {
-                        "type": "string",
-                        "description": "__Mandatory__. One of `ExternalCategoryPurpose1Code` from [ISO 20022 external code sets](https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets)."
-                      },
-                      "merchantCustomerId": {
-                        "type": "string",
-                        "description": "__Mandatory__. The merchant's identifier for the customer associated with the payment (ie. a custom Payer ID)."
-                      },
-                      "isPayeePrepopulated": {
-                        "type": "boolean",
-                        "description": "__Mandatory__. Set to `true` when the `payee` details were populated automatically (as opposed to being manually provided by the payee)."
-                      },
-                      "payeeAccountType": {
-                        "type": "string",
-                        "description": "__Optional__. One of `Personal`, `JointPersonal`, `PersonalSavingsAccount`, `Business`, `BusinessSavingsAccount`, `Charity`, `Collection`, `Corporate`, `Government`, `Ewallet`, `Investment`, `ISA`, `Premier`, `Wealth`, or `Pension `."
-                      }
-                    }
+                    "$ref": "#/components/schemas/HostedVrpCommercialRiskDetails"
                   }
                 }
               },
@@ -16843,6 +16744,114 @@
           }
         }
       },
+      "HostedVrpInitiationDetails": {
+        "type": "object",
+        "description": "__Optional__. The details of the participating parties.",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "description": "The reference/description of the payments that will be carried out on this VRP consent."
+          },
+          "payer": {
+            "$ref": "#/components/schemas/Payer"
+          },
+          "ultimatePayer": {
+            "$ref": "#/components/schemas/VrpUltimatePayer"
+          },
+          "payee": {
+            "$ref": "#/components/schemas/Payee"
+          },
+          "ultimatePayee": {
+            "$ref": "#/components/schemas/VrpUltimatePayee"
+          }
+        }
+      },
+      "HostedVrpControlParameters": {
+        "type": "object",
+        "description": "__Mandatory__. The parameters for the VRP mandate.",
+        "required": [
+          "maxAmountPerPayment",
+          "periodicLimit"
+        ],
+        "properties": {
+          "maxAmountPerPayment": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Amount"
+              }
+            ],
+            "description": "__Mandatory__. The maximum amount that will be allowed per VRP payment."
+          },
+          "periodicLimit": {
+            "type": "object",
+            "required": [
+              "frequency",
+              "totalMaxAmount"
+            ],
+            "properties": {
+              "frequency": {
+                "type": "string",
+                "description": "__Mandatory__. The frequency/period over which the limit is enforced.\nAllowed values are [`DAILY`, `WEEKLY`, `EVERY_TWO_WEEKS`, `MONTHLY`, `YEARLY`]."
+              },
+              "totalMaxAmount": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Amount"
+                  }
+                ],
+                "description": "__Mandatory__. The maximum amount that will be allowed over the specified frequency/period.\n\nIf the `alignment` is set to `CALENDAR`, then the limit will be [pro-rated](/payments/vrps/mandate-details#pro-rata-calculation) in the first period to the remaining number of days."
+              }
+            }
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time",
+            "description": "__Optional__. The start date when the consent becomes valid."
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date-time",
+            "description": "__Optional__. The end date when the consent expires and becomes invalid."
+          }
+        }
+      },
+      "HostedVrpCommercialRiskDetails": {
+        "type": "object",
+        "description": "__Mandatory__. The details required by the institutions to detect and prevent fraud.",
+        "required": [
+          "paymentContextCode",
+          "paymentPurposeCode",
+          "categoryPurposeCode",
+          "merchantCustomerId",
+          "isPayeePrepopulated"
+        ],
+        "properties": {
+          "paymentContextCode": {
+            "type": "string",
+            "description": "__Mandatory__. One of `BillingGoodsAndServicesInAdvance`, `BillingGoodsAndServicesInArrears`, `EcommerceMerchantInitiatedPayment`, `FaceToFacePointOfSale`, `TransferToSelf`, or `TransferToThirdParty`."
+          },
+          "paymentPurposeCode": {
+            "type": "string",
+            "description": "__Mandatory__. One of `ExternalPurpose1Code` from [ISO 20022 external code sets](https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets)."
+          },
+          "categoryPurposeCode": {
+            "type": "string",
+            "description": "__Mandatory__. One of `ExternalCategoryPurpose1Code` from [ISO 20022 external code sets](https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets)."
+          },
+          "merchantCustomerId": {
+            "type": "string",
+            "description": "__Mandatory__. The merchant's identifier for the customer associated with the payment (ie. a custom Payer ID)."
+          },
+          "isPayeePrepopulated": {
+            "type": "boolean",
+            "description": "__Mandatory__. Set to `true` when the `payee` details were populated automatically (as opposed to being manually provided by the payee)."
+          },
+          "payeeAccountType": {
+            "type": "string",
+            "description": "__Optional__. One of `Personal`, `JointPersonal`, `PersonalSavingsAccount`, `Business`, `BusinessSavingsAccount`, `Charity`, `Collection`, `Corporate`, `Government`, `Ewallet`, `Investment`, `ISA`, `Premier`, `Wealth`, or `Pension `."
+          }
+        }
+      },
       "ApiListResponseOfRealTimeTransaction": {
         "type": "object",
         "properties": {
@@ -17716,566 +17725,6 @@
           },
           "data": {
             "$ref": "#/components/schemas/HostedPaymentRequestResponse"
-          }
-        }
-      },
-      "CreateHostedVRPConsentRequest": {
-        "required": [
-          "redirectUrl",
-          "institutionIdentifiers",
-          "vrpSetup"
-        ],
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "__Conditional__. Yapily Identifier for the `User` returned by the create user step POST /users. Clients must either provide userId or applicationUserId."
-          },
-          "applicationUserId": {
-            "type": "string",
-            "description": "__Conditional__. Client's own `User` reference. If the client wants to work with their own unique references for individual PSUs then they can use the applicationUserId property to provide that value. Where Yapily does not already have a Yapily userId that matches the supplied applicationUserId, then a new Yapily userId is created automatically and linked to the applicationUserId value. Clients must either provide userId or applicationUserId."
-          },
-          "institutionIdentifiers": {
-            "$ref": "#/components/schemas/InstitutionIdentifiers"
-          },
-          "userSettings": {
-            "$ref": "#/components/schemas/UserSettings"
-          },
-          "redirectUrl": {
-            "type": "string",
-            "description": "URL of client's server to redirect the PSU after completion of the consent authorisation.",
-            "example": "https://tpp-application.com"
-          },
-          "oneTimeToken": {
-            "type": "boolean",
-            "description": "Used to receive a oneTimeToken rather than a consentToken at the redirectUrl for additional security. This can only be used when the redirectUrl is set.",
-            "example": "false"
-          },
-          "vrpSetup": {
-            "$ref": "#/components/schemas/VRPSetupRequest"
-          }
-        }
-      },
-      "ApiResponseOfCreateHostedVRPConsentRequest": {
-        "type": "object",
-        "properties": {
-          "meta": {
-            "$ref": "#/components/schemas/ResponseMeta"
-          },
-          "data": {
-            "$ref": "#/components/schemas/HostedVRPConsentRequestResponse"
-          }
-        }
-      },
-      "ApiResponseOfGetHostedVRPConsentRequest": {
-        "type": "object",
-        "properties": {
-          "meta": {
-            "$ref": "#/components/schemas/ResponseMeta"
-          },
-          "data": {
-            "$ref": "#/components/schemas/HostedVRPConsentDetails"
-          }
-        }
-      },
-      "ApiResponseOfGetHostedVRPConsentsRequest": {
-        "type": "object",
-        "properties": {
-          "meta": {
-            "$ref": "#/components/schemas/ResponseMeta"
-          },
-          "data": {
-            "$ref": "#/components/schemas/GetHostedVRPConsentsResponse"
-          }
-        }
-      },
-      "ApiResponseOfRevokeHostedVRPConsentRequest": {
-        "type": "object",
-        "properties": {
-          "meta": {
-            "$ref": "#/components/schemas/ResponseMeta"
-          },
-          "data": {
-            "$ref": "#/components/schemas/HostedVRPConsentDetails"
-          }
-        }
-      },
-      "HostedVRPConsentDetails": {
-        "required": [
-          "id",
-          "consentStatus",
-          "applicationId",
-          "vrpSetup"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "The unique ID of the consent request."
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Represents the Unique Identifier for the `User` assigned by Yapily."
-          },
-          "applicationUserId": {
-            "type": "string",
-            "description": "Represents the User-friendly reference to the `User`."
-          },
-          "applicationId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Represents the Unique Identifier of the `Application` the user is associated with."
-          },
-          "institutionIdentifiers": {
-            "$ref": "#/components/schemas/InstitutionIdentifiers"
-          },
-          "userSettings": {
-            "$ref": "#/components/schemas/UserSettings"
-          },
-          "redirectUrl": {
-            "type": "string",
-            "description": "URL of client's server to redirect the PSU after completion of the consent authorisation.",
-            "example": "https://tpp-application.com"
-          },
-          "vrpSetup": {
-            "$ref": "#/components/schemas/VRPSetup"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "authorisationExpiresAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Represents the date and time at which the auth Token will expire."
-          },
-          "consentToken": {
-            "type": "string",
-            "description": "Represents the authorisation to make VRP payments"
-          },
-          "consentStatus": {
-            "type": "string",
-            "description": "Current status of the authorisation. Can be one of [AWAITING_AUTHORIZATION, AUTHORIZED, REJECTED, REVOKED, FAILED, EXPIRED]"
-          },
-          "phases": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HostedVRPPhase"
-            }
-          }
-        }
-      },
-      "CreateHostedVRPPaymentRequest": {
-        "required": [
-          "paymentIdempotencyId",
-          "amount"
-        ],
-        "type": "object",
-        "properties": {
-          "paymentIdempotencyId": {
-            "type": "string",
-            "description": "__Mandatory__. A unique identifier that you must provide to identify the payment. This can be any alpha-numeric string but is limited to a maximum of 35 characters.",
-            "example": "04ab4536gaerfc0e1f93c4f4"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/Amount"
-          }
-        },
-        "description": "__Mandatory__. The payment request object defining the details of the payment for execution under the Variable Recurring Payment consent."
-      },
-      "HostedVRPPaymentResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "paymentIdempotencyId": {
-            "type": "string"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/Amount"
-          },
-          "reference": {
-            "type": "string",
-            "description": "__Optional__. The payment reference or description. Limited to a maximum of 18 characters long.",
-            "example": "Own Account Sweeping"
-          },
-          "payee": {
-            "$ref": "#/components/schemas/Payee"
-          },
-          "payer": {
-            "$ref": "#/components/schemas/HostedVrpPayerResponse"
-          },
-          "refundAccount": {
-            "$ref": "#/components/schemas/HostedVrpRefundAccount"
-          },
-          "risk": {
-            "$ref": "#/components/schemas/PaymentRisk"
-          },
-          "paymentLifecycleId": {
-            "type": "string",
-            "description": "The Unique Identifier provided by TPP in the Payment request to identify the payment."
-          },
-          "expectedExecutionTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "expectedSettlementTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "institutionPaymentId": {
-            "type": "string"
-          },
-          "statusDetails": {
-            "$ref": "#/components/schemas/HostedPaymentStatusDetails"
-          }
-        }
-      },
-      "ApiResponseOfCreateHostedVRPPaymentRequest": {
-        "type": "object",
-        "properties": {
-          "meta": {
-            "$ref": "#/components/schemas/ResponseMeta"
-          },
-          "data": {
-            "$ref": "#/components/schemas/HostedVRPPaymentResponse"
-          },
-          "tracingId": {
-            "type": "string",
-            "writeOnly": true
-          }
-        }
-      },
-      "ApiResponseOfGetHostedVRPPaymentRequest": {
-        "type": "object",
-        "properties": {
-          "meta": {
-            "$ref": "#/components/schemas/ResponseMeta"
-          },
-          "data": {
-            "$ref": "#/components/schemas/HostedVRPPaymentResponse"
-          },
-          "tracingId": {
-            "type": "string",
-            "writeOnly": true
-          }
-        }
-      },
-      "VRPSetupRequest": {
-        "required": [
-          "payee"
-        ],
-        "type": "object",
-        "properties": {
-          "payer": {
-            "$ref": "#/components/schemas/Payer"
-          },
-          "payee": {
-            "$ref": "#/components/schemas/Payee"
-          },
-          "reference": {
-            "type": "string",
-            "description": "__Optional__. The payment reference or description. Limited to a maximum of 18 characters long.",
-            "example": "Own Account Sweeping"
-          },
-          "limits": {
-            "$ref": "#/components/schemas/HostedVRPLimitsRequest"
-          },
-          "validFrom": {
-            "type": "string",
-            "format": "date-time",
-            "description": "__Optional__. Start date when the consent becomes valid."
-          },
-          "validTo": {
-            "type": "string",
-            "format": "date-time",
-            "description": "__Optional__. End date when the consent expires and becomes invalid."
-          },
-          "recurringPaymentCategory": {
-            "type": "string",
-            "description": "The use-case for the VRP consent supported by the bank. Allowed values: \n\n`ONGOING` \n\n`SUBSCRIPTION`"
-          },
-          "initialPayment": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Amount"
-              }
-            ],
-            "description": "__Optional__. Initial payment to be charged under this consent. If enforced, this amount must match the first payment amount executed using this consent."
-          },
-          "risk": {
-            "$ref": "#/components/schemas/PaymentRisk"
-          }
-        }
-      },
-      "VRPSetup": {
-        "required": [
-          "payee"
-        ],
-        "type": "object",
-        "properties": {
-          "payer": {
-            "$ref": "#/components/schemas/HostedVrpPayerResponse"
-          },
-          "payee": {
-            "$ref": "#/components/schemas/Payee"
-          },
-          "reference": {
-            "type": "string",
-            "description": "__Optional__. The payment reference or description. Limited to a maximum of 18 characters long.",
-            "example": "Own Account Sweeping"
-          },
-          "limits": {
-            "$ref": "#/components/schemas/HostedVRPLimits"
-          },
-          "validFrom": {
-            "type": "string",
-            "format": "date-time",
-            "description": "__Optional__. Start date when the consent becomes valid."
-          },
-          "validTo": {
-            "type": "string",
-            "format": "date-time",
-            "description": "__Optional__. End date when the consent expires and becomes invalid."
-          },
-          "recurringPaymentCategory": {
-            "type": "string",
-            "description": "The use-case for the VRP consent supported by the bank. Allowed values: \n\n`ONGOING` \n\n`SUBSCRIPTION`"
-          },
-          "initialPayment": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Amount"
-              }
-            ],
-            "description": "__Optional__. Initial payment to be charged under this consent. If enforced, this amount must match the first payment amount executed using this consent."
-          },
-          "risk": {
-            "$ref": "#/components/schemas/PaymentRisk"
-          }
-        }
-      },
-      "HostedVRPConsentRequestResponse": {
-        "required": [
-          "id",
-          "applicationId",
-          "hostedUrl",
-          "authToken",
-          "createdAt"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Represents the Unique Id of the VRP consent request"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Represents the Unique Id for the `User` assigned by Yapily."
-          },
-          "applicationUserId": {
-            "type": "string",
-            "description": "Represents the user-friendly reference to the `User`."
-          },
-          "applicationId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Represents the Unique Id of the `Application` the user is associated with."
-          },
-          "institutionIdentifiers": {
-            "$ref": "#/components/schemas/InstitutionIdentifiers"
-          },
-          "userSettings": {
-            "$ref": "#/components/schemas/UserSettings"
-          },
-          "redirectUrl": {
-            "type": "string",
-            "description": "URL of client's server to redirect the PSU after completion of the consent authorisation.",
-            "example": "https://tpp-application.com"
-          },
-          "vrpSetup": {
-            "$ref": "#/components/schemas/VRPSetupRequest"
-          },
-          "hostedUrl": {
-            "type": "string",
-            "description": "Represents the URL of Hosted UI page for the applicationId which initiates the user journey for the Consent. \n\n URL would be appended with authToken, applicationId and userSettings."
-          },
-          "authToken": {
-            "type": "string",
-            "description": "Represents the JWT Token signed by the certificate-vault using Yapily's keys."
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Represents the date and time at which the Consent was created."
-          },
-          "authorisationExpiresAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Represents the date and time at which the auth Token will expire."
-          }
-        }
-      },
-      "GetHostedVRPConsentsResponse": {
-        "type": "array",
-        "items": {
-          "required": [
-            "id",
-            "applicationId"
-          ],
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string",
-              "format": "uuid",
-              "description": "Represents the Unique Id of the VRP consent request"
-            },
-            "applicationId": {
-              "type": "string",
-              "format": "uuid",
-              "description": "Represents the Unique Id of the `Application` the user is associated with."
-            },
-            "institutionIdentifiers": {
-              "$ref": "#/components/schemas/InstitutionIdentifiers"
-            },
-            "vrpSetup": {
-              "$ref": "#/components/schemas/VRPSetupRequest"
-            },
-            "updatedAt": {
-              "type": "string",
-              "format": "date-time",
-              "description": "Represents the date and time at which the Consent was updated."
-            },
-            "consentStatus": {
-              "type": "string",
-              "description": "Current status of the authorisation. Can be one of [AWAITING_AUTHORIZATION, AUTHORIZED, REJECTED, REVOKED, FAILED, EXPIRED]"
-            }
-          }
-        }
-      },
-      "HostedVRPPhase": {
-        "type": "object",
-        "properties": {
-          "phaseName": {
-            "type": "string",
-            "description": "The name of the hosted VRP consent process phase. Allowed values are : \n\n- INITIATED - Process initiated\n- DECLINED - Process failed and will not proceed further\n- INSTITUTION_SUBMITTED - Consent institution submitted\n- INPUT_CAPTURED - Additional input captured to process the Consent\n- IBAN_VALIDATED - Payer IBAN successfully validated\n- AUTHORISATION_CREATED - Consent authorisation request created with Institution, awaiting authorisation completion\n- AUTHORISATION_REJECTED - Consent Authorisation request rejected by Institution and will not proceed further\n- AUTHORISED - Consent authorisation completed\n- AUTHORISATION_FAILED - Consent authorisation failed and will not proceed further\n- SUBMITTED - Consent execution created and submitted to Institution\n- ACCEPTED - Consent execution accepted by Institution and awaiting settlement\n- REJECTED - Consent execution request rejected by Institution and will not proceed further\n- STATUS_POLLING_STARTED - Consent status polling started\n- STATUS_POLLING_ENDED - Consent status polling ended\n- MERCHANT_ACKNOWLEDGED - Consent acknowledgement received from merchant\n- FINISHED - Consent process completed\n- REVOKED - Consent process completed"
-          },
-          "phaseCreatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date and time at which the phase of the hosted Consent was created."
-          }
-        },
-        "description": "The phase of the VRP Consent Request."
-      },
-      "PaymentRisk": {
-        "type": "object",
-        "description": "Additional information about the payment that may be used for risk scoring",
-        "properties": {
-          "contextType": {
-            "$ref": "#/components/schemas/PaymentContextTypeV2"
-          }
-        }
-      },
-      "HostedVRPLimitsRequest": {
-        "type": "object",
-        "description": "The restrictions and limits for payments executed under the VRP consent",
-        "properties": {
-          "periodicLimits": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HostedNonSweepingPeriodicLimits"
-            }
-          },
-          "maxAmountPerPayment": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Amount"
-              }
-            ],
-            "description": "__Optional__. Max amount that can be submitted per payment."
-          },
-          "maxCumulativeAmount": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Amount"
-              }
-            ],
-            "description": "__Optional__. Max cumulative amount that can be submitted under this consent."
-          },
-          "maxCumulativeNumberOfPayments": {
-            "type": "integer",
-            "format": "int32",
-            "description": "__Optional__. Max number of payments that can be submitted under this consent."
-          }
-        }
-      },
-      "HostedVRPLimits": {
-        "type": "object",
-        "description": "The restrictions and limits for payments executed under the VRP consent",
-        "properties": {
-          "periodicLimits": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HostedNonSweepingPeriodicLimits"
-            }
-          },
-          "maxAmountPerPayment": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Amount"
-              }
-            ],
-            "description": "__Optional__. Max amount that can be submitted per payment."
-          },
-          "maxCumulativeAmount": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Amount"
-              }
-            ],
-            "description": "__Optional__. Max cumulative amount that can be submitted under this consent."
-          },
-          "maxCumulativeNumberOfPayments": {
-            "type": "integer",
-            "format": "int32",
-            "description": "__Optional__. Max number of payments that can be submitted under this consent."
-          },
-          "editedByUser": {
-            "type": "boolean",
-            "description": "Indicates if the user edited the control parameters during authorisation"
-          }
-        }
-      },
-      "HostedNonSweepingPeriodicLimits": {
-        "required": [
-          "maxAmount",
-          "frequency",
-          "alignment"
-        ],
-        "type": "object",
-        "properties": {
-          "maxAmount": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Amount"
-              }
-            ],
-            "description": "__Mandatory__. Maximum amount that can be specified in all payment instructions in a given period under this VRP consent. If the Alignment is Calendar, the limit is pro-rated in the first period to the remaining number of days."
-          },
-          "frequency": {
-            "type": "string",
-            "description": "__Mandatory__. Frequency for which the payment limits are enforced. Allowed values are [MONTHLY]."
-          },
-          "alignment": {
-            "type": "string",
-            "description": "__Mandatory__. Period alignment for which the payment limits are enforced. Allowed values are [CONSENT, CALENDAR]. If CONSENT, then period starts on consent creation date. If CALENDAR, then period lines up with the frequency e.g. WEEKLY period will begin at start of the week in question."
           }
         }
       },
@@ -22640,499 +22089,6 @@
                 }
               }
             ]
-          }
-        }
-      },
-      "create-hosted-vrp-consent-request": {
-        "description": "Create Hosted VRP Consent Request",
-        "value": {
-          "applicationUserId": "45cf7ffe-6350-11ee-8c99-0242ac120002",
-          "institutionIdentifiers": {
-            "institutionId": "modelo-sandbox",
-            "institutionCountryCode": "GB"
-          },
-          "userSettings": {
-            "language": "en",
-            "location": "GB"
-          },
-          "redirectUrl": "https://tpp-application.com",
-          "vrpSetup": {
-            "payee": {
-              "name": "Merchant Doe",
-              "accountIdentifications": [
-                {
-                  "identification": "401016",
-                  "type": "SORT_CODE"
-                },
-                {
-                  "identification": "71518920",
-                  "type": "ACCOUNT_NUMBER"
-                }
-              ]
-            },
-            "reference": "Test Payment",
-            "limits": {
-              "periodicLimits": [
-                {
-                  "maxAmount": {
-                    "amount": 100,
-                    "currency": "GBP"
-                  },
-                  "frequency": "MONTHLY",
-                  "alignment": "CALENDAR"
-                }
-              ],
-              "maxAmountPerPayment": {
-                "amount": 10,
-                "currency": "GBP"
-              }
-            },
-            "validFrom": "2023-10-04T16:41:17.870Z",
-            "validTo": "2024-10-04T16:41:17.870Z",
-            "recurringPaymentCategory": "ONGOING",
-            "risk": {
-              "contextType": "ECOMMERCE_MERCHANT"
-            }
-          }
-        }
-      },
-      "create-hosted-vrp-consent-response": {
-        "description": "Create Hosted VRP Consent Response",
-        "value": {
-          "meta": {
-            "tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"
-          },
-          "data": {
-            "id": "ad4bfe58-6352-11ee-8c99-0242ac120002",
-            "applicationUserId": "45cf7ffe-6350-11ee-8c99-0242ac120002",
-            "applicationId": "ea4cdf01ee-278f-4e3e-8b30-695515aa4cdf01d64",
-            "institutionIdentifiers": {
-              "institutionId": "modelo-sandbox",
-              "institutionCountryCode": "GB"
-            },
-            "userSettings": {
-              "language": "en",
-              "location": "GB"
-            },
-            "redirectUrl": "https://tpp-application.com",
-            "vrpSetup": {
-              "payee": {
-                "name": "Merchant Doe",
-                "accountIdentifications": [
-                  {
-                    "identification": "401016",
-                    "type": "SORT_CODE"
-                  },
-                  {
-                    "identification": "71518920",
-                    "type": "ACCOUNT_NUMBER"
-                  }
-                ]
-              },
-              "reference": "Test Payment",
-              "limits": {
-                "periodicLimits": [
-                  {
-                    "maxAmount": {
-                      "amount": 100,
-                      "currency": "GBP"
-                    },
-                    "frequency": "MONTHLY",
-                    "alignment": "CALENDAR"
-                  }
-                ],
-                "maxAmountPerPayment": {
-                  "amount": 10,
-                  "currency": "GBP"
-                }
-              },
-              "validFrom": "2023-10-04T16:41:17.870Z",
-              "validTo": "2024-10-04T16:41:17.870Z",
-              "risk": {
-                "contextType": "ECOMMERCE_MERCHANT"
-              }
-            },
-            "hostedUrl": "https://payments.yapily.com/vrp?authToken=eyJra&applicationId=e5515aee-278f-4e3e-8b30-69a4cdf01d64",
-            "authToken": "eyJraWQiOiIwNmViZTQ1Yy1OiJFUzI1NiJ9.eyJhdWQiOiJwcm9kdWN0aW9uIiwic3ViIjoiZTU1MTVhZWUtMjc4Zi00ZTNlLThiMzAtNjlhNGNkZjAxZDY0Iiwib3JnIjoiYTUwZmEwNWUtNWIwYy00MGIxLTk0NWUtOTcxM2JkOGQzODk4IiwiY29uc2VudFJlcXVlc3RJZCI6IjdkMmMzZjU5LTU3NDgtNDhlNS1hODdjLWVkZmRkODJiMzQxZCIsImlzcyI6Imhvc3RlZC12cjgwMDE2NCwiaWF0IjoxNzA2Nzk5NTY0LCJqdGkiOiJjMTFkNTBkNy0wMjkxLTRhNTktYmFhNy1jZDhhYWIzMmYzOWIifQ.xa38HzD6phhFiR069E9nMrzvQ9GCmNZMQ",
-            "createdAt": "2024-02-01T14:59:25.007193Z"
-          }
-        }
-      },
-      "get-hosted-vrp-consent-response": {
-        "description": "Get Hosted VRP Consent Response",
-        "value": {
-          "meta": {
-            "tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"
-          },
-          "data": {
-            "id": "ad4bfe58-6352-11ee-8c99-0242ac120002",
-            "applicationUserId": "45cf7ffe-6350-11ee-8c99-0242ac120002",
-            "applicationId": "ea4cdf01ee-278f-4e3e-8b30-695515aa4cdf01d64",
-            "institutionIdentifiers": {
-              "institutionId": "modelo-sandbox",
-              "institutionCountryCode": "GB"
-            },
-            "userSettings": {
-              "language": "en",
-              "location": "GB"
-            },
-            "redirectUrl": "https://tpp-application.com",
-            "vrpSetup": {
-              "payer": {
-                "accountIdentifications": [
-                  {
-                    "type": "MASKED_ACCOUNT_NUMBER",
-                    "identification": "*****493"
-                  }
-                ]
-              },
-              "payee": {
-                "name": "Merchant Doe",
-                "accountIdentifications": [
-                  {
-                    "identification": "401016",
-                    "type": "SORT_CODE"
-                  },
-                  {
-                    "identification": "71518920",
-                    "type": "ACCOUNT_NUMBER"
-                  }
-                ]
-              },
-              "reference": "Test Payment",
-              "limits": {
-                "periodicLimits": [
-                  {
-                    "maxAmount": {
-                      "amount": 100,
-                      "currency": "GBP"
-                    },
-                    "frequency": "MONTHLY",
-                    "alignment": "CALENDAR"
-                  }
-                ],
-                "maxAmountPerPayment": {
-                  "amount": 10,
-                  "currency": "GBP"
-                }
-              },
-              "validFrom": "2023-10-04T16:41:17.870Z",
-              "validTo": "2024-10-04T16:41:17.870Z",
-              "recurringPaymentCategory": "ONGOING",
-              "risk": {
-                "contextType": "ECOMMERCE_MERCHANT"
-              }
-            },
-            "createdAt": "2023-10-05T07:56:44.552Z",
-            "authorisationExpiresAt": "2023-10-05T07:56:44.552Z",
-            "consentStatus": "AUTHORIZED",
-            "consentToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6Im1vZGVsby1zYW5kYm94IiwiQ09OU0VOVCI6IjU2YTQyMjQ0LTQxNGEtNGI1Mi04YzRmLTRhZDJhNTBlODJmZSIsIkFQUExJQ0FUSU9OX1VTRVJfSUQiOiJtb2ZlLTIiLCJVU0VSIjoiY2E0MTJmZGYtNWEzMC00M2EyLTg4YjctNTk2NGEyNGE4ZTU1In0.gorwpnUjSr5dzQJLR32M2geWOj7yK9xMsZmq27ssY9xP_xGmWfUL_aqVHYyQ4r5KWw6Xb6RjvO839st8chJLtg",
-            "phases": [
-              {
-                "phaseName": "INITIATED",
-                "phaseCreatedAt": "2023-05-10T07:56:54.887Z"
-              },
-              {
-                "phaseName": "INPUT_CAPTURED",
-                "phaseCreatedAt": "2023-05-10T07:57:05.123Z"
-              },
-              {
-                "phaseName": "VALIDATION_COMPLETED",
-                "phaseCreatedAt": "2023-05-10T07:57:05.223Z"
-              },
-              {
-                "phaseName": "AUTHORISATION_CREATED",
-                "phaseCreatedAt": "2023-05-10T07:57:06.637Z"
-              },
-              {
-                "phaseName": "AUTHORISED",
-                "phaseCreatedAt": "2023-05-10T07:57:10.637Z"
-              },
-              {
-                "phaseName": "SUBMITTED",
-                "phaseCreatedAt": "2023-05-10T07:57:10.654Z"
-              },
-              {
-                "phaseName": "ACCEPTED",
-                "phaseCreatedAt": "2023-05-10T07:57:11.867Z"
-              }
-            ]
-          }
-        }
-      },
-      "get-hosted-vrp-consents-response": {
-        "description": "Get Hosted VRP Consents Response",
-        "value": {
-          "meta": {
-            "tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"
-          },
-          "data": [
-            {
-              "id": "ad4bfe58-6352-11ee-8c99-0242ac120002",
-              "applicationId": "45cf7ffe-6350-11ee-8c99-0242ac120002",
-              "institutionIdentifiers": {
-                "institutionId": "modelo-sandbox",
-                "institutionCountryCode": "GB"
-              },
-              "vrpSetup": {
-                "limits": {
-                  "periodicLimits": [
-                    {
-                      "maxAmount": {
-                        "amount": 100,
-                        "currency": "GBP"
-                      },
-                      "frequency": "MONTHLY",
-                      "alignment": "CALENDAR"
-                    }
-                  ],
-                  "maxAmountPerPayment": {
-                    "amount": 10,
-                    "currency": "GBP"
-                  }
-                },
-                "recurringPaymentCategory": "ONGOING",
-                "risk": {
-                  "contextType": "ECOMMERCE_MERCHANT"
-                }
-              },
-              "updatedAt": "2023-10-05T07:56:44.552Z",
-              "consentStatus": "AUTHORIZED"
-            }
-          ]
-        }
-      },
-      "revoke-hosted-vrp-consent-response": {
-        "description": "Revoke Hosted VRP Consent Response",
-        "value": {
-          "meta": {
-            "tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"
-          },
-          "data": {
-            "id": "ad4bfe58-6352-11ee-8c99-0242ac120002",
-            "applicationUserId": "45cf7ffe-6350-11ee-8c99-0242ac120002",
-            "applicationId": "ea4cdf01ee-278f-4e3e-8b30-695515aa4cdf01d64",
-            "institutionIdentifiers": {
-              "institutionId": "modelo-sandbox",
-              "institutionCountryCode": "GB"
-            },
-            "userSettings": {
-              "language": "en",
-              "location": "GB"
-            },
-            "redirectUrl": "https://tpp-application.com",
-            "vrpSetup": {
-              "payee": {
-                "name": "Merchant Doe",
-                "accountIdentifications": [
-                  {
-                    "identification": "401016",
-                    "type": "SORT_CODE"
-                  },
-                  {
-                    "identification": "71518920",
-                    "type": "ACCOUNT_NUMBER"
-                  }
-                ]
-              },
-              "reference": "Test Payment",
-              "limits": {
-                "periodicLimits": [
-                  {
-                    "maxAmount": {
-                      "amount": 100,
-                      "currency": "GBP"
-                    },
-                    "frequency": "MONTHLY",
-                    "alignment": "CALENDAR"
-                  }
-                ],
-                "maxAmountPerPayment": {
-                  "amount": 10,
-                  "currency": "GBP"
-                }
-              },
-              "validFrom": "2023-10-04T16:41:17.870Z",
-              "validTo": "2024-10-04T16:41:17.870Z",
-              "risk": {
-                "contextType": "ECOMMERCE_MERCHANT"
-              }
-            },
-            "createdAt": "2023-10-05T07:56:44.552Z",
-            "authorisationExpiresAt": "2023-10-05T07:56:44.552Z",
-            "consentStatus": "REVOKED",
-            "phases": [
-              {
-                "phaseName": "INITIATED",
-                "phaseCreatedAt": "2023-05-10T07:56:54.887Z"
-              },
-              {
-                "phaseName": "INPUT_CAPTURED",
-                "phaseCreatedAt": "2023-05-10T07:57:05.123Z"
-              },
-              {
-                "phaseName": "VALIDATION_COMPLETED",
-                "phaseCreatedAt": "2023-05-10T07:57:05.223Z"
-              },
-              {
-                "phaseName": "AUTHORISATION_CREATED",
-                "phaseCreatedAt": "2023-05-10T07:57:06.637Z"
-              },
-              {
-                "phaseName": "AUTHORISED",
-                "phaseCreatedAt": "2023-05-10T07:57:10.637Z"
-              },
-              {
-                "phaseName": "SUBMITTED",
-                "phaseCreatedAt": "2023-05-10T07:57:10.654Z"
-              },
-              {
-                "phaseName": "ACCEPTED",
-                "phaseCreatedAt": "2023-05-10T07:57:11.867Z"
-              },
-              {
-                "phaseName": "REVOKED",
-                "phaseCreatedAt": "2023-05-11T09:57:11.867Z"
-              }
-            ]
-          }
-        }
-      },
-      "create-hosted-vrp-payment-request": {
-        "description": "Create Hosted VRP Payment Request",
-        "value": {
-          "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
-          "amount": {
-            "amount": 10,
-            "currency": "GBP"
-          }
-        }
-      },
-      "create-hosted-vrp-fund-confirmation": {
-        "description": "Create Hosted VRP Fund Confirmation Request",
-        "value": {
-          "reference": "Own Account Sweeping",
-          "paymentAmount": {
-            "amount": 10,
-            "currency": "GBP"
-          }
-        }
-      },
-      "create-hosted-vrp-fund-confirmation-response": {
-        "description": "Created Hosted VRP Fund Confirmation Response",
-        "value": {
-          "meta": {
-            "tracingId": "0f14e900011b445fa6b6c2c4272d7321"
-          },
-          "data": {
-            "id": "a9582f8e-08be-4cca-9f01-1ad3be96532d",
-            "fundsAvailable": {
-              "fundsAvailable": true,
-              "fundsAvailableAt": "2021-06-08T10:59:35.138Z"
-            },
-            "reference": "Own Account Sweeping",
-            "paymentAmount": {
-              "amount": 10,
-              "currency": "GBP"
-            }
-          }
-        }
-      },
-      "create-hosted-vrp-payment-response": {
-        "description": "Created Hosted VRP Payment Response",
-        "value": {
-          "meta": {
-            "tracingId": "d80a638a-635e-11ee-8c99-0242ac120002"
-          },
-          "data": {
-            "id": "string",
-            "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
-            "amount": {
-              "amount": 10,
-              "currency": "GBP"
-            },
-            "reference": "Test Payment",
-            "payee": {
-              "name": "Merchant Doe",
-              "accountIdentifications": [
-                {
-                  "identification": "401016",
-                  "type": "SORT_CODE"
-                },
-                {
-                  "identification": "71518920",
-                  "type": "ACCOUNT_NUMBER"
-                }
-              ]
-            },
-            "refundAccount": {
-              "name": "string",
-              "accountIdentifications": [
-                {
-                  "type": "MASKED_ACCOUNT_NUMBER",
-                  "identification": "*****493"
-                }
-              ]
-            },
-            "paymentLifecycleId": "234g87t58tgeuo848wudjew489",
-            "institutionPaymentId": "35a4bd02-635e-11ee-8c99-0242ac120002",
-            "statusDetails": {
-              "status": "PENDING",
-              "statusUpdateDate": "2023-10-05T09:00:36.360Z",
-              "isoStatus": {
-                "code": "PDNG",
-                "name": "Pending"
-              }
-            }
-          }
-        }
-      },
-      "get-hosted-vrp-payment-response": {
-        "description": "Get Hosted VRP Payment Response",
-        "value": {
-          "meta": {
-            "tracingId": "d80a638a-635e-11ee-8c99-0242ac120002"
-          },
-          "data": {
-            "id": "string",
-            "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
-            "amount": {
-              "amount": 10,
-              "currency": "GBP"
-            },
-            "reference": "Test Payment",
-            "payee": {
-              "name": "Merchant Doe",
-              "accountIdentifications": [
-                {
-                  "identification": "401016",
-                  "type": "SORT_CODE"
-                },
-                {
-                  "identification": "71518920",
-                  "type": "ACCOUNT_NUMBER"
-                }
-              ]
-            },
-            "refundAccount": {
-              "name": "string",
-              "accountIdentifications": [
-                {
-                  "type": "MASKED_ACCOUNT_NUMBER",
-                  "identification": "*****493"
-                }
-              ]
-            },
-            "paymentLifecycleId": "234g87t58tgeuo848wudjew489",
-            "institutionPaymentId": "35a4bd02-635e-11ee-8c99-0242ac120002",
-            "statusDetails": {
-              "status": "COMPLETED",
-              "statusUpdateDate": "2023-10-05T09:00:36.360Z",
-              "isoStatus": {
-                "code": "ACSC",
-                "name": "AcceptedSettlementCompleted"
-              }
-            }
           }
         }
       },
