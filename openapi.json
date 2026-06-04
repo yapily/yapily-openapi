@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.7.0",
+    "version": "12.8.1",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -4701,6 +4701,7 @@
                   "value": {
                     "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
                     "psuAuthenticationMethod": "SCA_NOT_REQUIRED",
+                    "psuInteractionType": "PSU_PRESENT",
                     "paymentAmount": {
                       "amount": 10,
                       "currency": "GBP"
@@ -6149,7 +6150,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6164,7 +6165,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6179,7 +6180,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6194,7 +6195,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6254,7 +6255,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6269,7 +6270,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6284,7 +6285,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6299,7 +6300,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6365,7 +6366,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6380,7 +6381,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6395,7 +6396,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6410,7 +6411,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6471,7 +6472,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6486,7 +6487,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6501,7 +6502,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6516,7 +6517,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6576,7 +6577,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6591,7 +6592,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6606,7 +6607,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -6621,7 +6622,7 @@
                   }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseError"
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
                 }
               }
             },
@@ -16608,6 +16609,10 @@
           }
         }
       },
+      "VrpInteractionType": {
+        "type": "string",
+        "description": "__Conditional__. This value is mandatory for Commercial VRP payments. It is one of `PSU_PRESENT` (ie. the PSU oversees the payment) or `PSU_NOT_PRESENT` (eg. the payment is async)."
+      },
       "VrpSubmissionRequest": {
         "type": "object",
         "required": [
@@ -16623,6 +16628,9 @@
           "psuAuthenticationMethod": {
             "type": "string",
             "description": "__Mandatory__. Defines the authentication method(s) allowed in payment submission step.\nAllowed values are [`SCA_REQUIRED`, `SCA_NOT_REQUIRED`].\n\nSee [SCA](/getting-started/glossary#strong-customer-authentication-sca)."
+          },
+          "psuInteractionType": {
+            "$ref": "#/components/schemas/VrpInteractionType"
           },
           "paymentAmount": {
             "$ref": "#/components/schemas/Amount"

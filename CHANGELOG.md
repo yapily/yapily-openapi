@@ -5,6 +5,25 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [12.9.0] - 2026-06-03
+### Changed
+Updated error schema for:  
+- POST /hosted/consent-requests
+- POST /hosted/payment-requests
+- GET /hosted/consent-requests/{consentRequestId}
+- GET /hosted/payment-requests/{paymentRequestId}
+- POST /hosted/payment-requests/links
+
+from `ApiResponseError` to `ApiErrorResponseV2`.
+
+## [12.8.1] - 2026-06-02
+### Changed
+Fix `psuInteractionType` field (it was added to example not to schema)
+
+## [12.8.0] - 2026-06-02
+### Changed
+Add `psuInteractionType` field to `POST /variable-recurring-payments/payments`
+
 ## [12.7.0] - 2026-05-29
 ### Changed
 Split `POST /hosted/vrp-requests/commercial` schema to use models
