@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.8.1",
+    "version": "12.9.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -6844,7 +6844,7 @@
                 },
                 "examples": {
                   "Create Hosted Commercial VRP Response": {
-                    "description": "Create Hosted VRP Response",
+                    "description": "Create Hosted Commercial VRP Response",
                     "value": {
                       "meta": {
                         "tracingId": "12345678901234567890123456789012"
@@ -6876,6 +6876,202 @@
                 "examples": {
                   "401 Error Response": {
                     "$ref": "#/components/examples/401-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "500 Error Response": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hosted/vrp-requests/commercial/{requestId}": {
+      "get": {
+        "description": "Used to get details of a Commercial VRP request",
+        "operationId": "getHostedCommercialVrpRequest",
+        "parameters": [
+          {
+            "description": "Unique Identifier of the Commercial VRP request",
+            "in": "path",
+            "name": "requestId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "requestType": {
+                          "type": "string"
+                        },
+                        "requestId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "applicationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "applicationUserId": {
+                          "type": "string"
+                        },
+                        "tppRedirectUrl": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "institutionIdentifiers": {
+                          "type": "object",
+                          "properties": {
+                            "institutionId": {
+                              "type": "string"
+                            },
+                            "institutionCountryCode": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "status": {
+                          "type": "object",
+                          "properties": {
+                            "currentStatus": {
+                              "type": "string"
+                            },
+                            "statusUpdatedAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "tppNotified": {
+                              "type": "boolean"
+                            },
+                            "qrScanned": {
+                              "type": "boolean"
+                            },
+                            "errorCode": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "result": {
+                          "type": "object",
+                          "properties": {
+                            "consentId": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "consentToken": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Get Hosted Commercial VRP Response": {
+                    "description": "Get Hosted Commercial VRP Response",
+                    "value": {
+                      "data": {
+                        "requestType": "vrp",
+                        "requestId": "00000000-0000-0000-0000-000000000000",
+                        "applicationId": "00000000-0000-0000-0000-000000000000",
+                        "userId": "00000000-0000-0000-0000-000000000000",
+                        "applicationUserId": "any",
+                        "tppRedirectUrl": "https://parameter-viewer.yapily.com/",
+                        "createdAt": "2026-01-01T00:00:00Z",
+                        "institutionIdentifiers": {
+                          "institutionId": "mock-sandbox",
+                          "institutionCountryCode": "GB"
+                        },
+                        "status": {
+                          "currentStatus": "...",
+                          "statusUpdatedAt": "2026-01-01T00:00:00Z",
+                          "tppNotified": false,
+                          "qrScanned": false,
+                          "errorCode": null
+                        },
+                        "result": {
+                          "consentId": "00000000-0000-0000-0000-000000000000",
+                          "consentToken": "..."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "400 Error Response": {
+                    "$ref": "#/components/examples/400-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "403 Error Response": {
+                    "$ref": "#/components/examples/403-error-response"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "examples": {
+                  "401 Error Response": {
+                    "$ref": "#/components/examples/404-error-response"
                   }
                 },
                 "schema": {
@@ -10337,25 +10533,6 @@
           }
         }
       },
-      "HostedVrpAccountIdentification": {
-        "title": "Account Identifications",
-        "required": [
-          "type",
-          "identification"
-        ],
-        "type": "object",
-        "properties": {
-          "type": {
-            "$ref": "#/components/schemas/HostedVrpAccountIdentificationType"
-          },
-          "identification": {
-            "title": "Account Identification",
-            "type": "string",
-            "description": "__Mandatory__. The value associated with the account identification type.\n\n See [Account Identification Combinations](/payments/payment-resources/intro-to-payment-execution#account-identifications-combinations) for more information on the format of the values.",
-            "example": "401016"
-          }
-        }
-      },
       "AccountIdentificationResponse": {
         "title": "Account Identifications",
         "type": "object",
@@ -10553,12 +10730,6 @@
             }
           }
         }
-      },
-      "HostedVrpAccountIdentificationType": {
-        "title": "Account Identification Type",
-        "type": "string",
-        "description": "Used to describe the format of the account.\n\n Allowed values: \n\nMASKED_ACCOUNT_NUMBER\n\nSORT_CODE\n\nACCOUNT_NUMBER",
-        "example": "SORT_CODE"
       },
       "AccountIdentificationTypeResponse": {
         "title": "Account Identification Type",
@@ -13447,33 +13618,6 @@
         },
         "description": "__Conditional__. Details of the benefactor [person or business]."
       },
-      "HostedVrpPayerResponse": {
-        "title": "Payer Details",
-        "required": [
-          "accountIdentifications"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "title": "Payer Name",
-            "type": "string",
-            "description": "The account holder name of the Payer.",
-            "example": "John Doe"
-          },
-          "accountIdentifications": {
-            "uniqueItems": true,
-            "type": "array",
-            "description": "__Mandatory__. The account identifications that identify the `Payer` bank account.",
-            "items": {
-              "$ref": "#/components/schemas/HostedVrpAccountIdentification"
-            }
-          },
-          "address": {
-            "$ref": "#/components/schemas/Address"
-          }
-        },
-        "description": "__Conditional__. Details of the benefactor [person or business]."
-      },
       "PayerDetailsResponse": {
         "title": "Payer Details",
         "type": "object",
@@ -14978,22 +15122,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AccountIdentification"
-            }
-          }
-        }
-      },
-      "HostedVrpRefundAccount": {
-        "type": "object",
-        "description": "The account to which funds should be returned if the payment is to be later refunded.",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "accountIdentifications": {
-            "uniqueItems": true,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HostedVrpAccountIdentification"
             }
           }
         }
