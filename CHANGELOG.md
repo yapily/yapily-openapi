@@ -5,6 +5,10 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [12.10.1] - 2026-06-08
+### Changed
+Remove the `applicationId` field in the `POST /hosted/vrp-requests/commercial` request body
+
 ## [12.10.0] - 2026-06-05
 ### Changed
 Add `GET /hosted/vrp-requests/commercial/{requestId}` endpoint
