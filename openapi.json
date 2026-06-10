@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.10.1",
+    "version": "12.10.2",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -6898,8 +6898,12 @@
     },
     "/hosted/vrp-requests/commercial/{requestId}": {
       "get": {
-        "description": "Used to get details of a Commercial VRP request",
         "operationId": "getHostedCommercialVrpRequest",
+        "summary": "Get Hosted Commercial VRP request",
+        "description": "Used to get details of a Commercial VRP request",
+        "tags": [
+          "Hosted VRP Pages"
+        ],
         "parameters": [
           {
             "description": "Unique Identifier of the Commercial VRP request",
@@ -6962,7 +6966,8 @@
                           "type": "object",
                           "properties": {
                             "currentStatus": {
-                              "type": "string"
+                              "type": "string",
+                              "description": "Allowed values:\n- `started`: request received, but session not yet created\n- `created`: session created, but PSU not yet redirected to institution\n- `awaiting`: PSU redirected to institution for authorisation\n- `succeed`: PSU authorised the consent\n- `rejected`: PSU declined authorisation, or institution rejected it\n- `failed`: unexpected error at any point during the flow\n- `expired`: session expired\n- `null` (ie. missing status): request not yet processed"
                             },
                             "statusUpdatedAt": {
                               "type": "string",
