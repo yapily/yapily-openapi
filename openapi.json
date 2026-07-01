@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.10.2",
+    "version": "12.11.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -1706,6 +1706,9 @@
                               "type": "string",
                               "description": "Bulk file status. Enum: `COMPLETED` `PENDING` `FAILED` `UNKNOWN`\nThese values are subject to change."
                             },
+                            "multiAuthorisationStatus": {
+                              "$ref": "#/components/schemas/MultiAuthorisation"
+                            },
                             "updatedAt": {
                               "type": "string",
                               "format": "date-time"
@@ -1731,6 +1734,9 @@
                         "consentId": "5daeb980-5ff5-49db-b7a0-e93dd9c93533",
                         "statusDetails": {
                           "status": "COMPLETED",
+                          "multiAuthorisationStatus": {
+                            "status": "COMPLETED"
+                          },
                           "updatedAt": "2024-07-25T18:14:52.672Z"
                         },
                         "createdAt": "2024-07-25T18:14:52.672Z"
