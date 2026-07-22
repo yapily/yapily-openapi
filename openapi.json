@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.12.1",
+    "version": "12.13.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -6696,7 +6696,46 @@
                     "$ref": "#/components/schemas/HostedVrpControlParameters"
                   },
                   "initiationDetails": {
-                    "$ref": "#/components/schemas/HostedVrpInitiationDetails"
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/HostedVrpInitiationDetails"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "payer": {
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/Payer"
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "address": {
+                                    "description": "Conditional. The delivery address of the Payer where goods will be shipped.\n\nThis field is required for use cases that involve the delivery of physical goods."
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "payee": {
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/Payee"
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "address": {
+                                    "description": "Optional. The address of the Payee."
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
                   },
                   "redirectUrl": {
                     "description": "__Mandatory__. The URL to redirect to once the Hosted VRP flow finishes.",
