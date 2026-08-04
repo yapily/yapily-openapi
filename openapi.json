@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.13.0",
+    "version": "12.15.0",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -6106,6 +6106,297 @@
         }
       }
     },
+    "/transactions/categorisation/{categorisationId}/feedback": {
+      "parameters": [
+        {
+          "name": "categorisationId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "schema": {
+            "$ref": "#/components/schemas/CategorisationFeedbackStatus"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "post-categorisation-feedback",
+        "summary": "Create Categorisation Feedback",
+        "description": "Submit feedback for categorised transactions, by Categorisation ID and Transaction Hashes.",
+        "tags": [
+          "Data Plus"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "transactionHash",
+                  "suggestions"
+                ],
+                "properties": {
+                  "transactionHash": {
+                    "type": "string",
+                    "description": "The Hash of the Transaction that is subject of the Feedback"
+                  },
+                  "suggestions": {
+                    "type": "array",
+                    "description": "The list of suggestions/issues on the categorised Transaction",
+                    "items": {
+                      "$ref": "#/components/schemas/CategorisationFeedbackSuggestion"
+                    }
+                  },
+                  "notes": {
+                    "type": "string",
+                    "description": "Any free-form notes about the Transaction, to be used for details that cannot be expressed via the `suggestions`"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "transactionHash": "...",
+                    "suggestions": [
+                      {
+                        "type": "MISSING",
+                        "field": "merchant name"
+                      },
+                      {
+                        "type": "INCORRECT",
+                        "field": "label",
+                        "suggestedValue": "Correct Label"
+                      }
+                    ],
+                    "notes": "Lorem ipsum..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategorisationFeedbackData"
+                },
+                "examples": {
+                  "Example": {
+                    "$ref": "#/components/examples/categorisation-feedback-data-response"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "get-categorisation-feedback",
+        "summary": "Get Categorisation Feedback",
+        "description": "Retrieve categorisation feedback submitted on any transactions of the Categorisation ID.",
+        "tags": [
+          "Data Plus"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "tracingId": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CategorisationFeedbackData"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "$ref": "#/components/examples/categorisation-feedback-data-list-response"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/categorisation/feedback/{feedbackId}": {
+      "parameters": [
+        {
+          "name": "feedbackId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "get-categorisation-feedback-id",
+        "summary": "Get Categorisation Feedback by ID",
+        "description": "Retrieve categorisation feedback by ID.",
+        "tags": [
+          "Data Plus"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "tracingId": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/CategorisationFeedbackData"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "$ref": "#/components/examples/categorisation-feedback-data-response"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/401-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/404-error-response"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseV2"
+                },
+                "examples": {
+                  "Example-1": {
+                    "$ref": "#/components/examples/500-error-response"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/hosted/consent-requests": {
       "post": {
         "description": "Used to initiate a consent request using Yapily Hosted Pages.",
@@ -12075,6 +12366,58 @@
             }
           }
         }
+      },
+      "CategorisationFeedbackData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "transactionHash": {
+            "type": "string"
+          },
+          "suggestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategorisationFeedbackSuggestion"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/CategorisationFeedbackStatus"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "CategorisationFeedbackSuggestion": {
+        "type": "object",
+        "required": [
+          "type",
+          "field"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Allowed values:\n- `INCORRECT`\n- `MISSING`"
+          },
+          "field": {
+            "type": "string",
+            "description": "Allowed values:\n- `label`\n- `recurrence`\n- `payment processor`\n- `merchant name`\n- `logo`\n- `location`"
+          },
+          "suggestedValue": {
+            "type": "string",
+            "description": "__Optional__. When `type` is `INCORRECT`, you may specify the value that should have been used."
+          }
+        }
+      },
+      "CategorisationFeedbackStatus": {
+        "type": "string",
+        "description": "Allowed values:\n- `RECEIVED`\n- `IN_REVIEW`\n- `RESOLVED`\n- `DECLINED`"
       },
       "ChargeBearerType": {
         "type": "string",
@@ -22576,7 +22919,7 @@
                     "logo": "https://example.org/logo.png"
                   }
                 },
-                "recurrence": "one-off",
+                "recurrence": "one off",
                 "paymentProcessor": "PayPal",
                 "location": "1725 Third Street, San Francisco 94158, United States",
                 "merchant": {
@@ -22633,6 +22976,67 @@
           "data": {
             "categorisationId": "ed8ea63f-7a1e-05d4-3633-a8a9175b50da"
           }
+        }
+      },
+      "categorisation-feedback-data-response": {
+        "value": {
+          "meta": {
+            "tracingId": "12345678901234567890123456789012"
+          },
+          "data": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "transactionHash": "...",
+            "suggestions": [
+              {
+                "type": "MISSING",
+                "field": "merchant name"
+              },
+              {
+                "type": "INCORRECT",
+                "field": "label",
+                "suggestedValue": "Correct Label"
+              }
+            ],
+            "status": "OPEN",
+            "createdAt": "2026-01-01T00:00:00Z",
+            "notes": "Lorem ipsum..."
+          }
+        }
+      },
+      "categorisation-feedback-data-list-response": {
+        "value": {
+          "meta": {
+            "tracingId": "12345678901234567890123456789012"
+          },
+          "data": [
+            {
+              "id": "10000000-0000-0000-0000-000000000000",
+              "transactionHash": "...",
+              "suggestions": [
+                {
+                  "type": "MISSING",
+                  "field": "merchant name"
+                }
+              ],
+              "status": "OPEN",
+              "createdAt": "2026-01-01T00:00:00Z",
+              "notes": "Lorem ipsum..."
+            },
+            {
+              "id": "20000000-0000-0000-0000-000000000000",
+              "transactionHash": "...",
+              "suggestions": [
+                {
+                  "type": "INCORRECT",
+                  "field": "label",
+                  "suggestedValue": "Correct Label"
+                }
+              ],
+              "status": "OPEN",
+              "createdAt": "2026-01-01T00:00:00Z",
+              "notes": "Lorem ipsum..."
+            }
+          ]
         }
       },
       "application-request": {

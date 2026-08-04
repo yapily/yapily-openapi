@@ -5,6 +5,14 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [12.15.0] - 2026-08-03
+### Changed
+Add Categorisation Feedback endpoints
+
+## [12.14.0] - 2026-07-29
+### Changed
+Updated the example value of the `recurrence` field on categorised transactions from `one-off` to `one off`
+
 ## [12.13.0] - 2026-07-17
 ### Changed
 Update payer and payee address description for endpoint `POST /hosted/vrp-requests/commercial`
