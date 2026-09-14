@@ -3,7 +3,7 @@
   "info": {
     "description": "The Yapily API enables connections between your application and users' banks. For more information check out our [documentation](/introduction).\n\nIn particular, make sure to view our [Getting Started](/getting-started/get-started) steps if this is your first time here.\n\nWhile testing the API, our list of [sandbox credentials](/resources/sandbox/sandbox-credentials) maybe useful.",
     "title": "Yapily API",
-    "version": "12.17.0",
+    "version": "12.17.1",
     "contact": {
       "name": "Yapily Support",
       "url": "https://docs.yapily.com/resources/support",
@@ -16832,10 +16832,7 @@
           },
           "status": {
             "type": "string",
-            "description": "The result of the operation",
-            "enum": [
-              "EXTENDED"
-            ]
+            "description": "The status of the consent dormancy after the operation. Possible values: `EXTENDED`"
           }
         }
       },

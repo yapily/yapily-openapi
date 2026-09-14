@@ -5,6 +5,10 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [12.17.2] - 2026-09-14
+### Changed
+No API changes. Updated ExtendVrpCommercialConsentResponse schema 'status' field.
+
 ## [12.17.1] - 2026-09-07
 ### Changed
 No API changes. Corrected `info.version` in `specs/openapi.json`, which was out of sync with this changelog file version to fix an issue that bypassed the automated version-increment CI step.
