@@ -5,6 +5,13 @@ All notable changes to the API definition will be recorded here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [13.0.0] - 2026-09-15
+### Removed
+**API Maintenance: Endpoint Deprecation**
+
+- **What Changed:** Deprecated and removed the `GET /accounts/{accountId}/real-time/transactions` endpoint.
+- **Reason for Change:** This feature was in an unreleased Beta state and has recorded zero active usage. As part of our ongoing API cleanup and transition to our next-generation platform architecture, this legacy beta endpoint has been sunset.
+
 ## [12.17.2] - 2026-09-14
 ### Changed
 No API changes. Updated ExtendVrpCommercialConsentResponse schema 'status' field.
